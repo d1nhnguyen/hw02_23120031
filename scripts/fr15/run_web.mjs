@@ -57,9 +57,10 @@ async function openProducts() {
 }
 
 async function fillForm(c) {
-  await page.getByPlaceholder('Tên sản phẩm').fill(c.name);
-  await page.getByPlaceholder('Giá tiền').fill(c.price === MISSING ? '' : String(c.price));
-  await page.locator('select').selectOption(String(c.category_id));
+  const touch = (key) => !c.touch || c.touch.includes(key); // test case Sửa chỉ một ô: các ô khác giữ giá trị form điền sẵn
+  if (touch('name')) await page.getByPlaceholder('Tên sản phẩm').fill(c.name);
+  if (touch('price')) await page.getByPlaceholder('Giá tiền').fill(c.price === MISSING ? '' : String(c.price));
+  if (touch('category_id')) await page.locator('select').selectOption(String(c.category_id));
   if (c.op === 'add') {
     await page.getByPlaceholder('URL Ảnh').fill(EXTRA.imageUrl);
     await page.getByPlaceholder('Mô tả').fill(EXTRA.description);

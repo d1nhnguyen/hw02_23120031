@@ -395,6 +395,7 @@ Mỗi test case một dòng. Bảng sinh từ `evidence/FR-15/web_results.json` 
 | FR15-BV-25 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product deleted”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
 | FR15-BV-26 | Pass | Form gửi request, HTTP 200 “Product deleted”; sản phẩm id 1 đã bị xóa, các sản phẩm khác giữ nguyên | Pass | HTTP 200 “Product deleted”; sản phẩm id 1 đã bị xóa, các sản phẩm khác giữ nguyên | [ảnh Web](../evidence/FR-15/web/FR15-BV-26.png) · `api_results.json` | – |
 | FR15-BV-27 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product deleted”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-DT-34 | Pass | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm id 3 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | – | Không áp dụng (giao diện không cho nhập giá trị này) | [ảnh Web](../evidence/FR-15/web/FR15-DT-34.png) | – |
 <!-- END:T53 -->
 
 ### 5.4 Tổng hợp
@@ -402,17 +403,47 @@ Mỗi test case một dòng. Bảng sinh từ `evidence/FR-15/web_results.json` 
 <!-- BEGIN:T55 -->
 | Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |
 | --- | --- | --- | --- | --- | --- | --- |
-| Web | 60 | 40 | 24 | 16 | 0 | 20 |
-| API | 60 | 60 | 22 | 38 | 0 | 0 |
-| **Tổng lượt chạy** | | **100** | **46** | **54** | **0** | |
+| Web | 61 | 41 | 25 | 16 | 0 | 20 |
+| API | 61 | 60 | 22 | 38 | 0 | 1 |
+| **Tổng lượt chạy** | | **101** | **47** | **54** | **0** | |
 
-60 test case = 33 Minimum Set (mục 3.2) + 27 BVA (mục 4.2). Gộp các kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 22 Pass, 38 Fail, 0 Blocked.
+61 test case = 33 Minimum Set (mục 3.2) + 27 BVA (mục 4.2) + 1 bổ sung sau rà soát (mục 6.2). Gộp các kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 23 Pass, 38 Fail, 0 Blocked.
 <!-- END:T55 -->
 
 ## 6. Bước 6 – AI gap analysis
 
-| # | AI bỏ sót / làm sai | Loại (EC / TC / biên / expected sai / bug) | Nguyên nhân (prompt / giới hạn công cụ AI / độ phức tạp feature) | Phát hiện bằng cách nào | Đã xử lý |
+> G1–G5: AI (Claude Code) tự phát hiện trong lúc làm các bước 1–5 của FR-15. Sinh viên rà soát và bổ sung các điểm tự phát hiện ở commit `[FR-15][Bn-review]`.
+
+### 6.1 Những gì AI bỏ sót hoặc làm sai
+
+| # | AI bỏ sót / làm sai | Loại | Nguyên nhân | Phát hiện bằng cách nào | Đã xử lý |
 | --- | --- | --- | --- | --- | --- |
+| G1 | Bước 1 ghi "trình duyệt chặn `0.5`" chỉ dựa vào thông báo `validationMessage` của ô Giá, không thử bấm Lưu; thực tế giá thập phân vẫn được gửi và lưu | Quan sát / giả định sai về SUT | **Giới hạn công cụ AI**: suy ra hành vi từ thuộc tính giao diện thay vì quan sát hành vi thật | FR15-DT-04, FR15-BV-13 Pass ở bước 5 trái với dự đoán; khảo sát lại `checkValidity()` | Đính chính mục 1.1 |
+| G2 | Thiết kế ban đầu không có test case Sửa chỉ một ô trên Web: mọi test case Sửa đều chọn lại Danh mục, nên không kiểm tra được form Sửa có điền sẵn đúng Danh mục (A9) hay không – lần khảo sát chỉ xem sản phẩm danh mục 1, trùng giá trị mặc định | Test case thiếu | **Độ phức tạp feature**: hành vi phụ thuộc giá trị form điền sẵn; **giới hạn công cụ AI**: script luôn nhập đủ mọi ô nên không giống thao tác thật | AI rà soát bảng phủ và giả định A9 sau khi chạy | Bổ sung FR15-DT-34 (mục 6.2): Pass |
+| G3 | Script Web bản đầu ghi thông báo "Please fill out this field." của form đã được xóa trắng sau khi lưu vào mọi test case → bằng chứng sai lệch, có thể khiến test case "từ chối" Pass giả | Oracle / bằng chứng | **Giới hạn công cụ AI**: lặp lại đúng lỗi G5 của FR-01 (đọc thông báo sau khi giao diện đã đổi trạng thái) – AI không tự chuyển bài học giữa các feature | Đọc output: test case thành công cũng có thông báo lỗi | Chỉ đọc thông báo trình duyệt khi form không gửi request |
+| G4 | Runner API bản đầu treo ở test case đầu tiên (chờ pipe của tiến trình backend chạy nền); trong lúc kiểm tra, AI còn khởi động lại backend song song làm hỏng lượt chạy | Thực thi | **Giới hạn công cụ AI**: lỗi lập trình script và thao tác song song trên môi trường dùng chung | Không có dòng kết quả nào sau 400 giây | Không bắt output của script restart; chạy lại toàn bộ |
+| G5 | Bảng kết quả bản đầu: ô API của FR15-DT-03 ghi "hiển thị nguyên văn None"; test case "không tìm thấy" Fail không nêu lý do; tên chứa `<b>` trong ô bảng sẽ bị hiển thị thành chữ đậm | Báo cáo kết quả | **Giới hạn công cụ AI**: sinh văn bản tự động không kiểm tra theo kênh và không escape | AI đọc lại bảng sinh ra | Sửa hàm diễn giải kết quả; escape `<`, `>`, `|` trong `report_lib.py` |
+
+### 6.2 Test case bổ sung
+
+Kết quả thực thi nằm ở mục 5.3.
+
+<!-- BEGIN:T62 -->
+| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Thao tác | Sản phẩm (id) | Tên | Giá | Danh mục | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| FR15-DT-34 | Kiểm tra sửa chỉ Giá sản phẩm thành công mà Danh mục do form điền sẵn được giữ nguyên | EC3, EC11, EC17, EC21, EC26 (A9 – form Sửa điền sẵn đúng Danh mục khác giá trị mặc định 1) | Sửa | `3` | `MacBook␣Pro␣M3` (không chạm vào ô) | `43000000` | `2` (không chạm vào ô) | Sửa thành công: sản phẩm id 3 mang Tên / Giá / Danh mục như cột dữ liệu, Mô tả / Ảnh giữ nguyên; các sản phẩm khác giữ nguyên (EC26, EC28); A9 | Web | AI |
+<!-- END:T62 -->
+
+### 6.3 Điểm còn mở (chưa xử lý)
+
+- Giá gửi dạng chuỗi số (`"350000"`) qua API chưa được phân vùng: đặc tả không nói giá trị dạng chuỗi số có hợp lệ không (liên quan A4).
+- A3 (giá thập phân hợp lệ) và A6 (404 khi sản phẩm không tồn tại) quyết định kết luận của FR15-DT-04, FR15-BV-13 và FR15-B6; cần TA xác nhận.
+
+### 6.4 Nhận xét
+
+- **Do prompt:** prompt không yêu cầu đối chiếu bài học từ FR-01, nên AI lặp lại lỗi đọc thông báo sau khi giao diện đổi trạng thái (G3).
+- **Do giới hạn công cụ AI:** AI dễ kết luận về hành vi SUT từ thuộc tính tĩnh (G1) và dễ viết oracle / script có lỗi ngầm (G3, G4); các lỗi này chỉ lộ ra khi đọc kỹ output thay vì chỉ nhìn số Pass / Fail.
+- **Do độ phức tạp feature:** Sửa phụ thuộc trạng thái form điền sẵn (G2), một khía cạnh mà dữ liệu đầu vào trong bảng không thể hiện được.
 
 ## 7. Bước 7 – Bug
 

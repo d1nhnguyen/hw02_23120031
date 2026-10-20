@@ -20,7 +20,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-02",
@@ -43,7 +44,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-03",
@@ -66,7 +68,8 @@
    "api"
   ],
   "pre": [],
-  "check": "html_display"
+  "check": "html_display",
+  "touch": null
  },
  {
   "id": "FR15-DT-04",
@@ -89,7 +92,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-05",
@@ -112,7 +116,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-06",
@@ -135,7 +140,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-07",
@@ -160,7 +166,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-08",
@@ -183,7 +190,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-09",
@@ -206,7 +214,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-10",
@@ -229,7 +238,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-11",
@@ -251,7 +261,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-12",
@@ -273,7 +284,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-13",
@@ -295,7 +307,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-14",
@@ -317,7 +330,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-15",
@@ -340,7 +354,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-16",
@@ -363,7 +378,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-17",
@@ -386,7 +402,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-18",
@@ -409,7 +426,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-19",
@@ -434,7 +452,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-20",
@@ -457,7 +476,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-21",
@@ -480,7 +500,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-22",
@@ -503,7 +524,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-23",
@@ -525,7 +547,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-24",
@@ -547,7 +570,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-25",
@@ -569,7 +593,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-26",
@@ -591,7 +616,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-27",
@@ -613,7 +639,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-28",
@@ -635,7 +662,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-29",
@@ -664,7 +692,8 @@
     5
    ]
   ],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-30",
@@ -687,7 +716,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-31",
@@ -709,7 +739,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-32",
@@ -731,7 +762,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-DT-33",
@@ -760,7 +792,8 @@
     5
    ]
   ],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-01",
@@ -783,7 +816,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-02",
@@ -806,7 +840,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-03",
@@ -831,7 +866,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-04",
@@ -856,7 +892,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-05",
@@ -881,7 +918,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-06",
@@ -906,7 +944,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-07",
@@ -931,7 +970,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-08",
@@ -954,7 +994,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-09",
@@ -979,7 +1020,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-10",
@@ -1004,7 +1046,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-11",
@@ -1027,7 +1070,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-12",
@@ -1050,7 +1094,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-13",
@@ -1073,7 +1118,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-14",
@@ -1096,7 +1142,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-15",
@@ -1119,7 +1166,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-16",
@@ -1142,7 +1190,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-17",
@@ -1165,7 +1214,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-18",
@@ -1187,7 +1237,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-19",
@@ -1210,7 +1261,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-20",
@@ -1232,7 +1284,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-21",
@@ -1254,7 +1307,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-22",
@@ -1277,7 +1331,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-23",
@@ -1300,7 +1355,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-24",
@@ -1322,7 +1378,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-25",
@@ -1344,7 +1401,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-26",
@@ -1367,7 +1425,8 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
  },
  {
   "id": "FR15-BV-27",
@@ -1389,6 +1448,35 @@
    "api"
   ],
   "pre": [],
-  "check": null
+  "check": null,
+  "touch": null
+ },
+ {
+  "id": "FR15-DT-34",
+  "section": "GAP",
+  "title": "Kiểm tra sửa chỉ Giá sản phẩm thành công mà Danh mục do form điền sẵn được giữ nguyên",
+  "covers": "EC3, EC11, EC17, EC21, EC26 (A9 – form Sửa điền sẵn đúng Danh mục khác giá trị mặc định 1)",
+  "op": "edit",
+  "op_vn": "Sửa",
+  "pid": 3,
+  "name": "MacBook Pro M3",
+  "price": 43000000,
+  "category_id": 2,
+  "expect": "accept",
+  "target": "price",
+  "expected": "Sửa thành công: sản phẩm id 3 mang Tên / Giá / Danh mục như cột dữ liệu, Mô tả / Ảnh giữ nguyên; các sản phẩm khác giữ nguyên (EC26, EC28); A9",
+  "origin": "AI",
+  "show": {
+   "name": "`MacBook␣Pro␣M3` (không chạm vào ô)",
+   "category_id": "`2` (không chạm vào ô)"
+  },
+  "channels": [
+   "web"
+  ],
+  "pre": [],
+  "check": null,
+  "touch": [
+   "price"
+  ]
  }
 ]

@@ -49,7 +49,8 @@ def expected_text(op, expect, target, pid, api):
 
 
 def case(short_id, op, expect, target, title, covers, *, pid=None, name=None, price=None, category_id=None,
-         api_only=False, note="", show=None, origin="AI", added=False, pre=None, check=None):
+         api_only=False, web_only=False, note="", show=None, origin="AI", added=False, pre=None, check=None,
+         touch=None):
     if op == "add":
         values = {**ADD}
     elif isinstance(pid, int) and pid in SEED:
@@ -61,7 +62,7 @@ def case(short_id, op, expect, target, title, covers, *, pid=None, name=None, pr
             values[key] = v
     if op == "delete":
         values = {"name": None, "price": None, "category_id": None}
-    channels = ["api"] if api_only else ["web", "api"]
+    channels = ["api"] if api_only else ["web"] if web_only else ["web", "api"]
     expected = expected_text(op, expect, target, pid, "api" in channels)
     if note:
         expected += f"; {note}"
@@ -82,6 +83,7 @@ def case(short_id, op, expect, target, title, covers, *, pid=None, name=None, pr
         "channels": channels,
         "pre": pre or [],    # tiền điều kiện, vd [["delete", 5]]
         "check": check,      # kiểm tra thêm, vd "html_display"
+        "touch": touch,      # Web: chỉ nhập vào các ô này, các ô khác để nguyên giá trị form điền sẵn
     }
 
 
@@ -230,8 +232,16 @@ CASES = [
          "EC21/EC22 (Xóa) – id 6 (UB+1)", pid=6, api_only=True),
 ]
 
+# 6.2 – bổ sung sau AI gap analysis
+CASES.append(case(
+    "DT-34", "edit", "accept", "price",
+    "Kiểm tra sửa chỉ Giá sản phẩm thành công mà Danh mục do form điền sẵn được giữ nguyên",
+    "EC3, EC11, EC17, EC21, EC26 (A9 – form Sửa điền sẵn đúng Danh mục khác giá trị mặc định 1)",
+    pid=3, price=43000000, web_only=True, added=True, touch=["price"], note="A9",
+    show={"name": "`MacBook␣Pro␣M3` (không chạm vào ô)", "category_id": "`2` (không chạm vào ô)"}))
+
 BY_ID = {c["id"]: c for c in CASES}
-assert len(CASES) == 60 and len(BY_ID) == 60
+assert len(CASES) == 61 and len(BY_ID) == 61
 assert len(A255) == 255 and len(VN256) == 256
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 {
- "run_at": "2026-10-20T16:14:25.839Z",
+ "run_at": "2026-10-20T16:18:07.767Z",
  "results": [
   {
    "id": "FR15-DT-01",
@@ -979,6 +979,33 @@
     1
    ],
    "others_changed": [],
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-DT-34",
+   "op": "edit",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "MacBook Pro M3",
+    "price": 43000000,
+    "category_id": 2,
+    "description": "Laptop chuyên nghiệp mạnh mẽ",
+    "imageUrl": "https://placehold.co/300x300/png?text=Macbook+Pro"
+   },
    "verdict": "Pass",
    "notes": []
   }
