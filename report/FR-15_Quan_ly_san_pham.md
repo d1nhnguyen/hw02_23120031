@@ -81,8 +81,61 @@ API (`api_specification.md` mục 3.3): `POST /api/products`, `PUT /api/products
 
 ## 2. Bước 2 – Lớp tương đương (Complete Set of Partitions)
 
-| EC | Biến | Guideline | Phân vùng | Valid / Invalid |
+### 2.1 Cách áp dụng guideline cho từng biến
+
+| Biến | Điều kiện trong đặc tả | Guideline [S04] | Lớp tạo ra |
+| --- | --- | --- | --- |
+| I1 Thao tác | "Thêm / Xem / Sửa / Xóa" | Tập giá trị được xử lý khác nhau → mỗi thao tác 1 lớp valid. Giao diện / API chỉ cung cấp 4 thao tác nên không có lớp invalid | 4 lớp valid |
+| I2 Tên | "bắt buộc" | "Phải là" → có giá trị / rỗng; tách lớp (G5): chuỗi chỉ có khoảng trắng có thể lọt qua kiểm tra "không rỗng" (A2) | có giá trị (valid); rỗng, chỉ khoảng trắng (invalid) |
+| | "tối đa 255 ký tự" | Khoảng giá trị 1–255 → 1 valid + 1 invalid phía trên (phía dưới là "rỗng") | 1–255 (valid), > 255 (invalid) |
+| | (không nêu bộ ký tự) | Tách lớp (G5): chữ có dấu có thể bị đếm theo byte (A1); ký tự HTML có thể bị render khi hiển thị (A8) | thêm "có dấu tiếng Việt", "có ký tự HTML" (valid) |
+| I3 Giá | "bắt buộc" | "Phải là" | bỏ trống (invalid) |
+| | "phải là số" | "Phải là" (A4) | không phải số (invalid) |
+| | "dương (> 0)" | Khoảng giá trị chỉ có cận dưới → 1 valid + các invalid phía dưới; tách lớp (G5): `0` và số âm hay bị xử lý khác nhau (`> 0` vs `>= 0`); số thập phân có thể bị chặn bởi kiểu số nguyên (A3) | > 0 nguyên, > 0 thập phân (valid); = 0, < 0 (invalid) |
+| I4 Danh mục | "bắt buộc" | "Phải là" | bỏ trống (invalid) |
+| | "chọn từ danh sách có sẵn" | Tập giá trị {1, 2, 3}: không có lý do tin rằng mỗi danh mục được xử lý khác nhau → 1 lớp valid; invalid: id ngoài danh sách; tách lớp (G5): id không phải số | thuộc danh sách (valid); ngoài danh sách, không phải số (invalid) |
+| I5 Sản phẩm được Sửa / Xóa | "Sửa / Xóa một sản phẩm" | "Phải là" sản phẩm đang tồn tại; tách lớp (G5): id không phải số; sản phẩm vừa bị xóa (rủi ro xóa mềm – bản ghi còn trong CSDL) | tồn tại (valid); không tồn tại, không phải số, đã bị xóa (invalid) |
+| Thao tác × dữ liệu | Thêm và Sửa cùng ràng buộc | Tách lớp (G5): Thêm (`POST`) và Sửa (`PUT`) là hai đường xử lý khác nhau → các lớp invalid của I2–I4 được kiểm tra cho cả hai thao tác | – |
+| Đầu ra O1–O4 | thành công / từng loại lỗi / sản phẩm khác | Phân vùng đầu ra như ví dụ [UC] | 8 lớp đầu ra |
+
+### 2.2 Complete Set of Partitions
+
+| EC | Biến | Phân vùng | Ví dụ đại diện | Valid / Invalid |
 | --- | --- | --- | --- | --- |
+| EC1 | I1 Thao tác | Thêm sản phẩm | form "Thêm sản phẩm mới" / `POST` | Valid |
+| EC2 | I1 Thao tác | Xem danh sách sản phẩm | danh sách Admin / `GET /api/products` | Valid |
+| EC3 | I1 Thao tác | Sửa sản phẩm | nút "Sửa" / `PUT` | Valid |
+| EC4 | I1 Thao tác | Xóa sản phẩm | nút "Xóa" / `DELETE` | Valid |
+| EC5 | I2 Tên | 1–255 ký tự Latin | `Sac nhanh USB-C 20W` | Valid |
+| EC6 | I2 Tên | Có chữ tiếng Việt có dấu (A1) | `Ốp lưng chống sốc iPhone 15` | Valid |
+| EC7 | I2 Tên | Có ký tự HTML (A8) | `<b>Loa Bluetooth</b> Mini` | Valid |
+| EC8 | I2 Tên | Rỗng | `` | Invalid |
+| EC9 | I2 Tên | Chỉ gồm khoảng trắng (A2) | `   ` | Invalid |
+| EC10 | I2 Tên | Dài hơn 255 ký tự | 300 ký tự | Invalid |
+| EC11 | I3 Giá | Số nguyên > 0 | `350000` | Valid |
+| EC12 | I3 Giá | Số thập phân > 0 (A3) | `99999.5` | Valid |
+| EC13 | I3 Giá | Bằng 0 | `0` | Invalid |
+| EC14 | I3 Giá | Âm | `-50000` | Invalid |
+| EC15 | I3 Giá | Bỏ trống / không gửi | `` | Invalid |
+| EC16 | I3 Giá | Không phải số (A4) | `"abc"` | Invalid |
+| EC17 | I4 Danh mục | Thuộc danh sách có sẵn | `3` | Valid |
+| EC18 | I4 Danh mục | Bỏ trống / không gửi | không có `category_id` | Invalid |
+| EC19 | I4 Danh mục | Id không có trong danh sách | `99` | Invalid |
+| EC20 | I4 Danh mục | Không phải số | `"abc"` | Invalid |
+| EC21 | I5 Sản phẩm | Đang tồn tại | id `3` | Valid |
+| EC22 | I5 Sản phẩm | Id không tồn tại | `9999` | Invalid |
+| EC23 | I5 Sản phẩm | Id không phải số | `abc` | Invalid |
+| EC24 | I5 Sản phẩm | Vừa bị xóa trước đó | id `5` sau khi xóa | Invalid |
+| EC25 | O1, O3 | Thêm thành công: sản phẩm mới có trong danh sách với đúng Tên / Giá / Danh mục | | Output |
+| EC26 | O1, O3 | Sửa thành công: sản phẩm mang giá trị mới, trường không sửa giữ nguyên (A9) | | Output |
+| EC27 | O1, O3 | Xóa thành công: sản phẩm không còn trong danh sách | | Output |
+| EC28 | O4 | Các sản phẩm khác giữ nguyên | | Output |
+| EC29 | O1, O2 | Từ chối – tên không hợp lệ | | Output |
+| EC30 | O1, O2 | Từ chối – giá không hợp lệ | | Output |
+| EC31 | O1, O2 | Từ chối – danh mục không hợp lệ | | Output |
+| EC32 | O1, O2 | Không tìm thấy sản phẩm (404) | | Output |
+
+Tổng: 24 lớp đầu vào (11 valid, 13 invalid) và 8 lớp đầu ra.
 
 ## 3. Bước 3 – Test case Domain Testing
 
