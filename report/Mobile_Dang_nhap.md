@@ -236,12 +236,73 @@ Tổng: 10 test case BVA mới (MOB-BV-01…MOB-BV-10); 5 dòng có ID trong ngo
 
 ## 5. Bước 5 – Kết quả thực thi
 
-| TC | Kênh | Kết quả thực tế | Status | Bug ID |
-| --- | --- | --- | --- | --- |
+### 5.1 Môi trường và cách chạy
 
-| Thiết kế | Đã chạy | Pass | Fail | Blocked / chưa chạy | Số bug |
-| --- | --- | --- | --- | --- | --- |
-| | | | | | |
+| Mục | Giá trị |
+| --- | --- |
+| Ngày chạy | 2026-10-21 |
+| Người chạy | 23120031 (script tự động, kết quả được rà soát thủ công) |
+| SUT | `eshop-sut-main` (trùng với `d1nhnguyen/eshop-sut`); `frontend-mobile/App.js:16` trỏ `API_URL` tới `http://10.0.2.2:3000/api` |
+| Mobile | Expo Go SDK 54, Android Emulator **Pixel 2** (`eshop_api34_pixel2`, Android 14, 1080×1920); điều khiển qua `adb` (`scripts/mobile/adb_ui.py`) |
+| API | `http://localhost:3000/api`, gọi bằng Python `urllib` |
+| Dữ liệu | Backend được khởi động lại và app được mở lại trước mỗi test case |
+| Script | `scripts/mobile/cases.py` (dữ liệu), `run_mobile.py` (P-MOBILE), `run_api.py` (P-API), `common.py` (kết luận chung cho 2 kênh), `report_tables.py` |
+| Bằng chứng | `evidence/Mobile/web_results.json` (kênh Mobile), `api_results.json`; ảnh màn hình sau lần thử được đánh giá `evidence/Mobile/web/<ID>.png` |
+
+Cách kết luận: "thành công" Pass khi rời màn hình Đăng nhập, thanh tiêu đề chào người dùng, mở được Hồ sơ (API: `200` + `token`) và bộ đếm về 0. "Từ chối" Pass khi ở lại màn hình Đăng nhập với thông báo lỗi (API 4xx, không có `token`), bộ đếm đúng giá trị mong đợi và tài khoản chỉ bị khóa khi đủ 3 lần sai. Test case có tiền điều kiện không dựng được (lần đăng nhập đúng trong chuỗi bị từ chối) là **Blocked**.
+
+### 5.2 Phát hiện chính
+
+- **Pixel 6 không mở được màn hình Đăng nhập** (thanh tiêu đề bị thanh trạng thái che – mục 1.1); mọi thực thi trên Mobile dùng Pixel 2.
+- **Bộ đếm tăng 2 mỗi lần sai:** gọi `POST /api/login` sai một lần → `login_attempts` từ 0 lên 2 (đã kiểm tra bằng đúng một request, loại trừ khả năng script gửi hai lần); vì vậy tài khoản bị khóa ngay sau lần sai thứ 2.
+- **Thời gian khóa 180 giây:** `locked_until` = thời điểm khóa + 180 giây; sau 32–35 giây vẫn bị từ chối. Các lần thử trong lúc khóa không gia hạn khóa.
+- Thông báo trên Mobile luôn là "Đăng nhập thất bại. Vui lòng kiểm tra lại." – giống nhau cho sai email / sai mật khẩu / bị khóa (không lộ nguyên nhân). API trả "Invalid email or password" (401) hoặc "Tài khoản đã bị khóa. Vui lòng thử lại sau." (403).
+- Email khác chữ hoa / thường hoặc có khoảng trắng đầu / cuối bị từ chối (A6).
+- MOB-DT-05 Blocked vì tài khoản đã bị khóa từ lần sai thứ 2 nên lần đăng nhập đúng ở giữa chuỗi không thực hiện được.
+
+### 5.3 Kết quả theo test case
+
+Mỗi test case một dòng. Bảng sinh từ `evidence/Mobile/web_results.json` (cột Mobile) và `api_results.json`.
+
+<!-- BEGIN:T53 -->
+| TC | Mobile | Kết quả thực tế – Mobile | API | Kết quả thực tế – API | Bằng chứng | Bug |
+| --- | --- | --- | --- | --- | --- | --- |
+| MOB-DT-01 | Pass | Đăng nhập thành công, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; bộ đếm = 0 | Pass | HTTP 200 “Login successful”, có token; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-01.png) · `api_results.json` | – |
+| MOB-DT-02 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 0 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-02.png) · `api_results.json` | MOB-B4 |
+| MOB-DT-03 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 0 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-03.png) · `api_results.json` | MOB-B4 |
+| MOB-DT-04 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 4, bị khóa đến 17:35:02 UTC | Fail | HTTP 403 “Tài khoản đã bị khóa. Vui lòng thử lại sau.”; bộ đếm = 4, bị khóa đến 16:55:56 UTC | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-04.png) · `api_results.json` | MOB-B3 |
+| MOB-DT-05 | Blocked | tiền điều kiện không dựng được: lần đăng nhập đúng trong chuỗi bị từ chối (“Đăng nhập thất bại. Vui lòng kiểm tra lại.”) | Blocked | tiền điều kiện không dựng được: lần đăng nhập đúng trong chuỗi bị từ chối (“Tài khoản đã bị khóa. Vui lòng thử lại sau.”) | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-05.png) · `api_results.json` | – |
+| MOB-DT-06 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 2 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 2 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-06.png) · `api_results.json` | MOB-B2 |
+| MOB-DT-07 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 2 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 2 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-07.png) · `api_results.json` | MOB-B2 |
+| MOB-DT-08 | Pass | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 0 | Pass | HTTP 401 “Invalid email or password”; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-08.png) · `api_results.json` | – |
+| MOB-DT-09 | Pass | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 0 | Pass | HTTP 401 “Invalid email or password”; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-09.png) · `api_results.json` | – |
+| MOB-DT-10 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 2 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 2 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-10.png) · `api_results.json` | MOB-B2 |
+| MOB-DT-11 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 2 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 2 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-11.png) · `api_results.json` | MOB-B2 |
+| MOB-DT-12 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 2 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 2 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-12.png) · `api_results.json` | MOB-B2 |
+| MOB-DT-13 | Pass | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 4, bị khóa đến 17:45:04 UTC | Pass | HTTP 403 “Tài khoản đã bị khóa. Vui lòng thử lại sau.”; bộ đếm = 4, bị khóa đến 16:56:40 UTC | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-13.png) · `api_results.json` | – |
+| MOB-BV-01 | Pass | Đăng nhập thành công, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; bộ đếm = 0 | Pass | HTTP 200 “Login successful”, có token; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-01.png) · `api_results.json` | – |
+| MOB-BV-02 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 4, bị khóa đến 17:48:33 UTC | Fail | HTTP 403 “Tài khoản đã bị khóa. Vui lòng thử lại sau.”; bộ đếm = 4, bị khóa đến 16:56:42 UTC | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-02.png) · `api_results.json` | MOB-B2 |
+| MOB-BV-03 | Pass | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 4, bị khóa đến 17:50:15 UTC | Pass | HTTP 403 “Tài khoản đã bị khóa. Vui lòng thử lại sau.”; bộ đếm = 4, bị khóa đến 16:56:43 UTC | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-03.png) · `api_results.json` | – |
+| MOB-BV-04 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 4, bị khóa đến 17:52:50 UTC | Fail | HTTP 403 “Tài khoản đã bị khóa. Vui lòng thử lại sau.”; bộ đếm = 4, bị khóa đến 16:56:44 UTC | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-04.png) · `api_results.json` | MOB-B2 |
+| MOB-BV-05 | Pass | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 4, bị khóa đến 17:54:33 UTC | Pass | HTTP 403 “Tài khoản đã bị khóa. Vui lòng thử lại sau.”; bộ đếm = 4, bị khóa đến 16:56:44 UTC | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-05.png) · `api_results.json` | – |
+| MOB-BV-06 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 4, bị khóa đến 17:56:48 UTC | Fail | HTTP 403 “Tài khoản đã bị khóa. Vui lòng thử lại sau.”; bộ đếm = 4, bị khóa đến 16:57:13 UTC | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-06.png) · `api_results.json` | MOB-B3 |
+| MOB-BV-07 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 2 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 2 | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-07.png) · `api_results.json` | MOB-B2 |
+| MOB-BV-08 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 2 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 2 | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-08.png) · `api_results.json` | MOB-B2 |
+| MOB-BV-09 | Pass | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 0 | Pass | HTTP 401 “Invalid email or password”; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-09.png) · `api_results.json` | – |
+| MOB-BV-10 | Pass | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 0 | Pass | HTTP 401 “Invalid email or password”; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-10.png) · `api_results.json` | – |
+<!-- END:T53 -->
+
+### 5.4 Tổng hợp
+
+<!-- BEGIN:T55 -->
+| Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |
+| --- | --- | --- | --- | --- | --- | --- |
+| Mobile | 23 | 23 | 9 | 13 | 1 | 0 |
+| API | 23 | 23 | 9 | 13 | 1 | 0 |
+| **Tổng lượt chạy** | | **46** | **18** | **26** | **2** | |
+
+23 test case = 13 Minimum Set (mục 3.2) + 10 BVA (mục 4.2). Gộp các kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 9 Pass, 13 Fail, 1 Blocked.
+<!-- END:T55 -->
 
 ## 6. Bước 6 – AI gap analysis
 

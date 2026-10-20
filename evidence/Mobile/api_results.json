@@ -1,0 +1,328 @@
+{
+ "run_at": "2026-10-20T23:54:50",
+ "results": [
+  {
+   "id": "MOB-DT-01",
+   "expect": "accept",
+   "status": 200,
+   "message": "Login successful",
+   "token": true,
+   "login_attempts": 0,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "MOB-DT-02",
+   "expect": "accept",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 0,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Fail",
+   "notes": [
+    "đăng nhập thất bại: “Invalid email or password”"
+   ]
+  },
+  {
+   "id": "MOB-DT-03",
+   "expect": "accept",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 0,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Fail",
+   "notes": [
+    "đăng nhập thất bại: “Invalid email or password”"
+   ]
+  },
+  {
+   "id": "MOB-DT-04",
+   "expect": "accept",
+   "status": 403,
+   "message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "token": false,
+   "login_attempts": 4,
+   "locked_until": "2026-10-20T16:55:56.450Z",
+   "locked": true,
+   "pre_message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "verdict": "Fail",
+   "notes": [
+    "đăng nhập thất bại: “Tài khoản đã bị khóa. Vui lòng thử lại sau.”"
+   ]
+  },
+  {
+   "id": "MOB-DT-05",
+   "expect": "accept",
+   "status": null,
+   "message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "token": false,
+   "verdict": "Blocked",
+   "notes": [
+    "tiền điều kiện không dựng được: lần đăng nhập đúng trong chuỗi bị từ chối (“Tài khoản đã bị khóa. Vui lòng thử lại sau.”)"
+   ]
+  },
+  {
+   "id": "MOB-DT-06",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 2,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Fail",
+   "notes": [
+    "bộ đếm = 2, mong đợi 1"
+   ]
+  },
+  {
+   "id": "MOB-DT-07",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 2,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": "Invalid email or password",
+   "verdict": "Fail",
+   "notes": [
+    "bộ đếm = 2, mong đợi 1"
+   ]
+  },
+  {
+   "id": "MOB-DT-08",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 0,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "MOB-DT-09",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 0,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "MOB-DT-10",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 2,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Fail",
+   "notes": [
+    "bộ đếm = 2, mong đợi 1"
+   ]
+  },
+  {
+   "id": "MOB-DT-11",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 2,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Fail",
+   "notes": [
+    "bộ đếm = 2, mong đợi 1"
+   ]
+  },
+  {
+   "id": "MOB-DT-12",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 2,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Fail",
+   "notes": [
+    "bộ đếm = 2, mong đợi 1"
+   ]
+  },
+  {
+   "id": "MOB-DT-13",
+   "expect": "locked",
+   "status": 403,
+   "message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "token": false,
+   "login_attempts": 4,
+   "locked_until": "2026-10-20T16:56:40.142Z",
+   "locked": true,
+   "pre_message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "MOB-BV-01",
+   "expect": "accept",
+   "status": 200,
+   "message": "Login successful",
+   "token": true,
+   "login_attempts": 0,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": "Invalid email or password",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "MOB-BV-02",
+   "expect": "accept",
+   "status": 403,
+   "message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "token": false,
+   "login_attempts": 4,
+   "locked_until": "2026-10-20T16:56:42.084Z",
+   "locked": true,
+   "pre_message": "Invalid email or password",
+   "verdict": "Fail",
+   "notes": [
+    "đăng nhập thất bại: “Tài khoản đã bị khóa. Vui lòng thử lại sau.”"
+   ]
+  },
+  {
+   "id": "MOB-BV-03",
+   "expect": "locked",
+   "status": 403,
+   "message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "token": false,
+   "login_attempts": 4,
+   "locked_until": "2026-10-20T16:56:43.051Z",
+   "locked": true,
+   "pre_message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "MOB-BV-04",
+   "expect": "fail",
+   "status": 403,
+   "message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "token": false,
+   "login_attempts": 4,
+   "locked_until": "2026-10-20T16:56:44.025Z",
+   "locked": true,
+   "pre_message": "Invalid email or password",
+   "verdict": "Fail",
+   "notes": [
+    "bộ đếm = 4, mong đợi 3"
+   ]
+  },
+  {
+   "id": "MOB-BV-05",
+   "expect": "locked",
+   "status": 403,
+   "message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "token": false,
+   "login_attempts": 4,
+   "locked_until": "2026-10-20T16:56:44.989Z",
+   "locked": true,
+   "pre_message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "MOB-BV-06",
+   "expect": "accept",
+   "status": 403,
+   "message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "token": false,
+   "login_attempts": 4,
+   "locked_until": "2026-10-20T16:57:13.967Z",
+   "locked": true,
+   "pre_message": "Tài khoản đã bị khóa. Vui lòng thử lại sau.",
+   "verdict": "Fail",
+   "notes": [
+    "đăng nhập thất bại: “Tài khoản đã bị khóa. Vui lòng thử lại sau.”"
+   ]
+  },
+  {
+   "id": "MOB-BV-07",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 2,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Fail",
+   "notes": [
+    "bộ đếm = 2, mong đợi 1"
+   ]
+  },
+  {
+   "id": "MOB-BV-08",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 2,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Fail",
+   "notes": [
+    "bộ đếm = 2, mong đợi 1"
+   ]
+  },
+  {
+   "id": "MOB-BV-09",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 0,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "MOB-BV-10",
+   "expect": "fail",
+   "status": 401,
+   "message": "Invalid email or password",
+   "token": false,
+   "login_attempts": 0,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": null,
+   "verdict": "Pass",
+   "notes": []
+  }
+ ]
+}

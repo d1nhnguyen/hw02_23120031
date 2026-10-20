@@ -99,12 +99,28 @@ def screenshot(path):
         subprocess.run([ADB, "exec-out", "screencap", "-p"], check=True, stdout=f)
 
 
-def reload_app():
-    """Mở lại app Expo (xóa trạng thái trong bộ nhớ: giỏ hàng, phiên đăng nhập lưu trong state)."""
-    adb("shell", "am", "force-stop", "host.exp.exponent", check=False)
-    adb("shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", "exp://10.0.2.2:8081", check=False)
-    time.sleep(4)
-    cont = wait_for("Continue", timeout=6, exact=True)
-    if cont:
-        tap(cont)
-    wait_for("EShop", timeout=15)
+def dismiss_dialogs():
+    """Đóng hộp thoại không thuộc app: menu Expo ("Continue"), "System UI isn't responding" ("Wait")."""
+    for label in ("Continue", "Wait"):
+        n = find(text=label, exact=True)
+        if n:
+            tap(n)
+
+
+def reload_app(tries=3):
+    """Mở lại app Expo (xóa trạng thái trong bộ nhớ: giỏ hàng, phiên đăng nhập lưu trong state).
+    Lệnh mở ngay sau force-stop đôi khi không khởi động được Expo Go, nên thử lại tối đa `tries` lần."""
+    for _ in range(tries):
+        adb("shell", "am", "force-stop", "host.exp.exponent", check=False)
+        time.sleep(1)
+        adb("shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", "exp://10.0.2.2:8081",
+            "host.exp.exponent", check=False)
+        end = time.time() + 8
+        while time.time() < end:  # chờ trang chủ tải xong danh sách sản phẩm
+            dismiss_dialogs()
+            if find(text="Hiển thị 5 sản phẩm", exact=False):
+                time.sleep(1)
+                dismiss_dialogs()
+                return True
+            time.sleep(1)
+    return False

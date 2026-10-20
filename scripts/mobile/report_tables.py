@@ -46,15 +46,36 @@ def display(c, key):
 
 
 def bugs_for(c, ch, verdict):
-    return [] if verdict != "Fail" else ["?"]
+    if verdict != "Fail":
+        return []
+    if c["email"] != c["email"].strip() or c["email"] != c["email"].lower():
+        return ["MOB-B4"]
+    if c["wait"] >= 30:
+        return ["MOB-B3"]
+    return ["MOB-B2"]
+
+
+def lock_text(r):
+    counter = r.get("login_attempts")
+    text = f"bộ đếm = {counter}"
+    if r.get("locked"):
+        text += f", bị khóa đến {r['locked_until'][11:19]} UTC"
+    return text
 
 
 def web_actual(r, c):
-    return r.get("summary", "")
+    if r["verdict"] == "Blocked":
+        return "; ".join(r["notes"])
+    if r.get("success"):
+        return ("Đăng nhập thành công, thanh tiêu đề hiện “Chào, Test User”, "
+                + ("mở được Hồ sơ" if r.get("profile_opens") else "không mở được Hồ sơ") + f"; {lock_text(r)}")
+    return f"Ở lại màn hình Đăng nhập, hiện “{r['message']}”; {lock_text(r)}"
 
 
 def api_actual(r, c):
-    return r.get("summary", "")
+    if r["verdict"] == "Blocked":
+        return "; ".join(r["notes"])
+    return f"HTTP {r['status']} “{r['message']}”{', có token' if r.get('token') else ''}; {lock_text(r)}"
 
 
 FEATURE = Feature(
