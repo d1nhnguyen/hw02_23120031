@@ -1,6 +1,6 @@
 # Phụ lục A — Prompt log (trích tự động từ transcript Claude Code)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 23:32 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-21 01:05 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -18,6 +18,10 @@
 | 12 | 2026-10-20 21:31 | `1946c20d` | Tiếp tục làm các bước, khi nào có vấn đề nào không rõ hãy dừng lại hỏi tôi, đọc kỹ các bài |
 | 13 | 2026-10-20 22:37 | `1946c20d` | <pasted_content id="5e2c"> ### 1. Về Bảng (Cấu trúc & tính nhất quán) • Đạt chuẩn: • Đủ ch |
 | 14 | 2026-10-20 22:52 | `1946c20d` | tiếp tục chuyển khai các feature tiếp theo, dừng khi cần và nhớ tất cả các điểm cần tôi đố |
+| 15 | 2026-10-21 00:06 | `1946c20d` | tiếp tục |
+| 16 | 2026-10-21 00:13 | `1946c20d` | kiểm tra đã xong chưa |
+| 17 | 2026-10-21 00:15 | `1946c20d` | theo dõi hoặc nhờ agent khác, ko tự dừng vì sau khi dừng không tự chạy lại được? |
+| 18 | 2026-10-21 00:26 | `1946c20d` | kiếm tra lại, vscode vừa bị dừng |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -944,9 +948,17 @@ Dựng dữ liệu thành công: 7 đơn đều đúng trạng thái. Tôi chạ
 Runner Web cho FR-10 đã viết xong. Tôi chờ kênh API chạy xong rồi mới chạy Web, vì hai bên dùng chung một backend.
 
 Ảnh bằng chứng rõ ràng. Giờ tôi viết mục 6 (gap analysis), mục 7 (bug) của FR-10 và nháp 2 bug vào `bugs/Bug_Report.md`.
+
+Emulator đang hiện hộp thoại "System UI isn't responding"; chuyện này hay gặp ngay sau khi emulator vừa boot. Tôi bấm "Wait" rồi đọc lại màn hình.
+
+Đã tạo AVD Pixel 2. Tôi khởi động máy này, chờ boot xong rồi mở lại Expo trên đó.
+
+Hai ảnh Pixel 6 thực chất giống nhau (đều là trang chủ). Tôi giữ một ảnh với tên mô tả đúng nội dung, rồi viết B1 cho Mobile.
+
+Mốc T62 sẽ được thêm cùng mục 6 sau khi có kết quả. Tôi chờ kênh Mobile chạy xong; trong lúc chạy không được đụng tới backend, vì mỗi TC đều reset dữ liệu.
 ````
 
-<details><summary>Hành động AI đã thực hiện (84)</summary>
+<details><summary>Hành động AI đã thực hiện (126)</summary>
 
 1. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md
 2. `Write` — /home/npdinh/.claude/projects/-home-npdinh-study-Homeworks/memory/hw02-pre-submit-checklist.md
@@ -1038,5 +1050,241 @@ Runner Web cho FR-10 đã viết xong. Tôi chờ kênh API chạy xong rồi m�
 82. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR10-B2.png
 83. `Bash` — Write FR-10 sections 6, 7 and bug drafts; commit B6
 84. `Bash` — Cross-check, commit FR-10 B7, update log, push
+85. `Bash` — Boot the Android emulator
+86. `Bash` — Wait for emulator boot; reset backend
+87. `Bash` — Start Expo and open app on emulator
+88. `Bash` — Wait for Expo bundle to finish
+89. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/mobile/adb_ui.py
+90. `Bash` — Dump home screen elements of the app
+91. `Bash` — Dismiss ANR dialog and dump screen
+92. `Bash` — Open mobile login screen and inspect fields
+93. `Bash` — Retry tapping login link below status bar
+94. `Bash` — Explore alternative paths to the login screen
+95. `Bash` — Stop Pixel 6 emulator; create Pixel 2 AVD
+96. `Bash` — Create Pixel 2 AVD and check config
+97. `Bash` — Boot the Pixel 2 emulator
+98. `Bash` — Wait for Pixel 2 boot; check status bar size
+99. `Bash` — Start Expo and open app on Pixel 2
+100. `Bash` — Wait for bundle; open login screen on Pixel 2
+101. `Bash` — Screenshot Pixel 2 home screen
+102. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/android/p2_home.png
+103. `Bash` — Retry tapping login on Pixel 2
+104. `Bash` — Explore mobile login failures and lockout
+105. `Bash` — Compare single API vs single mobile tap counter
+106. `Bash` — Observe successful mobile login and profile
+107. `Bash` — Rename evidence; capture login screen on Pixel 2
+108. `Bash` — Deduplicate and rename mobile evidence
+109. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/mob_b1.md
+110. `Bash` — Insert mobile B1, update checklist, commit
+111. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/mob_b2.md
+112. `Bash` — Verify counts, insert mobile B2, commit
+113. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/mobile/cases.py
+114. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/mobile/report_tables.py
+115. `Bash` — Add web_label; write mobile sections 3–4; generate
+116. `Bash` — Split mobile B3 and B4 into separate commits
+117. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/mobile/common.py
+118. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/mobile/run_api.py
+119. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/mobile/run_mobile.py
+120. `Bash` — Run mobile-login API suite
+121. `Bash` — Measure lock duration and extension behavior
+122. `Bash` — Add MOB-DT-14, Blocked detection; rerun API
+123. `Bash` — Fix print KeyError; rerun mobile API suite
+124. `Bash` — Smoke-test mobile runner on two TCs
+125. `Bash` — Run full mobile-login suite on emulator
+126. `Bash` — Add mobile result text and bug mapping
+
+</details>
+
+## #15 · 2026-10-21 00:06:22 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+tiếp tục
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Tôi kiểm tra tiến độ lượt chạy Mobile đang chạy nền.
+
+Đã dừng task. Tôi kiểm tra xem tiến trình Python của runner đã thật sự tắt chưa, rồi chụp màn hình hiện tại của emulator để tìm nguyên nhân bị Blocked.
+
+Script bằng chứng đã sẵn sàng. Tôi chờ lượt chạy Mobile hoàn tất; khi có kết quả sẽ viết mục 5–7, nháp bug và commit.
+````
+
+<details><summary>Hành động AI đã thực hiện (7)</summary>
+
+1. `Bash` — Check mobile run progress
+2. `ToolSearch` — query=select:TaskStop, max_results=1
+3. `TaskStop` — task_id=bp62jr2nb
+4. `Bash` — Confirm runner stopped; inspect emulator screen
+5. `Bash` — Harden app reload and login opening; retest
+6. `Bash` — Run full mobile-login suite on emulator
+7. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/mobile/bug_evidence.mjs
+
+</details>
+
+## #16 · 2026-10-21 00:13:06 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+kiểm tra đã xong chưa
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Lượt chạy Mobile **chưa xong**; tôi vừa phải dừng rồi chạy lại vì gặp sự cố ở phía runner:
+- **Sự cố:** sau mỗi lần runner mở lại app để có trạng thái sạch, lệnh đầu tiên luôn không khởi động được Expo Go. Ảnh chụp lúc đó chỉ là màn hình chính của Android. Vì vậy ở lần chạy trước có 4 TC bị đánh Blocked oan.
+- **Đã sửa:** chỉ rõ package Expo Go khi mở, tự thử lại tối đa 3 lần, và chờ trang chủ tải xong danh sách sản phẩm rồi mới thao tác. Tôi đã thử mở lại 4 lần liên tiếp và lần nào cũng thành công.
+- **Hiện tại:** đang chạy lại toàn bộ 24 TC trên Pixel 2, dự kiến mất khoảng 12–15 phút vì có các TC phải chờ 28–35 giây. Kênh API đã chạy xong từ trước: 10 Pass, 13 Fail, 1 Blocked.
+
+Lượt chạy xong là tôi sẽ:
+- chụp ảnh bằng chứng cho 5 bug;
+- viết mục 5–7 của báo cáo Mobile và nháp bug;
+- commit theo từng bước rồi push.
+````
+
+<details><summary>Hành động AI đã thực hiện (7)</summary>
+
+1. `Bash` — Check mobile run progress and status
+2. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/evidence/Mobile/web/MOB-DT-02.png
+3. `TaskStop` — task_id=bzdxznk9p
+4. `Bash` — Check runner stopped, Metro status, Expo Go package
+5. `Bash` — Make app reload robust; test four reloads
+6. `Bash` — Shorten per-try reload wait to 8 seconds
+7. `Bash` — Run full mobile-login suite on emulator
+
+</details>
+
+## #17 · 2026-10-21 00:15:52 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+theo dõi hoặc nhờ agent khác, ko tự dừng vì sau khi dừng không tự chạy lại được?
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Đã hiểu. Từ giờ tôi sẽ không tự dừng các lượt chạy nữa, mà theo dõi chúng bằng Monitor và vẫn làm tiếp những việc không đụng tới backend trong lúc chờ. Nếu lượt chạy gặp lỗi, tôi sẽ nhận thông báo ngay từ dòng log tương ứng mà không cần dừng nó.
+
+Tôi bật Monitor theo dõi log của lượt chạy Mobile: mỗi TC xong sẽ có một sự kiện, và có cảnh báo khi có lỗi hoặc khi kết thúc.
+
+Bug report đã có thêm 5 bug Mobile. Tiếp theo tôi viết mục 5 (phần chữ cố định, bảng sẽ sinh sau khi có kết quả), mục 6 và mục 7 của báo cáo Mobile.
+
+Đã có số liệu cho 3 feature:
+
+| Feature | TC thiết kế | Lượt chạy | Pass | Fail | Blocked | Số bug |
+| --- | --- | --- | --- | --- | --- | --- |
+| FR-01 | 53 | 101 | 36 | 50 | 15 | 9 |
+| FR-15 | 61 | 101 | 47 | 54 | 0 | 6 |
+| FR-10 | 47 | 56 | 50 | 6 | 0 | 2 |
+
+Tôi sẽ điền README một lần, khi có cả số liệu Mobile. Monitor sẽ báo từng TC của lượt chạy Mobile; tôi xử lý tiếp ngay khi có sự kiện, không dừng lượt chạy.
+````
+
+<details><summary>Hành động AI đã thực hiện (4)</summary>
+
+1. `Monitor` — command=L=/tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f, description=mobile login run: per-TC results, errors, completion
+2. `Bash` — Draft five mobile bugs in bug report
+3. `Bash` — Write mobile sections 5–7 text and generate T62
+4. `Bash` — Compute test summary numbers for three features
+
+</details>
+
+## #18 · 2026-10-21 00:26:06 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+kiếm tra lại, vscode vừa bị dừng
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+VS Code vừa bị dừng nên các task nền (lượt chạy Mobile, Monitor, emulator, Expo, Web/Admin) đều đã bị đánh dấu dừng. Tôi kiểm tra lại toàn bộ trạng thái: dịch vụ nào còn chạy, lượt Mobile đã chạy tới đâu, và trong repo có thay đổi nào chưa commit.
+
+Môi trường đã sẵn sàng. Tôi chạy lại toàn bộ kênh Mobile, tách khỏi VS Code và lưu kết quả sau từng TC, rồi bật Monitor theo dõi log.
+
+`pgrep` chỉ khớp với chính shell vừa chạy lệnh, chưa chứng minh runner đã chạy. Tôi kiểm tra trực tiếp tiến trình Python và dòng log đầu tiên.
+
+Tiếp theo là hai tài liệu tham chiếu của skill: `method.md` (quy tắc của môn) và `lessons.md` (14 bài học rút từ gap analysis của 4 feature).
+
+Đã commit 2 skill (`684d43e`). Lượt chạy Mobile vẫn đang tiếp diễn ở chế độ tách khỏi VS Code; Monitor sẽ báo từng TC và tôi xử lý tiếp ngay khi có sự kiện.
+
+Tóm tắt tình hình sau sự cố VS Code:
+- **Môi trường đã dựng lại:** backend, emulator Pixel 2 và Metro. Tất cả giờ chạy tách khỏi VS Code nên không bị dừng theo nữa.
+- **Lượt Mobile đang chạy lại từ đầu** và lưu kết quả sau từng TC. Nếu bị gián đoạn, chạy `RESUME=1 python3 run_mobile.py` để tiếp tục từ chỗ dở.
+- **Không mất dữ liệu:** phần chưa commit (báo cáo và bug Mobile) vẫn còn nguyên trên đĩa.
+- **Trong lúc chờ, đã xong và commit Agent Skills:** `skills/domain-testing-bva` (quy trình 7 bước, template, thư viện sinh bảng, 14 bài học) và `skills/ai-audit-log` (prompt log và nháp AI Audit Report).
+
+Lưu ý về video demo: để gọi được skill trong Claude Code, cần đặt chúng vào `.claude/skills/`, có thể bằng symlink từ thư mục dự án. Tôi chưa làm việc này vì nó thay đổi cấu hình Claude Code của bạn; bạn đồng ý thì tôi tạo.
+
+Monitor hết hạn sau 30 phút mà không báo sự kiện nào, dù log có kết quả. Lỗi của tôi: lệnh `cut` ở cuối pipeline giữ output trong bộ đệm, nên không dòng nào tới được Monitor. Tôi kiểm tra trực tiếp trạng thái lượt chạy.
+
+Lượt chạy chỉ còn một TC. Có thông báo hoàn tất là tôi sinh bảng kết quả, chụp bằng chứng bug và commit B5–B7 của Mobile.
+
+Mobile đã chạy xong (10 Pass / 13 Fail / 1 Blocked); bảng bug khớp với T53. Giờ tôi tách commit B5–B7 cho Mobile, theo cùng cách đã làm ở các feature trước.
+
+B5 đã commit (23 TC). Đang commit B6 (gap analysis + MOB-DT-14), sau đó là B7 (bug report).
+
+Mobile B5–B7 đã commit xong, working tree sạch. Tiếp theo: cập nhật prompt log và push.
+````
+
+<details><summary>Hành động AI đã thực hiện (40)</summary>
+
+1. `Bash` — Check services, mobile run progress, git status
+2. `Bash` — Detach backend; make mobile runner resumable
+3. `Bash` — Start backend, emulator, Metro detached; wait ready
+4. `Bash` — Open app and verify login screen reachable
+5. `Bash` — Launch mobile runner detached from VS Code
+6. `Monitor` — command=L=/tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f, description=mobile login run: per-TC results, errors, completion
+7. `Bash` — Verify detached mobile runner is running
+8. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/domain-testing-bva/SKILL.md
+9. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/domain-testing-bva/reference/method.md
+10. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/domain-testing-bva/reference/lessons.md
+11. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/domain-testing-bva/templates/report_template.md
+12. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/domain-testing-bva/templates/cases_template.py
+13. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/domain-testing-bva/templates/report_tables_template.py
+14. `Bash` — Copy shared library into skill; list skill files
+15. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/scripts/audit_draft.py
+16. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/SKILL.md
+17. `Bash` — Copy log exporter; test audit draft; peek run log
+18. `Bash` — Commit the two agent skills
+19. `Bash` — Check mobile runner status and log
+20. `Bash` — Wait until mobile run prints its summary
+21. `Bash` — Read mobile run completion summary
+22. `Bash` — Capture mobile bug evidence; generate result tables
+23. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B3.png
+24. `Bash` — Show working tree status and recent commits
+25. `Bash` — Show Mobile report structure and MOB bug references
+26. `Bash` — Show MOB entries in bug report and Mobile report sections 5-7
+27. `Bash` — Show committed tail of Mobile report and script diffs
+28. `Bash` — Inspect how earlier features split B5/B6/B7 commits
+29. `Bash` — Inspect Mobile evidence JSON structure and report_lib hooks
+30. `Bash` — Back up final files and regenerate T33 to check DT-14 coverage
+31. `Bash` — Build B5 state: 23 cases, filtered evidence, report with section 5 only
+32. `Bash` — Commit Mobile B5 execution results
+33. `Bash` — Build B6 state with DT-14 and section 6, verify against final
+34. `Bash` — Commit Mobile B6 and locate checklist lines to update
+35. `Bash` — Show severity and GitHub Issues sections of checklist
+36. `Bash` — Restore final report and update pre-submit checklist for Mobile bugs
+37. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B2.png
+38. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B4.png
+39. `Bash` — Commit Mobile B7 bug drafts and evidence
+40. `Bash` — Regenerate prompt log from transcripts
 
 </details>
