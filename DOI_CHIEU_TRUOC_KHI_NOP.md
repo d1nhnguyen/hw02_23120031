@@ -16,6 +16,7 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 - [ ] FR-15: A1 (255 ký tự tính theo ký tự Unicode), A3 (giá được phép là số thập phân dương, không giới hạn trên – ảnh hưởng kết luận về việc ô Giá chặn `0.5`), A6 (mã 404 khi sản phẩm không tồn tại).
 - [ ] FR-10: A1 (Admin **không** được hủy đơn `shipping` – sơ đồ không có cạnh `shipping → canceled`, nhưng câu "chỉ Admin mới có thể thao tác" có thể hiểu khác), A6 (User hủy đơn của người khác – giao với FR-11).
 - [ ] Pool D = các chức năng của FR-20; "Mobile – Đăng nhập" kế thừa quy tắc FR-02 (file phân công nhóm cũng ghi nên hỏi TA).
+- [ ] Mobile – Đăng nhập: A2 (khóa ngay sau lần sai thứ 3), A3 (đăng nhập đúng đặt lại bộ đếm), A6 (email không phân biệt hoa thường / bỏ khoảng trắng).
 
 ## Quyết định phương pháp (đã áp dụng, cần sinh viên xác nhận)
 
@@ -40,6 +41,8 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 
 ## Môi trường
 
+- [ ] Mobile được thực thi trên Android Emulator **Pixel 2** vì trên **Pixel 6** thanh tiêu đề bị thanh trạng thái che, không mở được màn hình Đăng nhập (đã báo bug). Nếu có điện thoại thật, nên thử lại để xác nhận mức độ ảnh hưởng.
+
 - [ ] Bản SUT local đã sửa `frontend-mobile/App.js:16` (API_URL → `10.0.2.2`) để chạy trên Android Emulator – đã ghi trong PLAN.md.
 
 ## Quan sát ngoài phạm vi (báo cho thành viên phụ trách nếu cần)
@@ -47,3 +50,4 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 - [ ] FR-06 (chi tiết sản phẩm): `GET /api/products/:id` trả `price` dạng **chuỗi** với sản phẩm có id chẵn, dạng số với id lẻ (danh sách `GET /api/products` luôn là số) – phát hiện khi làm FR-15.
 - [ ] FR-21 (giao diện chung): trang Đăng ký không có thẻ `<h1>`, nút "Đăng Ký" màu đỏ – phát hiện khi làm FR-01.
 - [ ] FR-21: danh sách sản phẩm trong Web Admin hiển thị giá không có phân cách hàng nghìn (`30000000 ₫`) – phát hiện khi làm FR-15.
+- [ ] Mobile – Đăng xuất (Pool D, người khác): nút đăng xuất ghi "Thoát" thay vì "Đăng xuất" (FR-23).
