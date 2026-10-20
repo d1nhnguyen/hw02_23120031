@@ -25,7 +25,9 @@ Thiết kế test theo hướng hộp đen, chỉ dựa trên đặc tả (`READ
 
 - Mỗi bước được làm với AI theo đúng thứ tự kỹ thuật. Output AI của bước là commit `[<FR>][B<n>]`; phần sinh viên rà soát / sửa là commit tiếp theo `[<FR>][B<n>-review]`, nên `git diff` giữa hai commit là bằng chứng chỉnh sửa.
 - Mỗi test case có cột **Origin**: `AI` (dùng nguyên) / `AI-sửa` / `SV` (sinh viên tự thêm).
-- Template test case: ID | Tiêu đề (Action + Function + Condition) | Lớp/biên phủ | Tiền điều kiện | Các bước | Dữ liệu | Kết quả mong đợi | Kết quả thực tế | Trạng thái | Bug ID | Origin.
+- Test case viết dạng **data matrix**: thủ tục step-by-step chung (Tiền điều kiện + Các bước) ở mục 3.1 của báo cáo; bảng thiết kế (mục 3.2, 4.2, 6.2): ID | Tên test case (Action + Function + Condition) | Phân vùng phủ / Partition tested | một cột cho mỗi biến đầu vào | Kết quả mong đợi | Kênh | Origin; bảng thực thi (mục 5.3): TC | kết quả thực tế + Status theo từng kênh | Bằng chứng | Bug ID.
+- ID test case có tiền tố feature: `FR01-DT-01`, `FR01-BV-01`, `FR15-DT-01`, `FR10-…`, `MOB-…`. Dữ liệu trong bảng luôn là giá trị cụ thể (không ghi "mặc định", "như TC khác").
+- Dữ liệu, tiêu đề, kết quả mong đợi của test case nằm ở `scripts/<feature>/cases.py`; bảng trong báo cáo được sinh từ đó để báo cáo và script không lệch nhau.
 
 ## Quy ước
 

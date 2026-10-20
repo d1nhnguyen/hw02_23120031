@@ -49,7 +49,9 @@ Phần này mô tả cách bài làm áp dụng kỹ thuật theo tài liệu m�
 
 ## Định dạng test case [S07], [DR], [TPL]
 
-- Tiêu đề theo cú pháp **Action + Function + Condition**, ví dụ "Verify đăng ký bị từ chối khi mật khẩu thiếu chữ hoa".
+- ID có tiền tố feature (`FR01-DT-01`, `FR01-BV-01`…) như `TC-LOGIN-003` [S07] và `01 - 001` [TPL], để không trùng khi gộp 4 feature.
+- Tiêu đề theo cú pháp **Action + Function + Condition**, ví dụ "Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ hoa".
+- Mỗi ô dữ liệu là giá trị cụ thể, mỗi kết quả mong đợi viết tường minh kèm mã lớp đầu ra (vd EC41) – không ghi "mặc định" hay "như TC khác" (Repeatable, Self-standing [S07]).
 - Với form nhập liệu, mọi test case có cùng thủ tục, chỉ dữ liệu thay đổi → dùng dạng **data matrix** [DR]: mỗi feature có một thủ tục step-by-step (Precondition + Steps) cho từng kênh (Web UI, API), mỗi dòng của ma trận là một test case có ID, tiêu đề, dữ liệu và kết quả mong đợi kiểm chứng được.
 - Kết quả thực thi ghi theo mẫu [TPL]: Actual Result, Status (Pass / Fail / Blocked), Tester, Tested Date, Bug ID.
 - Tự rà soát bằng *Testcase Checklist* [TPL] (Accurate, Economical, Repeatable, Traceable, Appropriate, Self standing, Self cleaning; ≤ 15 bước; matrix chạy ≤ 20 phút).

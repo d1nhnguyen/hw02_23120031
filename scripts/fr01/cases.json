@@ -1,797 +1,1169 @@
 [
  {
-  "id": "DT-01",
+  "id": "FR01-DT-01",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký thành công với dữ liệu hợp lệ điển hình",
+  "covers": "EC1, EC5, EC14, EC18, EC20, EC22, EC24, EC26, EC29, EC37, EC41",
   "expect": "accept",
   "target": "all",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt01@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-02",
+  "id": "FR01-DT-02",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký thành công khi Họ Tên có dấu, Email có khoảng trắng đầu/cuối và Mật khẩu đủ 4 loại kèm thêm ký tự ngoài tập",
+  "covers": "EC2, EC6, EC14, EC18, EC20, EC22, EC24, EC26, EC30, EC36, EC37, EC41",
   "expect": "accept",
   "target": "mixed",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); email được lưu là `fr01.dt02@example.com` (A4)",
+  "origin": "AI-sửa",
   "name": "Nguyễn Thị Ánh",
   "email": " fr01.dt02@example.com ",
   "password": "Abc#def1$",
   "confirm": "Abc#def1$",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-03",
+  "id": "FR01-DT-03",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất của Mật khẩu là `!`",
+  "covers": "EC1, EC5, EC14, EC18, EC20, EC22, EC24, EC26, EC31, EC37, EC41",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt03@example.com",
   "password": "Abcdef1!",
   "confirm": "Abcdef1!",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-04",
+  "id": "FR01-DT-04",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất của Mật khẩu là `%`",
+  "covers": "EC1, EC5, EC14, EC18, EC20, EC22, EC24, EC26, EC32, EC37, EC41",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt04@example.com",
   "password": "Abcdef1%",
   "confirm": "Abcdef1%",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-05",
+  "id": "FR01-DT-05",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất của Mật khẩu là `*`",
+  "covers": "EC1, EC5, EC14, EC18, EC20, EC22, EC24, EC26, EC33, EC37, EC41",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt05@example.com",
   "password": "Abcdef1*",
   "confirm": "Abcdef1*",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-06",
+  "id": "FR01-DT-06",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất của Mật khẩu là `?`",
+  "covers": "EC1, EC5, EC14, EC18, EC20, EC22, EC24, EC26, EC34, EC37, EC41",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt06@example.com",
   "password": "Abcdef1?",
   "confirm": "Abcdef1?",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-07",
+  "id": "FR01-DT-07",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất của Mật khẩu là `&`",
+  "covers": "EC1, EC5, EC14, EC18, EC20, EC22, EC24, EC26, EC35, EC37, EC41",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt07@example.com",
   "password": "Abcdef1&",
   "confirm": "Abcdef1&",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-08",
+  "id": "FR01-DT-08",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi bỏ trống Họ Tên",
+  "covers": "EC3, EC42",
   "expect": "reject",
   "target": "name",
+  "expected": "Từ chối, báo thiếu Họ Tên; không tạo tài khoản; API trả 4xx (EC42)",
+  "origin": "AI",
   "name": "",
   "email": "fr01.dt08@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "DT-09",
+  "id": "FR01-DT-09",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Họ Tên chỉ gồm khoảng trắng",
+  "covers": "EC4, EC42",
   "expect": "reject",
   "target": "name",
+  "expected": "Từ chối, báo thiếu Họ Tên; không tạo tài khoản; API trả 4xx (EC42); A4",
+  "origin": "AI",
   "name": "   ",
   "email": "fr01.dt09@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "DT-10",
+  "id": "FR01-DT-10",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi bỏ trống Email",
+  "covers": "EC7, EC42",
   "expect": "reject",
   "target": "email",
+  "expected": "Từ chối, báo thiếu Email; không tạo tài khoản; API trả 4xx (EC42)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "DT-11",
+  "id": "FR01-DT-11",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Email thiếu ký tự `@`",
+  "covers": "EC8, EC43",
   "expect": "reject",
   "target": "email",
+  "expected": "Từ chối, báo email sai định dạng; không tạo tài khoản; API trả 4xx (EC43)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt11example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "DT-12",
+  "id": "FR01-DT-12",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Email thiếu phần trước `@`",
+  "covers": "EC9, EC43",
   "expect": "reject",
   "target": "email",
+  "expected": "Từ chối, báo email sai định dạng; không tạo tài khoản; API trả 4xx (EC43)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "DT-13",
+  "id": "FR01-DT-13",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Email thiếu phần domain sau `@`",
+  "covers": "EC10, EC43",
   "expect": "reject",
   "target": "email",
+  "expected": "Từ chối, báo email sai định dạng; không tạo tài khoản; API trả 4xx (EC43)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt13@",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "DT-14",
+  "id": "FR01-DT-14",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi domain của Email không có dấu `.`",
+  "covers": "EC11, EC43",
   "expect": "reject",
   "target": "email",
+  "expected": "Từ chối, báo email sai định dạng; không tạo tài khoản; API trả 4xx (EC43); A2",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt14@example",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "DT-15",
+  "id": "FR01-DT-15",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Email có hai ký tự `@`",
+  "covers": "EC12, EC43",
   "expect": "reject",
   "target": "email",
+  "expected": "Từ chối, báo email sai định dạng; không tạo tài khoản; API trả 4xx (EC43)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01@dt15@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "DT-16",
+  "id": "FR01-DT-16",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Email có khoảng trắng ở giữa",
+  "covers": "EC13, EC43",
   "expect": "reject",
   "target": "email",
+  "expected": "Từ chối, báo email sai định dạng; không tạo tài khoản; API trả 4xx (EC43)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01 dt16@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "DT-17",
+  "id": "FR01-DT-17",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Email đã tồn tại",
+  "covers": "EC15, EC44",
   "expect": "reject",
   "target": "dup",
+  "expected": "Từ chối, báo email đã tồn tại; không tạo tài khoản; API trả 4xx; `test@eshop.com / Test1234!` vẫn đăng nhập được (EC44)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "test@eshop.com",
   "password": "Newpass1@",
   "confirm": "Newpass1@",
-  "web_workaround_confirm": "Newpass1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": "test@eshop.com",
-  "web_workaround_password": "Newpass1 "
+  "web_workaround_password": "Newpass1 ",
+  "web_workaround_confirm": "Newpass1 "
  },
  {
-  "id": "DT-18",
+  "id": "FR01-DT-18",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Email trùng tài khoản có sẵn nhưng khác chữ hoa / thường",
+  "covers": "EC16, EC44",
   "expect": "reject",
   "target": "dup",
+  "expected": "Từ chối, báo email đã tồn tại; không tạo tài khoản; API trả 4xx; `test@eshop.com / Test1234!` vẫn đăng nhập được (EC44); A3",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "TEST@eshop.com",
   "password": "Newpass1@",
   "confirm": "Newpass1@",
-  "web_workaround_confirm": "Newpass1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": "test@eshop.com",
-  "web_workaround_password": "Newpass1 "
+  "web_workaround_password": "Newpass1 ",
+  "web_workaround_confirm": "Newpass1 "
  },
  {
-  "id": "DT-19",
+  "id": "FR01-DT-19",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi bỏ trống Mật khẩu",
+  "covers": "EC17, EC42",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo thiếu Mật khẩu; không tạo tài khoản; API trả 4xx (EC42)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt19@example.com",
   "password": "",
   "confirm": "",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-20",
+  "id": "FR01-DT-20",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Mật khẩu ngắn hơn 8 ký tự",
+  "covers": "EC19, EC45",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt20@example.com",
   "password": "Abcd1@",
   "confirm": "Abcd1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-21",
+  "id": "FR01-DT-21",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ hoa",
+  "covers": "EC21, EC45",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt21@example.com",
   "password": "abcdef1@",
   "confirm": "abcdef1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-22",
+  "id": "FR01-DT-22",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ thường",
+  "covers": "EC23, EC45",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt22@example.com",
   "password": "ABCDEF1@",
   "confirm": "ABCDEF1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-23",
+  "id": "FR01-DT-23",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ số",
+  "covers": "EC25, EC45",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt23@example.com",
   "password": "Abcdefg@",
   "confirm": "Abcdefg@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-24",
+  "id": "FR01-DT-24",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Mật khẩu không có ký tự đặc biệt",
+  "covers": "EC27, EC45",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt24@example.com",
   "password": "Abcdefg1",
   "confirm": "Abcdefg1",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-25",
+  "id": "FR01-DT-25",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi ký tự đặc biệt duy nhất của Mật khẩu nằm ngoài tập `@ $ ! % * ? &`",
+  "covers": "EC28, EC45",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45); A1",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt25@example.com",
   "password": "Abcdef1#",
   "confirm": "Abcdef1#",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "DT-26",
+  "id": "FR01-DT-26",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi bỏ trống Xác nhận mật khẩu",
+  "covers": "EC38, EC42",
   "expect": "reject",
   "target": "confirm",
+  "expected": "Từ chối, báo thiếu Xác nhận mật khẩu hoặc không khớp; không tạo tài khoản (EC42/EC46)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt26@example.com",
   "password": "Abcdef1@",
   "confirm": "",
-  "web_workaround_confirm": "",
+  "show": {},
   "channels": [
    "web"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": ""
  },
  {
-  "id": "DT-27",
+  "id": "FR01-DT-27",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu khác Mật khẩu",
+  "covers": "EC39, EC46",
   "expect": "reject",
   "target": "confirm",
+  "expected": "Từ chối, báo xác nhận mật khẩu không khớp; không tạo tài khoản (EC46)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt27@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef2@",
-  "web_workaround_confirm": "Abcdef2 ",
+  "show": {},
   "channels": [
    "web"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef2 "
  },
  {
-  "id": "DT-28",
+  "id": "FR01-DT-28",
+  "section": "DT",
+  "title": "Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu chỉ khác Mật khẩu ở chữ hoa / thường",
+  "covers": "EC40, EC46",
   "expect": "reject",
   "target": "confirm",
+  "expected": "Từ chối, báo xác nhận mật khẩu không khớp; không tạo tài khoản (EC46)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt28@example.com",
   "password": "Abcdef1@",
   "confirm": "abcdef1@",
-  "web_workaround_confirm": "abcdef1 ",
+  "show": {},
   "channels": [
    "web"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "abcdef1 "
  },
  {
-  "id": "BV-01",
+  "id": "FR01-BV-01",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 1 ký tự",
+  "covers": "EC17/EC19 – độ dài 1 (LB của EC19)",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv01@example.com",
   "password": "@",
   "confirm": "@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-02",
+  "id": "FR01-BV-02",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 2 ký tự",
+  "covers": "EC19 – độ dài 2 (LB+1)",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv02@example.com",
   "password": "A1",
   "confirm": "A1",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-03",
+  "id": "FR01-BV-03",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 7 ký tự và đủ 4 loại ký tự",
+  "covers": "EC19/EC18 – độ dài 7 (UB của EC19)",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv03@example.com",
   "password": "Abcde1@",
   "confirm": "Abcde1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-04",
+  "id": "FR01-BV-04",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công khi Mật khẩu dài 9 ký tự",
+  "covers": "EC18 – độ dài 9 (LB+1 của EC18)",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv04@example.com",
   "password": "Abcdefg1@",
   "confirm": "Abcdefg1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-05",
+  "id": "FR01-BV-05",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công khi Mật khẩu dài 1000 ký tự",
+  "covers": "EC18 – độ dài 1000 (lớn nhất chọn thử)",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); A5",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv05@example.com",
   "password": "Abcdef1@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "confirm": "Abcdef1@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-  "web_workaround_confirm": null,
+  "show": {
+   "password": "`\"Abcdef1@\" + \"a\" * 992` (1000 ký tự)"
+  },
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-06",
+  "id": "FR01-BV-06",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công khi Mật khẩu có đúng 1 chữ thường",
+  "covers": "EC22 – 1 chữ thường (LB)",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv06@example.com",
   "password": "ABCDEa1@",
   "confirm": "ABCDEa1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-07",
+  "id": "FR01-BV-07",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công khi chữ hoa duy nhất là `Z`, chữ thường duy nhất là `a`, chữ số duy nhất là `9`",
+  "covers": "`Z` (UB chữ hoa), `a` (LB chữ thường), `9` (UB chữ số)",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv07@example.com",
   "password": "Zaaaaa9@",
   "confirm": "Zaaaaa9@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-08",
+  "id": "FR01-BV-08",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công khi chữ hoa duy nhất là `A`, chữ thường duy nhất là `z`, chữ số duy nhất là `0`",
+  "covers": "`A` (LB chữ hoa), `z` (UB chữ thường), `0` (LB chữ số)",
   "expect": "accept",
   "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv08@example.com",
   "password": "Azzzzz0@",
   "confirm": "Azzzzz0@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-09",
+  "id": "FR01-BV-09",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi ký tự liền sau `Z` (`[`) thay cho chữ hoa",
+  "covers": "`Z`/`[` (UB+1 chữ hoa)",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv09@example.com",
   "password": "[bcdef1@",
   "confirm": "[bcdef1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-10",
+  "id": "FR01-BV-10",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi ký tự liền trước `a` (`` ` ``) thay cho chữ thường",
+  "covers": "`` ` ``/`a` (LB-1 chữ thường)",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv10@example.com",
   "password": "A`````1@",
   "confirm": "A`````1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-11",
+  "id": "FR01-BV-11",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi ký tự liền sau `z` (`{`) thay cho chữ thường",
+  "covers": "`z`/`{` (UB+1 chữ thường)",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv11@example.com",
   "password": "A{{{{{1@",
   "confirm": "A{{{{{1@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-12",
+  "id": "FR01-BV-12",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi ký tự liền trước `0` (`/`) thay cho chữ số",
+  "covers": "`/`/`0` (LB-1 chữ số)",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv12@example.com",
   "password": "Abcdef/@",
   "confirm": "Abcdef/@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-13",
+  "id": "FR01-BV-13",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi ký tự liền sau `9` (`:`) thay cho chữ số",
+  "covers": "`9`/`:` (UB+1 chữ số)",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv13@example.com",
   "password": "Abcdef:@",
   "confirm": "Abcdef:@",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  },
  {
-  "id": "BV-14",
+  "id": "FR01-BV-14",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công khi Họ Tên dài 1 ký tự",
+  "covers": "EC3/EC1 – độ dài 1 (LB của EC1)",
   "expect": "accept",
   "target": "name",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "A",
   "email": "fr01.bv14@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "BV-15",
+  "id": "FR01-BV-15",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công khi Họ Tên có 1 ký tự giữa các khoảng trắng",
+  "covers": "EC4/EC1 – 1 ký tự khác khoảng trắng (LB)",
   "expect": "accept",
   "target": "name",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); A4",
+  "origin": "AI",
   "name": " A ",
   "email": "fr01.bv15@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "BV-16",
+  "id": "FR01-BV-16",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công khi Họ Tên dài 1000 ký tự",
+  "covers": "EC1 – độ dài 1000 (lớn nhất chọn thử)",
   "expect": "accept",
   "target": "name",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); A5",
+  "origin": "AI",
   "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
   "email": "fr01.bv16@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {
+   "name": "`\"A\" * 1000`"
+  },
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "BV-17",
+  "id": "FR01-BV-17",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công với Email ngắn nhất hợp lệ",
+  "covers": "EC5 – độ dài 5 (LB theo A2)",
   "expect": "accept",
   "target": "email",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "a@b.c",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "BV-18",
+  "id": "FR01-BV-18",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký thành công với Email dài 254 ký tự",
+  "covers": "EC5 – độ dài 254 (UB theo RFC 5321)",
   "expect": "accept",
   "target": "email",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@",
-  "web_workaround_confirm": "Abcdef1 ",
+  "show": {
+   "email": "`\"a\" * 64 + \"@\" + \"b\" * 63 + \".\" + \"c\" * 63 + \".\" + \"d\" * 57 + \".com\"` (254 ký tự)"
+  },
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 "
  },
  {
-  "id": "BV-19",
+  "id": "FR01-BV-19",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi Email đã tồn tại có đúng 1 khoảng trắng ở đầu",
+  "covers": "Số khoảng trắng đầu email = 1 (LB của EC6) kết hợp EC15",
   "expect": "reject",
   "target": "dup",
+  "expected": "Từ chối, báo email đã tồn tại; không tạo tài khoản; API trả 4xx; `test@eshop.com / Test1234!` vẫn đăng nhập được (EC44); A4",
+  "origin": "AI-sửa",
   "name": "Nguyen Van A",
   "email": " test@eshop.com",
   "password": "Newpass1@",
   "confirm": "Newpass1@",
-  "web_workaround_confirm": "Newpass1 ",
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": "test@eshop.com",
-  "web_workaround_password": "Newpass1 "
+  "web_workaround_password": "Newpass1 ",
+  "web_workaround_confirm": "Newpass1 "
  },
  {
-  "id": "BV-20",
+  "id": "FR01-BV-20",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu thiếu ký tự cuối",
+  "covers": "EC37/EC39 – độ dài Mật khẩu - 1",
   "expect": "reject",
   "target": "confirm",
+  "expected": "Từ chối, báo xác nhận mật khẩu không khớp; không tạo tài khoản (EC46)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv20@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1",
-  "web_workaround_confirm": "Abcdef1",
+  "show": {},
   "channels": [
    "web"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1"
  },
  {
-  "id": "BV-21",
+  "id": "FR01-BV-21",
+  "section": "BV",
+  "title": "Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu thừa 1 ký tự",
+  "covers": "EC37/EC39 – độ dài Mật khẩu + 1",
   "expect": "reject",
   "target": "confirm",
+  "expected": "Từ chối, báo xác nhận mật khẩu không khớp; không tạo tài khoản (EC46)",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.bv21@example.com",
   "password": "Abcdef1@",
   "confirm": "Abcdef1@1",
-  "web_workaround_confirm": "Abcdef1 1",
+  "show": {},
   "channels": [
    "web"
   ],
   "duplicate_of": null,
-  "web_workaround_password": "Abcdef1 "
+  "web_workaround_password": "Abcdef1 ",
+  "web_workaround_confirm": "Abcdef1 1"
  },
  {
-  "id": "DT-29",
+  "id": "FR01-DT-29",
+  "section": "GAP",
+  "title": "Kiểm tra đăng ký bị từ chối khi ký tự đặc biệt duy nhất của Mật khẩu là dấu cách",
+  "covers": "EC28 (đại diện thứ hai), EC45",
   "expect": "reject",
   "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45); A1",
+  "origin": "AI",
   "name": "Nguyen Van A",
   "email": "fr01.dt29@example.com",
   "password": "Abcdef1 ",
   "confirm": "Abcdef1 ",
-  "web_workaround_confirm": null,
+  "show": {},
   "channels": [
    "web",
    "api"
   ],
   "duplicate_of": null,
-  "web_workaround_password": null
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
+ },
+ {
+  "id": "FR01-DT-30",
+  "section": "GAP",
+  "title": "Kiểm tra đăng ký bị từ chối khi chữ hoa duy nhất của Mật khẩu là chữ có dấu `Đ`",
+  "covers": "EC21 (đại diện thứ hai), EC45",
+  "expect": "reject",
+  "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45); A10",
+  "origin": "SV",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt30@example.com",
+  "password": "Đbcdef1@",
+  "confirm": "Đbcdef1@",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
+ },
+ {
+  "id": "FR01-DT-31",
+  "section": "GAP",
+  "title": "Kiểm tra đăng ký bị từ chối khi chữ thường duy nhất của Mật khẩu là chữ có dấu `ă`",
+  "covers": "EC23 (đại diện thứ hai), EC45",
+  "expect": "reject",
+  "target": "password",
+  "expected": "Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45); A10",
+  "origin": "SV",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt31@example.com",
+  "password": "ABCDEă1@",
+  "confirm": "ABCDEă1@",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
+ },
+ {
+  "id": "FR01-DT-32",
+  "section": "GAP",
+  "title": "Kiểm tra đăng ký thành công khi Mật khẩu đủ 4 loại kèm thêm chữ có dấu tiếng Việt",
+  "covers": "EC36 (đại diện thứ hai), EC41",
+  "expect": "accept",
+  "target": "password",
+  "expected": "Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); A1, A10",
+  "origin": "SV",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt32@example.com",
+  "password": "Mậtkhẩu1@",
+  "confirm": "Mậtkhẩu1@",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null,
+  "web_workaround_confirm": null
  }
 ]
