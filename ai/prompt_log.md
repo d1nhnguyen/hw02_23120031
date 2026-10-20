@@ -1,6 +1,6 @@
 # Phụ lục A — Prompt log (trích tự động từ transcript Claude Code)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 22:12 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 22:49 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -16,6 +16,7 @@
 | 10 | 2026-10-20 21:25 | `1946c20d` | [Request interrupted by user] |
 | 11 | 2026-10-20 21:26 | `1946c20d` | về phần tên file ở pool mobile, m-02 ko phải là tên chính thức đó chỉ là quy định trong nh |
 | 12 | 2026-10-20 21:31 | `1946c20d` | Tiếp tục làm các bước, khi nào có vấn đề nào không rõ hãy dừng lại hỏi tôi, đọc kỹ các bài |
+| 13 | 2026-10-20 22:37 | `1946c20d` | <pasted_content id="5e2c"> ### 1. Về Bảng (Cấu trúc & tính nhất quán) • Đạt chuẩn: • Đủ ch |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -589,6 +590,40 @@ Runner Web đã viết lại. Runner API cũng cần cùng quy tắc kiểm tra 
 Bug report đã nháp xong. Tôi điền mục 7 của báo cáo FR-01 (bảng bug trỏ sang `bugs/Bug_Report.md`) rồi commit B7.
 
 Mục 7 nằm cuối file nên không có heading kết thúc để script splice tìm. Tôi thay trực tiếp từ heading mục 7 đến hết file, rồi commit.
+
+Tôi đã làm xong FR-01 (B1–B7), mỗi bước một commit và đã push. Tôi dừng ở đây để bạn xem lại trước khi làm 3 feature còn lại theo cùng mẫu, vì có vài việc cần bạn quyết.
+
+**Kết quả FR-01** (báo cáo ở [report/FR-01_Dang_ky.md](HW02/HW02_23120031/report/FR-01_Dang_ky.md)):
+- **Thiết kế:** 46 lớp tương đương; 50 TC, gồm 28 TC Domain Testing, 21 TC BVA và DT-29 bổ sung ở B6.
+- **Đã chạy 95 lượt:**
+
+  | Kênh | Lượt chạy | Pass | Fail | Blocked |
+  | --- | --- | --- | --- | --- |
+  | Web | 50 | 17 | 18 | 15 |
+  | API | 45 | 16 | 29 | 0 |
+
+  Riêng 5 TC về ô Xác nhận mật khẩu không chạy được qua API vì API không có trường này.
+- **Lỗi chính:**
+  - Form Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ: nó chỉ coi dấu cách là ký tự đặc biệt.
+  - Server không kiểm tra gì: chấp nhận trường rỗng, email sai định dạng, mật khẩu 1 ký tự.
+  - Server cho đăng ký trùng email, tạo ra tài khoản thứ hai không đăng nhập được.
+  - Form không có ô Xác nhận mật khẩu.
+- **Nháp 9 bug** (2 Critical, 4 Major, 3 Minor) ở [bugs/Bug_Report.md](HW02/HW02_23120031/bugs/Bug_Report.md), đã có tiêu đề issue gợi ý và ảnh bằng chứng trong `bugs/screenshots/`.
+- **Script chạy lại được** nằm ở `scripts/fr01/`. Nếu muốn tự chạy lại, bạn cần `npm install` trong thư mục `scripts`.
+
+**Cần bạn quyết định / làm:**
+
+1. **Cách xử lý TC bị lỗi khác che.** Form Web chặn mọi mật khẩu hợp lệ, nên 15 TC Web nhắm vào Họ Tên, Email và email trùng không chạm được tới điều kiện cần test. Tôi đã:
+   - đánh chúng là **Blocked** trong kết quả chính thức;
+   - chạy thêm một **lượt khảo sát** (không tính điểm Pass/Fail) với mật khẩu `Abcdef1␣`;
+   - vẫn đánh giá đầy đủ các biến này qua API.
+
+   Bạn đồng ý cách này không, hay muốn tính lượt khảo sát thành kết quả chính thức?
+2. **Tạo 9 issue.** Bạn duyệt nháp rồi tự viết issue trên `d1nhnguyen/eshop-sut`, đính kèm ảnh trong `bugs/screenshots/`. Số tiếp theo trên repo là BUG-12, nếu nhóm chưa tạo thêm. Tạo xong, bạn gửi tôi danh sách số BUG; tôi sẽ điền vào báo cáo và chụp trang issue làm bằng chứng nộp bài.
+3. **Rà soát FR-01.** Phần B6 (AI gap analysis) hiện chỉ có những lỗi AI tự nhận ra; bạn cần thêm những điểm bạn phát hiện khi đọc lại. Chỗ nào bạn sửa thì commit thành `[FR-01][Bn-review]` để `git diff` làm bằng chứng cho AI Audit. Các giả định A1–A9 (đặc biệt A3: email trùng không phân biệt hoa thường; A4: bỏ khoảng trắng đầu/cuối) nên hỏi lại TA.
+4. **Định dạng.** Nếu bạn muốn đổi gì ở FR-01 (bảng, cách đặt tên TC, mức độ chi tiết), bạn nói trước khi tôi làm FR-15, FR-10 và Mobile để khỏi phải sửa lại cả 3.
+
+Bạn trả lời câu 1 và 4 là tôi làm tiếp FR-15 được ngay. Câu 2 và 3 bạn có thể làm song song.
 ````
 
 <details><summary>Hành động AI đã thực hiện (97)</summary>
@@ -691,5 +726,136 @@ Mục 7 nằm cuối file nên không có heading kết thúc để script splic
 95. `Bash` — Write FR-01 section 7 draft
 96. `Bash` — Insert section 7, commit B7, push
 97. `Bash` — Fix remote URL, update prompt log, push
+
+</details>
+
+## #13 · 2026-10-20 22:37:45 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+<pasted_content id="5e2c">
+### 1. Về Bảng (Cấu trúc & tính nhất quán)
+• Đạt chuẩn:
+    • Đủ chuỗi bảng theo [S04] và [UC]: Biến Input/Output (mục 1.2–1.3) → Complete Set of Partitions có cả phân vùng Output EC41–EC46 (mục 2.2) →
+    Minimum Set + Bảng phủ 46/46 lớp (mục 3.2–3.3) → BVA (mục 4.1–4.2).
+    • Bảng BVA dẫn chiếu lại các điểm biên đã có trong Minimum Set ((DT-19), (DT-01)...) giúp tránh trùng lặp (đạt tiêu chí Economical / Non-
+    redundant).
+• Cần chỉnh:
+    1. Bảng 4.2 (BVA) bị lệch cấu trúc cột so với Bảng 3.2 (Minimum Set):
+        • Ở bảng 3.2, bạn tách 4 cột dữ liệu Họ Tên | Email | Mật khẩu | Xác nhận đúng chuẩn Data Matrix.
+        • Sang bảng 4.2, 4 cột này bị gom lại thành 1 cột Giá trị duy nhất. Theo mẫu Table 6 trong [UC] và slide 27 của [S04], bảng BVA vẫn phải
+        giữ nguyên các cột Input của ma trận dữ liệu như bảng Minimum Set.
+    2. Bảng 5.3 (Kết quả thực thi) đang gộp nhiều TC vào 1 dòng:
+        • Tại bảng 5.3, bạn đang gộp DT-03…DT-07, DT-11…DT-16, DT-20…DT-25, BV-01…BV-03, BV-04…BV-08, BV-09…BV-13, BV-14…BV-18 (48 TC chỉ còn 18
+        dòng, và thiếu DT-29).
+        • Trong khi ở evidence/FR-01/web/ bạn đã có ảnh riêng cho từng TC (DT-11.png…DT-16.png), việc gộp dòng làm mất chi tiết kết quả thực tế
+        (ví dụ HTTP response / thông báo cụ thể trên từng dữ liệu) và không gắn được link bằng chứng cho từng TC. Nên tách mỗi TC 1 dòng (hoặc
+        thêm cột Bằng chứng).
+    3. Khớp lại mô tả cột trong PLAN.md:
+        • Dòng 28 của PLAN.md:28 ghi template 1 bảng gộp (ID | Tiêu đề | Lớp/biên phủ | Tiền điều kiện | Các bước | Dữ liệu | KQMĐ | KQTT | Trạng
+        thái | Bug ID | Origin), trong khi báo cáo tách thủ tục ra mục 3.1 (Data Matrix) và tách bảng Thiết kế (3.2, 4.2) với bảng Thực thi (5.3).
+        Cách làm trong báo cáo gọn và đúng mẫu Data Matrix hơn, nhưng bạn nên cập nhật lại dòng 28 của PLAN.md để không tự mâu thuẫn.
+
+
+──────
+### 2. Về Cách đặt tên TC (ID & Tiêu đề)
+
+• Về ID (DT-01…DT-29, BV-01…BV-21):
+    • Khi ghép 4 feature (FR-01, FR-10, FR-15, Mobile) vào báo cáo chung hoặc bảng tổng hợp, nếu cả 4 bài đều dùng DT-01, BV-01 thì ID sẽ bị trùng.
+    Theo slide 6 của EN.Test_Cases_AI_First.pdf (TC-LOGIN-003) và Test cases_Template_En.xlsx (01 - 001), nên có mã chức năng ở đầu (ví dụ FR01-
+    DT-01, FR01-BV-01) hoặc quy ước rõ ở mục đầu.
+• Về cú pháp tiêu đề (Action + Function + Condition):
+    • Đa số các TC đã tuân thủ cấu trúc: Kiểm tra (Action) + đăng ký thành công / bị từ chối (Function + Outcome) + khi ... (Condition).
+    • Các dòng cần sửa tên:
+        • Trong bảng 4.2, 7 dòng dẫn chiếu lại (DT-19), (DT-20), (DT-01), (DT-21…DT-24), (DT-21), (DT-08) đang viết tên rút gọn kiểu danh từ ("Mật
+        khẩu độ dài 0", "Mật khẩu dài 6 ký tự", "Họ Tên độ dài 0"), không theo cú pháp Action + Function + Condition và lệch với tên chính thức ở
+        bảng 3.2.
+        • DT-02 (dòng 201): "…và mật khẩu có ký tự ngoài tập" dễ gây hiểu nhầm với DT-25 (chỉ có ký tự ngoài tập). Nên ghi rõ: "…và mật khẩu đủ 4
+        loại kèm thêm ký tự ngoài tập".
+        • BV-19 (dòng 313) và DT-29 (dòng 419)其實 là test case phân vùng (Equivalence Partitioning / kết hợp lớp) hơn là giá trị biên thuần túy —
+        đặt DT-29 ở DT là đúng, còn BV-19 nên giải thích rõ là biên độ dài khoảng trắng dẫn đầu = 1 (LB của số khoảng trắng đầu chuỗi).
+
+
+──────
+### 3. Về Mức độ chi tiết (Dữ liệu, Expected, Actual, Độ phủ)
+
+1. Tránh ghi chữ "mặc định" và "Như DT-01" trong các ô dữ liệu / kết quả mong đợi:
+    • Theo EN.Test_Cases_AI_First.pdf (slide 10, 12, 14) và Testcase Checklist.xlsx, một test case tốt phải Repeatable & Self-standing (có
+    concrete data, không bắt người chạy tra cứu ngược lên test case trước).
+    • Ở bảng 3.2, nên thay chữ mặc định bằng giá trị cụ thể (Nguyen Van A, Abcdef1@), và thay "Như DT-01" / "Như DT-17" bằng nội dung tường minh
+    hoặc mã kết quả đầu ra (EC41).
+2. Dữ liệu biên dài (BV-05, BV-16, BV-18) cần ghi công thức tạo chuỗi chính xác:
+    • Ở BV-18 (dòng 312), bạn ghi "phần local 64 ký tự + @ + domain 189 ký tự (các nhãn ≤ 63 ký tự, kết thúc .com)". Nên ghi rõ biểu thức chuỗi
+    đúng như trong cases.py (ví dụ 'a'*64 + '@' + 'b'*63 + '.' + 'c'*63 + '.' + 'd'*57 + '.com') để bất kỳ ai chạy lại đều nhập đúng một giá trị.
+3. Mức độ chi tiết của Expected Result ở Bảng 4.2 (BVA):
+    • Các dòng BV-14, BV-15, BV-16 (dòng 308–310) chỉ ghi độc một chữ "Thành công", trong khi BV-04, BV-06 ghi "Thành công, đăng nhập được", còn
+    DT-01 ghi đầy đủ cả Web, API và kiểm chứng đăng nhập. Nên thống nhất mức độ chi tiết giữa các dòng.
+4. Thống nhất tổng số TC giữa mục 3, 4, 5 và 6 (49 vs 50):
+    • Mục 3.2 (28 TC) + Mục 4.2 (21 TC) = 49 TC (đang dùng ở bảng 5.5).
+    • Nhưng mục 6.2 bổ sung thêm DT-29 (đã chạy cả Web và API). Bạn nên ghi chú rõ ở bảng 5.5 (hoặc cộng DT-29 vào tổng thành 50 TC) để khi đưa
+    sang bảng Test Summary ở README.md không bị lệch số liệu.
+5. Cột Origin và dấu ấn rà soát của Sinh viên (SV / AI-sửa):
+    • Hiện tại cả 49 TC ở bảng 3.2, 4.2 và DT-29 ở bảng 6.2 đều ghi Origin = AI, và trong lịch sử git chưa có commit [FR-01][B<n>-review] nào như
+    quy ước ở PLAN.md` dòng 26–27.
+    • Theo yêu cầu Human review và AI gap analysis của đề bài, bạn nên tự rà soát, chỉnh sửa/bổ sung ít nhất một vài test case hoặc điều kiện
+    (đánh dấu AI-sửa hoặc SV, ví dụ các trường hợp do bạn tự phát hiện hoặc điểm mở ở mục 6.3 như chữ tiếng Việt có dấu trong mật khẩu Đ, ă...) và
+    tạo commit review tương ứng.
+</pasted_content id="5e2c">
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Nội dung bạn dán vào là một bản rà soát FR-01 với các yêu cầu sửa cụ thể; tôi sẽ làm theo. Tôi tổ chức lại một chút để làm cho chắc:
+- **`cases.py` trở thành nguồn dữ liệu duy nhất**, chứa cả tiêu đề, phân vùng phủ, dữ liệu cụ thể, kết quả mong đợi và Origin. Các bảng 3.2, 3.3, 4.2, 5.3, 5.5 và 6.2 sẽ được sinh tự động từ file này cộng với kết quả chạy. Như vậy báo cáo và script không thể lệch nhau, và cách làm này dùng lại được cho 3 feature sau.
+- **ID có tiền tố feature** (`FR01-DT-01`), nên phải chạy lại toàn bộ để tên ảnh bằng chứng khớp với ID.
+- **Mỗi bước sửa một commit `[FR-01][Bn-review]`**, đúng quy ước trong PLAN.
+
+Trước hết tôi đọc lại báo cáo FR-01 hiện tại.
+
+Tôi đọc lại `cases.py` hiện tại trước khi chuyển nó thành nguồn dữ liệu duy nhất.
+
+Script sinh bảng đã sẵn sàng. **Commit 1: `[FR-01][B1-review]`**, thêm giả định A10 vào mục 1.4.
+
+**Commit 2: `[FR-01][B3-review]`**. Tôi thay mục 3.2 và 3.3 bằng các mốc sinh bảng, sửa mục 3.1 cho khớp (bỏ ký hiệu `= MK`, ghi quy ước ID), rồi chạy script sinh bảng.
+
+Bảng phủ giờ đầy đủ 46/46 lớp, có ghi kèm các đại diện bổ sung ở mục 6.2. Tôi commit B3-review.
+
+**Commit 5: `[FR-01][B5-review]`**, chạy lại toàn bộ 53 TC với ID mới. Phiên trước đã kết thúc nên có thể Web frontend đã tắt; tôi kiểm tra các cổng trước.
+
+Backend vẫn chạy; Web và Web Admin đã tắt. Tôi chỉ cần bật lại Web, vì ảnh bằng chứng bug không phụ thuộc vào ID TC nên không phải chụp lại.
+
+Web đã chạy và bằng chứng theo ID cũ đã được gỡ. Tôi chạy lại 3 lượt: Web chính thức, Web khảo sát, rồi API, mỗi lượt sau một lần restart backend.
+
+Mục 5.2 và 5.4 nhất quán. Tôi commit B5-review cùng bộ bằng chứng mới.
+````
+
+<details><summary>Hành động AI đã thực hiện (22)</summary>
+
+1. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md
+2. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/cases.py
+3. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/cases.py
+4. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/report_tables.py
+5. `Edit` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md
+6. `Bash` — Commit B1 review
+7. `Bash` — Restructure 3.1–3.3, update PLAN, generate T32/T33
+8. `Bash` — Complete valid-class coverage and regenerate
+9. `Bash` — Commit B3 review
+10. `Bash` — Restructure 4.1/4.2 and generate BVA table
+11. `Bash` — Commit B4 review
+12. `Bash` — Update section 6, generate T62, commit B6 review
+13. `Bash` — Check which SUT services are running
+14. `Bash` — Start web frontend on port 5173
+15. `Bash` — Wait for web; remove old-ID evidence files
+16. `Bash` — Rerun web, workaround, and API with new IDs
+17. `Bash` — Generate T53/T55 and prefix remaining IDs
+18. `Bash` — Check leftover IDs; clarify duplicate wording
+19. `Bash` — Review sections 5.2 and 5.4 text
+20. `Bash` — Commit B5 review with new evidence
+21. `Bash` — Prefix IDs in bug report and map new TCs
+22. `Bash` — Fix count, commit B7 review, update log, push
 
 </details>
