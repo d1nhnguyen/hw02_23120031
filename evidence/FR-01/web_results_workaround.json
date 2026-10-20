@@ -1,0 +1,404 @@
+{
+ "run_at": "2026-10-20T15:04:56.627Z",
+ "workaround": true,
+ "results": [
+  {
+   "id": "DT-08",
+   "expect": "reject",
+   "target": "name",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": false,
+   "url_after": "/register",
+   "messages": [
+    {
+     "source": "native:name",
+     "text": "Please fill out this field.",
+     "reason": "name"
+    }
+   ],
+   "created": false,
+   "matching_accounts_after": 0,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "DT-09",
+   "expect": "reject",
+   "target": "name",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":3}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "DT-10",
+   "expect": "reject",
+   "target": "email",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": false,
+   "url_after": "/register",
+   "messages": [
+    {
+     "source": "native:email",
+     "text": "Please fill out this field.",
+     "reason": "email"
+    }
+   ],
+   "created": false,
+   "matching_accounts_after": 0,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "DT-11",
+   "expect": "reject",
+   "target": "email",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":4}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "DT-12",
+   "expect": "reject",
+   "target": "email",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":5}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "DT-13",
+   "expect": "reject",
+   "target": "email",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":6}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "DT-14",
+   "expect": "reject",
+   "target": "email",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":7}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "DT-15",
+   "expect": "reject",
+   "target": "email",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":8}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "DT-16",
+   "expect": "reject",
+   "target": "email",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":9}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "DT-17",
+   "expect": "reject",
+   "target": "dup",
+   "password_used": "Newpass1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":10}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 2,
+   "seed_login_ok": true,
+   "verdict": "Fail",
+   "notes": [
+    "email trùng vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "DT-18",
+   "expect": "reject",
+   "target": "dup",
+   "password_used": "Newpass1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":11}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 3,
+   "seed_login_ok": true,
+   "verdict": "Fail",
+   "notes": [
+    "email trùng vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "DT-26",
+   "expect": "reject",
+   "target": "confirm",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":12}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "giao diện không có ô Xác nhận mật khẩu"
+   ]
+  },
+  {
+   "id": "DT-27",
+   "expect": "reject",
+   "target": "confirm",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":13}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "giao diện không có ô Xác nhận mật khẩu"
+   ]
+  },
+  {
+   "id": "DT-28",
+   "expect": "reject",
+   "target": "confirm",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":14}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "giao diện không có ô Xác nhận mật khẩu"
+   ]
+  },
+  {
+   "id": "BV-14",
+   "expect": "accept",
+   "target": "name",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":15}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "login_ok": true,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "BV-15",
+   "expect": "accept",
+   "target": "name",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":16}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "login_ok": true,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "BV-16",
+   "expect": "accept",
+   "target": "name",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":17}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "login_ok": true,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "BV-17",
+   "expect": "accept",
+   "target": "email",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":18}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "login_ok": true,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "BV-18",
+   "expect": "accept",
+   "target": "email",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":19}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "login_ok": true,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "BV-19",
+   "expect": "reject",
+   "target": "dup",
+   "password_used": "Newpass1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":20}",
+   "url_after": "/login",
+   "messages": [],
+   "created": false,
+   "matching_accounts_after": 3,
+   "seed_login_ok": true,
+   "verdict": "Fail",
+   "notes": [
+    "email trùng vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "BV-20",
+   "expect": "reject",
+   "target": "confirm",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":21}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "giao diện không có ô Xác nhận mật khẩu"
+   ]
+  },
+  {
+   "id": "BV-21",
+   "expect": "reject",
+   "target": "confirm",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":22}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "giao diện không có ô Xác nhận mật khẩu"
+   ]
+  }
+ ]
+}

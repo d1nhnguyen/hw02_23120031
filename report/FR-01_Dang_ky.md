@@ -318,12 +318,82 @@ Tổng: 21 test case BVA mới (BV-01…BV-21); 7 điểm biên khác đã đư�
 
 ## 5. Bước 5 – Kết quả thực thi
 
-| TC | Kênh | Kết quả thực tế | Status | Bug ID |
-| --- | --- | --- | --- | --- |
+### 5.1 Môi trường và cách chạy
 
-| Thiết kế | Đã chạy | Pass | Fail | Blocked / chưa chạy | Số bug |
-| --- | --- | --- | --- | --- | --- |
-| | | | | | |
+| Mục | Giá trị |
+| --- | --- |
+| Ngày chạy | 2026-10-20 |
+| Người chạy | 23120031 (script tự động, kết quả được rà soát thủ công) |
+| SUT | `eshop-sut-main` (trùng với `d1nhnguyen/eshop-sut`), Node 20.19.5 |
+| Web | Chrome 155 (headless, Playwright), `http://localhost:5173` |
+| API | `http://localhost:3000/api`, gọi bằng Python `urllib` |
+| Dữ liệu | Backend được khởi động lại trước mỗi lượt chạy (`scripts/restart_backend.sh`) |
+| Script | `scripts/fr01/cases.py` (dữ liệu), `run_web.mjs` (P-WEB), `run_api.py` (P-API), `explore_web_password.mjs` (khảo sát) |
+| Bằng chứng | `evidence/FR-01/web_results.json`, `api_results.json`, `web_results_workaround.json`, `explore_web_password.json`, ảnh `evidence/FR-01/web/<ID>.png` |
+
+Cách kết luận (A7): test case "thành công" Pass khi chuyển tới trang Đăng nhập (Web) / HTTP 200 (API), tài khoản xuất hiện trong danh sách người dùng (`GET /api/admin/users`) và đăng nhập được. Test case "từ chối" Pass khi không tạo tài khoản **và** thông báo lỗi nói đúng lý do mong đợi; bị từ chối nhưng sai lý do là Fail. Test case email trùng còn kiểm tra tài khoản gốc `test@eshop.com / Test1234!` vẫn đăng nhập được.
+
+### 5.2 Phát hiện chặn khi chạy trên Web
+
+Lượt chạy Web đầu tiên cho thấy **mọi mật khẩu hợp lệ theo đặc tả đều bị form báo "Mật khẩu quá yếu!"** và không gửi request. Khảo sát thêm 43 mật khẩu (`explore_web_password.json`):
+
+| Mật khẩu thử | Form Web |
+| --- | --- |
+| `Abcdef1` + một trong 7 ký tự `@ $ ! % * ? &` | Chặn |
+| `Abcdef1` + một trong 25 ký tự đặc biệt khác (`# ^ - _ . ~ + = / \ ( ) [ ] { } < > \| : ; , ' " ` ``) | Chặn |
+| `Abcdef1␣`, `Abc␣def1`, `␣Abcdef1` | Gửi request, đăng ký thành công |
+| `Abcdef1@␣` (có cả `@` và dấu cách) | Chặn |
+| `abcdef1␣`, `ABCDEF1␣`, `Abcdefg␣`, `Abcde1␣` | Chặn (thiếu chữ thường / chữ hoa / chữ số / đủ 8 ký tự) |
+
+→ Form Web kiểm tra đúng độ dài, chữ hoa, chữ thường, chữ số, nhưng **chỉ coi dấu cách là ký tự đặc biệt** và chặn mọi ký tự đặc biệt khác. Không tồn tại mật khẩu vừa hợp lệ theo đặc tả vừa qua được form, nên:
+
+- 15 test case Web không nhắm vào mật khẩu (Họ Tên, Email, email trùng) bị **Blocked** ở lượt chính thức: form từ chối vì mật khẩu trước khi tới điều kiện cần kiểm tra. Các biến này vẫn được đánh giá đầy đủ trên kênh API.
+- Lượt **khảo sát** (không tính verdict) chạy lại 22 test case này với mật khẩu `Abcdef1␣` (thay `@` bằng dấu cách – không hợp lệ theo A1) để quan sát cách Web xử lý các biến khác (mục 5.4).
+
+### 5.3 Kết quả theo test case
+
+Web = lượt chính thức (P-WEB, dữ liệu đúng thiết kế). Ảnh: `evidence/FR-01/web/<ID>.png`.
+
+| TC | Web | API | Kết quả thực tế | Bug |
+| --- | --- | --- | --- | --- |
+| DT-01 | Fail | Pass | Web: "Mật khẩu quá yếu!", không gửi request. API: 200, đăng nhập được | FR01-B1 |
+| DT-02 | Fail | Fail | Web: "Mật khẩu quá yếu!" (`$`). API: 200 nhưng email lưu nguyên `' fr01.dt02@example.com '`, đăng nhập bằng email đã bỏ khoảng trắng thất bại | FR01-B1, FR01-B8 |
+| DT-03…DT-07 | Fail | Pass | Web: "Mật khẩu quá yếu!" với `!`, `%`, `*`, `?`, `&`. API: 200, đăng nhập được | FR01-B1 |
+| DT-08 | Pass | Fail | Web: trình duyệt chặn ô Họ Tên trống ("Please fill out this field."). API: 200, tạo tài khoản không có tên | FR01-B3 |
+| DT-09 | Blocked | Fail | Web: bị chặn vì mật khẩu. API: 200, tạo tài khoản tên `'   '` | FR01-B9 |
+| DT-10 | Pass | Fail | Web: trình duyệt chặn ô Email trống. API: 200, tạo tài khoản không có email | FR01-B3 |
+| DT-11…DT-16 | Blocked | Fail | Web: bị chặn vì mật khẩu. API: 200 với cả 6 kiểu email sai định dạng | FR01-B4 |
+| DT-17 | Blocked | Fail | API: 200, tạo **tài khoản thứ hai** `test@eshop.com`; đăng nhập `Test1234!` vẫn vào tài khoản cũ, `Newpass1@` không đăng nhập được | FR01-B6 |
+| DT-18 | Blocked | Fail | API: 200, tạo thêm tài khoản `TEST@eshop.com` | FR01-B6 |
+| DT-19 | Pass | Fail | Web: trình duyệt chặn ô Mật khẩu trống. API: 200, tạo tài khoản mật khẩu rỗng | FR01-B3 |
+| DT-20…DT-25 | Pass | Fail | Web: "Mật khẩu quá yếu!" (đúng lý do). API: 200 với mật khẩu 6 ký tự, thiếu chữ hoa / chữ thường / chữ số / ký tự đặc biệt, chỉ có `#` | FR01-B5 |
+| DT-26…DT-28 | Fail | – | Giao diện không có ô Xác nhận mật khẩu | FR01-B2 |
+| BV-01…BV-03 | Pass | Fail | Web: "Mật khẩu quá yếu!". API: 200 với mật khẩu dài 1, 2, 7 ký tự | FR01-B5 |
+| BV-04…BV-08 | Fail | Pass | Web: "Mật khẩu quá yếu!" với mật khẩu 9, 1000 ký tự, 1 chữ thường, biên `A/Z/a/z/0/9`. API: 200, đăng nhập được | FR01-B1 |
+| BV-09…BV-13 | Pass | Fail | Web: "Mật khẩu quá yếu!". API: 200 với `[`, `` ` ``, `{`, `/`, `:` thay cho chữ hoa / chữ thường / chữ số | FR01-B5 |
+| BV-14…BV-18 | Blocked | Pass | API: 200 và đăng nhập được với Họ Tên 1 ký tự, `␣A␣`, 1000 ký tự, email `a@b.c`, email 254 ký tự | – |
+| BV-19 | Blocked | Fail | API: 200, tạo tài khoản email `' test@eshop.com'` (không bỏ khoảng trắng nên không phát hiện trùng) | FR01-B6, FR01-B8 |
+| BV-20, BV-21 | Fail | – | Giao diện không có ô Xác nhận mật khẩu | FR01-B2 |
+
+### 5.4 Quan sát từ lượt khảo sát trên Web (không tính verdict)
+
+Với mật khẩu `Abcdef1␣` form Web gửi request; `web_results_workaround.json`, ảnh `evidence/FR-01/web/<ID>_wa.png`:
+
+- Họ Tên `␣␣␣` (DT-09) qua được thuộc tính `required` của trình duyệt và được server chấp nhận → FR01-B9.
+- Cả 6 email sai định dạng (DT-11…DT-16) được form gửi đi mà không cảnh báo (ô Email là `type="text"`) và được server chấp nhận → FR01-B7, FR01-B4.
+- Email trùng `test@eshop.com`, `TEST@eshop.com`, `␣test@eshop.com` (DT-17, DT-18, BV-19) được chấp nhận → FR01-B6.
+- Họ Tên / Email ở biên (BV-14…BV-18) đăng ký và đăng nhập được, khớp kết quả API.
+- Bản thân việc mật khẩu `Abcdef1␣` (không có ký tự nào thuộc tập `@ $ ! % * ? &`) được chấp nhận ở cả Web và API là vi phạm A1 → FR01-B1, FR01-B5.
+
+### 5.5 Tổng hợp
+
+| Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |
+| --- | --- | --- | --- | --- | --- | --- |
+| Web | 49 | 49 | 17 | 17 | 15 | 0 |
+| API | 49 | 44 | 16 | 28 | 0 | 5 (biến Xác nhận mật khẩu, A8) |
+| **Tổng lượt chạy** | | **93** | **33** | **45** | **15** | |
+
+Theo test case (gộp 2 kênh: Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 49 test case, 0 Pass, 44 Fail, 5 Blocked (BV-14…BV-18 Pass ở API nhưng Blocked ở Web).
 
 ## 6. Bước 6 – AI gap analysis
 

@@ -1,0 +1,781 @@
+[
+ {
+  "id": "DT-01",
+  "expect": "accept",
+  "target": "all",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt01@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-02",
+  "expect": "accept",
+  "target": "mixed",
+  "name": "Nguyễn Thị Ánh",
+  "email": " fr01.dt02@example.com ",
+  "password": "Abc#def1$",
+  "confirm": "Abc#def1$",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-03",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt03@example.com",
+  "password": "Abcdef1!",
+  "confirm": "Abcdef1!",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-04",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt04@example.com",
+  "password": "Abcdef1%",
+  "confirm": "Abcdef1%",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-05",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt05@example.com",
+  "password": "Abcdef1*",
+  "confirm": "Abcdef1*",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-06",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt06@example.com",
+  "password": "Abcdef1?",
+  "confirm": "Abcdef1?",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-07",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt07@example.com",
+  "password": "Abcdef1&",
+  "confirm": "Abcdef1&",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-08",
+  "expect": "reject",
+  "target": "name",
+  "name": "",
+  "email": "fr01.dt08@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-09",
+  "expect": "reject",
+  "target": "name",
+  "name": "   ",
+  "email": "fr01.dt09@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-10",
+  "expect": "reject",
+  "target": "email",
+  "name": "Nguyen Van A",
+  "email": "",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-11",
+  "expect": "reject",
+  "target": "email",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt11example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-12",
+  "expect": "reject",
+  "target": "email",
+  "name": "Nguyen Van A",
+  "email": "@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-13",
+  "expect": "reject",
+  "target": "email",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt13@",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-14",
+  "expect": "reject",
+  "target": "email",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt14@example",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-15",
+  "expect": "reject",
+  "target": "email",
+  "name": "Nguyen Van A",
+  "email": "fr01@dt15@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-16",
+  "expect": "reject",
+  "target": "email",
+  "name": "Nguyen Van A",
+  "email": "fr01 dt16@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-17",
+  "expect": "reject",
+  "target": "dup",
+  "name": "Nguyen Van A",
+  "email": "test@eshop.com",
+  "password": "Newpass1@",
+  "confirm": "Newpass1@",
+  "web_workaround_confirm": "Newpass1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": "test@eshop.com",
+  "web_workaround_password": "Newpass1 "
+ },
+ {
+  "id": "DT-18",
+  "expect": "reject",
+  "target": "dup",
+  "name": "Nguyen Van A",
+  "email": "TEST@eshop.com",
+  "password": "Newpass1@",
+  "confirm": "Newpass1@",
+  "web_workaround_confirm": "Newpass1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": "test@eshop.com",
+  "web_workaround_password": "Newpass1 "
+ },
+ {
+  "id": "DT-19",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt19@example.com",
+  "password": "",
+  "confirm": "",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-20",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt20@example.com",
+  "password": "Abcd1@",
+  "confirm": "Abcd1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-21",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt21@example.com",
+  "password": "abcdef1@",
+  "confirm": "abcdef1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-22",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt22@example.com",
+  "password": "ABCDEF1@",
+  "confirm": "ABCDEF1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-23",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt23@example.com",
+  "password": "Abcdefg@",
+  "confirm": "Abcdefg@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-24",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt24@example.com",
+  "password": "Abcdefg1",
+  "confirm": "Abcdefg1",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-25",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt25@example.com",
+  "password": "Abcdef1#",
+  "confirm": "Abcdef1#",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "DT-26",
+  "expect": "reject",
+  "target": "confirm",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt26@example.com",
+  "password": "Abcdef1@",
+  "confirm": "",
+  "web_workaround_confirm": "",
+  "channels": [
+   "web"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-27",
+  "expect": "reject",
+  "target": "confirm",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt27@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef2@",
+  "web_workaround_confirm": "Abcdef2 ",
+  "channels": [
+   "web"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-28",
+  "expect": "reject",
+  "target": "confirm",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt28@example.com",
+  "password": "Abcdef1@",
+  "confirm": "abcdef1@",
+  "web_workaround_confirm": "abcdef1 ",
+  "channels": [
+   "web"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "BV-01",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv01@example.com",
+  "password": "@",
+  "confirm": "@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-02",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv02@example.com",
+  "password": "A1",
+  "confirm": "A1",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-03",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv03@example.com",
+  "password": "Abcde1@",
+  "confirm": "Abcde1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-04",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv04@example.com",
+  "password": "Abcdefg1@",
+  "confirm": "Abcdefg1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-05",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv05@example.com",
+  "password": "Abcdef1@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "confirm": "Abcdef1@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-06",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv06@example.com",
+  "password": "ABCDEa1@",
+  "confirm": "ABCDEa1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-07",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv07@example.com",
+  "password": "Zaaaaa9@",
+  "confirm": "Zaaaaa9@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-08",
+  "expect": "accept",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv08@example.com",
+  "password": "Azzzzz0@",
+  "confirm": "Azzzzz0@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-09",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv09@example.com",
+  "password": "[bcdef1@",
+  "confirm": "[bcdef1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-10",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv10@example.com",
+  "password": "A`````1@",
+  "confirm": "A`````1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-11",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv11@example.com",
+  "password": "A{{{{{1@",
+  "confirm": "A{{{{{1@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-12",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv12@example.com",
+  "password": "Abcdef/@",
+  "confirm": "Abcdef/@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-13",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv13@example.com",
+  "password": "Abcdef:@",
+  "confirm": "Abcdef:@",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
+ },
+ {
+  "id": "BV-14",
+  "expect": "accept",
+  "target": "name",
+  "name": "A",
+  "email": "fr01.bv14@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "BV-15",
+  "expect": "accept",
+  "target": "name",
+  "name": " A ",
+  "email": "fr01.bv15@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "BV-16",
+  "expect": "accept",
+  "target": "name",
+  "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+  "email": "fr01.bv16@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "BV-17",
+  "expect": "accept",
+  "target": "email",
+  "name": "Nguyen Van A",
+  "email": "a@b.c",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "BV-18",
+  "expect": "accept",
+  "target": "email",
+  "name": "Nguyen Van A",
+  "email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc.ddddddddddddddddddddddddddddddddddddddddddddddddddddddddd.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@",
+  "web_workaround_confirm": "Abcdef1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "BV-19",
+  "expect": "reject",
+  "target": "dup",
+  "name": "Nguyen Van A",
+  "email": " test@eshop.com",
+  "password": "Newpass1@",
+  "confirm": "Newpass1@",
+  "web_workaround_confirm": "Newpass1 ",
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": "test@eshop.com",
+  "web_workaround_password": "Newpass1 "
+ },
+ {
+  "id": "BV-20",
+  "expect": "reject",
+  "target": "confirm",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv20@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1",
+  "web_workaround_confirm": "Abcdef1",
+  "channels": [
+   "web"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "BV-21",
+  "expect": "reject",
+  "target": "confirm",
+  "name": "Nguyen Van A",
+  "email": "fr01.bv21@example.com",
+  "password": "Abcdef1@",
+  "confirm": "Abcdef1@1",
+  "web_workaround_confirm": "Abcdef1 1",
+  "channels": [
+   "web"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": "Abcdef1 "
+ }
+]

@@ -1,0 +1,9 @@
+{
+  "name": "hw02-test-scripts",
+  "private": true,
+  "type": "module",
+  "description": "Script thực thi test HW02 (Playwright trên Chrome hệ thống)",
+  "dependencies": {
+    "playwright-core": "1.64.0-alpha-1790635538000"
+  }
+}
