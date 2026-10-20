@@ -49,6 +49,7 @@ class Feature:
     display: Callable = None             # (case, khóa) -> chuỗi hiển thị riêng (tùy chọn)
     na_text: str = "Không áp dụng"       # ô kết quả khi test case không chạy trên kênh đó
     na_note: str = ""                    # ghi chú cột "Không áp dụng" của kênh API trong bảng tổng hợp
+    web_label: str = "Web"               # tên kênh giao diện trong bảng kết quả (vd "Mobile")
 
     @property
     def by_id(self):
@@ -157,7 +158,8 @@ class Feature:
 
     def t53(self):
         web, api = self.load("web_results.json"), self.load("api_results.json")
-        lines = ["| TC | Web | Kết quả thực tế – Web | API | Kết quả thực tế – API | Bằng chứng | Bug |",
+        wl = self.web_label
+        lines = [f"| TC | {wl} | Kết quả thực tế – {wl} | API | Kết quả thực tế – API | Bằng chứng | Bug |",
                  "| --- | --- | --- | --- | --- | --- | --- |"]
         rel = f"../evidence/{self.evidence.name}"
         for c in self.cases:
@@ -167,7 +169,7 @@ class Feature:
                 for b in self.bugs_for(c, ch, r["verdict"] if r else None):
                     if b not in bugs:
                         bugs.append(b)
-            proof = " · ".join(([f"[ảnh Web]({rel}/web/{c['id']}.png)"] if w else []) + (["`api_results.json`"] if a else []))
+            proof = " · ".join(([f"[ảnh {wl}]({rel}/web/{c['id']}.png)"] if w else []) + (["`api_results.json`"] if a else []))
             na = self.na_text
             lines.append(f"| {c['id']} | {w['verdict'] if w else '–'} | {esc_cell(self.web_actual(w, c)) if w else na} "
                          f"| {a['verdict'] if a else '–'} | {esc_cell(self.api_actual(a, c)) if a else na} "
@@ -180,7 +182,7 @@ class Feature:
         n = len(self.cases)
         lines = ["| Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |",
                  "| --- | --- | --- | --- | --- | --- | --- |",
-                 f"| Web | {n} | {len(web)} | {count(web, 'Pass')} | {count(web, 'Fail')} | {count(web, 'Blocked')} "
+                 f"| {self.web_label} | {n} | {len(web)} | {count(web, 'Pass')} | {count(web, 'Fail')} | {count(web, 'Blocked')} "
                  f"| {n - len(web)} |",
                  f"| API | {n} | {len(api)} | {count(api, 'Pass')} | {count(api, 'Fail')} | {count(api, 'Blocked')} "
                  f"| {n - len(api)}{self.na_note} |",

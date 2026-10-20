@@ -1,0 +1,603 @@
+[
+ {
+  "id": "MOB-DT-01",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập thành công với email và mật khẩu đúng",
+  "covers": "EC1, EC7, EC12, EC17",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [],
+  "wait": 0,
+  "expect": "accept",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-02",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập thành công khi email khác chữ hoa / thường",
+  "covers": "EC2, EC7, EC12, EC17",
+  "email": "TEST@eshop.com",
+  "password": "Test1234!",
+  "pre": [],
+  "wait": 0,
+  "expect": "accept",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A6",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-03",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập thành công khi email có khoảng trắng đầu / cuối",
+  "covers": "EC3, EC7, EC12, EC17",
+  "email": " test@eshop.com ",
+  "password": "Test1234!",
+  "pre": [],
+  "wait": 0,
+  "expect": "accept",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A6",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-04",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập thành công khi đã hết 30 giây khóa",
+  "covers": "EC15, EC21",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 35,
+  "expect": "accept",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); tiền điều kiện: 3 lần sai liên tiếp rồi chờ 35 giây",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-05",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập đúng xen giữa làm mới chuỗi sai liên tiếp",
+  "covers": "EC16, EC12, EC17",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Test1234!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 0,
+  "expect": "accept",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A3; sau lần đúng thứ nhất chuỗi sai bắt đầu lại nên 2 lần sai sau không làm khóa tài khoản",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-06",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập bị từ chối khi sai mật khẩu",
+  "covers": "EC8, EC18, EC19",
+  "email": "test@eshop.com",
+  "password": "Sai12345!",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 1,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-07",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập bị từ chối với cùng thông báo khi email không tồn tại",
+  "covers": "EC4, EC18",
+  "email": "khongco@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 1,
+  "lock_expected": null,
+  "same_message_as_pre": true,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19); A5, A7: thông báo giống hệt lần sai mật khẩu ở tiền điều kiện; bộ đếm của `test@eshop.com` giữ 1",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-08",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập bị từ chối khi bỏ trống email",
+  "covers": "EC5, EC18",
+  "email": "",
+  "password": "Test1234!",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 0,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 0 (EC18, EC19)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-09",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập bị từ chối khi email sai định dạng",
+  "covers": "EC6, EC18",
+  "email": "test@eshop",
+  "password": "Test1234!",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 0,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 0 (EC18, EC19)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-10",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập bị từ chối khi bỏ trống mật khẩu",
+  "covers": "EC9, EC18",
+  "email": "test@eshop.com",
+  "password": "",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 1,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-11",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập bị từ chối khi mật khẩu chỉ khác chữ hoa / thường",
+  "covers": "EC10, EC18",
+  "email": "test@eshop.com",
+  "password": "test1234!",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 1,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-12",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập bị từ chối khi mật khẩu thừa khoảng trắng cuối",
+  "covers": "EC11, EC18",
+  "email": "test@eshop.com",
+  "password": "Test1234! ",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 1,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19); A6",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-DT-13",
+  "section": "DT",
+  "title": "Kiểm tra đăng nhập bị từ chối dù mật khẩu đúng khi đã sai 3 lần liên tiếp",
+  "covers": "EC13, EC14, EC20",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 0,
+  "expect": "locked",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối dù mật khẩu đúng (tài khoản đang bị khóa), ở lại màn hình Đăng nhập; API trả 4xx, không có `token` (EC20); A2",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-01",
+  "section": "BV",
+  "title": "Kiểm tra đăng nhập thành công khi trước đó sai 1 lần",
+  "covers": "EC12 – 1 lần sai (LB+1)",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 0,
+  "expect": "accept",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-02",
+  "section": "BV",
+  "title": "Kiểm tra đăng nhập thành công khi trước đó sai 2 lần liên tiếp",
+  "covers": "EC12/EC13 – 2 lần sai (UB của EC12)",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 0,
+  "expect": "accept",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A2",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-03",
+  "section": "BV",
+  "title": "Kiểm tra đăng nhập bị từ chối dù mật khẩu đúng khi trước đó sai 4 lần liên tiếp",
+  "covers": "EC13 – 4 lần sai (LB+1 của EC13)",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 0,
+  "expect": "locked",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối dù mật khẩu đúng (tài khoản đang bị khóa), ở lại màn hình Đăng nhập; API trả 4xx, không có `token` (EC20)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-04",
+  "section": "BV",
+  "title": "Kiểm tra lần sai thứ 3 liên tiếp đưa bộ đếm lên 3 và khóa tài khoản",
+  "covers": "EC19 – bộ đếm 2 → 3 (biên khóa)",
+  "email": "test@eshop.com",
+  "password": "Sai12345!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 3,
+  "lock_expected": true,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 3 (EC18, EC19); sau lần này `locked_until` ≈ thời điểm hiện tại + 30 giây",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-05",
+  "section": "BV",
+  "title": "Kiểm tra đăng nhập bị từ chối khi mới qua 28 giây khóa",
+  "covers": "EC14/EC15 – 28 giây (UB-1 của EC14, sai số thao tác ~1 giây)",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 28,
+  "expect": "locked",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối dù mật khẩu đúng (tài khoản đang bị khóa), ở lại màn hình Đăng nhập; API trả 4xx, không có `token` (EC20)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-06",
+  "section": "BV",
+  "title": "Kiểm tra đăng nhập thành công khi đã qua 32 giây khóa",
+  "covers": "EC14/EC15 – 32 giây (LB+1 của EC15, sai số thao tác ~1 giây)",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 32,
+  "expect": "accept",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-07",
+  "section": "BV",
+  "title": "Kiểm tra đăng nhập bị từ chối khi mật khẩu thiếu 1 ký tự cuối",
+  "covers": "EC7/EC8 – độ dài mật khẩu − 1",
+  "email": "test@eshop.com",
+  "password": "Test1234",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 1,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-08",
+  "section": "BV",
+  "title": "Kiểm tra đăng nhập bị từ chối khi mật khẩu thừa 1 ký tự",
+  "covers": "EC7/EC8 – độ dài mật khẩu + 1",
+  "email": "test@eshop.com",
+  "password": "Test1234!!",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 1,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-09",
+  "section": "BV",
+  "title": "Kiểm tra đăng nhập bị từ chối khi email thiếu 1 ký tự cuối",
+  "covers": "EC1/EC4 – độ dài email − 1",
+  "email": "test@eshop.co",
+  "password": "Test1234!",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 0,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 0 (EC18, EC19)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ },
+ {
+  "id": "MOB-BV-10",
+  "section": "BV",
+  "title": "Kiểm tra đăng nhập bị từ chối khi email thừa 1 ký tự",
+  "covers": "EC1/EC4 – độ dài email + 1",
+  "email": "test@eshop.comm",
+  "password": "Test1234!",
+  "pre": [],
+  "wait": 0,
+  "expect": "fail",
+  "counter": 0,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 0 (EC18, EC19)",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
+ }
+]

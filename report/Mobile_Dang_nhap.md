@@ -130,15 +130,71 @@ Tổng: 16 lớp đầu vào (7 valid, 9 invalid) và 5 lớp đầu ra.
 
 ### 3.1 Thủ tục thực hiện
 
+Mọi test case dùng chung thủ tục, chỉ dữ liệu thay đổi → dạng **data matrix** [DR]. ID có tiền tố `MOB-`. Mỗi test case gồm các **lần thử trước** (tiền điều kiện, thực hiện cùng kênh) và **lần thử được đánh giá** (cột Email, Mật khẩu). Trong bảng: `␣` là một dấu cách; `(rỗng)` là để trống ô.
+
+**Tiền điều kiện chung (self-standing, self-cleaning):** khởi động lại backend trước mỗi test case → `test@eshop.com / Test1234!` có `login_attempts = 0`, chưa bị khóa.
+
+**P-MOBILE** – Android Emulator Pixel 2, Expo Go:
+
+| Bước | Hành động | Kết quả mong đợi của bước |
+| --- | --- | --- |
+| 1 | Mở lại app (trạng thái chưa đăng nhập), bấm "Đăng nhập" trên thanh tiêu đề | Màn hình "Đăng Nhập" với ô Email, Mật khẩu, nút đăng nhập |
+| 2 | Thực hiện lần lượt các lần thử trước: nhập Email, Mật khẩu, bấm nút đăng nhập; nếu đăng nhập thành công thì quay lại màn hình Đăng nhập | Như thiết kế của tiền điều kiện |
+| 3 | Chờ theo cột "Chờ trước lần thử" (tính từ lần thử trước cuối cùng) | – |
+| 4 | Nhập Email, Mật khẩu theo cột dữ liệu, bấm nút đăng nhập | Như cột Kết quả mong đợi |
+| 5 | Nếu đăng nhập thành công: bấm "Chào, …" trên thanh tiêu đề | Trang "Hồ sơ của bạn" hiện email `test@eshop.com` (token được dùng – A8) |
+| 6 | Kiểm chứng bộ đếm: `GET /api/admin/users` → `login_attempts`, `locked_until` của `test@eshop.com` (A4) | Như cột Kết quả mong đợi |
+
+**P-API** – các lần thử trước và lần thử được đánh giá là `POST /api/login` với `{"email", "password"}`; kiểm chứng mã HTTP, `token`, và bước 6 như trên.
+
 ### 3.2 Minimum Set of Test Cases
 
-| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Dữ liệu | Kết quả mong đợi | Origin |
-| --- | --- | --- | --- | --- | --- |
+Dữ liệu và kết quả mong đợi được sinh từ `scripts/mobile/cases.py` (cùng nguồn với script thực thi) bằng `scripts/mobile/report_tables.py`.
+
+<!-- BEGIN:T32 -->
+**Test case valid** – mỗi test case phủ nhiều lớp valid nhất có thể:
+
+| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Email | Mật khẩu | Các lần thử trước (tiền điều kiện) | Chờ trước lần thử | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| MOB-DT-01 | Kiểm tra đăng nhập thành công với email và mật khẩu đúng | EC1, EC7, EC12, EC17 | `test@eshop.com` | `Test1234!` | – | – | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17) | Mobile, API | AI |
+| MOB-DT-02 | Kiểm tra đăng nhập thành công khi email khác chữ hoa / thường | EC2, EC7, EC12, EC17 | `TEST@eshop.com` | `Test1234!` | – | – | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A6 | Mobile, API | AI |
+| MOB-DT-03 | Kiểm tra đăng nhập thành công khi email có khoảng trắng đầu / cuối | EC3, EC7, EC12, EC17 | `␣test@eshop.com␣` | `Test1234!` | – | – | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A6 | Mobile, API | AI |
+| MOB-DT-04 | Kiểm tra đăng nhập thành công khi đã hết 30 giây khóa | EC15, EC21 | `test@eshop.com` | `Test1234!` | 3 × sai (`Sai12345!`) | 35 giây | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); tiền điều kiện: 3 lần sai liên tiếp rồi chờ 35 giây | Mobile, API | AI |
+| MOB-DT-05 | Kiểm tra đăng nhập đúng xen giữa làm mới chuỗi sai liên tiếp | EC16, EC12, EC17 | `test@eshop.com` | `Test1234!` | 2 × sai (`Sai12345!`) → 1 × đúng (`Test1234!`) → 2 × sai (`Sai12345!`) | – | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A3; sau lần đúng thứ nhất chuỗi sai bắt đầu lại nên 2 lần sai sau không làm khóa tài khoản | Mobile, API | AI |
+
+**Test case invalid** – mỗi test case phủ đúng một lớp invalid, các biến còn lại hợp lệ:
+
+| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Email | Mật khẩu | Các lần thử trước (tiền điều kiện) | Chờ trước lần thử | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| MOB-DT-06 | Kiểm tra đăng nhập bị từ chối khi sai mật khẩu | EC8, EC18, EC19 | `test@eshop.com` | `Sai12345!` | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19) | Mobile, API | AI |
+| MOB-DT-07 | Kiểm tra đăng nhập bị từ chối với cùng thông báo khi email không tồn tại | EC4, EC18 | `khongco@eshop.com` | `Test1234!` | 1 × sai (`Sai12345!`) | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19); A5, A7: thông báo giống hệt lần sai mật khẩu ở tiền điều kiện; bộ đếm của `test@eshop.com` giữ 1 | Mobile, API | AI |
+| MOB-DT-08 | Kiểm tra đăng nhập bị từ chối khi bỏ trống email | EC5, EC18 | (rỗng) | `Test1234!` | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 0 (EC18, EC19) | Mobile, API | AI |
+| MOB-DT-09 | Kiểm tra đăng nhập bị từ chối khi email sai định dạng | EC6, EC18 | `test@eshop` | `Test1234!` | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 0 (EC18, EC19) | Mobile, API | AI |
+| MOB-DT-10 | Kiểm tra đăng nhập bị từ chối khi bỏ trống mật khẩu | EC9, EC18 | `test@eshop.com` | (rỗng) | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19) | Mobile, API | AI |
+| MOB-DT-11 | Kiểm tra đăng nhập bị từ chối khi mật khẩu chỉ khác chữ hoa / thường | EC10, EC18 | `test@eshop.com` | `test1234!` | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19) | Mobile, API | AI |
+| MOB-DT-12 | Kiểm tra đăng nhập bị từ chối khi mật khẩu thừa khoảng trắng cuối | EC11, EC18 | `test@eshop.com` | `Test1234!␣` | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19); A6 | Mobile, API | AI |
+| MOB-DT-13 | Kiểm tra đăng nhập bị từ chối dù mật khẩu đúng khi đã sai 3 lần liên tiếp | EC13, EC14, EC20 | `test@eshop.com` | `Test1234!` | 3 × sai (`Sai12345!`) | – | Từ chối dù mật khẩu đúng (tài khoản đang bị khóa), ở lại màn hình Đăng nhập; API trả 4xx, không có `token` (EC20); A2 | Mobile, API | AI |
+<!-- END:T32 -->
 
 ### 3.3 Bảng phủ phân vùng
 
-| EC | Test case phủ |
-| --- | --- |
+<!-- BEGIN:T33 -->
+| EC | Test case phủ | | EC | Test case phủ |
+| --- | --- | --- | --- | --- |
+| EC1 | MOB-DT-01 | | EC12 | MOB-DT-01…MOB-DT-03, MOB-DT-05 |
+| EC2 | MOB-DT-02 | | EC13 | MOB-DT-13 |
+| EC3 | MOB-DT-03 | | EC14 | MOB-DT-13 |
+| EC4 | MOB-DT-07 | | EC15 | MOB-DT-04 |
+| EC5 | MOB-DT-08 | | EC16 | MOB-DT-05 |
+| EC6 | MOB-DT-09 | | EC17 | MOB-DT-01…MOB-DT-03, MOB-DT-05 |
+| EC7 | MOB-DT-01…MOB-DT-03 | | EC18 | MOB-DT-06…MOB-DT-12 |
+| EC8 | MOB-DT-06 | | EC19 | MOB-DT-06 |
+| EC9 | MOB-DT-10 | | EC20 | MOB-DT-13 |
+| EC10 | MOB-DT-11 | | EC21 | MOB-DT-04 |
+| EC11 | MOB-DT-12 | |  |  |
+
+21 / 21 lớp được phủ bởi 13 test case Minimum Set (5 valid, 8 invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có test case riêng.
+<!-- END:T33 -->
 
 ## 4. Bước 4 – Boundary Value Analysis
 
