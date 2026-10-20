@@ -2,4 +2,3 @@ node_modules/
 __pycache__/
 *.zip
 .DS_Store
-scripts/node_modules/

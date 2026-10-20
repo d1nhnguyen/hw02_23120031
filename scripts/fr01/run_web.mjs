@@ -29,7 +29,10 @@ function reasonOf(message) {
   return 'unknown';
 }
 
-let cases = JSON.parse(readFileSync(join(HERE, 'cases.json'), 'utf8')).filter((c) => c.channels.includes('web'));
+// ONLY=DT-29 node fr01/run_web.mjs  -> chỉ chạy các test case liệt kê, ghi ra file kết quả riêng
+const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null;
+let cases = JSON.parse(readFileSync(join(HERE, 'cases.json'), 'utf8'))
+  .filter((c) => c.channels.includes('web') && (!ONLY || ONLY.includes(c.id)));
 if (WORKAROUND) {
   cases = cases.filter((c) => c.web_workaround_password)
     .map((c) => ({ ...c, password: c.web_workaround_password, confirm: c.web_workaround_confirm }));
@@ -138,7 +141,7 @@ for (const c of cases) {
 }
 await browser.close();
 
-const out = join(EVIDENCE, `web_results${WORKAROUND ? '_workaround' : ''}.json`);
+const out = join(EVIDENCE, `web_results${WORKAROUND ? '_workaround' : ''}${ONLY ? `_${ONLY.join('_')}` : ''}.json`);
 writeFileSync(out, JSON.stringify({ run_at: new Date().toISOString(), workaround: WORKAROUND, results }, null, 1));
 const count = (v) => results.filter((r) => r.verdict === v).length;
 console.log(`\n${results.length} test case: ${count('Pass')} Pass, ${count('Fail')} Fail, ${count('Blocked')} Blocked -> ${out}`);

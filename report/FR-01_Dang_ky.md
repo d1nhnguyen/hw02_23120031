@@ -397,8 +397,39 @@ Theo test case (gộp 2 kênh: Fail nếu Fail ở bất kỳ kênh nào, Blocke
 
 ## 6. Bước 6 – AI gap analysis
 
-| # | AI bỏ sót / làm sai | Loại (EC / TC / biên / expected sai / bug) | Nguyên nhân (prompt / giới hạn công cụ AI / độ phức tạp feature) | Phát hiện bằng cách nào | Đã xử lý |
+> Bản nháp do AI (Claude Code) tự liệt kê những chỗ nó làm sai / bỏ sót trong các bước 1–5 của FR-01. Sinh viên rà soát và bổ sung các điểm tự phát hiện (commit `[FR-01][B6-review]`).
+
+### 6.1 Những gì AI bỏ sót hoặc làm sai
+
+| # | AI bỏ sót / làm sai | Loại | Nguyên nhân | Phát hiện bằng cách nào | Đã xử lý |
 | --- | --- | --- | --- | --- | --- |
+| G1 | Lớp EC28 "chỉ có ký tự đặc biệt ngoài tập" dùng `#` làm đại diện; không xét dấu cách – đúng ký tự mà form Web coi là "ký tự đặc biệt". Thiết kế ban đầu không có test case phát hiện việc Web / API chấp nhận mật khẩu không có ký tự nào thuộc tập | Test case / chọn best representative | **Giới hạn công cụ AI**: chọn đại diện "điển hình" thay vì theo rủi ro; trước khi chạy không quan sát được cách SUT xử lý từng ký tự. **Độ phức tạp feature**: các phần tử của cùng một lớp lại được SUT xử lý khác nhau – đúng trường hợp guideline G5 yêu cầu tách lớp | Khảo sát 43 mật khẩu ở bước 5 | Bổ sung DT-29 (mục 6.2) |
+| G2 | Bản đầu của script Web coi "bị từ chối với bất kỳ thông báo nào" là Pass → 10 test case Email / Họ Tên / email trùng được báo Pass trong khi thật ra bị từ chối vì "Mật khẩu quá yếu!" | Kết quả mong đợi / oracle quá lỏng | **Giới hạn công cụ AI**: tự động hoá kiểm tra không bám đúng giả định A7 ("thông báo chỉ đúng lý do") mà chính nó đã đặt ra | Rà soát output lượt chạy đầu: mọi test case từ chối đều cùng một câu thông báo | Kiểm tra lý do từ chối theo trường; thêm trạng thái Blocked |
+| G3 | Bản đầu của script không đánh Fail 5 test case Xác nhận mật khẩu khi ô này không tồn tại (chúng "Pass" vì bị từ chối do mật khẩu) | Oracle | Như G2 | Rà soát output | Kiểm tra sự tồn tại của ô trước khi kết luận |
+| G4 | Giả định đường vòng `Abcdef1@␣` sẽ qua được form vì `Abcdef1␣` qua được – khái quát hoá từ một mẫu | Giả định sai | **Giới hạn công cụ AI**: suy luận quá đà từ dữ liệu khảo sát ít | Lượt chạy lại vẫn bị chặn | Khảo sát thêm 10 mật khẩu; chuyển lượt chạy lại thành khảo sát, không tính verdict |
+| G5 | Script đọc thông báo validation của form Đăng nhập sau khi đã chuyển trang, ghi vào bằng chứng như thông báo của form Đăng ký | Bằng chứng sai lệch | **Giới hạn công cụ AI**: không lường trước việc chuyển trang làm thay đổi phần tử được chọn | Đọc output: test case thành công lại có "Please fill out this field." | Chỉ đọc thông báo khi còn ở `/register` |
+| G6 | Kiểm tra "tài khoản gốc bị ảnh hưởng" dựa vào số tài khoản trùng email = 1, bị nhiễm trạng thái do test case trước tạo ra → kết luận sai cho DT-18, BV-19 | Oracle / test case không độc lập | **Độ phức tạp feature**: một lỗi (cho trùng email) làm thay đổi trạng thái dùng chung giữa các test case | Đối chiếu thủ công bằng `curl` | Chỉ dựa vào việc tài khoản gốc còn đăng nhập được |
+| G7 | Email 254 ký tự bị tính thành 255 | Dữ liệu test | Lỗi tính toán của AI | `assert` trong `cases.py` | Sửa |
+| G8 | Trước khi commit B3, bảng phủ tính cả test case invalid là phủ lớp valid; DT-19 ghi ô Xác nhận rỗng thay vì `= MK` | Bảng phủ / dữ liệu | AI áp dụng quy tắc Minimum Set chưa chặt | AI tự rà soát trước khi commit (không có trong lịch sử commit) | Sửa trước commit |
+
+### 6.2 Test case bổ sung
+
+| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Mật khẩu | Kết quả mong đợi | Web | API | Bug | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| DT-29 | Kiểm tra đăng ký bị từ chối khi ký tự đặc biệt duy nhất của Mật khẩu là dấu cách | EC28 (đại diện thứ hai), EC45 | `Abcdef1␣` | Từ chối, mật khẩu không đủ mạnh (A1) | Fail – đăng ký thành công | Fail – 200, tạo tài khoản | FR01-B1, FR01-B5 | AI (sau khảo sát) |
+
+Bằng chứng: `evidence/FR-01/web_results_DT-29.json`, `api_results_DT-29.json`, ảnh `evidence/FR-01/web/DT-29.png`.
+
+### 6.3 Điểm còn mở (chưa xử lý)
+
+- Đặc tả không nói "chữ hoa / chữ thường" có gồm chữ có dấu (`Đ`, `Ă`, `ê`…) hay không; thiết kế hiện chỉ xét `A–Z`, `a–z`. Cần hỏi TA trước khi thêm lớp.
+- Các giả định A1–A5 ảnh hưởng trực tiếp tới kết quả mong đợi (đặc biệt A3, A4 liên quan FR01-B6, FR01-B8); nên xác nhận với TA.
+
+### 6.4 Nhận xét
+
+- **Do prompt:** prompt "tiếp tục làm các bước" không quy định cách xử lý test case bị một lỗi khác che, nên AI tự chọn cách xử lý (Blocked + lượt khảo sát); sinh viên cần xác nhận lựa chọn này.
+- **Do giới hạn công cụ AI:** phần lớn sai sót (G2–G7) nằm ở script tự động hoá và oracle, không phải ở bảng phân vùng; AI viết oracle lỏng hơn chính giả định nó đặt ra.
+- **Do độ phức tạp feature:** hai lỗi chồng nhau (Web chặn mật khẩu hợp lệ, server không kiểm tra gì) khiến kết quả "Pass" trên Web dễ là Pass giả nếu không kiểm tra lý do từ chối.
 
 ## 7. Bước 7 – Bug
 

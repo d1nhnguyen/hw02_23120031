@@ -4,6 +4,7 @@ Yêu cầu: backend vừa khởi động lại (dữ liệu seed).
 Kết quả: evidence/FR-01/api_results.json
 """
 import json
+import os
 import re
 import sys
 import urllib.error
@@ -14,7 +15,10 @@ from pathlib import Path
 from cases import CASES, SEED_PASSWORD
 
 BASE = "http://localhost:3000/api"
-OUT = Path(__file__).resolve().parents[2] / "evidence" / "FR-01" / "api_results.json"
+# ONLY=DT-29 python3 run_api.py -> chỉ chạy các test case liệt kê, ghi ra file kết quả riêng
+ONLY = os.environ["ONLY"].split(",") if os.environ.get("ONLY") else None
+OUT = Path(__file__).resolve().parents[2] / "evidence" / "FR-01" / (
+    f"api_results_{'_'.join(ONLY)}.json" if ONLY else "api_results.json")
 
 
 def call(method, path, body=None, token=None):
@@ -64,7 +68,7 @@ def run():
     token = admin["token"]
     results = []
     for c in CASES:
-        if "api" not in c["channels"]:
+        if "api" not in c["channels"] or (ONLY and c["id"] not in ONLY):
             continue
         stored = c["email"].strip()
         before = [u for u in users(token) if str(u.get("email", "")).lower() == stored.lower()]

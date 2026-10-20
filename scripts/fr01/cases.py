@@ -91,6 +91,8 @@ CASES = [
     case("BV-19", "reject", "dup", mail=" " + SEED_EMAIL, password="Newpass1@", duplicate_of=SEED_EMAIL),
     case("BV-20", "reject", "confirm", confirm="Abcdef1", web_only=True),
     case("BV-21", "reject", "confirm", confirm="Abcdef1@1", web_only=True),
+    # 6 – bổ sung sau AI gap analysis: dấu cách là đại diện rủi ro cao nhất của EC28
+    case("DT-29", "reject", "password", password="Abcdef1 "),
 ]
 
 BY_ID = {c["id"]: c for c in CASES}
@@ -103,7 +105,7 @@ for tc_id, confirm in {
     "BV-21": "Abcdef1 1",   # thừa 1 ký tự
 }.items():
     BY_ID[tc_id]["web_workaround_confirm"] = confirm
-assert len(CASES) == 49 and len(BY_ID) == 49
+assert len(CASES) == 50 and len(BY_ID) == 50
 assert len(BY_ID["DT-01"]["password"]) == 8 and len(BY_ID["BV-05"]["password"]) == 1000
 assert len(BY_ID["BV-16"]["name"]) == 1000
 

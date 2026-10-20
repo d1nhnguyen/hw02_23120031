@@ -777,5 +777,21 @@
   ],
   "duplicate_of": null,
   "web_workaround_password": "Abcdef1 "
+ },
+ {
+  "id": "DT-29",
+  "expect": "reject",
+  "target": "password",
+  "name": "Nguyen Van A",
+  "email": "fr01.dt29@example.com",
+  "password": "Abcdef1 ",
+  "confirm": "Abcdef1 ",
+  "web_workaround_confirm": null,
+  "channels": [
+   "web",
+   "api"
+  ],
+  "duplicate_of": null,
+  "web_workaround_password": null
  }
 ]

@@ -1,0 +1,24 @@
+{
+ "run_at": "2026-10-20T15:07:30.172Z",
+ "workaround": false,
+ "results": [
+  {
+   "id": "DT-29",
+   "expect": "reject",
+   "target": "password",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":3}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  }
+ ]
+}
