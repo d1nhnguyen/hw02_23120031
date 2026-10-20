@@ -223,24 +223,24 @@ Dữ liệu và kết quả mong đợi được sinh từ `scripts/fr15/cases.p
 <!-- BEGIN:T33 -->
 | EC | Test case phủ | | EC | Test case phủ |
 | --- | --- | --- | --- | --- |
-| EC1 | FR15-DT-01…FR15-DT-04 | | EC17 | FR15-DT-01…FR15-DT-04, FR15-DT-15, FR15-DT-16 |
+| EC1 | FR15-DT-01…FR15-DT-04 | | EC17 | FR15-DT-01…FR15-DT-04, FR15-DT-15, FR15-DT-16; bổ sung: FR15-DT-34 (mục 6.2) |
 | EC2 | FR15-DT-01…FR15-DT-04, FR15-DT-15, FR15-DT-16, FR15-DT-30 | | EC18 | FR15-DT-12, FR15-DT-24 |
-| EC3 | FR15-DT-15, FR15-DT-16 | | EC19 | FR15-DT-13, FR15-DT-25 |
+| EC3 | FR15-DT-15, FR15-DT-16; bổ sung: FR15-DT-34 (mục 6.2) | | EC19 | FR15-DT-13, FR15-DT-25 |
 | EC4 | FR15-DT-30 | | EC20 | FR15-DT-14, FR15-DT-26 |
-| EC5 | FR15-DT-01, FR15-DT-04, FR15-DT-15 | | EC21 | FR15-DT-15, FR15-DT-16, FR15-DT-30 |
+| EC5 | FR15-DT-01, FR15-DT-04, FR15-DT-15 | | EC21 | FR15-DT-15, FR15-DT-16, FR15-DT-30; bổ sung: FR15-DT-34 (mục 6.2) |
 | EC6 | FR15-DT-02, FR15-DT-16 | | EC22 | FR15-DT-27, FR15-DT-31 |
 | EC7 | FR15-DT-03 | | EC23 | FR15-DT-28, FR15-DT-32 |
 | EC8 | FR15-DT-05, FR15-DT-17 | | EC24 | FR15-DT-29, FR15-DT-33 |
 | EC9 | FR15-DT-06, FR15-DT-18 | | EC25 | FR15-DT-01…FR15-DT-04 |
-| EC10 | FR15-DT-07, FR15-DT-19 | | EC26 | FR15-DT-15, FR15-DT-16 |
-| EC11 | FR15-DT-01…FR15-DT-03, FR15-DT-15, FR15-DT-16 | | EC27 | FR15-DT-30 |
+| EC10 | FR15-DT-07, FR15-DT-19 | | EC26 | FR15-DT-15, FR15-DT-16; bổ sung: FR15-DT-34 (mục 6.2) |
+| EC11 | FR15-DT-01…FR15-DT-03, FR15-DT-15, FR15-DT-16; bổ sung: FR15-DT-34 (mục 6.2) | | EC27 | FR15-DT-30 |
 | EC12 | FR15-DT-04 | | EC28 | FR15-DT-15, FR15-DT-16, FR15-DT-30 |
 | EC13 | FR15-DT-08, FR15-DT-20 | | EC29 | FR15-DT-05…FR15-DT-07, FR15-DT-17…FR15-DT-19 |
 | EC14 | FR15-DT-09, FR15-DT-21 | | EC30 | FR15-DT-08…FR15-DT-11, FR15-DT-20…FR15-DT-23 |
 | EC15 | FR15-DT-10, FR15-DT-22 | | EC31 | FR15-DT-12…FR15-DT-14, FR15-DT-24…FR15-DT-26 |
 | EC16 | FR15-DT-11, FR15-DT-23 | | EC32 | FR15-DT-27…FR15-DT-29, FR15-DT-31…FR15-DT-33 |
 
-32 / 32 lớp được phủ bởi 33 test case Minimum Set (7 valid, 26 invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có test case riêng.
+32 / 32 lớp được phủ bởi 33 test case Minimum Set (7 valid, 26 invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có test case riêng. Các đại diện bổ sung sau rà soát (mục 6.2) ghi sau dấu `;`.
 <!-- END:T33 -->
 
 ## 4. Bước 4 – Boundary Value Analysis
