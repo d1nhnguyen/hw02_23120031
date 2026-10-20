@@ -281,45 +281,48 @@ BVA áp dụng cho các biến / đại lượng có thứ tự. Với mỗi ph�
 | Khoảng chữ số | `0`–`9` (mã 48–57) | `0` | `9` | 1 mã ký tự | `/` (47), `0`, `9`, `:` (58) |
 | I1 độ dài Họ Tên (không tính khoảng trắng đầu/cuối) | EC3, EC4 (0) / EC1 (≥ 1) | 1 | không giới hạn (A5) | 1 ký tự | 0, 1, 1000 |
 | I2 độ dài Email | EC5 | 5 (`a@b.c`, ngắn nhất theo A2) | 254 (giới hạn độ dài địa chỉ của RFC 5321) | 1 ký tự | 5, 254 |
-| I2 khoảng trắng đầu email × trùng email | EC6 / EC15 | – | – | – | 1 khoảng trắng + email đã tồn tại |
+| Số khoảng trắng ở đầu email | EC5 (0) / EC6 (≥ 1) | 1 | không giới hạn | 1 ký tự | 0 (FR01-DT-01); 1 đầu + 1 cuối (FR01-DT-02); 1 – kết hợp email đã tồn tại EC15 để kiểm tra việc bỏ khoảng trắng trước khi so trùng (FR01-BV-19) |
 | I4 so với I3 | EC37 (khớp) / EC39 (khác) | độ dài = độ dài MK | | 1 ký tự | MK thiếu 1 ký tự cuối, MK thừa 1 ký tự |
 
 ### 4.2 Boundary Value Test Cases
 
-Thủ tục: P-WEB / P-API ở mục 3.1. Giá trị mặc định như mục 3.2; email mỗi test case là `fr01.<id>@example.com` trừ khi ghi khác.
+Thủ tục: P-WEB / P-API ở mục 3.1. Bảng giữ nguyên các cột dữ liệu của data matrix như mục 3.2 (theo Table 6 của [UC] và slide 27 của [S04]). Dòng có ID trong ngoặc là điểm biên đã có trong Minimum Set, chỉ dẫn chiếu.
 
-| ID | Tên test case (Action + Function + Condition) | Partition tested | Giá trị | Kết quả mong đợi | Kênh | Origin |
-| --- | --- | --- | --- | --- | --- | --- |
-| (DT-19) | Mật khẩu độ dài 0 | EC17 | `` | Từ chối | | |
-| BV-01 | Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 1 ký tự | EC17/EC19 (LB) | `@` | Từ chối, mật khẩu không đủ mạnh | Web, API | AI |
-| BV-02 | Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 2 ký tự | EC19 (LB+1) | `A1` | Từ chối, mật khẩu không đủ mạnh | Web, API | AI |
-| (DT-20) | Mật khẩu dài 6 ký tự | EC19 (UB-1) | `Abcd1@` | Từ chối | | |
-| BV-03 | Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 7 ký tự và đủ 4 loại ký tự | EC19/EC18 (UB của EC19) | `Abcde1@` | Từ chối, mật khẩu không đủ mạnh | Web, API | AI |
-| (DT-01) | Mật khẩu dài 8 ký tự | EC19/EC18 (LB của EC18) | `Abcdef1@` | Thành công | | |
-| BV-04 | Kiểm tra đăng ký thành công khi Mật khẩu dài 9 ký tự | EC18 (LB+1) | `Abcdefg1@` | Thành công, đăng nhập được | Web, API | AI |
-| BV-05 | Kiểm tra đăng ký thành công khi Mật khẩu dài 1000 ký tự | EC18 (lớn nhất nhập được) | `Abcdef1@` + 992 × `a` | Thành công, đăng nhập được bằng đúng mật khẩu 1000 ký tự (A5) | Web, API | AI |
-| (DT-21…DT-24) | Mỗi loại ký tự có 0 ký tự | EC21, EC23, EC25, EC27 | | Từ chối | | |
-| (DT-01) | Có đúng 1 chữ hoa, 1 chữ số, 1 ký tự đặc biệt | EC20, EC24, EC26 (LB) | `Abcdef1@` | Thành công | | |
-| BV-06 | Kiểm tra đăng ký thành công khi Mật khẩu có đúng 1 chữ thường | EC22 (LB) | `ABCDEa1@` | Thành công, đăng nhập được | Web, API | AI |
-| BV-07 | Kiểm tra đăng ký thành công khi chữ hoa duy nhất là `Z`, chữ thường duy nhất là `a`, chữ số duy nhất là `9` | `Z` (UB chữ hoa), `a` (LB chữ thường), `9` (UB chữ số) | `Zaaaaa9@` | Thành công, đăng nhập được | Web, API | AI |
-| BV-08 | Kiểm tra đăng ký thành công khi chữ hoa duy nhất là `A`, chữ thường duy nhất là `z`, chữ số duy nhất là `0` | `A` (LB chữ hoa), `z` (UB chữ thường), `0` (LB chữ số) | `Azzzzz0@` | Thành công, đăng nhập được | Web, API | AI |
-| (DT-21) | Ký tự liền trước `A` là `@` – mật khẩu không có chữ hoa nhưng có `@` | `@`/`A` | `abcdef1@` | Từ chối | | |
-| BV-09 | Kiểm tra đăng ký bị từ chối khi ký tự liền sau `Z` (`[`) thay cho chữ hoa | `Z`/`[` (UB+1 chữ hoa) | `[bcdef1@` | Từ chối, mật khẩu không đủ mạnh (không có chữ hoa) | Web, API | AI |
-| BV-10 | Kiểm tra đăng ký bị từ chối khi ký tự liền trước `a` (`` ` ``) thay cho chữ thường | `` ` ``/`a` (LB-1 chữ thường) | ``A`````1@`` | Từ chối, mật khẩu không đủ mạnh (không có chữ thường) | Web, API | AI |
-| BV-11 | Kiểm tra đăng ký bị từ chối khi ký tự liền sau `z` (`{`) thay cho chữ thường | `z`/`{` (UB+1 chữ thường) | `A{{{{{1@` | Từ chối, mật khẩu không đủ mạnh (không có chữ thường) | Web, API | AI |
-| BV-12 | Kiểm tra đăng ký bị từ chối khi ký tự liền trước `0` (`/`) thay cho chữ số | `/`/`0` (LB-1 chữ số) | `Abcdef/@` | Từ chối, mật khẩu không đủ mạnh (không có chữ số) | Web, API | AI |
-| BV-13 | Kiểm tra đăng ký bị từ chối khi ký tự liền sau `9` (`:`) thay cho chữ số | `9`/`:` (UB+1 chữ số) | `Abcdef:@` | Từ chối, mật khẩu không đủ mạnh (không có chữ số) | Web, API | AI |
-| (DT-08) | Họ Tên độ dài 0 | EC3 | `` | Từ chối | | |
-| BV-14 | Kiểm tra đăng ký thành công khi Họ Tên dài 1 ký tự | EC3/EC1 (LB) | `A` | Thành công | Web, API | AI |
-| BV-15 | Kiểm tra đăng ký thành công khi Họ Tên có 1 ký tự giữa các khoảng trắng | EC4/EC1 | `␣A␣` | Thành công (A4) | Web, API | AI |
-| BV-16 | Kiểm tra đăng ký thành công khi Họ Tên dài 1000 ký tự | EC1 (lớn nhất nhập được) | 1000 × `A` | Thành công (A5) | Web, API | AI |
-| BV-17 | Kiểm tra đăng ký thành công với Email ngắn nhất hợp lệ | EC5 (LB) | `a@b.c` | Thành công, đăng nhập được | Web, API | AI |
-| BV-18 | Kiểm tra đăng ký thành công với Email dài 254 ký tự | EC5 (UB) | phần local 64 ký tự + `@` + domain 189 ký tự (các nhãn ≤ 63 ký tự, kết thúc `.com`) | Thành công, đăng nhập được | Web, API | AI |
-| BV-19 | Kiểm tra đăng ký bị từ chối khi Email đã tồn tại có thêm khoảng trắng ở đầu | EC6/EC15 | `␣test@eshop.com`, Mật khẩu `Newpass1@` | Từ chối, email đã tồn tại; `test@eshop.com / Test1234!` vẫn đăng nhập được (A4) | Web, API | AI |
-| BV-20 | Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu thiếu ký tự cuối | EC37/EC39 (độ dài - 1) | MK `Abcdef1@`, Xác nhận `Abcdef1` | Từ chối, xác nhận mật khẩu không khớp | Web | AI |
-| BV-21 | Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu thừa 1 ký tự | EC37/EC39 (độ dài + 1) | MK `Abcdef1@`, Xác nhận `Abcdef1@1` | Từ chối, xác nhận mật khẩu không khớp | Web | AI |
+<!-- BEGIN:T42 -->
+| ID | Tên test case (Action + Function + Condition) | Partition tested | Họ Tên | Email | Mật khẩu | Xác nhận | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| (FR01-DT-19) | Kiểm tra đăng ký bị từ chối khi bỏ trống Mật khẩu | EC17 – độ dài 0 | `Nguyen␣Van␣A` | `fr01.dt19@example.com` | (rỗng) | (rỗng) | Từ chối, báo thiếu Mật khẩu; không tạo tài khoản; API trả 4xx (EC42) | Web, API | xem 3.2 |
+| FR01-BV-01 | Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 1 ký tự | EC17/EC19 – độ dài 1 (LB của EC19) | `Nguyen␣Van␣A` | `fr01.bv01@example.com` | `@` | `@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | AI |
+| FR01-BV-02 | Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 2 ký tự | EC19 – độ dài 2 (LB+1) | `Nguyen␣Van␣A` | `fr01.bv02@example.com` | `A1` | `A1` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | AI |
+| (FR01-DT-20) | Kiểm tra đăng ký bị từ chối khi Mật khẩu ngắn hơn 8 ký tự | EC19 – độ dài 6 (UB-1) | `Nguyen␣Van␣A` | `fr01.dt20@example.com` | `Abcd1@` | `Abcd1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | xem 3.2 |
+| FR01-BV-03 | Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 7 ký tự và đủ 4 loại ký tự | EC19/EC18 – độ dài 7 (UB của EC19) | `Nguyen␣Van␣A` | `fr01.bv03@example.com` | `Abcde1@` | `Abcde1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | AI |
+| (FR01-DT-01) | Kiểm tra đăng ký thành công với dữ liệu hợp lệ điển hình | EC19/EC18 – độ dài 8 (LB của EC18); EC20, EC24, EC26 – đúng 1 chữ hoa, 1 chữ số, 1 ký tự đặc biệt (LB); số khoảng trắng đầu email = 0 | `Nguyen␣Van␣A` | `fr01.dt01@example.com` | `Abcdef1@` | `Abcdef1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41) | Web, API | xem 3.2 |
+| FR01-BV-04 | Kiểm tra đăng ký thành công khi Mật khẩu dài 9 ký tự | EC18 – độ dài 9 (LB+1 của EC18) | `Nguyen␣Van␣A` | `fr01.bv04@example.com` | `Abcdefg1@` | `Abcdefg1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41) | Web, API | AI |
+| FR01-BV-05 | Kiểm tra đăng ký thành công khi Mật khẩu dài 1000 ký tự | EC18 – độ dài 1000 (lớn nhất chọn thử) | `Nguyen␣Van␣A` | `fr01.bv05@example.com` | `"Abcdef1@" + "a" * 992` (1000 ký tự) | `"Abcdef1@" + "a" * 992` (1000 ký tự) | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); A5 | Web, API | AI |
+| (FR01-DT-21) | Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ hoa | EC21 – 0 chữ hoa; `@`/`A` (`@` là ký tự liền trước `A`, LB-1 chữ hoa) | `Nguyen␣Van␣A` | `fr01.dt21@example.com` | `abcdef1@` | `abcdef1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | xem 3.2 |
+| (FR01-DT-22) | Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ thường | EC23 – 0 chữ thường | `Nguyen␣Van␣A` | `fr01.dt22@example.com` | `ABCDEF1@` | `ABCDEF1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | xem 3.2 |
+| (FR01-DT-23) | Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ số | EC25 – 0 chữ số | `Nguyen␣Van␣A` | `fr01.dt23@example.com` | `Abcdefg@` | `Abcdefg@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | xem 3.2 |
+| (FR01-DT-24) | Kiểm tra đăng ký bị từ chối khi Mật khẩu không có ký tự đặc biệt | EC27 – 0 ký tự đặc biệt | `Nguyen␣Van␣A` | `fr01.dt24@example.com` | `Abcdefg1` | `Abcdefg1` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | xem 3.2 |
+| FR01-BV-06 | Kiểm tra đăng ký thành công khi Mật khẩu có đúng 1 chữ thường | EC22 – 1 chữ thường (LB) | `Nguyen␣Van␣A` | `fr01.bv06@example.com` | `ABCDEa1@` | `ABCDEa1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41) | Web, API | AI |
+| FR01-BV-07 | Kiểm tra đăng ký thành công khi chữ hoa duy nhất là `Z`, chữ thường duy nhất là `a`, chữ số duy nhất là `9` | `Z` (UB chữ hoa), `a` (LB chữ thường), `9` (UB chữ số) | `Nguyen␣Van␣A` | `fr01.bv07@example.com` | `Zaaaaa9@` | `Zaaaaa9@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41) | Web, API | AI |
+| FR01-BV-08 | Kiểm tra đăng ký thành công khi chữ hoa duy nhất là `A`, chữ thường duy nhất là `z`, chữ số duy nhất là `0` | `A` (LB chữ hoa), `z` (UB chữ thường), `0` (LB chữ số) | `Nguyen␣Van␣A` | `fr01.bv08@example.com` | `Azzzzz0@` | `Azzzzz0@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41) | Web, API | AI |
+| FR01-BV-09 | Kiểm tra đăng ký bị từ chối khi ký tự liền sau `Z` (`[`) thay cho chữ hoa | `Z`/`[` (UB+1 chữ hoa) | `Nguyen␣Van␣A` | `fr01.bv09@example.com` | `[bcdef1@` | `[bcdef1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | AI |
+| FR01-BV-10 | Kiểm tra đăng ký bị từ chối khi ký tự liền trước `a` (`` ` ``) thay cho chữ thường | `` ` ``/`a` (LB-1 chữ thường) | `Nguyen␣Van␣A` | `fr01.bv10@example.com` | ``````A`````1@`````` | ``````A`````1@`````` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | AI |
+| FR01-BV-11 | Kiểm tra đăng ký bị từ chối khi ký tự liền sau `z` (`{`) thay cho chữ thường | `z`/`{` (UB+1 chữ thường) | `Nguyen␣Van␣A` | `fr01.bv11@example.com` | `A{{{{{1@` | `A{{{{{1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | AI |
+| FR01-BV-12 | Kiểm tra đăng ký bị từ chối khi ký tự liền trước `0` (`/`) thay cho chữ số | `/`/`0` (LB-1 chữ số) | `Nguyen␣Van␣A` | `fr01.bv12@example.com` | `Abcdef/@` | `Abcdef/@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | AI |
+| FR01-BV-13 | Kiểm tra đăng ký bị từ chối khi ký tự liền sau `9` (`:`) thay cho chữ số | `9`/`:` (UB+1 chữ số) | `Nguyen␣Van␣A` | `fr01.bv13@example.com` | `Abcdef:@` | `Abcdef:@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45) | Web, API | AI |
+| (FR01-DT-08) | Kiểm tra đăng ký bị từ chối khi bỏ trống Họ Tên | EC3 – Họ Tên độ dài 0 | (rỗng) | `fr01.dt08@example.com` | `Abcdef1@` | `Abcdef1@` | Từ chối, báo thiếu Họ Tên; không tạo tài khoản; API trả 4xx (EC42) | Web, API | xem 3.2 |
+| FR01-BV-14 | Kiểm tra đăng ký thành công khi Họ Tên dài 1 ký tự | EC3/EC1 – độ dài 1 (LB của EC1) | `A` | `fr01.bv14@example.com` | `Abcdef1@` | `Abcdef1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41) | Web, API | AI |
+| FR01-BV-15 | Kiểm tra đăng ký thành công khi Họ Tên có 1 ký tự giữa các khoảng trắng | EC4/EC1 – 1 ký tự khác khoảng trắng (LB) | `␣A␣` | `fr01.bv15@example.com` | `Abcdef1@` | `Abcdef1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); A4 | Web, API | AI |
+| FR01-BV-16 | Kiểm tra đăng ký thành công khi Họ Tên dài 1000 ký tự | EC1 – độ dài 1000 (lớn nhất chọn thử) | `"A" * 1000` | `fr01.bv16@example.com` | `Abcdef1@` | `Abcdef1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); A5 | Web, API | AI |
+| FR01-BV-17 | Kiểm tra đăng ký thành công với Email ngắn nhất hợp lệ | EC5 – độ dài 5 (LB theo A2) | `Nguyen␣Van␣A` | `a@b.c` | `Abcdef1@` | `Abcdef1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41) | Web, API | AI |
+| FR01-BV-18 | Kiểm tra đăng ký thành công với Email dài 254 ký tự | EC5 – độ dài 254 (UB theo RFC 5321) | `Nguyen␣Van␣A` | `"a" * 64 + "@" + "b" * 63 + "." + "c" * 63 + "." + "d" * 57 + ".com"` (254 ký tự) | `Abcdef1@` | `Abcdef1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41) | Web, API | AI |
+| FR01-BV-19 | Kiểm tra đăng ký bị từ chối khi Email đã tồn tại có đúng 1 khoảng trắng ở đầu | Số khoảng trắng đầu email = 1 (LB của EC6) kết hợp EC15 | `Nguyen␣Van␣A` | `␣test@eshop.com` | `Newpass1@` | `Newpass1@` | Từ chối, báo email đã tồn tại; không tạo tài khoản; API trả 4xx; `test@eshop.com / Test1234!` vẫn đăng nhập được (EC44); A4 | Web, API | AI-sửa |
+| FR01-BV-20 | Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu thiếu ký tự cuối | EC37/EC39 – độ dài Mật khẩu - 1 | `Nguyen␣Van␣A` | `fr01.bv20@example.com` | `Abcdef1@` | `Abcdef1` | Từ chối, báo xác nhận mật khẩu không khớp; không tạo tài khoản (EC46) | Web | AI |
+| FR01-BV-21 | Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu thừa 1 ký tự | EC37/EC39 – độ dài Mật khẩu + 1 | `Nguyen␣Van␣A` | `fr01.bv21@example.com` | `Abcdef1@` | `Abcdef1@1` | Từ chối, báo xác nhận mật khẩu không khớp; không tạo tài khoản (EC46) | Web | AI |
 
-Tổng: 21 test case BVA mới (BV-01…BV-21); 7 điểm biên khác đã được phủ bởi test case Domain Testing (dòng có ID trong ngoặc).
+Tổng: 21 test case BVA mới (FR01-BV-01…FR01-BV-21); 8 dòng có ID trong ngoặc là điểm biên đã được phủ bởi test case Minimum Set (mục 3.2), chỉ dẫn chiếu, không chạy lại.
+<!-- END:T42 -->
 
 ## 5. Bước 5 – Kết quả thực thi
 
