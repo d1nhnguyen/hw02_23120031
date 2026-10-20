@@ -6,7 +6,7 @@
 | Mã bài | HW02-AI |
 | SUT | EShop (`ttbhanh/eshop-sut`, bản dùng chung của nhóm: `d1nhnguyen/eshop-sut`) |
 | Nơi báo bug | GitHub Issues của `d1nhnguyen/eshop-sut` |
-| Feature | FR-01 Đăng ký (Pool A) · FR-10 Máy trạng thái đơn hàng (Pool B) · FR-15 Quản lý sản phẩm (Pool C) · M-02 Mobile – Đăng nhập (Pool D) |
+| Feature | FR-01 Đăng ký (Pool A) · FR-10 Máy trạng thái đơn hàng (Pool B) · FR-15 Quản lý sản phẩm (Pool C) · Mobile – Đăng nhập (Pool D, FR-20) |
 | Công cụ AI | Claude Code (VS Code extension) |
 
 ## Bảng tự chấm
@@ -16,7 +16,7 @@
 | 1 | Feature A – FR-01 Đăng ký tài khoản (Domain + Boundary) | 25 | |
 | 2 | Feature B – FR-10 Máy trạng thái đơn hàng (Domain + Boundary) | 25 | |
 | 3 | Feature C – FR-15 Quản lý sản phẩm (Domain + Boundary) | 25 | |
-| 4 | Feature D – M-02 Mobile – Đăng nhập (Domain + Boundary) | 15 | |
+| 4 | Feature D – Mobile: Đăng nhập (Domain + Boundary) | 15 | |
 | 5 | Agent Skills | 10 | |
 | | **Tổng** | **100** | |
 
@@ -27,7 +27,7 @@
 | FR-01 | | | | | | |
 | FR-10 | | | | | | |
 | FR-15 | | | | | | |
-| M-02 | | | | | | |
+| Mobile – Đăng nhập | | | | | | |
 | **Tổng (4 feature)** | | | | | | |
 
 ## Video demo

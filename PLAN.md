@@ -7,7 +7,7 @@
 | A | FR-01 Đăng ký tài khoản | Web (`/register`) + API `POST /api/register` |
 | B | FR-10 Máy trạng thái đơn hàng | Web Admin (tab Đơn hàng) + Web (hủy đơn ở Hồ sơ) + API `PUT /api/admin/orders/:id/status`, `PUT /api/orders/:id/cancel` |
 | C | FR-15 Quản lý sản phẩm (CRUD) | Web Admin (tab Sản phẩm) + API `/api/products` |
-| D | M-02 Mobile – Đăng nhập | App mobile (Expo Go trên Android Emulator); đặc tả kế thừa FR-02, FR-20, FR-22 |
+| D | Mobile – Đăng nhập (FR-20) | App mobile (Expo Go trên Android Emulator); đặc tả kế thừa FR-02, FR-20, FR-22 |
 
 Thiết kế test theo hướng hộp đen, chỉ dựa trên đặc tả (`README.md` của SUT, `api_specification.md`). Không đọc mã nguồn SUT để thiết kế test.
 
@@ -29,7 +29,7 @@ Thiết kế test theo hướng hộp đen, chỉ dựa trên đặc tả (`READ
 
 ## Quy ước
 
-- **Commit:** `[<FR>][B<n>] <mô tả>`, ví dụ `[FR-15][B2] Xác định lớp tương đương cho tên, giá, danh mục`. Việc chung dùng `[setup]`, `[skill]`, `[report]`, `[ai-log]`.
+- **Commit:** `[<FR>][B<n>] <mô tả>`, ví dụ `[FR-15][B2] Xác định lớp tương đương cho tên, giá, danh mục`; feature mobile dùng `[Mobile]`. Việc chung dùng `[setup]`, `[skill]`, `[report]`, `[ai-log]`.
 - **Issue:** `[BUG-NN] [FR-xx] <tóm tắt>`, trong đó NN là số kế tiếp trên repo nhóm tại thời điểm tạo. Bug mobile dùng `[FR-20]` như nhóm đang làm, phần thân dẫn chiếu FR-02. Nội dung bug do AI nháp, sinh viên duyệt và tự viết lên GitHub.
 - **Prompt log:** chạy `python3 scripts/export_prompt_log.py --since 2026-10-20T20:40` sau mỗi phiên làm việc rồi commit với `[ai-log]`.
 
