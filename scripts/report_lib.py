@@ -29,6 +29,11 @@ def code(value):
     return f"{fence}{pad}{v}{pad}{fence}"
 
 
+def esc_cell(text):
+    """Văn bản tự do trong ô bảng: không để Markdown / HTML diễn giải nhầm (vd tên chứa <b>)."""
+    return str(text).replace("|", "\\|").replace("<", "&lt;").replace(">", "&gt;")
+
+
 @dataclass
 class Feature:
     prefix: str                          # vd "FR01"
@@ -159,8 +164,8 @@ class Feature:
                         bugs.append(b)
             proof = " · ".join(([f"[ảnh Web]({rel}/web/{c['id']}.png)"] if w else []) + (["`api_results.json`"] if a else []))
             na = self.na_text
-            lines.append(f"| {c['id']} | {w['verdict'] if w else '–'} | {self.web_actual(w, c) if w else na} "
-                         f"| {a['verdict'] if a else '–'} | {self.api_actual(a, c) if a else na} "
+            lines.append(f"| {c['id']} | {w['verdict'] if w else '–'} | {esc_cell(self.web_actual(w, c)) if w else na} "
+                         f"| {a['verdict'] if a else '–'} | {esc_cell(self.api_actual(a, c)) if a else na} "
                          f"| {proof} | {', '.join(bugs) or '–'} |")
         return "\n".join(lines)
 

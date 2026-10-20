@@ -29,7 +29,7 @@ Web Admin `http://localhost:5174` → đăng nhập `admin@eshop.com` → tab "S
 | --- | --- |
 | Form "Thêm sản phẩm mới" | Không có nhãn, chỉ có placeholder; nút "Lưu sản phẩm" |
 | Ô "Tên sản phẩm" | `type="text"`, `required`, không giới hạn độ dài (`maxlength` không đặt) |
-| Ô "Giá tiền" | `type="number"`, **không** `required`, không đặt `min` / `step`. Trình duyệt chặn `0.5` ("The two nearest valid values are 0 and 1" – bước mặc định 1) nhưng cho qua `0`, `-1`, `1e3` |
+| Ô "Giá tiền" | `type="number"`, **không** `required`, không đặt `min` / `step`. Với `0.5` ô báo "The two nearest valid values are 0 and 1" (bước mặc định 1), với `0`, `-1`, `1e3` không báo gì. *Đính chính ở bước 5: dù ô báo như vậy, bấm "Lưu sản phẩm" vẫn gửi và lưu giá thập phân* |
 | Ô "URL Ảnh", "Mô tả" | `text`, `textarea`, không bắt buộc |
 | Ô Danh mục | `select` gồm `1 = Điện thoại`, `2 = Laptop`, `3 = Phụ kiện`; mặc định chọn `1`; trên giao diện không thể để trống hay chọn giá trị ngoài danh sách |
 | Danh sách sản phẩm | Cột Ảnh, Tên SP, Giá, Hành động (Sửa / Xóa); không hiển thị danh mục |
@@ -305,12 +305,109 @@ Tổng: 27 test case BVA mới (FR15-BV-01…FR15-BV-27); 5 dòng có ID trong n
 
 ## 5. Bước 5 – Kết quả thực thi
 
-| TC | Kênh | Kết quả thực tế | Status | Bug ID |
-| --- | --- | --- | --- | --- |
+### 5.1 Môi trường và cách chạy
 
-| Thiết kế | Đã chạy | Pass | Fail | Blocked / chưa chạy | Số bug |
-| --- | --- | --- | --- | --- | --- |
-| | | | | | |
+| Mục | Giá trị |
+| --- | --- |
+| Ngày chạy | 2026-10-20 |
+| Người chạy | 23120031 (script tự động, kết quả được rà soát thủ công) |
+| SUT | `eshop-sut-main` (trùng với `d1nhnguyen/eshop-sut`), Node 20.19.5 |
+| Web | Web Admin `http://localhost:5174`, Chrome 155 (headless, Playwright) |
+| API | `http://localhost:3000/api`, gọi bằng Python `urllib`, token admin |
+| Dữ liệu | Backend được khởi động lại **trước mỗi test case** (`scripts/restart_backend.sh`) |
+| Script | `scripts/fr15/cases.py` (dữ liệu), `run_web.mjs` (P-WEB), `run_api.py` (P-API), `report_tables.py` (sinh bảng) |
+| Bằng chứng | `evidence/FR-15/web_results.json`, `api_results.json`; ảnh sau thao tác của từng test case `evidence/FR-15/web/<ID>.png` |
+
+Cách kết luận (A6): chụp `GET /api/products` trước và sau thao tác. Test case "thành công" Pass khi sản phẩm được thao tác mang đúng giá trị (Thêm, Sửa) hoặc biến mất (Xóa) **và** các sản phẩm khác giữ nguyên. Test case "từ chối" Pass khi danh sách sản phẩm không đổi **và** có thông báo nêu đúng trường (hoặc API trả 4xx với thông báo đúng trường); "không tìm thấy" Pass khi API trả 404 và danh sách không đổi.
+
+### 5.2 Phát hiện chính
+
+- **Server không kiểm tra dữ liệu sản phẩm:** mọi giá trị Tên / Giá / Danh mục không hợp lệ đều được lưu khi Thêm và khi Sửa (HTTP 200 "Product created" / "Product updated").
+- **Web Admin chỉ chặn Tên rỗng** (thuộc tính `required` của trình duyệt). Tên toàn khoảng trắng, Tên > 255 ký tự, Giá 0 / âm / trống đều được gửi đi; khi Sửa còn hiện "Cập nhật thành công!".
+- **Giá thập phân** (`99999.5`, `0.01`) được lưu cả qua Web lẫn API – đúng với A3; ghi nhận ở bước 1 rằng trình duyệt chặn `0.5` là chưa chính xác (xem mục 6).
+- **Sửa / Xóa sản phẩm không tồn tại** (id `0`, `6`, `9999`, `abc`, sản phẩm vừa xóa) trả 200 "Product updated" / "Product deleted" thay vì 404; dữ liệu không đổi.
+- Các thao tác hợp lệ đều đúng; khi Sửa / Xóa một sản phẩm, các sản phẩm khác giữ nguyên (đúng yêu cầu "chỉ sản phẩm đó bị thay đổi"). Tên chứa HTML được hiển thị nguyên văn.
+
+### 5.3 Kết quả theo test case
+
+Mỗi test case một dòng. Bảng sinh từ `evidence/FR-15/web_results.json` và `api_results.json`.
+
+<!-- BEGIN:T53 -->
+| TC | Web | Kết quả thực tế – Web | API | Kết quả thực tế – API | Bằng chứng | Bug |
+| --- | --- | --- | --- | --- | --- | --- |
+| FR15-DT-01 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-DT-01.png) · `api_results.json` | – |
+| FR15-DT-02 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-DT-02.png) · `api_results.json` | – |
+| FR15-DT-03 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục, danh sách hiển thị nguyên văn “&lt;b&gt;Loa Bluetooth&lt;/b&gt; Mini” | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-DT-03.png) · `api_results.json` | – |
+| FR15-DT-04 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-DT-04.png) · `api_results.json` | – |
+| FR15-DT-05 | Pass | Trình duyệt chặn ô Tên sản phẩm: “Please fill out this field.”, không gửi request; danh sách sản phẩm không đổi | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “”, Giá 350000, Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-DT-05.png) · `api_results.json` | FR15-B4 |
+| FR15-DT-06 | Fail | Form gửi request, HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “   ”, Giá 350000, Danh mục 3 | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “   ”, Giá 350000, Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-DT-06.png) · `api_results.json` | FR15-B4 |
+| FR15-DT-07 | Fail | Form gửi request, HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB…”, Giá 350000, Danh mục 3 | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB…”, Giá 350000, Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-DT-07.png) · `api_results.json` | FR15-B3 |
+| FR15-DT-08 | Fail | Form gửi request, HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá 0, Danh mục 3 | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá 0, Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-DT-08.png) · `api_results.json` | FR15-B1 |
+| FR15-DT-09 | Fail | Form gửi request, HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá -50000, Danh mục 3 | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá -50000, Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-DT-09.png) · `api_results.json` | FR15-B1 |
+| FR15-DT-10 | Fail | Form gửi request, HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá (rỗng), Danh mục 3 | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá (không có), Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-DT-10.png) · `api_results.json` | FR15-B2 |
+| FR15-DT-11 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá abc, Danh mục 3 | `api_results.json` | FR15-B2 |
+| FR15-DT-12 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá 350000, Danh mục (không có) | `api_results.json` | FR15-B5 |
+| FR15-DT-13 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá 350000, Danh mục 99 | `api_results.json` | FR15-B5 |
+| FR15-DT-14 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá 350000, Danh mục abc | `api_results.json` | FR15-B5 |
+| FR15-DT-15 | Pass | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm id 3 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | Pass | HTTP 200 “Product updated”; sản phẩm id 3 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | [ảnh Web](../evidence/FR-15/web/FR15-DT-15.png) · `api_results.json` | – |
+| FR15-DT-16 | Pass | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm id 4 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | Pass | HTTP 200 “Product updated”; sản phẩm id 4 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | [ảnh Web](../evidence/FR-15/web/FR15-DT-16.png) · `api_results.json` | – |
+| FR15-DT-17 | Pass | Trình duyệt chặn ô Tên sản phẩm: “Please fill out this field.”, không gửi request; danh sách sản phẩm không đổi | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “”, Giá 28000000, Danh mục 1 | [ảnh Web](../evidence/FR-15/web/FR15-DT-17.png) · `api_results.json` | FR15-B4 |
+| FR15-DT-18 | Fail | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm bị sửa thành: Tên “   ”, Giá 28000000, Danh mục 1 | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “   ”, Giá 28000000, Danh mục 1 | [ảnh Web](../evidence/FR-15/web/FR15-DT-18.png) · `api_results.json` | FR15-B4 |
+| FR15-DT-19 | Fail | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm bị sửa thành: Tên “BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB…”, Giá 28000000, Danh mục 1 | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB…”, Giá 28000000, Danh mục 1 | [ảnh Web](../evidence/FR-15/web/FR15-DT-19.png) · `api_results.json` | FR15-B3 |
+| FR15-DT-20 | Fail | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá 0, Danh mục 1 | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá 0, Danh mục 1 | [ảnh Web](../evidence/FR-15/web/FR15-DT-20.png) · `api_results.json` | FR15-B1 |
+| FR15-DT-21 | Fail | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá -50000, Danh mục 1 | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá -50000, Danh mục 1 | [ảnh Web](../evidence/FR-15/web/FR15-DT-21.png) · `api_results.json` | FR15-B1 |
+| FR15-DT-22 | Fail | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá (rỗng), Danh mục 1 | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá (không có), Danh mục 1 | [ảnh Web](../evidence/FR-15/web/FR15-DT-22.png) · `api_results.json` | FR15-B2 |
+| FR15-DT-23 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá abc, Danh mục 1 | `api_results.json` | FR15-B2 |
+| FR15-DT-24 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá 28000000, Danh mục (không có) | `api_results.json` | FR15-B5 |
+| FR15-DT-25 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá 28000000, Danh mục 99 | `api_results.json` | FR15-B5 |
+| FR15-DT-26 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá 28000000, Danh mục abc | `api_results.json` | FR15-B5 |
+| FR15-DT-27 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product updated”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-DT-28 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product updated”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-DT-29 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product updated”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-DT-30 | Pass | Form gửi request, HTTP 200 “Product deleted”; sản phẩm id 5 đã bị xóa, các sản phẩm khác giữ nguyên | Pass | HTTP 200 “Product deleted”; sản phẩm id 5 đã bị xóa, các sản phẩm khác giữ nguyên | [ảnh Web](../evidence/FR-15/web/FR15-DT-30.png) · `api_results.json` | – |
+| FR15-DT-31 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product deleted”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-DT-32 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product deleted”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-DT-33 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product deleted”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-BV-01 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-01.png) · `api_results.json` | – |
+| FR15-BV-02 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-02.png) · `api_results.json` | – |
+| FR15-BV-03 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-03.png) · `api_results.json` | – |
+| FR15-BV-04 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-04.png) · `api_results.json` | – |
+| FR15-BV-05 | Fail | Form gửi request, HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”, Giá 350000, Danh mục 3 | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”, Giá 350000, Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-BV-05.png) · `api_results.json` | FR15-B3 |
+| FR15-BV-06 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-06.png) · `api_results.json` | – |
+| FR15-BV-07 | Fail | Form gửi request, HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “ỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐ…”, Giá 350000, Danh mục 3 | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “ỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐ…”, Giá 350000, Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-BV-07.png) · `api_results.json` | FR15-B3 |
+| FR15-BV-08 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-08.png) · `api_results.json` | – |
+| FR15-BV-09 | Pass | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm id 2 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | Pass | HTTP 200 “Product updated”; sản phẩm id 2 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | [ảnh Web](../evidence/FR-15/web/FR15-BV-09.png) · `api_results.json` | – |
+| FR15-BV-10 | Fail | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm bị sửa thành: Tên “AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”, Giá 28000000, Danh mục 1 | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”, Giá 28000000, Danh mục 1 | [ảnh Web](../evidence/FR-15/web/FR15-BV-10.png) · `api_results.json` | FR15-B3 |
+| FR15-BV-11 | Fail | Form gửi request, HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá -1, Danh mục 3 | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá -1, Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-BV-11.png) · `api_results.json` | FR15-B1 |
+| FR15-BV-12 | Fail | Form gửi request, HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá -0.01, Danh mục 3 | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá -0.01, Danh mục 3 | [ảnh Web](../evidence/FR-15/web/FR15-BV-12.png) · `api_results.json` | FR15-B1 |
+| FR15-BV-13 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-13.png) · `api_results.json` | – |
+| FR15-BV-14 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-14.png) · `api_results.json` | – |
+| FR15-BV-15 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-15.png) · `api_results.json` | – |
+| FR15-BV-16 | Pass | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm id 2 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | Pass | HTTP 200 “Product updated”; sản phẩm id 2 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | [ảnh Web](../evidence/FR-15/web/FR15-BV-16.png) · `api_results.json` | – |
+| FR15-BV-17 | Fail | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá -1, Danh mục 1 | Fail | HTTP 200 “Product updated”; sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá -1, Danh mục 1 | [ảnh Web](../evidence/FR-15/web/FR15-BV-17.png) · `api_results.json` | FR15-B1 |
+| FR15-BV-18 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá 350000, Danh mục 0 | `api_results.json` | FR15-B5 |
+| FR15-BV-19 | Pass | Form gửi request, HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | Pass | HTTP 200 “Product created”; sản phẩm mới lưu đúng Tên / Giá / Danh mục | [ảnh Web](../evidence/FR-15/web/FR15-BV-19.png) · `api_results.json` | – |
+| FR15-BV-20 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product created”; vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá 350000, Danh mục 4 | `api_results.json` | FR15-B5 |
+| FR15-BV-21 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product updated”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-BV-22 | Pass | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm id 1 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | Pass | HTTP 200 “Product updated”; sản phẩm id 1 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | [ảnh Web](../evidence/FR-15/web/FR15-BV-22.png) · `api_results.json` | – |
+| FR15-BV-23 | Pass | Form gửi request, HTTP 200 “Product updated”, hiện “Cập nhật thành công!”; sản phẩm id 5 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | Pass | HTTP 200 “Product updated”; sản phẩm id 5 lưu đúng giá trị mới, các sản phẩm khác giữ nguyên | [ảnh Web](../evidence/FR-15/web/FR15-BV-23.png) · `api_results.json` | – |
+| FR15-BV-24 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product updated”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-BV-25 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product deleted”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+| FR15-BV-26 | Pass | Form gửi request, HTTP 200 “Product deleted”; sản phẩm id 1 đã bị xóa, các sản phẩm khác giữ nguyên | Pass | HTTP 200 “Product deleted”; sản phẩm id 1 đã bị xóa, các sản phẩm khác giữ nguyên | [ảnh Web](../evidence/FR-15/web/FR15-BV-26.png) · `api_results.json` | – |
+| FR15-BV-27 | – | Không áp dụng (giao diện không cho nhập giá trị này) | Fail | HTTP 200 “Product deleted”; báo thành công thay vì 404; danh sách sản phẩm không đổi | `api_results.json` | FR15-B6 |
+<!-- END:T53 -->
+
+### 5.4 Tổng hợp
+
+<!-- BEGIN:T55 -->
+| Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |
+| --- | --- | --- | --- | --- | --- | --- |
+| Web | 60 | 40 | 24 | 16 | 0 | 20 |
+| API | 60 | 60 | 22 | 38 | 0 | 0 |
+| **Tổng lượt chạy** | | **100** | **46** | **54** | **0** | |
+
+60 test case = 33 Minimum Set (mục 3.2) + 27 BVA (mục 4.2). Gộp các kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 22 Pass, 38 Fail, 0 Blocked.
+<!-- END:T55 -->
 
 ## 6. Bước 6 – AI gap analysis
 

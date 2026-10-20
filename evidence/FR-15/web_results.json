@@ -1,0 +1,986 @@
+{
+ "run_at": "2026-10-20T16:14:25.839Z",
+ "results": [
+  {
+   "id": "FR15-DT-01",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-DT-02",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Ốp lưng chống sốc iPhone 15",
+    "price": 150000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-DT-03",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "displayed_name": "<b>Loa Bluetooth</b> Mini",
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "<b>Loa Bluetooth</b> Mini",
+    "price": 500000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-DT-04",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": 99999.5,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-DT-05",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": false,
+   "messages": [
+    {
+     "source": "native",
+     "text": "Please fill out this field.",
+     "reason": "name"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-DT-06",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "   ",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "vẫn tạo sản phẩm: Tên “   ”, Giá 350000, Danh mục 3"
+   ]
+  },
+  {
+   "id": "FR15-DT-07",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "vẫn tạo sản phẩm: Tên “BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB…”, Giá 350000, Danh mục 3"
+   ]
+  },
+  {
+   "id": "FR15-DT-08",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": 0,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá 0, Danh mục 3"
+   ]
+  },
+  {
+   "id": "FR15-DT-09",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": -50000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá -50000, Danh mục 3"
+   ]
+  },
+  {
+   "id": "FR15-DT-10",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": "",
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá , Danh mục 3"
+   ]
+  },
+  {
+   "id": "FR15-DT-15",
+   "op": "edit",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "MacBook Pro M3",
+    "price": 42000000,
+    "category_id": 2,
+    "description": "Laptop chuyên nghiệp mạnh mẽ",
+    "imageUrl": "https://placehold.co/300x300/png?text=Macbook+Pro"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-DT-16",
+   "op": "edit",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Tai nghe AirPods Pro 2 – bản 2026",
+    "price": 6000000,
+    "category_id": 1,
+    "description": "Chống ồn chủ động xuất sắc",
+    "imageUrl": "https://placehold.co/300x300/png?text=AirPods+Pro"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-DT-17",
+   "op": "edit",
+   "expect": "reject",
+   "request_sent": false,
+   "messages": [
+    {
+     "source": "native",
+     "text": "Please fill out this field.",
+     "reason": "name"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-DT-18",
+   "op": "edit",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "   ",
+    "price": 28000000,
+    "category_id": 1,
+    "description": "Màn hình hiển thị xuất sắc, camera siêu zoom",
+    "imageUrl": "https://placehold.co/300x300/png?text=Samsung+S24"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "sản phẩm bị sửa thành: Tên “   ”, Giá 28000000, Danh mục 1"
+   ]
+  },
+  {
+   "id": "FR15-DT-19",
+   "op": "edit",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "price": 28000000,
+    "category_id": 1,
+    "description": "Màn hình hiển thị xuất sắc, camera siêu zoom",
+    "imageUrl": "https://placehold.co/300x300/png?text=Samsung+S24"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "sản phẩm bị sửa thành: Tên “BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB…”, Giá 28000000, Danh mục 1"
+   ]
+  },
+  {
+   "id": "FR15-DT-20",
+   "op": "edit",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Samsung Galaxy S24 Ultra",
+    "price": 0,
+    "category_id": 1,
+    "description": "Màn hình hiển thị xuất sắc, camera siêu zoom",
+    "imageUrl": "https://placehold.co/300x300/png?text=Samsung+S24"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá 0, Danh mục 1"
+   ]
+  },
+  {
+   "id": "FR15-DT-21",
+   "op": "edit",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Samsung Galaxy S24 Ultra",
+    "price": -50000,
+    "category_id": 1,
+    "description": "Màn hình hiển thị xuất sắc, camera siêu zoom",
+    "imageUrl": "https://placehold.co/300x300/png?text=Samsung+S24"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá -50000, Danh mục 1"
+   ]
+  },
+  {
+   "id": "FR15-DT-22",
+   "op": "edit",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Samsung Galaxy S24 Ultra",
+    "price": "",
+    "category_id": 1,
+    "description": "Màn hình hiển thị xuất sắc, camera siêu zoom",
+    "imageUrl": "https://placehold.co/300x300/png?text=Samsung+S24"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá , Danh mục 1"
+   ]
+  },
+  {
+   "id": "FR15-DT-30",
+   "op": "delete",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product deleted\"}",
+   "messages": [],
+   "added": [],
+   "removed": [
+    5
+   ],
+   "others_changed": [],
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-01",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "A",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-02",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "AB",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-03",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-04",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-05",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "vẫn tạo sản phẩm: Tên “AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”, Giá 350000, Danh mục 3"
+   ]
+  },
+  {
+   "id": "FR15-BV-06",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "ỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐ",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-07",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "ỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐ",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "vẫn tạo sản phẩm: Tên “ỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐỐ…”, Giá 350000, Danh mục 3"
+   ]
+  },
+  {
+   "id": "FR15-BV-08",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": " A ",
+    "price": 350000,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-09",
+   "op": "edit",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "price": 28000000,
+    "category_id": 1,
+    "description": "Màn hình hiển thị xuất sắc, camera siêu zoom",
+    "imageUrl": "https://placehold.co/300x300/png?text=Samsung+S24"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-10",
+   "op": "edit",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "price": 28000000,
+    "category_id": 1,
+    "description": "Màn hình hiển thị xuất sắc, camera siêu zoom",
+    "imageUrl": "https://placehold.co/300x300/png?text=Samsung+S24"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "sản phẩm bị sửa thành: Tên “AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA…”, Giá 28000000, Danh mục 1"
+   ]
+  },
+  {
+   "id": "FR15-BV-11",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": -1,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá -1, Danh mục 3"
+   ]
+  },
+  {
+   "id": "FR15-BV-12",
+   "op": "add",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": -0.01,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "vẫn tạo sản phẩm: Tên “Sac nhanh USB-C 20W”, Giá -0.01, Danh mục 3"
+   ]
+  },
+  {
+   "id": "FR15-BV-13",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": 0.01,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-14",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": 1,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-15",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": 9007199254740991,
+    "category_id": 3,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-16",
+   "op": "edit",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Samsung Galaxy S24 Ultra",
+    "price": 1,
+    "category_id": 1,
+    "description": "Màn hình hiển thị xuất sắc, camera siêu zoom",
+    "imageUrl": "https://placehold.co/300x300/png?text=Samsung+S24"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-17",
+   "op": "edit",
+   "expect": "reject",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Samsung Galaxy S24 Ultra",
+    "price": -1,
+    "category_id": 1,
+    "description": "Màn hình hiển thị xuất sắc, camera siêu zoom",
+    "imageUrl": "https://placehold.co/300x300/png?text=Samsung+S24"
+   },
+   "verdict": "Fail",
+   "notes": [
+    "sản phẩm bị sửa thành: Tên “Samsung Galaxy S24 Ultra”, Giá -1, Danh mục 1"
+   ]
+  },
+  {
+   "id": "FR15-BV-19",
+   "op": "add",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product created\",\"id\":6}",
+   "messages": [],
+   "added": [
+    6
+   ],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Sac nhanh USB-C 20W",
+    "price": 350000,
+    "category_id": 1,
+    "description": "Mô tả kiểm thử FR-15",
+    "imageUrl": "https://placehold.co/300x300/png?text=FR15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-22",
+   "op": "edit",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "iPhone 15 Pro Max",
+    "price": 31000000,
+    "category_id": 1,
+    "description": "Điện thoại cao cấp của Apple",
+    "imageUrl": "https://placehold.co/300x300/png?text=iPhone+15"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-23",
+   "op": "edit",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product updated\"}",
+   "messages": [
+    {
+     "source": "dialog",
+     "text": "Cập nhật thành công!",
+     "reason": "unknown"
+    }
+   ],
+   "added": [],
+   "removed": [],
+   "others_changed": [],
+   "stored": {
+    "name": "Bàn phím cơ Keychron Q1",
+    "price": 4100000,
+    "category_id": 3,
+    "description": "Gõ cực sướng, thiết kế kim loại",
+    "imageUrl": "https://placehold.co/300x300/png?text=Keychron+Q1"
+   },
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR15-BV-26",
+   "op": "delete",
+   "expect": "accept",
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"Product deleted\"}",
+   "messages": [],
+   "added": [],
+   "removed": [
+    1
+   ],
+   "others_changed": [],
+   "verdict": "Pass",
+   "notes": []
+  }
+ ]
+}

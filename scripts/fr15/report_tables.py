@@ -2,6 +2,7 @@
 
 Dùng: python3 report_tables.py T32 T33   (không truyền mã nào = sinh tất cả; danh sách mã: xem report_lib.py)
 """
+import json
 import sys
 from pathlib import Path
 
@@ -39,15 +40,72 @@ def display(c, key):
 
 
 def bugs_for(c, ch, verdict):
-    return [] if verdict != "Fail" else ["?"]
+    if verdict != "Fail":
+        return []
+    t = c["target"]
+    if c["expect"] == "notfound":
+        return ["FR15-B6"]
+    if c["expect"] == "reject":
+        if t == "name":
+            return ["FR15-B4"] if str(c["name"]).strip() == "" else ["FR15-B3"]
+        if t == "price":
+            return ["FR15-B2"] if c["price"] in (MISSING, "abc") else ["FR15-B1"]
+        if t == "category":
+            return ["FR15-B5"]
+    return ["?"]
+
+
+FIELD_VN = {"name": "Tên sản phẩm", "price": "Giá tiền"}
+
+
+def tidy(note):
+    return (note.replace("Giá , ", "Giá (rỗng), ").replace("Giá None", "Giá (không có)")
+            .replace("Danh mục None", "Danh mục (không có)"))
+
+
+def outcome(r, c):
+    """Kết quả kiểm chứng bằng danh sách sản phẩm trước / sau."""
+    if r["notes"]:
+        return "; ".join(tidy(n) for n in r["notes"])
+    if c["expect"] == "notfound" and r.get("status") != 404:
+        return "báo thành công thay vì 404; danh sách sản phẩm không đổi"
+    if c["expect"] == "accept":
+        parts = {"add": "sản phẩm mới lưu đúng Tên / Giá / Danh mục", "edit": f"sản phẩm id {c['pid']} lưu đúng giá trị mới",
+                 "delete": f"sản phẩm id {c['pid']} đã bị xóa"}[c["op"]]
+        if c["op"] != "add":
+            parts += ", các sản phẩm khác giữ nguyên"
+        if c.get("check") == "html_display" and "displayed_name" in r:
+            parts += f", danh sách hiển thị nguyên văn “{r.get('displayed_name')}”"
+        return parts
+    return "danh sách sản phẩm không đổi"
+
+
+def short_body(body):
+    if isinstance(body, str):
+        try:
+            body = json.loads(body)
+        except ValueError:
+            return body[:60]
+    if isinstance(body, dict):
+        return body.get("message") or body.get("error") or str(body)
+    return str(body)
 
 
 def web_actual(r, c):
-    return r.get("summary", "")
+    if r["request_sent"]:
+        head = f"Form gửi request, HTTP {r['status']} “{short_body(r['body'])}”"
+        toast = [m["text"] for m in r["messages"] if m["source"] in ("page", "dialog")]
+        if toast:
+            head += f", hiện “{toast[0]}”"
+    else:
+        native = [m for m in r["messages"] if m["source"] == "native"]
+        head = (f"Trình duyệt chặn ô {FIELD_VN[native[0]['reason']]}: “{native[0]['text']}”, không gửi request"
+                if native else "Không gửi request")
+    return f"{head}; {outcome(r, c)}"
 
 
 def api_actual(r, c):
-    return r.get("summary", "")
+    return f"HTTP {r['status']} “{short_body(r['body'])}”; {outcome(r, c)}"
 
 
 FEATURE = Feature(
