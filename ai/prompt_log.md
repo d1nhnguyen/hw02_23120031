@@ -1,6 +1,6 @@
 # Phụ lục A — Prompt log (trích tự động từ transcript Claude Code & Google Antigravity)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-21 01:29 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-21 06:35 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -24,6 +24,9 @@
 | 18 | 2026-10-21 00:15 | `1946c20d` | theo dõi hoặc nhờ agent khác, ko tự dừng vì sau khi dừng không tự chạy lại được? |
 | 19 | 2026-10-21 00:26 | `1946c20d` | kiếm tra lại, vscode vừa bị dừng |
 | 20 | 2026-10-21 01:16 | `421e648d` | thêm log phần này vào AI-log và các tài liệu cần thiết khác |
+| 21 | 2026-10-21 06:14 | `421e648d` | kiểm tra các bug trong report có đúng chưa? |
+| 22 | 2026-10-21 06:22 | `421e648d` | các bug đó thật sự có trong code? |
+| 23 | 2026-10-21 06:29 | `1946c20d` | 1. đó là Antigravity, tôi dùng để kiểm tra chéo và đã thêm vào báo cáo. 2. bạn hãy tạo 22  |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -1478,16 +1481,25 @@ thêm log phần này vào AI-log và các tài liệu cần thiết khác
 **Output AI (nguyên văn):**
 
 ````markdown
-Đã cập nhật nhật ký sử dụng AI và toàn bộ tài liệu liên quan để ghi nhận đầy đủ phiên rà soát chéo FR-01 bằng Google Antigravity (Gemini 4 Argon):
+Đã cập nhật nhật ký sử dụng AI và toàn bộ các tài liệu liên quan để ghi nhận đầy đủ phiên rà soát chéo FR-01 bằng **Google Antigravity (Gemini 4 Argon)** (commit `d58c016`):
 
-1. **`scripts/export_prompt_log.py` & `skills/ai-audit-log/scripts/export_prompt_log.py`**: bổ sung trích xuất tự động transcript của Google Antigravity (`~/.gemini/antigravity-cli/brain/421e648d.../transcript_full.jsonl`) cùng với Claude Code theo đúng thứ tự thời gian.
-2. **`ai/prompt_log.md` (Phụ lục A)**: cập nhật đầy đủ 20 lượt tương tác (thêm lượt #13 lúc `2026-10-20 22:30:38` rà soát FR-01 trên Antigravity và lượt #20 lúc `2026-10-21 01:16:02` cập nhật hồ sơ AI).
-3. **`skills/ai-audit-log/scripts/audit_draft.py` & `ai/AI_Audit_Report.md`**: khai báo thêm công cụ Google Antigravity (Gemini 4 Argon); cập nhật bảng audit 32 artifact dẫn chiếu rõ lượt #13 (Antigravity rà soát) → lượt #14 (Claude Code áp dụng vào các commit `[FR-01][Bn-review]`).
-4. **`ai/AI_Disclosure_Form.md`, `ai/AI_Critique.md`, `ai/AI_Privacy_Checklist.md`**: bổ sung công cụ Antigravity, đánh dấu giai đoạn `phản hồi`, thêm prompt chính lượt #13, cập nhật bảng đóng góp 2.4 và trích dẫn IEEE `[2]`.
-5. **`report/FR-01_Dang_ky.md`, `scripts/fr01/cases.py`, `report/00_Phuong_phap.md`, `README.md`, `DOI_CHIEU_TRUOC_KHI_NOP.md`**: cập nhật công cụ AI, đổi nguồn phát hiện `G9–G16` thành `Rà soát chéo (SV + Antigravity, lượt #13)`, đổi `Origin` của `FR01-DT-30…32` thành `AI-sửa` và đánh dấu hoàn tất mục đối chiếu nguồn rà soát FR-01.
+1. **Script trích xuất log & Agent Skill ([`scripts/export_prompt_log.py`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/export_prompt_log.py), [`skills/ai-audit-log/scripts/export_prompt_log.py`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/scripts/export_prompt_log.py), [`skills/ai-audit-log/SKILL.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/SKILL.md)):**
+   - Bổ sung hàm [`parse_antigravity_session`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/export_prompt_log.py#L145-L189) đọc trực tiếp transcript của Google Antigravity (`~/.gemini/antigravity-cli/brain/421e648d.../.system_generated/logs/transcript_full.jsonl`) và gộp theo đúng thứ tự thời gian cùng transcript của Claude Code (nên các lần chạy lại `export_prompt_log.py` về sau sẽ luôn giữ nguyên log này).
+2. **Phụ lục A – Prompt Log ([`ai/prompt_log.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/prompt_log.md)):**
+   - Cập nhật lên **20 lượt** tương tác từ 3 phiên (`1946c20d`, `4aefb10a`, `421e648d`):
+     - **Lượt #13 (`2026-10-20 22:30:38`, phiên `421e648d`):** prompt và toàn văn nhận xét rà soát FR-01 của Google Antigravity (Gemini 4 Argon), ngay trước lượt #14 (`22:37:45`) khi dán bản rà soát sang Claude Code.
+     - **Lượt #20 (`2026-10-21 01:16:02`, phiên `421e648d`):** yêu cầu bổ sung log phiên rà soát vào hồ sơ AI.
+3. **AI Audit Report ([`ai/AI_Audit_Report.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Audit_Report.md) & [`skills/ai-audit-log/scripts/audit_draft.py`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/scripts/audit_draft.py)):**
+   - Khai báo thêm công cụ `Google Antigravity IDE (model Gemini 4 Argon (Medium))` ở [mục 1–2](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Audit_Report.md#L14-L22).
+   - Bổ sung **hàng #9** cho artifact rà soát chéo FR-01 của Google Antigravity (tổng **33 artifact**: 27 VALID / 6 INCOMPLETE), đồng thời ở cột (5) của các hàng FR-01 (`#2, #4, #5, #6, #7, #8`) dẫn chiếu rõ chuỗi *rà soát chéo Antigravity lượt #13 $\rightarrow$ áp dụng ở lượt #14*.
+4. **Disclosure Form, Critique & Privacy Checklist ([`ai/AI_Disclosure_Form.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Disclosure_Form.md), [`ai/AI_Critique.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Critique.md), [`ai/AI_Privacy_Checklist.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Privacy_Checklist.md)):**
+   - Khai báo công cụ thứ hai ở mục 2.1, tích chọn `[x] phản hồi` ở mục 2.2, thêm prompt chính lượt #13 ở mục 2.3, cập nhật bảng đóng góp 2.4 (`5 test case AI-sửa`) và thêm trích dẫn IEEE `[2]` cho Google Antigravity (Gemini 4 Argon).
+5. **Báo cáo FR-01, Phương pháp & Checklist đối chiếu ([`report/FR-01_Dang_ky.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md), [`scripts/fr01/cases.py`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/cases.py), [`report/00_Phuong_phap.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/00_Phuong_phap.md), [`README.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/README.md), [`DOI_CHIEU_TRUOC_KHI_NOP.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md)):**
+   - Ghi nhận công cụ rà soát chéo ở bảng thông tin chung và mục Phương pháp.
+   - Đổi nguồn phát hiện `G9–G16` ở [mục 6.1](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L461-L468) thành `Rà soát chéo (SV + Antigravity, lượt #13)`, đổi `Origin` của `FR01-DT-30…32` ở [mục 6.2](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L478-L480) thành `AI-sửa`, và đánh dấu hoàn tất `[x]` mục kiểm tra nguồn rà soát trong [`DOI_CHIEU_TRUOC_KHI_NOP.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md#L7).
 ````
 
-<details><summary>Hành động AI đã thực hiện (47)</summary>
+<details><summary>Hành động AI đã thực hiện (48)</summary>
 
 1. `run_command` — Check git log and status of HW02_23120031
 2. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/export_prompt_log.py
@@ -1536,5 +1548,368 @@ thêm log phần này vào AI-log và các tài liệu cần thiết khác
 45. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Privacy_Checklist.md
 46. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md
 47. `run_command` — Regenerate prompt_log.md and check git status
+48. `run_command` — Commit AI log updates to HW02_23120031 repo
+
+</details>
+
+## #21 · 2026-10-21 06:14:48 · phiên `421e648d`
+
+- **Công cụ AI:** Google Antigravity IDE, model `Gemini 4 Argon (Medium)`
+
+**Prompt (nguyên văn):**
+
+````text
+kiểm tra các bug trong report có đúng chưa?
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Mình đã đối chiếu toàn bộ **22 bug** trong [Bug_Report.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md) và **Mục 7** của 4 file báo cáo thành phần với:
+1. Đặc tả gốc của SUT ([README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md) và [api_specification.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/api_specification.md)),
+2. Bảng kết quả thực thi TC (Mục 5.3) và 24 ảnh chụp màn hình trong [`bugs/screenshots/`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots),
+3. Danh sách GitHub Issues hiện tại trên repo nhóm `d1nhnguyen/eshop-sut` (`#1`–`#14`).
+
+**Kết luận tổng quan:** Cả **22/22 bug đều chính xác về mặt kỹ thuật**, có căn cứ đặc tả rõ ràng, khớp với bằng chứng thực thi + ảnh chụp màn hình, và **không bị trùng** với bất kỳ issue nào các thành viên khác đã đăng trên GitHub. Tuy nhiên, có **3 điểm lệch chữ nhỏ (cosmetic)** giữa bảng Tổng hợp và mục Chi tiết trong `Bug_Report.md` và **1 lưu ý lập luận** bạn nên nắm khi vấn đáp.
+
+---
+
+### 1. Kiểm tra tính đúng đắn theo Đặc tả & Phân mức Severity (22/22 Đạt)
+
+#### A. FR-01 — Đăng ký tài khoản (9 bugs: [FR-01_Dang_ky.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L494-L508))
+| Mã bug | Mức độ | Căn cứ đặc tả / Giả định | Đánh giá |
+|---|---|---|---|
+| **FR01-B1** | Critical | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L76-L81) yêu cầu mật khẩu có `>= 1 ký tự đặc biệt (@ $ ! % * ? &)`. Web `/register` từ chối cả 7 ký tự này (`"Mật khẩu quá yếu!"`) và chỉ nhận dấu cách `␣`. | **Chính xác.** Chặn đứng luồng đăng ký hợp lệ trên Web UI (`Critical` hoàn toàn hợp lý). Ảnh [FR01-B1.png](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-B1.png) rõ ràng. |
+| **FR01-B2** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L76) quy định: *"Xác nhận mật khẩu: phải khớp hoàn toàn với mật khẩu đã nhập"*. Form `/register` không có ô này. | **Chính xác.** Thiếu hẳn 1 trường bắt buộc trong đặc tả. |
+| **FR01-B3** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L73-L75): Họ tên, Email, Mật khẩu đều `bắt buộc`. `POST /api/register` nhận chuỗi rỗng `""` và trả `200 OK`. | **Chính xác.** Ảnh [FR01-admin-users.png](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-admin-users.png) chứng minh record rỗng đã lọt vào DB. |
+| **FR01-B4** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L74): Email phải *"đúng định dạng email hợp lệ (`user@domain.tld`)"*. Backend nhận cả 6 dạng sai (`userexample.com`, `@example.com`, `user@`, v.v.). | **Chính xác.** Khớp hoàn toàn với 6 TC `FR01-DT-11`..`16`. |
+| **FR01-B5** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L75): Mật khẩu `>= 8 ký tự`, đủ 4 nhóm ký tự (kèm giả định `A10` về chữ cái ASCII). Backend nhận mọi mật khẩu yếu (`7` ký tự, thiếu hoa/thường/số/đặc biệt). | **Chính xác.** Khớp với 7 TC (`FR01-BVA-01`, `FR01-DT-04`..`07`, `FR01-ERR-05`, `06`). |
+| **FR01-B6** | Critical | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L74): Email *"duy nhất trong hệ thống"*. Backend cho đăng ký trùng `test@eshop.com`, tạo bản ghi thứ 2 nhưng khi login lại khớp bản ghi đầu tiên khiến mật khẩu mới bị `401`. | **Chính xác.** Vi phạm ràng buộc duy nhất + làm hỏng xác thực của tài khoản mới (`Critical`). Ảnh [FR01-B6.png](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-B6.png) thể hiện rõ 2 dòng `test@eshop.com`. |
+| **FR01-B7** | Minor | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L74) & [FR-22](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L186): Ô Email dùng `type="text"` thay vì `type="email"`, chỉ kiểm tra có ký tự `@`. | **Chính xác.** Phát hiện qua bước khảo sát workaround (Mục 5.4) là rất chặt chẽ. |
+| **FR01-B8** | Minor | Dựa trên giả định `A4` (trim khoảng trắng đầu/cuối của email). Lưu nguyên `" fr01.b8@example.com "` khiến user không đăng nhập được bằng email đã cắt khoảng trắng. | **Chính xác.** Đã dẫn chiếu rõ giả định `A4`. |
+| **FR01-B9** | Minor | Dựa trên giả định `A4` (`name = "   "` toàn khoảng trắng phải bị từ chối). Cả HTML5 `required` lẫn Backend đều cho qua. | **Chính xác.** Đã dẫn chiếu rõ giả định `A4`. |
+
+---
+
+#### B. FR-15 — Quản lý sản phẩm – Admin (6 bugs: [FR-15_Quan_ly_san_pham.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-15_Quan_ly_san_pham.md#L446-L457))
+| Mã bug | Mức độ | Căn cứ đặc tả / Giả định | Đánh giá |
+|---|---|---|---|
+| **FR15-B1** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L152): *"Giá: bắt buộc, phải là số dương (> 0)"*. Cả Web Admin và API (`POST`/`PUT`) đều nhận giá `0`, `-50000`, `-1`, `-0.01`. | **Chính xác.** Ảnh [FR15-B1.png](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR15-B1.png) hiển thị sản phẩm giá `0 đ` và `-50000 đ` ngay trên trang chủ. |
+| **FR15-B2** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L152): Giá bắt buộc và là số dương. Hệ thống nhận cả giá rỗng (`""`/bỏ trống) và chữ (`"abc"`), hiển thị thành `đ` hoặc `abc đ`. | **Chính xác.** Ảnh [FR15-B2.png](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR15-B2.png) minh họa trực quan lỗi hiển thị `đ` và `abc đ`. |
+| **FR15-B3** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L151): *"Tên sản phẩm: bắt buộc, tối đa 255 ký tự"*. Hệ thống cho tạo và sửa tên dài `256` và `300` ký tự. | **Chính xác.** Khớp với các TC biên `FR15-BVA-03`, `06`, `FR15-EP-03`, `FR15-ERR-05`. |
+| **FR15-B4** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L151) + Giả định `A3`: Tên sản phẩm bắt buộc. API nhận `name = ""`, và cả Web Admin lẫn API nhận `name = "   "`. | **Chính xác.** Đã phân biệt rõ trên Web `name = ""` bị HTML5 `required` chặn (Pass), chỉ Fail ở API và ở chuỗi toàn khoảng trắng `"   "`. |
+| **FR15-B5** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L153): *"Danh mục: bắt buộc chọn danh mục hợp lệ"*. API `POST`/`PUT` nhận `category_id` thiếu, `99`, `0`, `"abc"`, `4`. | **Chính xác.** Ghi rõ phạm vi `Backend` (vì trên Web Admin dùng `<select>` cố định 3 danh mục). |
+| **FR15-B6** | Minor | Giả định `A6`: `PUT`/`DELETE /api/products/:id` với `id` không tồn tại (`9999`, `0`, `abc`, hoặc xóa lặp lần 2) vẫn trả `200 OK` thay vì `404`. | **Chính xác.** Phân mức `Minor` và dẫn chiếu giả định `A6` rất chuẩn. |
+
+---
+
+#### C. FR-10 — Quản lý trạng thái đơn hàng (2 bugs: [FR-10_Trang_thai_don_hang.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-10_Trang_thai_don_hang.md#L401-L408))
+| Mã bug | Mức độ | Căn cứ đặc tả / Giả định | Đánh giá |
+|---|---|---|---|
+| **FR10-B1** | Critical | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L123): *"delivered và canceled là trạng thái kết thúc (không chuyển tiếp được)"*. Đơn đã `canceled` vẫn hiện nút `"Đánh dấu Đã giao"` trên Web Admin và API cho chuyển sang `delivered` (mất cả thông tin `cancel_reason` trên UI). | **Chính xác.** Phá vỡ trực tiếp máy trạng thái đơn hàng (`Critical`). Ảnh [FR10-B1.png](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR10-B1.png) chụp rõ cả nút bấm lẫn trạng thái sau khi bấm. |
+| **FR10-B2** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L125): *"Khi đơn hàng đã ở trạng thái shipping, User không được phép tự hủy"*. Trang `/profile` vẫn hiện nút `"Hủy đơn"` ở đơn `shipping` và `PUT /api/orders/:id/cancel` trả `200 OK`. | **Chính xác.** Vi phạm trực tiếp quy tắc phân quyền hủy đơn. Ảnh [FR10-B2.png](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR10-B2.png) rất rõ. |
+
+---
+
+#### D. Mobile — Đăng nhập (5 bugs: [Mobile_Dang_nhap.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/Mobile_Dang_nhap.md#L338-L348))
+| Mã bug | Mức độ | Căn cứ đặc tả / Giả định | Đánh giá |
+|---|---|---|---|
+| **MOB-B1** | Critical | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L168-L176) (`FR-20`): Trên thiết bị có camera đục lỗ / status bar cao (`128 px` như Pixel 6), thanh header (`y = 37–108 px`) bị che khuất hoàn toàn, không bấm được nút `"Đăng nhập"`. | **Chính xác.** Lỗi đặc thù nền tảng Mobile rất đắt giá (`Critical`), ảnh [MOB-B1.png](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B1.png) so sánh trực quan 2 chế độ cutout. |
+| **MOB-B2** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L84): *"Sau 3 lần đăng nhập thất bại liên tiếp, tài khoản bị tạm khóa"*. Thực tế mỗi lần sai `login_attempts` tăng thêm 2, nên mới sai **2 lần** đã bị khóa (`403`). | **Chính xác.** Kết hợp kiểm tra giao diện Mobile và truy vấn DB (`login_attempts = 2, 4`) rất thuyết phục. |
+| **MOB-B3** | Major | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L84): *"tạm khóa trong 30 giây"*. Thực tế `locked_until` bị cộng thêm **180 giây** (3 phút), nên ở giây thứ 31 đăng nhập lại vẫn bị khóa. | **Chính xác.** Khớp hoàn toàn với kiểm thử biên thời gian `MOB-BVA-02` (`t = 31s`). |
+| **MOB-B4** | Minor | Giả định `A6`: Email đúng nhưng viết hoa (`TEST@eshop.com`) hoặc dư khoảng trắng đầu/cuối (`" test@eshop.com "`) bị từ chối `401` (rất dễ xảy ra do bàn phím Mobile tự viết hoa / tự thêm dấu cách). | **Chính xác.** Gắn kết tốt giữa giả định `A6` và hành vi thực tế của bàn phím ảo trên Mobile. |
+| **MOB-B5** | Minor | [README.md](file:///home/npdinh/study/Homeworks/eshop-sut-main/README.md#L180) (`FR-21`): *"Toàn bộ giao diện dùng tiếng Việt"*. Màn hình Đăng nhập Mobile lại hiển thị nhãn `"Username"` (cho trường Email) và nút `"Sign In"`. | **Chính xác.** Xem thêm lưu ý nhỏ ở Mục 3 bên dưới để trả lời nếu giảng viên hỏi về phạm vi. |
+
+---
+
+### 2. Đối chiếu chéo với GitHub Issues của nhóm (`d1nhnguyen/eshop-sut`)
+
+Mình đã kiểm tra trực tiếp danh sách Issues trên repo `d1nhnguyen/eshop-sut` (hiện có **14 issues**, từ `#1` đến `#14`):
+- `#1`–`#3`: `[FR-03]` (Cập nhật hồ sơ) — `stardust65613`
+- `#4`–`#6`: `[FR-08]` (Mã giảm giá) — `stardust65613`
+- `#7`–`#8`: `[FR-14]` (Bộ lọc ngày Admin) — `stardust65613`
+- `#9`: `[FR-20]` (Nhập mã giảm giá `SAVE10` trên Mobile) — `stardust65613`
+- `#10`–`#14`: `[FR-04]` (Danh sách sản phẩm & Mã giảm giá) — `UngDuong125`
+
+$\Rightarrow$ **Không có bất kỳ sự trùng lặp nào** với 22 bug thuộc `FR-01`, `FR-15`, `FR-10`, và `Mobile Đăng nhập` của bạn.
+*(Lưu ý nhỏ: Trong [DOI_CHIEU_TRUOC_KHI_NOP.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md#L29) đang ghi số thứ tự tiếp theo là `BUG-12` từ lúc nhóm mới có 11 issues; hiện tại `UngDuong125` đã tạo thêm đến `#14`, nên nếu bạn đăng tiếp lên GitHub thì sẽ bắt đầu từ **`BUG-15`**).*
+
+---
+
+### 3. Ba điểm lệch chữ nhỏ (Cosmetic) & Lưu ý khi bảo vệ
+
+Khi đối chiếu từng chữ giữa **Bảng 5.3**, **Bảng Mục 7** của 4 báo cáo, **Bảng Tổng hợp** ([Bug_Report.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L11-L34)) và **Mục Chi tiết** ([Bug_Report.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L38-L601)), có 3 chỗ tiêu đề/dòng TC chênh nhau vài từ:
+
+1. **`FR01-B8`** — Tiêu đề ở Bảng Tổng hợp ([dòng 20](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L20)) ghi:
+   > `Email đăng ký được lưu kèm khoảng trắng đầu/cuối, không đăng nhập được bằng email bình thường`
+   Trong khi tiêu đề Chi tiết ([dòng 218](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L218)) và [FR-01_Dang_ky.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L507) chỉ ghi:
+   > `Email đăng ký được lưu kèm khoảng trắng đầu/cuối`
+2. **`FR15-B6`** — Tiêu đề ở Bảng Tổng hợp ([dòng 27](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L27)) và [FR-15_Quan_ly_san_pham.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-15_Quan_ly_san_pham.md#L457) có cụm `"Product updated / deleted"`, còn tiêu đề Chi tiết ([dòng 393](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L393)) lược bỏ cụm này.
+3. **`MOB-B2`** — Ở mục Chi tiết ([dòng 507](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L507) & [dòng 516](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L516)):
+   - Tiêu đề thiếu chữ `ngay` so với Bảng Tổng hợp (`bị khóa sau lần sai thứ 2` vs `bị khóa ngay sau lần sai thứ 2`).
+   - Dòng `TC phát hiện` ở mục Chi tiết có ghi thêm `; MOB-DT-05 Blocked` (`MOB-BVA-01, MOB-DT-04; MOB-DT-05 Blocked`), trong khi Bảng Tổng hợp và [Mobile_Dang_nhap.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/Mobile_Dang_nhap.md#L345) chỉ ghi `MOB-BVA-01, MOB-DT-04`.
+4. **Mẹo bảo vệ cho `MOB-B5` (`"Username"` / `"Sign In"`)**:
+   - Ở `FR-01` và `FR-15`, bạn có ghi chú các lỗi thuần giao diện `FR-21` (thiếu thẻ `<h1>`, màu nút Xóa, định dạng dấu chấm giá tiền) nằm ngoài phạm vi Domain Testing nên không lập mã bug.
+   - Riêng ở Mobile, việc lập `MOB-B5` cho nhãn `"Username"` và `"Sign In"` là **hợp lý** vì nhãn `"Username"` gây hiểu nhầm trực tiếp về **miền dữ liệu đầu vào (input domain)** của trường đăng nhập (khiến người dùng tưởng nhập tên tài khoản thay vì địa chỉ `email` theo `FR-02`/`FR-20`).
+
+Bạn có muốn mình đồng bộ luôn 3 tiêu đề/dòng TC trong [Bug_Report.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md) và cập nhật con số `BUG-12` $\rightarrow$ `BUG-15` trong [DOI_CHIEU_TRUOC_KHI_NOP.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md) không?
+````
+
+<details><summary>Hành động AI đã thực hiện (23)</summary>
+
+1. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md
+2. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md
+3. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/README.md
+4. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/api_specification.md
+5. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-15_Quan_ly_san_pham.md
+6. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-10_Trang_thai_don_hang.md
+7. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/Mobile_Dang_nhap.md
+8. `run_command` — Verify screenshot files and paths in Bug_Report.md
+9. `run_command` — Cross-check bug images and TC lists across all reports
+10. `run_command` — Check existing GitHub issues on d1nhnguyen/eshop-sut
+11. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-B1.png
+12. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR15-B1.png
+13. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR10-B1.png
+14. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B1.png
+15. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-B6.png
+16. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR10-B2.png
+17. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B2.png
+18. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B3.png
+19. `run_command` — List files in bugs/screenshots/
+20. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR15-B2.png
+21. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR15-B6.png
+22. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B4.png
+23. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B5.png
+
+</details>
+
+## #22 · 2026-10-21 06:22:38 · phiên `421e648d`
+
+- **Công cụ AI:** Google Antigravity IDE, model `Gemini 4 Argon (Medium)`
+
+**Prompt (nguyên văn):**
+
+````text
+các bug đó thật sự có trong code?
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+**Có, 100% cả 22 bug đều nằm thật trong mã nguồn của SUT** (thậm chí nhiều bug còn do giảng viên/tác giả đề bài cố tình cài vào kèm theo tên biến hoặc comment đánh dấu trong code).
+
+Dưới đây là vị trí dòng code chính xác trong [`eshop-sut-main`](file:///home/npdinh/study/Homeworks/eshop-sut-main) cho từng bug:
+
+---
+
+### 1. Nhóm FR-01 — Đăng ký tài khoản (9/9 có trong code)
+
+- **`FR01-B1` (Web từ chối `@ $ ! % * ? &`, chỉ nhận dấu cách `␣`)**:
+  Tại [Register.jsx](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-web/src/pages/Register.jsx#L15-L20), tác giả đặt tên biến là `flawedStrongPasswordRegex` và dùng `\s` (khoảng trắng) thay vì ký tự đặc biệt:
+  ```javascript
+  const flawedStrongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\s)[A-Za-z\d\s]{8,}$/;
+  ```
+- **`FR01-B2` (Form Web thiếu ô "Xác nhận mật khẩu")**:
+  Tại [Register.jsx](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-web/src/pages/Register.jsx#L34-L80), toàn bộ `<form>` chỉ có 3 `<input>` (`name`, `email`, `password`), hoàn toàn không có state hay ô nhập xác nhận mật khẩu.
+- **`FR01-B3`, `FR01-B4`, `FR01-B5`, `FR01-B6`, `FR01-B8` (Backend không validate rỗng, định dạng email, độ mạnh mật khẩu, email trùng, khoảng trắng đầu/cuối)**:
+  - Tại [server.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js#L20-L30), API `POST /api/register` **không có bất kỳ dòng kiểm tra nào** mà `INSERT` thẳng `req.body` vào SQLite:
+    ```javascript
+    app.post("/api/register", (req, res) => {
+      const { name, email, password } = req.body;
+      db.run(
+        "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+        [name, email, password],
+        ...
+    ```
+  - Tại [database.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/database.js#L50-L61), cột `email TEXT` trong bảng `users` **không có ràng buộc `UNIQUE`** và không `NOT NULL`:
+    ```sql
+    CREATE TABLE users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        email TEXT,
+        password TEXT, ...
+    ```
+  - Khi đăng nhập ([server.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js#L35)), `db.get("SELECT * FROM users WHERE email = ?", [email])` luôn lấy bản ghi đầu tiên khớp `email`, nên tài khoản đăng ký trùng thứ 2 (`FR01-B6`) không bao giờ đăng nhập được bằng mật khẩu mới.
+- **`FR01-B7` (Ô Email trên Web dùng `type="text"` thay vì `type="email"`)**:
+  Tại [Register.jsx](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-web/src/pages/Register.jsx#L46-L53):
+  ```jsx
+  <label className="block text-gray-700 mb-2">Email</label>
+  <input
+    type="text"
+    value={email} ...
+  ```
+  *(Lưu ý nhỏ: Vì `type="text"` nên trình duyệt không kiểm tra cả ký tự `@`; trong [Bug_Report.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L194-L216) bạn đã mô tả đúng là `type="text"` không kiểm tra định dạng email).*
+- **`FR01-B9` (Họ tên toàn khoảng trắng `"   "` vượt qua cả Web và Backend)**:
+  Tại [Register.jsx](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-web/src/pages/Register.jsx#L37-L43), `<input type="text" required />` của HTML5 chỉ chặn chuỗi rỗng `""` chứ không chặn `"   "`, và `handleSubmit` không `.trim()` trước khi gửi lên [server.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js#L20-L30).
+
+---
+
+### 2. Nhóm FR-15 — Quản lý sản phẩm – Admin (6/6 có trong code)
+
+- **`FR15-B1`, `FR15-B2`, `FR15-B3`, `FR15-B4`, `FR15-B5` (Không kiểm tra `price <= 0`, `price` rỗng/chữ, `name > 255` ký tự, `name` rỗng/toàn khoảng trắng, `category_id` không tồn tại)**:
+  - **Backend**: Tại [server.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js#L167-L189), cả `POST /api/products` và `PUT /api/products/:id` đều `INSERT` / `UPDATE` thẳng không kiểm tra bất kỳ điều kiện nào:
+    ```javascript
+    app.post("/api/products", (req, res) => {
+      const { name, price, description, imageUrl, category_id } = req.body;
+      db.run(
+        "INSERT INTO products (name, price, description, imageUrl, category_id) VALUES (?, ?, ?, ?, ?)",
+        [name, price, description, imageUrl, category_id], ...
+    ```
+  - **Database**: Tại [database.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/database.js#L64-L71), bảng `products` dùng kiểu động của SQLite, không có `CHECK(price > 0)`, không giới hạn độ dài `name`, không khai báo `FOREIGN KEY (category_id)`.
+  - **Web Admin**: Tại [frontend-admin/src/App.jsx](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-admin/src/App.jsx#L491-L508), ô `name` không có `maxLength`, không `.trim()`, còn ô `price` **không có cả `required` lẫn `min`**:
+    ```jsx
+    <input
+      placeholder="Giá tiền"
+      type="number"
+      className="border p-2 rounded"
+      value={productForm.price} ...
+    />
+    ```
+- **`FR15-B6` (Sửa / Xóa `id` sản phẩm không tồn tại vẫn trả `200 OK`)**:
+  Tại [server.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js#L179-L196), cả `PUT /api/products/:id` và `DELETE /api/products/:id` đều không kiểm tra `this.changes === 0` mà trả thẳng `res.json({ message: "Product updated" })` / `res.json({ message: "Product deleted" })`.
+
+---
+
+### 3. Nhóm FR-10 — Quản lý trạng thái đơn hàng (2/2 có trong code)
+
+- **`FR10-B1` (Đơn `canceled` chuyển tiếp được sang `delivered`)**:
+  - **Backend** ([server.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js#L550-L551)) cố tình mở cửa cho cạnh `canceled -> delivered`:
+    ```javascript
+    if (currentStatus === "canceled" && status === "delivered")
+      isValidTransition = true;
+    ```
+  - **Web Admin** ([frontend-admin/src/App.jsx](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-admin/src/App.jsx#L862-L869)) cố tình vẽ nút màu xanh cho đơn đã hủy:
+    ```jsx
+    {o.status === "canceled" && (
+      <button
+        className="bg-green-500 text-white px-2 py-1 rounded text-xs"
+        onClick={() => updateOrderStatus(o.id, "delivered")}
+      >
+        Đánh dấu Đã giao
+      </button>
+    )}
+    ```
+- **`FR10-B2` (User tự hủy được đơn đang ở trạng thái `shipping`)**:
+  - **Backend** ([server.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js#L328-L331)) thậm chí có sẵn comment tiếng Việt của tác giả đề bài:
+    ```javascript
+    // Lẽ ra phải là: if (order.status !== 'pending' && order.status !== 'confirmed')
+    if (order.status === "delivered" || order.status === "canceled") {
+      return res.status(400).json({ error: "Cannot cancel this order." });
+    }
+    ```
+  - **Web Profile** ([Profile.jsx](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-web/src/pages/Profile.jsx#L199-L207)) cũng có comment cố tình:
+    ```jsx
+    {/* Nút hủy hiển thị khi chưa giao xong và chưa hủy (kể cả khi đang giao) */}
+    {o.status !== "delivered" && o.status !== "canceled" && (
+      <button onClick={() => cancelOrder(o.id)} ...>Hủy đơn</button>
+    )}
+    ```
+
+---
+
+### 4. Nhóm Mobile — Đăng nhập (5/5 có trong code)
+
+- **`MOB-B1` (Header bị thanh StatusBar/camera cutout che khuất trên Android)**:
+  Tại [frontend-mobile/App.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-mobile/App.js#L4,L443,L989), app dùng `SafeAreaView` của `react-native` (vốn chỉ tự động chèn top inset trên iOS, **bỏ qua trên Android**) thay vì `react-native-safe-area-context` và không cộng `StatusBar.currentHeight` vào `styles.safeArea` hay `styles.navBar`.
+- **`MOB-B2` (Đăng nhập sai 2 lần đã bị khóa thay vì 3 lần)** & **`MOB-B3` (Khóa 180 giây thay vì 30 giây)**:
+  Tại [server.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js#L54-L58), mỗi lần sai mật khẩu code cộng `+ 2` vào `login_attempts` và khóa `180000` ms (`180` giây):
+  ```javascript
+  const newAttempts = user.login_attempts + 2;
+  let lockedUntil = null;
+  if (newAttempts >= 3) {
+    lockedUntil = new Date(Date.now() + 180000).toISOString();
+  }
+  ```
+- **`MOB-B4` (Email viết hoa hoặc dư khoảng trắng đầu/cuối bị báo `401`)**:
+  - Trên Mobile ([frontend-mobile/App.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-mobile/App.js#L189-L193)): gửi nguyên `email` (`JSON.stringify({ email, password })`) không `.trim()` / `.toLowerCase()`.
+  - Trên Backend ([server.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js#L35)): so sánh `WHERE email = ?` phân biệt chữ hoa/thường và khoảng trắng.
+- **`MOB-B5` (Màn hình Đăng nhập Mobile dùng nhãn tiếng Anh `"Username"` và `"Sign In"`)**:
+  Tại [frontend-mobile/App.js](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-mobile/App.js#L763-L784):
+  ```jsx
+  <Text style={styles.label}>Username</Text>
+  <TextInput
+    style={styles.textInput}
+    placeholder="Email" ...
+  />
+  ...
+  <TouchableOpacity style={styles.button} onPress={handleLogin}>
+    <Text style={styles.buttonText}>Sign In</Text>
+  </TouchableOpacity>
+  ```
+
+---
+
+### Lưu ý duy nhất rất nhỏ trong báo cáo `FR-01` để bạn nắm rõ
+Ở [FR-01_Dang_ky.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L483-L486) (Mục 5.4 — khảo sát bổ sung sau khi lách `FR01-B1`), có câu: *"Form chỉ kiểm tra có ký tự `@` hay không"*. Thực tế trong [Register.jsx](file:///home/npdinh/study/Homeworks/eshop-sut-main/frontend-web/src/pages/Register.jsx#L48), vì ô Email là `type="text"` nên form **không kiểm tra cả ký tự `@`** (như bạn đã ghi chính xác trong [Bug_Report.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md#L207-L212) ở bước tái hiện `FR01-B7` với email `fr01.b7example.com` không có `@` vẫn gửi đi được).
+
+Bạn có muốn mình sửa lại câu mô tả ngắn ở Mục 5.4 của [FR-01_Dang_ky.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L485) và 3 tiêu đề nhỏ trong [Bug_Report.md](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md) cho khớp tuyệt đối với code không?
+````
+
+<details><summary>Hành động AI đã thực hiện (11)</summary>
+
+1. `run_command` — List SUT source code files
+2. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/backend/server.js
+3. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/backend/database.js
+4. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/frontend-web/src/pages/Register.jsx
+5. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/frontend-web/src/pages/Profile.jsx
+6. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/frontend-admin/src/App.jsx
+7. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/frontend-mobile/App.js
+8. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/frontend-admin/src/App.jsx
+9. `read_file` — /home/npdinh/study/Homeworks/eshop-sut-main/frontend-mobile/App.js
+10. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md
+11. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md
+
+</details>
+
+## #23 · 2026-10-21 06:29:51 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+1. đó là Antigravity, tôi dùng để kiểm tra chéo và đã thêm vào báo cáo.
+2. bạn hãy tạo 22 issúe trên github theo đúng yêu cầu và điền lại báo cáo.
+3. hãy gắn skills vào .claude/ và chỉ cần skill Yapply the domain testing andboundary value analysis techniques, ko cần skill ai-audit-log (có thể loại bỏ)
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Skill đã chuyển xong. Giờ tôi chuẩn bị nội dung 22 issue để bạn dán vào.
+
+Đã có bản nháp nội dung 22 issue. Tôi cập nhật danh sách đối chiếu, commit, rồi cập nhật prompt log.
+````
+
+**Sinh viên trả lời câu hỏi của AI:**
+
+````text
+The user answered: "Issue nên đứng tên tài khoản GitHub nào? (gh CLI trên máy đang đăng nhập npdinhx; tài khoản d1nhnguyen hiện chỉ có SSH, không gọi được API)"="d1nhnguyen", "Ảnh bug đính vào issue bằng cách nào? API của GitHub không cho upload file đính kèm (kiểu kéo-thả user-attachments như các bạn trong nhóm đang làm), nên ảnh phải nằm ở một nơi public rồi nhúng bằng link."="vậy phần này tôi sẽ tự tạo, làm các yêu cầu khác". Read the answers carefully — they may request clarification, changes, or that you not proceed — and follow what they actually say.
+````
+
+<details><summary>Hành động AI đã thực hiện (22)</summary>
+
+1. `Bash` — Check tree status, Antigravity mentions, gh auth and SUT repo access
+2. `Bash` — Show recent commits and existing issues on shared SUT repo
+3. `Bash` — View format of existing issues on shared repo
+4. `Bash` — Read brief requirements on GitHub issues and Agent Skills
+5. `Bash` — Check which GitHub accounts SSH aliases and gh map to
+6. `Bash` — Inspect Antigravity commit and current skills layout
+7. `Bash` — Find references to skills paths and ai-audit-log
+8. `Bash` — Move skill into .claude/skills, drop ai-audit-log, add symlink
+9. `Bash` — Read domain-testing-bva SKILL.md for path references
+10. `AskUserQuestion` — Issue nên đứng tên tài khoản GitHub nào? (gh CLI trên máy đang đăng nhập npdinhx; tài khoản d1nhnguyen hiện chỉ có SSH, không gọi được API) / Ảnh bug đính vào issue bằng cách nào? API của GitHub không cho upload file đính kèm (kiểu kéo-thả user-attachments như các bạn trong nhóm đang làm), nên ảnh phải nằm ở một nơi public rồi nhúng bằng link.
+11. `Bash` — View lines referencing skills in docs
+12. `Bash` — Update docs and SKILL.md for the new skill location
+13. `Bash` — Verify report_lib sync and commit skill restructure
+14. `Bash` — Inspect Bug_Report.md structure and a sample bug
+15. `Bash` — View bug summary table, issue screenshot section, report section 7 headers
+16. `Bash` — Check browser launch code, links, gitignore, group env notes
+17. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/github_issues.py
+18. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/issue_shots.mjs
+19. `Bash` — Generate issue drafts and dry-run the fill step
+20. `Bash` — Fix summary regex and rerun draft and dry fill
+21. `Bash` — Check status, ignore drafts folder, view issues checklist
+22. `Bash` — Update checklist, commit issue scripts, regenerate prompt log
 
 </details>
