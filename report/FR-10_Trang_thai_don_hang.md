@@ -243,13 +243,61 @@ Dữ liệu và kết quả mong đợi được sinh từ `scripts/fr10/cases.p
 
 ### 4.1 Xác định biên
 
-| Biến | Phân vùng | LB | UB | Bước nhảy | Nhỏ nhất nhập được | Lớn nhất nhập được |
-| --- | --- | --- | --- | --- | --- | --- |
+Trạng thái `pending (0) < confirmed (1) < shipping (2) < delivered (3)` có thứ tự, nên BVA áp dụng cho khoảng cách **d = thứ tự đích − thứ tự hiện tại**: chuyển tiến hợp lệ chỉ khi d = +1 (vừa là LB vừa là UB), nên các điểm biên là d = 0 (UB−1), d = +1, d = +2 (UB+1), cùng d âm (lùi) và giá trị lớn nhất. Ngoài ra xét vùng "được hủy" `{pending, confirmed}` (UB = `confirmed`, UB+1 = `shipping`), độ dài chuỗi `status` quanh giá trị hợp lệ `confirmed`, và mã đơn của bộ dữ liệu (#1–#7).
+
+| Biến | Phân vùng | LB | UB | Bước nhảy | Điểm kiểm tra |
+| --- | --- | --- | --- | --- | --- |
+| d từ `pending` | EC12 (d = 0) / EC1 (d = +1) / EC10 (d ≥ 2) | +1 | +1 | 1 trạng thái | 0, +1, +2, +3 |
+| d từ `confirmed` | EC11 (d < 0) / EC12 / EC2 / EC10 | +1 | +1 | 1 trạng thái | −1, 0, +1, +2 |
+| d từ `shipping` | EC11 / EC12 / EC3 | +1 | +1 | 1 trạng thái | −2, −1, 0, +1 |
+| d từ `delivered` (kết thúc) | EC8 | – | – | 1 trạng thái | −1, 0 |
+| `canceled` (kết thúc) | EC9 | – | – | – | → `canceled`, → `pending` |
+| Vùng được hủy (Admin, User) | EC4/EC5, EC6/EC7 (valid) / EC13, EC14 (invalid) | `pending` | `confirmed` | 1 trạng thái | `confirmed` (UB), `shipping` (UB+1) |
+| Chuỗi `status` | EC18 / EC19 | `confirmed` (9 ký tự) | `confirmed` | 1 ký tự | thiếu 1 ký tự, thừa 1 ký tự, thừa 1 khoảng trắng đầu / cuối |
+| Mã đơn Admin | EC24 / EC23 (#1–#7) | 1 | 7 | 1 | 0, 1, 7, 8 |
+| Mã đơn User (đơn của mình #1–#6) | EC24 / EC23 | 1 | 6 | 1 | 0, 6, 8 |
 
 ### 4.2 Boundary Value Test Cases
 
-| ID | Tên test case (Action + Function + Condition) | Partition tested | Giá trị | Kết quả mong đợi | Origin |
-| --- | --- | --- | --- | --- | --- |
+Thủ tục: mục 3.1 (chỉ chạy P-API – giao diện không có thao tác cho các điểm biên này). Dòng có ID trong ngoặc là điểm biên đã có trong Minimum Set, chỉ dẫn chiếu.
+
+<!-- BEGIN:T42 -->
+| ID | Tên test case (Action + Function + Condition) | Partition tested | Tác nhân | Thao tác | Đơn | Trạng thái hiện tại | Giá trị `status` | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| FR10-BV-01 | Kiểm tra Admin chuyển đơn chờ xác nhận sang chính nó bị từ chối | `pending`: d = 0 (UB-1) | Admin | Đổi trạng thái | #1 | `pending` | `pending` | Từ chối, báo chuyển đổi không hợp lệ; đơn #1 giữ `pending`; các đơn khác giữ nguyên; API trả 4xx (EC27); A2 | API | AI |
+| (FR10-DT-01) | Kiểm tra Admin xác nhận đơn đang chờ xác nhận thành công | `pending`: d = +1 (UB – cạnh hợp lệ) | Admin | Đổi trạng thái | #1 | `pending` | `confirmed` | Đơn #1 chuyển `pending` → `confirmed`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | xem 3.2 |
+| (FR10-DT-10) | Kiểm tra Admin chuyển đơn chờ xác nhận thẳng sang đang giao bị từ chối | `pending`: d = +2 (UB+1) | Admin | Đổi trạng thái | #1 | `pending` | `shipping` | Từ chối, báo chuyển đổi không hợp lệ; đơn #1 giữ `pending`; các đơn khác giữ nguyên; API trả 4xx (EC27); A3 | API | xem 3.2 |
+| FR10-BV-02 | Kiểm tra Admin chuyển đơn chờ xác nhận thẳng sang đã giao bị từ chối | `pending`: d = +3 (lớn nhất) | Admin | Đổi trạng thái | #1 | `pending` | `delivered` | Từ chối, báo chuyển đổi không hợp lệ; đơn #1 giữ `pending`; các đơn khác giữ nguyên; API trả 4xx (EC27); A3 | API | AI |
+| FR10-BV-03 | Kiểm tra Admin chuyển đơn đã xác nhận lùi về chờ xác nhận bị từ chối | `confirmed`: d = −1 | Admin | Đổi trạng thái | #2 | `confirmed` | `pending` | Từ chối, báo chuyển đổi không hợp lệ; đơn #2 giữ `confirmed`; các đơn khác giữ nguyên; API trả 4xx (EC27); A3 | API | AI |
+| (FR10-DT-12) | Kiểm tra Admin chuyển đơn đã xác nhận sang chính trạng thái đã xác nhận bị từ chối | `confirmed`: d = 0 (UB-1) | Admin | Đổi trạng thái | #2 | `confirmed` | `confirmed` | Từ chối, báo chuyển đổi không hợp lệ; đơn #2 giữ `confirmed`; các đơn khác giữ nguyên; API trả 4xx (EC27); A2 | API | xem 3.2 |
+| (FR10-DT-02) | Kiểm tra Admin chuyển đơn đã xác nhận sang đang giao thành công | `confirmed`: d = +1 (UB) | Admin | Đổi trạng thái | #2 | `confirmed` | `shipping` | Đơn #2 chuyển `confirmed` → `shipping`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | xem 3.2 |
+| FR10-BV-04 | Kiểm tra Admin chuyển đơn đã xác nhận thẳng sang đã giao bị từ chối | `confirmed`: d = +2 (UB+1) | Admin | Đổi trạng thái | #2 | `confirmed` | `delivered` | Từ chối, báo chuyển đổi không hợp lệ; đơn #2 giữ `confirmed`; các đơn khác giữ nguyên; API trả 4xx (EC27); A3 | API | AI |
+| FR10-BV-05 | Kiểm tra Admin chuyển đơn đang giao lùi về chờ xác nhận bị từ chối | `shipping`: d = −2 | Admin | Đổi trạng thái | #3 | `shipping` | `pending` | Từ chối, báo chuyển đổi không hợp lệ; đơn #3 giữ `shipping`; các đơn khác giữ nguyên; API trả 4xx (EC27); A3 | API | AI |
+| (FR10-DT-11) | Kiểm tra Admin chuyển đơn đang giao lùi về đã xác nhận bị từ chối | `shipping`: d = −1 (UB-2) | Admin | Đổi trạng thái | #3 | `shipping` | `confirmed` | Từ chối, báo chuyển đổi không hợp lệ; đơn #3 giữ `shipping`; các đơn khác giữ nguyên; API trả 4xx (EC27); A3 | API | xem 3.2 |
+| FR10-BV-06 | Kiểm tra Admin chuyển đơn đang giao sang chính nó bị từ chối | `shipping`: d = 0 | Admin | Đổi trạng thái | #3 | `shipping` | `shipping` | Từ chối, báo chuyển đổi không hợp lệ; đơn #3 giữ `shipping`; các đơn khác giữ nguyên; API trả 4xx (EC27); A2 | API | AI |
+| (FR10-DT-03) | Kiểm tra Admin hoàn tất đơn đang giao thành công | `shipping`: d = +1 (UB) | Admin | Đổi trạng thái | #3 | `shipping` | `delivered` | Đơn #3 chuyển `shipping` → `delivered`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | xem 3.2 |
+| FR10-BV-07 | Kiểm tra Admin chuyển đơn đã giao lùi về đang giao bị từ chối | `delivered` (kết thúc): d = −1 | Admin | Đổi trạng thái | #4 | `delivered` | `shipping` | Từ chối, báo chuyển đổi không hợp lệ; đơn #4 giữ `delivered`; các đơn khác giữ nguyên; API trả 4xx (EC27) | API | AI |
+| FR10-BV-08 | Kiểm tra Admin chuyển đơn đã giao sang chính nó bị từ chối | `delivered` (kết thúc): d = 0 | Admin | Đổi trạng thái | #4 | `delivered` | `delivered` | Từ chối, báo chuyển đổi không hợp lệ; đơn #4 giữ `delivered`; các đơn khác giữ nguyên; API trả 4xx (EC27); A2 | API | AI |
+| (FR10-DT-05) | Kiểm tra Admin hủy đơn đã xác nhận thành công | Vùng được hủy {pending, confirmed} – Admin hủy `confirmed` (UB) | Admin | Đổi trạng thái | #2 | `confirmed` | `canceled` | Đơn #2 chuyển `confirmed` → `canceled`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | xem 3.2 |
+| (FR10-DT-13) | Kiểm tra Admin hủy đơn đang giao bị từ chối | Admin hủy `shipping` (UB+1, A1) | Admin | Đổi trạng thái | #3 | `shipping` | `canceled` | Từ chối, báo chuyển đổi không hợp lệ; đơn #3 giữ `shipping`; các đơn khác giữ nguyên; API trả 4xx (EC27); A1 | API | xem 3.2 |
+| (FR10-DT-07) | Kiểm tra User hủy đơn đã xác nhận của mình thành công | User hủy `confirmed` (UB) | User chủ đơn | Hủy đơn | #2 | `confirmed` | – | Đơn #2 chuyển `confirmed` → `canceled`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | xem 3.2 |
+| (FR10-DT-14) | Kiểm tra User hủy đơn đang giao bị từ chối | User hủy `shipping` (UB+1) | User chủ đơn | Hủy đơn | #3 | `shipping` | – | Từ chối, báo chuyển đổi không hợp lệ; đơn #3 giữ `shipping`; các đơn khác giữ nguyên; API trả 4xx (EC27); trên Web bấm nút "Hủy đơn" có sẵn ở đơn đang giao | Web, API | xem 3.2 |
+| FR10-BV-09 | Kiểm tra Admin hủy lại đơn đã hủy bị từ chối | `canceled` (kết thúc) → `canceled` | Admin | Đổi trạng thái | #5 | `canceled` | `canceled` | Từ chối, báo chuyển đổi không hợp lệ; đơn #5 giữ `canceled`; các đơn khác giữ nguyên; API trả 4xx (EC27); A2 | API | AI |
+| FR10-BV-10 | Kiểm tra Admin khôi phục đơn đã hủy về chờ xác nhận bị từ chối | `canceled` (kết thúc) → `pending` | Admin | Đổi trạng thái | #5 | `canceled` | `pending` | Từ chối, báo chuyển đổi không hợp lệ; đơn #5 giữ `canceled`; các đơn khác giữ nguyên; API trả 4xx (EC27) | API | AI |
+| FR10-BV-11 | Kiểm tra Admin đổi trạng thái bị từ chối khi status thừa 1 khoảng trắng đầu | `confirmed` + 1 ký tự ở đầu | Admin | Đổi trạng thái | #1 | `pending` | `␣confirmed` | Từ chối, báo trạng thái không hợp lệ; đơn #1 giữ `pending`; API trả 4xx (EC28); A4 | API | AI |
+| FR10-BV-12 | Kiểm tra Admin đổi trạng thái bị từ chối khi status thừa 1 khoảng trắng cuối | `confirmed` + 1 ký tự ở cuối | Admin | Đổi trạng thái | #1 | `pending` | `confirmed␣` | Từ chối, báo trạng thái không hợp lệ; đơn #1 giữ `pending`; API trả 4xx (EC28); A4 | API | AI |
+| FR10-BV-13 | Kiểm tra Admin đổi trạng thái bị từ chối khi status thiếu 1 ký tự | độ dài `confirmed` − 1 | Admin | Đổi trạng thái | #1 | `pending` | `confirme` | Từ chối, báo trạng thái không hợp lệ; đơn #1 giữ `pending`; API trả 4xx (EC28); A4 | API | AI |
+| FR10-BV-14 | Kiểm tra Admin đổi trạng thái bị từ chối khi status thừa 1 ký tự | độ dài `confirmed` + 1 | Admin | Đổi trạng thái | #1 | `pending` | `confirmedd` | Từ chối, báo trạng thái không hợp lệ; đơn #1 giữ `pending`; API trả 4xx (EC28); A4 | API | AI |
+| FR10-BV-15 | Kiểm tra Admin đổi trạng thái đơn mã 0 bị từ chối | mã đơn 0 (LB-1) | Admin | Đổi trạng thái | #0 | – | `confirmed` | Từ chối, báo không tìm thấy đơn; API trả 404; các đơn giữ nguyên (EC29) | API | AI |
+| (FR10-DT-01) | Kiểm tra Admin xác nhận đơn đang chờ xác nhận thành công | mã đơn 1 (LB) | Admin | Đổi trạng thái | #1 | `pending` | `confirmed` | Đơn #1 chuyển `pending` → `confirmed`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | xem 3.2 |
+| FR10-BV-16 | Kiểm tra Admin xác nhận đơn có mã lớn nhất đang tồn tại thành công | mã đơn 7 (UB) | Admin | Đổi trạng thái | #7 | `pending` | `confirmed` | Đơn #7 chuyển `pending` → `confirmed`; các đơn khác giữ nguyên; API trả 2xx (EC26) | API | AI |
+| FR10-BV-17 | Kiểm tra Admin đổi trạng thái đơn mã 8 bị từ chối | mã đơn 8 (UB+1) | Admin | Đổi trạng thái | #8 | – | `confirmed` | Từ chối, báo không tìm thấy đơn; API trả 404; các đơn giữ nguyên (EC29) | API | AI |
+| FR10-BV-18 | Kiểm tra User hủy đơn mã 0 bị từ chối | mã đơn 0 (LB-1) | User chủ đơn | Hủy đơn | #0 | – | – | Từ chối, báo không tìm thấy đơn; API trả 404; các đơn giữ nguyên (EC29) | API | AI |
+| FR10-BV-19 | Kiểm tra User hủy đơn có mã lớn nhất của mình thành công | mã đơn 6 (UB của User) | User chủ đơn | Hủy đơn | #6 | `pending` | – | Đơn #6 chuyển `pending` → `canceled`; các đơn khác giữ nguyên; API trả 2xx (EC26) | API | AI |
+| FR10-BV-20 | Kiểm tra User hủy đơn mã 8 bị từ chối | mã đơn 8 (UB+1) | User chủ đơn | Hủy đơn | #8 | – | – | Từ chối, báo không tìm thấy đơn; API trả 404; các đơn giữ nguyên (EC29) | API | AI |
+
+Tổng: 20 test case BVA mới (FR10-BV-01…FR10-BV-20); 11 dòng có ID trong ngoặc là điểm biên đã được phủ bởi test case Minimum Set (mục 3.2), chỉ dẫn chiếu, không chạy lại.
+<!-- END:T42 -->
 
 ## 5. Bước 5 – Kết quả thực thi
 
