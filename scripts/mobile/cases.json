@@ -599,5 +599,39 @@
    "web",
    "api"
   ]
+ },
+ {
+  "id": "MOB-DT-14",
+  "section": "GAP",
+  "title": "Kiểm tra đăng nhập đúng sau một lần sai làm mới bộ đếm",
+  "covers": "EC16, EC17",
+  "email": "test@eshop.com",
+  "password": "Test1234!",
+  "pre": [
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ],
+   [
+    "test@eshop.com",
+    "Test1234!"
+   ],
+   [
+    "test@eshop.com",
+    "Sai12345!"
+   ]
+  ],
+  "wait": 0,
+  "expect": "accept",
+  "counter": null,
+  "lock_expected": null,
+  "same_message_as_pre": false,
+  "expected": "Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A3; nếu bộ đếm không về 0 sau lần đúng thì 2 lần sai cộng dồn sẽ khóa tài khoản",
+  "origin": "AI",
+  "show": {},
+  "channels": [
+   "web",
+   "api"
+  ]
  }
 ]

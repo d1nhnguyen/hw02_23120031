@@ -649,6 +649,33 @@
    "pre_message": null,
    "verdict": "Pass",
    "notes": []
+  },
+  {
+   "id": "MOB-DT-14",
+   "expect": "accept",
+   "success": true,
+   "message": "",
+   "shown": [
+    "EShop Mobile",
+    "Chào, Test User",
+    "Giỏ (0)",
+    "Danh sách sản phẩm",
+    "Tìm kiếm...",
+    "Tìm",
+    "iPhone 15 Pro Max",
+    "30,000,000 ₫",
+    "Xem chi tiết",
+    "Thêm vào giỏ",
+    "Hiển thị 5 sản phẩm",
+    "© 2026 EShop SUT. Dành cho mục đích kiểm thử."
+   ],
+   "login_attempts": 0,
+   "locked_until": null,
+   "locked": false,
+   "pre_message": "Đăng nhập thất bại. Vui lòng kiểm tra lại.",
+   "profile_opens": true,
+   "verdict": "Pass",
+   "notes": []
   }
  ]
 }

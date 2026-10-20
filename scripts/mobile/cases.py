@@ -96,8 +96,13 @@ CASES = [
          "EC1/EC4 – độ dài email + 1", email="test@eshop.comm", counter=0),
 ]
 
+# 6.2 – bổ sung sau AI gap analysis: MOB-DT-05 không dựng được tiền điều kiện khi bộ đếm tăng sai
+CASES.append(case("DT-14", "success", "Kiểm tra đăng nhập đúng sau một lần sai làm mới bộ đếm",
+                  "EC16, EC17", pre=[FAIL, OK, FAIL], added=True,
+                  note="A3; nếu bộ đếm không về 0 sau lần đúng thì 2 lần sai cộng dồn sẽ khóa tài khoản"))
+
 BY_ID = {c["id"]: c for c in CASES}
-assert len(CASES) == 23 and len(BY_ID) == 23
+assert len(CASES) == 24 and len(BY_ID) == 24
 
 if __name__ == "__main__":
     out = Path(__file__).with_name("cases.json")

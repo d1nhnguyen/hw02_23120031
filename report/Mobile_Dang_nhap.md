@@ -185,15 +185,15 @@ Dữ liệu và kết quả mong đợi được sinh từ `scripts/mobile/cases
 | EC2 | MOB-DT-02 | | EC13 | MOB-DT-13 |
 | EC3 | MOB-DT-03 | | EC14 | MOB-DT-13 |
 | EC4 | MOB-DT-07 | | EC15 | MOB-DT-04 |
-| EC5 | MOB-DT-08 | | EC16 | MOB-DT-05 |
-| EC6 | MOB-DT-09 | | EC17 | MOB-DT-01…MOB-DT-03, MOB-DT-05 |
+| EC5 | MOB-DT-08 | | EC16 | MOB-DT-05; bổ sung: MOB-DT-14 (mục 6.2) |
+| EC6 | MOB-DT-09 | | EC17 | MOB-DT-01…MOB-DT-03, MOB-DT-05; bổ sung: MOB-DT-14 (mục 6.2) |
 | EC7 | MOB-DT-01…MOB-DT-03 | | EC18 | MOB-DT-06…MOB-DT-12 |
 | EC8 | MOB-DT-06 | | EC19 | MOB-DT-06 |
 | EC9 | MOB-DT-10 | | EC20 | MOB-DT-13 |
 | EC10 | MOB-DT-11 | | EC21 | MOB-DT-04 |
 | EC11 | MOB-DT-12 | |  |  |
 
-21 / 21 lớp được phủ bởi 13 test case Minimum Set (5 valid, 8 invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có test case riêng.
+21 / 21 lớp được phủ bởi 13 test case Minimum Set (5 valid, 8 invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có test case riêng. Các đại diện bổ sung sau rà soát (mục 6.2) ghi sau dấu `;`.
 <!-- END:T33 -->
 
 ## 4. Bước 4 – Boundary Value Analysis
@@ -258,7 +258,7 @@ Cách kết luận: "thành công" Pass khi rời màn hình Đăng nhập, than
 - **Thời gian khóa 180 giây:** `locked_until` = thời điểm khóa + 180 giây; sau 32–35 giây vẫn bị từ chối. Các lần thử trong lúc khóa không gia hạn khóa.
 - Thông báo trên Mobile luôn là "Đăng nhập thất bại. Vui lòng kiểm tra lại." – giống nhau cho sai email / sai mật khẩu / bị khóa (không lộ nguyên nhân). API trả "Invalid email or password" (401) hoặc "Tài khoản đã bị khóa. Vui lòng thử lại sau." (403).
 - Email khác chữ hoa / thường hoặc có khoảng trắng đầu / cuối bị từ chối (A6).
-- MOB-DT-05 Blocked vì tài khoản đã bị khóa từ lần sai thứ 2 nên lần đăng nhập đúng ở giữa chuỗi không thực hiện được.
+- Đăng nhập đúng làm mới bộ đếm (MOB-DT-14 Pass); MOB-DT-05 Blocked vì tài khoản đã bị khóa từ lần sai thứ 2 nên lần đăng nhập đúng ở giữa chuỗi không thực hiện được.
 
 ### 5.3 Kết quả theo test case
 
@@ -290,6 +290,7 @@ Mỗi test case một dòng. Bảng sinh từ `evidence/Mobile/web_results.json`
 | MOB-BV-08 | Fail | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 2 | Fail | HTTP 401 “Invalid email or password”; bộ đếm = 2 | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-08.png) · `api_results.json` | MOB-B2 |
 | MOB-BV-09 | Pass | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 0 | Pass | HTTP 401 “Invalid email or password”; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-09.png) · `api_results.json` | – |
 | MOB-BV-10 | Pass | Ở lại màn hình Đăng nhập, hiện “Đăng nhập thất bại. Vui lòng kiểm tra lại.”; bộ đếm = 0 | Pass | HTTP 401 “Invalid email or password”; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-BV-10.png) · `api_results.json` | – |
+| MOB-DT-14 | Pass | Đăng nhập thành công, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; bộ đếm = 0 | Pass | HTTP 200 “Login successful”, có token; bộ đếm = 0 | [ảnh Mobile](../evidence/Mobile/web/MOB-DT-14.png) · `api_results.json` | – |
 <!-- END:T53 -->
 
 ### 5.4 Tổng hợp
@@ -297,17 +298,47 @@ Mỗi test case một dòng. Bảng sinh từ `evidence/Mobile/web_results.json`
 <!-- BEGIN:T55 -->
 | Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |
 | --- | --- | --- | --- | --- | --- | --- |
-| Mobile | 23 | 23 | 9 | 13 | 1 | 0 |
-| API | 23 | 23 | 9 | 13 | 1 | 0 |
-| **Tổng lượt chạy** | | **46** | **18** | **26** | **2** | |
+| Mobile | 24 | 24 | 10 | 13 | 1 | 0 |
+| API | 24 | 24 | 10 | 13 | 1 | 0 |
+| **Tổng lượt chạy** | | **48** | **20** | **26** | **2** | |
 
-23 test case = 13 Minimum Set (mục 3.2) + 10 BVA (mục 4.2). Gộp các kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 9 Pass, 13 Fail, 1 Blocked.
+24 test case = 13 Minimum Set (mục 3.2) + 10 BVA (mục 4.2) + 1 bổ sung sau rà soát (mục 6.2). Gộp các kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 10 Pass, 13 Fail, 1 Blocked.
 <!-- END:T55 -->
 
 ## 6. Bước 6 – AI gap analysis
 
-| # | AI bỏ sót / làm sai | Loại (EC / TC / biên / expected sai / bug) | Nguyên nhân (prompt / giới hạn công cụ AI / độ phức tạp feature) | Phát hiện bằng cách nào | Đã xử lý |
+> G1–G5: AI (Claude Code) tự phát hiện trong lúc làm các bước 1–5. Sinh viên rà soát và bổ sung các điểm tự phát hiện ở commit `[Mobile][Bn-review]`.
+
+### 6.1 Những gì AI bỏ sót hoặc làm sai
+
+| # | AI bỏ sót / làm sai | Loại | Nguyên nhân | Phát hiện bằng cách nào | Đã xử lý |
 | --- | --- | --- | --- | --- | --- |
+| G1 | Thiết kế không có biến "thiết bị / kích thước thanh trạng thái"; AI chỉ chuẩn bị một máy ảo (Pixel 6) và suýt kết luận cả feature bị chặn | Biến đầu vào thiếu (môi trường) | **Độ phức tạp feature**: hành vi giao diện phụ thuộc thiết bị; **do prompt**: đề không nêu thiết bị đích | Không chạm được "Đăng nhập" ở bước 1 | Tạo thêm máy Pixel 2, ghi bug MOB-B1, ghi điểm cần kiểm tra trên điện thoại thật |
+| G2 | MOB-DT-05 (đăng nhập đúng xen giữa) phụ thuộc bộ đếm tăng đúng 1; khi bộ đếm tăng 2 thì tiền điều kiện không dựng được nên test case không trả lời được câu hỏi "có làm mới bộ đếm không" | Thiết kế test case | **Độ phức tạp feature**: hai quy tắc (đếm, làm mới) ràng buộc nhau; AI chọn chuỗi thao tác dài thay vì chuỗi ngắn nhất cô lập quy tắc | Kết quả API: lần đăng nhập đúng ở giữa bị 403 | Đánh Blocked; bổ sung MOB-DT-14 (sai → đúng → sai → đúng) |
+| G3 | Bộ đếm tăng 2 lúc đầu có thể do script chạm nút hai lần | Nguy cơ kết luận sai | **Giới hạn công cụ AI**: tự động hoá giao diện qua `adb` không thấy được request mạng | AI kiểm tra lại bằng đúng một request API | Kết luận chỉ sau khi tái hiện bằng một request |
+| G4 | Runner Mobile bản đầu: lỗi `KeyError` khi in kết quả Blocked; mở lại app ngay sau `force-stop` thất bại → 4 test case Blocked giả; phải dừng và chạy lại | Thực thi | **Giới hạn công cụ AI**: script chưa xử lý trạng thái không mong đợi của emulator / Expo Go | Ảnh chụp lúc Blocked là màn hình chính Android | Chỉ rõ package khi mở app, thử lại tối đa 3 lần, chờ trang chủ tải xong |
+| G5 | Điểm biên thời gian 28 / 32 giây chỉ kiểm tra được biên theo đặc tả (30 giây); biên thực tế của SUT (180 giây) chỉ đo được qua `locked_until`, chưa chạy test case quanh 180 giây | Biên chưa phủ | **Giới hạn thời gian thực thi** (mỗi lần chờ 3 phút) | Khảo sát `locked_until` | Ghi trong bug MOB-B3; để mở |
+
+### 6.2 Test case bổ sung
+
+Kết quả thực thi nằm ở mục 5.3.
+
+<!-- BEGIN:T62 -->
+| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Email | Mật khẩu | Các lần thử trước (tiền điều kiện) | Chờ trước lần thử | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| MOB-DT-14 | Kiểm tra đăng nhập đúng sau một lần sai làm mới bộ đếm | EC16, EC17 | `test@eshop.com` | `Test1234!` | 1 × sai (`Sai12345!`) → 1 × đúng (`Test1234!`) → 1 × sai (`Sai12345!`) | – | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A3; nếu bộ đếm không về 0 sau lần đúng thì 2 lần sai cộng dồn sẽ khóa tài khoản | Mobile, API | AI |
+<!-- END:T62 -->
+
+### 6.3 Điểm còn mở (chưa xử lý)
+
+- Kiểm tra lại MOB-B1 trên điện thoại thật có tai thỏ để xác nhận mức độ ảnh hưởng.
+- A1 (Mobile kế thừa FR-02), A2 (khóa ngay sau lần sai thứ 3), A6 (email không phân biệt hoa / thường) cần TA xác nhận.
+
+### 6.4 Nhận xét
+
+- **Do prompt:** đề và prompt không nêu thiết bị đích nên AI không phân vùng theo thiết bị (G1).
+- **Do giới hạn công cụ AI:** tự động hoá mobile qua `adb` kém ổn định hơn Web; AI phải tự xác minh bằng kênh API để tránh kết luận sai (G3, G4).
+- **Do độ phức tạp feature:** các quy tắc đếm / khóa / làm mới phụ thuộc trạng thái và thời gian; một lỗi (bộ đếm tăng 2) che các test case khác (G2).
 
 ## 7. Bước 7 – Bug
 
