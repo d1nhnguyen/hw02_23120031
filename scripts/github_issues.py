@@ -83,9 +83,9 @@ def set_issue_cell(path, code, link, col):
     out = []
     for line in text.split("\n"):
         if line.startswith(f"| {code} |"):
-            cells = line.strip("|").split(" | ")
+            cells = [c.strip() for c in line.strip().strip("|").split("|")]  # ô bảng không chứa "|"
             cells[col] = link
-            line = "| " + " | ".join(c.strip() for c in cells) + " |"
+            line = "| " + " | ".join(cells) + " |"
         out.append(line)
     path.write_text("\n".join(out), encoding="utf-8")
 

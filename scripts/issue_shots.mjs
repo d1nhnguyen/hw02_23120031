@@ -10,7 +10,10 @@ const targets = JSON.parse(process.argv[2]);
 const browser = await chromium.launch({ channel: 'chrome' });
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, locale: 'en-US' });
 for (const t of targets) {
-  await page.goto(t.url, { waitUntil: 'networkidle' });
+  // trang GitHub giữ kết nối nền nên không chờ 'networkidle'; chờ phần thân issue hiện ra
+  await page.goto(t.url, { waitUntil: 'load' });
+  await page.waitForSelector('[data-testid="issue-body"], .js-comment-body', { timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(1500);
   await page.screenshot({ path: join(OUT, `${t.bug}_issue.png`), fullPage: true });
   console.log(`${t.bug}_issue.png`);
 }
