@@ -42,7 +42,7 @@
 | --- | --- |
 | `report/` | Báo cáo chính (Domain Testing + BVA) cho từng feature, bản Markdown + PDF |
 | `bugs/` | Báo cáo bug, ảnh bug và ảnh chụp trang GitHub Issues |
-| `ai/` | AI Audit Report, AI Critique, Disclosure Form, Privacy Checklist, prompt log (Phụ lục A), output AI gốc (`ai/raw/`) |
+| `ai/` | AI Audit Report, AI Critique, Disclosure Form, Privacy Checklist, prompt log (Phụ lục A) |
 | `evidence/` | Ảnh / log kết quả chạy test |
 | `scripts/` | Script dựng dữ liệu, chạy test, trích prompt log |
 | `skills/` | Agent Skills |

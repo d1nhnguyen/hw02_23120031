@@ -23,7 +23,7 @@ Thiết kế test theo hướng hộp đen, chỉ dựa trên đặc tả (`READ
 | B6 | AI gap analysis: so bản AI gốc (`ai/raw/`) với bản cuối | mục 6 |
 | B7 | Báo cáo bug (Markdown + GitHub Issue có ảnh) | `bugs/` |
 
-- Sinh viên tự viết prompt cho từng bước. Output AI nguyên gốc được lưu ở `ai/raw/<FR>_B<n>.md` **trước** khi chỉnh sửa.
+- Mỗi bước được làm với AI theo đúng thứ tự kỹ thuật. Output AI của bước là commit `[<FR>][B<n>]`; phần sinh viên rà soát / sửa là commit tiếp theo `[<FR>][B<n>-review]`, nên `git diff` giữa hai commit là bằng chứng chỉnh sửa.
 - Mỗi test case có cột **Origin**: `AI` (dùng nguyên) / `AI-sửa` / `SV` (sinh viên tự thêm).
 - Template test case: ID | Tiêu đề (Action + Function + Condition) | Lớp/biên phủ | Tiền điều kiện | Các bước | Dữ liệu | Kết quả mong đợi | Kết quả thực tế | Trạng thái | Bug ID | Origin.
 
