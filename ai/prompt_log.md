@@ -1,6 +1,6 @@
 # Phụ lục A — Prompt log (trích tự động từ transcript Claude Code)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 21:15 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 21:27 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -8,6 +8,13 @@
 | 2 | 2026-10-20 21:06 | `1946c20d` | 1. Đây là URL repo chung: https://github.com/d1nhnguyen/eshop-sut, một issues có thể được  |
 | 3 | 2026-10-20 21:10 | `1946c20d` | [Request interrupted by user] |
 | 4 | 2026-10-20 21:11 | `1946c20d` | ko xem các dữ liệu đã cũ, tôi chỉ test trước để hiểu đề bài |
+| 5 | 2026-10-20 21:18 | `4aefb10a` | tao mot private repo trong hw02_23120031, voi github account d1nhnguyen |
+| 6 | 2026-10-20 21:19 | `4aefb10a` | [Request interrupted by user for tool use] |
+| 7 | 2026-10-20 21:19 | `4aefb10a` | co the dua lenh toi tu chay cung duoc |
+| 8 | 2026-10-20 21:21 | `4aefb10a` | git remote add origin git@github-d1nh:d1nhnguyen/hw02_23120031.git error: remote origin al |
+| 9 | 2026-10-20 21:23 | `1946c20d` | tôi đã tạo repo rồi, các commit có thể ko cần thêm co-authored claude. Thực hiện tiếp |
+| 10 | 2026-10-20 21:25 | `1946c20d` | [Request interrupted by user] |
+| 11 | 2026-10-20 21:26 | `1946c20d` | về phần tên file ở pool mobile, m-02 ko phải là tên chính thức đó chỉ là quy định trong nh |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -265,6 +272,18 @@ Expo Go đã cài xong và đang tải bundle của app.
 Bundle đã build xong. Tôi chụp màn hình emulator để xem app có tải được danh sách sản phẩm từ backend không.
 
 Log báo 11 lượt, nhiều hơn số prompt bạn thực sự gõ (4). Có thể các thông báo hệ thống từ tác vụ nền đã bị tính nhầm là prompt. Tôi kiểm tra.
+
+Giai đoạn 0 xong, chỉ còn bước push lên GitHub.
+
+- **Mobile chạy được trên emulator.** App EShop mở trong Expo Go và tải đúng danh sách sản phẩm từ backend (ví dụ iPhone 15 Pro Max, 30,000,000 ₫). Emulator, backend và Expo vẫn đang chạy nền.
+- **Đã sửa lỗi script log.** Các thông báo hệ thống từ tác vụ nền bị tính nhầm là prompt, khiến log đếm thành 11 lượt. Giờ log chỉ còn 4 prompt bạn thực sự gõ trong phiên này, dữ liệu cũ không lọt vào.
+- **Repo local có 3 commit:** `[setup]` cấu trúc và kế hoạch, `[setup]` script khởi động môi trường, `[ai-log]` sửa script log. Lần sau bạn chỉ cần chạy `scripts/start_env.sh mobile` (hoặc `web`, hoặc `all`) để bật lại môi trường.
+
+**Việc bạn cần làm để push:** tạo repo private `HW02_23120031` dưới tài khoản `d1nhnguyen`, qua web hoặc qua `gh auth login`. Xong báo tôi một câu là tôi push ngay.
+
+**Bước tiếp theo là FR-01 B1** (xác định biến Input/Output), với prompt do bạn tự viết. Tôi đề xuất mỗi feature làm trong một phiên Claude Code mới, vì hai lý do: log mỗi feature sẽ gọn và tách bạch, và AI không mang theo ngữ cảnh của feature khác nên phần gap analysis trung thực hơn. Các quyết định đã chốt (định dạng issue, bạn tự viết prompt, chỉ test hộp đen, bỏ dữ liệu cũ) tôi đã ghi vào bộ nhớ, nên phiên mới vẫn nắm được.
+
+Monitor theo dõi log Expo đã hết hạn sau 5 phút, đúng như dự kiến. Tôi không bật lại vì app đã chạy và đã kiểm tra xong. Expo, emulator và backend vẫn chạy nền. Tôi đang chờ bạn tạo repo `HW02_23120031` để push.
 ````
 
 <details><summary>Hành động AI đã thực hiện (26)</summary>
@@ -295,5 +314,218 @@ Log báo 11 lượt, nhiều hơn số prompt bạn thực sự gõ (4). Có th�
 24. `Bash` — Inspect which entries were counted as prompts
 25. `Edit` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/export_prompt_log.py
 26. `Bash` — Regenerate log without notifications and commit
+
+</details>
+
+## #5 · 2026-10-20 21:18:43 · phiên `4aefb10a`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+tao mot private repo trong hw02_23120031, voi github account d1nhnguyen
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+(không có văn bản trả lời)
+````
+
+<details><summary>Hành động AI đã thực hiện (3)</summary>
+
+1. `Bash` — Read memory, list folder, check gh auth
+2. `Bash` — Locate the hw02 folder and SSH alias config
+3. `Bash` — Check folder contents, git state, SSH identity
+
+</details>
+
+## #6 · 2026-10-20 21:19:01 · phiên `4aefb10a`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `n/a`
+
+**Prompt (nguyên văn):**
+
+````text
+[Request interrupted by user for tool use]
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+(không có văn bản trả lời)
+````
+
+## #7 · 2026-10-20 21:19:07 · phiên `4aefb10a`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+co the dua lenh toi tu chay cung duoc
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Thư mục nằm ở `HW02/HW02_23120031`. gh CLI trên máy đang đăng nhập bằng `npdinhx`, nên không tạo repo cho `d1nhnguyen` bằng nó được. Có hai cách:
+
+**Cách 1 — qua web (khuyên dùng, không đụng tới gh):**
+
+1. Đăng nhập GitHub bằng `d1nhnguyen` và vào https://github.com/new
+   - Repository name: `HW02_23120031`
+   - Chọn **Private**
+   - Không tick README, .gitignore hay license, để repo rỗng
+2. Chạy các lệnh sau trong terminal:
+
+```bash
+cd /home/npdinh/study/Homeworks/HW02/HW02_23120031
+git init -b main
+git remote add origin git@github-d1nh:d1nhnguyen/HW02_23120031.git
+ssh -T git@github-d1nh   # phải in ra "Hi d1nhnguyen!"
+```
+
+**Cách 2 — qua gh CLI (phải thêm tài khoản d1nhnguyen vào gh):**
+
+```bash
+gh auth login --hostname github.com --git-protocol ssh --web --skip-ssh-key   # đăng nhập bằng d1nhnguyen
+cd /home/npdinh/study/Homeworks/HW02/HW02_23120031
+git init -b main
+gh repo create d1nhnguyen/HW02_23120031 --private --source=. --remote=origin
+git remote set-url origin git@github-d1nh:d1nhnguyen/HW02_23120031.git
+gh auth switch --user npdinhx   # chuyển gh về lại tài khoản cũ
+```
+
+Lưu ý:
+- Nếu gõ lệnh ngay trong khung chat này thì thêm `!` ở đầu mỗi dòng (ví dụ `! git init -b main`) để mình xem được kết quả.
+- Remote dùng alias SSH `github-d1nh` để push bằng key của `d1nhnguyen`, không phải key của `npdinhx`.
+- Repo rỗng thì chưa push được. Lần push đầu tiên sẽ đi cùng commit đầu tiên của bạn: `git push -u origin main`.
+- Nếu muốn commit đứng tên `d1nhnguyen`, đặt `git config user.name` / `user.email` riêng cho repo này. Mặc định nó dùng cấu hình global trên máy.
+
+Nếu bạn tạo repo theo cách 1, bước 1 xong thì báo mình, mình chạy các lệnh git ở bước 2 cho.
+````
+
+## #8 · 2026-10-20 21:21:11 · phiên `4aefb10a`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+git remote add origin git@github-d1nh:d1nhnguyen/hw02_23120031.git
+error: remote origin already exists.
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Lỗi đó không sao: remote `origin` đã có sẵn và trỏ đúng chỗ.
+
+```
+origin  git@github-d1nh:d1nhnguyen/HW02_23120031.git
+```
+
+Thư mục này đã là git repo với 3 commit `[setup]` / `[ai-log]` từ trước. GitHub không phân biệt hoa thường ở tên repo, nên `hw02_23120031` và `HW02_23120031` là cùng một repo. Không cần thêm remote nữa.
+
+Giờ chỉ cần kiểm tra xem repo trên GitHub đã có chưa, rồi push lên:
+
+```bash
+git ls-remote origin
+```
+
+- **Không lỗi** (in ra trống hoặc in ra danh sách ref): repo đã có trên GitHub. Chạy `git push -u origin main` là xong.
+- **Lỗi `Repository not found`**: repo chưa có. Đăng nhập `d1nhnguyen`, vào https://github.com/new, tạo repo `HW02_23120031` ở chế độ **Private** và không tick README. Sau đó chạy `git push -u origin main`.
+
+Nếu nhánh hiện tại không tên `main` thì kiểm tra bằng `git branch --show-current` và push đúng tên nhánh đó.
+````
+
+<details><summary>Hành động AI đã thực hiện (2)</summary>
+
+1. `Bash` — Show which repo and remote the folder uses
+2. `Bash` — Update outdated note about submission folder in memory
+
+</details>
+
+## #9 · 2026-10-20 21:23:02 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+tôi đã tạo repo rồi, các commit có thể ko cần thêm co-authored claude. Thực hiện tiếp
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Đã rõ: từ giờ không thêm dòng `Co-Authored-By` nữa. Ba commit hiện tại mới nằm ở local, chưa push lần nào, nên tôi xoá dòng đó khỏi chúng luôn rồi mới push. Trước hết tôi ghi nhớ quyết định này và kiểm tra repo trên GitHub.
+
+Đã gắn `origin/main`. Tôi kiểm tra phiên bản pandoc để chọn tuỳ chọn nhúng ảnh khi xuất PDF.
+
+pandoc 3.1.3 hỗ trợ `--embed-resources`. Tôi viết script xuất PDF và file CSS đi kèm.
+````
+
+<details><summary>Hành động AI đã thực hiện (9)</summary>
+
+1. `Edit` — /home/npdinh/.claude/projects/-home-npdinh-study-Homeworks/memory/hw02-plan-decisions.md
+2. `Bash` — Check the new remote repo is reachable and empty
+3. `Bash` — Fetch remote and set upstream tracking
+4. `Bash` — Check pandoc and Chrome versions
+5. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/pdf.css
+6. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/build_pdf.sh
+7. `Bash` — Test PDF export on README
+8. `Bash` — Generate four feature report skeletons
+9. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md
+
+</details>
+
+## #10 · 2026-10-20 21:25:03 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `n/a`
+
+**Prompt (nguyên văn):**
+
+````text
+[Request interrupted by user]
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+(không có văn bản trả lời)
+````
+
+## #11 · 2026-10-20 21:26:06 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+về phần tên file ở pool mobile, m-02 ko phải là tên chính thức đó chỉ là quy định trong nhóm tôi để chia task, có thể đặt là mobile_dang_nhap
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Các chỗ nhắc "M-02" trong `ai/prompt_log.md` là log nguyên văn nên tôi giữ nguyên. Tôi sửa README, PLAN, file báo cáo và bộ nhớ.
+
+Đủ các khung. Tôi chia thành các commit rõ ràng, không có dòng Co-Authored-By, rồi push.
+````
+
+<details><summary>Hành động AI đã thực hiện (9)</summary>
+
+1. `Bash` — Find all M-02 references outside the log
+2. `Bash` — Rename mobile report and drop M-02 label
+3. `Bash` — Update memory: M-02 is an internal label
+4. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md
+5. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Audit_Report.md
+6. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Disclosure_Form.md
+7. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Privacy_Checklist.md
+8. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Critique.md
+9. `Bash` — Commit setup work in steps and push
 
 </details>
