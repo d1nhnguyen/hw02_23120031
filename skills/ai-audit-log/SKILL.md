@@ -19,10 +19,11 @@ python3 scripts/export_prompt_log.py --since <YYYY-MM-DDTHH:MM> --out ai/prompt_
 ## 2. Nháp bảng AI Audit Report (mẫu AI-02)
 
 ```bash
-python3 scripts/audit_draft.py <repo> > ai/audit_draft.md
+python3 scripts/audit_draft.py <repo> --prompt-log ai/prompt_log.md > ai/audit_draft.md
 ```
 
-- Mỗi hàng = một artifact AI sinh ở một bước (`[F][Bn]`); cột (5) lấy từ commit `[F][Bn-review]`.
+- Mỗi hàng = một artifact AI sinh ở một bước (`[F][Bn]`); cột (5) lấy từ commit `[F][Bn-review]`. Commit `[skill]` / `[report]` mỗi commit một hàng.
+- `--prompt-log`: cột (1) ghi lượt prompt gần nhất trước commit (đọc bảng mục lục của prompt log), cột (5) ghi lượt prompt dẫn tới bản sửa.
 - Verdict gợi ý: VALID (không sửa) / INCOMPLETE (có sửa sau rà soát); sinh viên đổi thành INVALID nếu artifact bị loại.
 - Sinh viên điền cột (4) "Lý do" có dẫn chiếu slide / ISTQB, và đối chiếu từng dòng với `git diff <ai>..<review>`.
 - Tổng hợp mục 4 (số lượng / tỉ lệ VALID / INVALID / INCOMPLETE) từ bảng đã duyệt.
