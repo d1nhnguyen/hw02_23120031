@@ -20,7 +20,7 @@ Thiết kế test theo hướng hộp đen, chỉ dựa trên đặc tả (`READ
 | B3 | Chọn test case Domain Testing (valid gộp nhiều lớp, invalid mỗi TC đúng 1 lớp) | mục 3 |
 | B4 | Boundary Value Analysis cho các biến có thứ tự | mục 4 |
 | B5 | Chạy test trên SUT, ghi Actual / Status, chụp bằng chứng | mục 5, `evidence/<FR>/` |
-| B6 | AI gap analysis: so bản AI gốc (`ai/raw/`) với bản cuối | mục 6 |
+| B6 | AI gap analysis: so bản AI gốc (commit `[<FR>][B<n>]`) với bản cuối | mục 6 |
 | B7 | Báo cáo bug (Markdown + GitHub Issue có ảnh) | `bugs/` |
 
 - Mỗi bước được làm với AI theo đúng thứ tự kỹ thuật. Output AI của bước là commit `[<FR>][B<n>]`; phần sinh viên rà soát / sửa là commit tiếp theo `[<FR>][B<n>-review]`, nên `git diff` giữa hai commit là bằng chứng chỉnh sửa.
