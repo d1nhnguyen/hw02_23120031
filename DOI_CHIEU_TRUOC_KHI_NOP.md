@@ -33,7 +33,10 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 ## Hồ sơ nộp
 
 - [ ] Điền họ tên, lớp/khoá, giảng viên, ngày, chữ ký trong `ai/AI_Audit_Report.md`, `AI_Disclosure_Form.md`, `AI_Privacy_Checklist.md`.
-- [ ] AI Critique 200–300 từ (sinh viên viết / duyệt).
+- [ ] AI Critique 200–300 từ (sinh viên viết / duyệt); xóa khối chú thích gợi ý trong `ai/AI_Critique.md`.
+- [ ] **AI Audit Report**: bảng mục 3 là nháp tự động (32 artifact; verdict gợi ý 26 VALID / 6 INCOMPLETE). Xác nhận / đổi verdict từng hàng, điền cột (4) lý do có dẫn chiếu slide / ISTQB, tính lại mục 4, viết mục 5 (80–150 chữ) và mục 6 Mandatory Disclosure, xóa các chú thích `NHÁP`.
+- [ ] FR-15, FR-10, Mobile **chưa có commit rà soát** của sinh viên (mọi hàng đang "Không sửa" → VALID). Nếu sửa gì khi duyệt: commit `[<F>][Bn-review]` rồi chạy lại `audit_draft.py --prompt-log ai/prompt_log.md`.
+- [ ] **AI Disclosure Form**: kiểm tra bảng 2.4 (AI nháp), tự viết mục 2.5, xóa chú thích `NHÁP`.
 - [ ] Video demo Agent Skill có **giọng nói của sinh viên** (AI-01 §10), đăng YouTube, điền link vào README.
 - [ ] Điểm tự chấm trong README và tên file zip `23120031_HW02_AI_DomainTesting_<điểm>.zip`.
 - [ ] Điền sheet phân công nhóm (`HW02_Phan_cong_nhom.xlsx`), kiểm tra không trùng feature.
