@@ -64,4 +64,5 @@ Phần này mô tả cách bài làm áp dụng kỹ thuật theo tài liệu m�
 ## Vai trò của AI
 
 - Mỗi bước được thực hiện với Claude Code theo đúng thứ tự trên (không dùng một prompt "sinh test case" duy nhất).
-- Output AI của mỗi bước là một commit riêng `[<FR>][B<n>]`; phần sinh viên rà soát, sửa và bổ sung là commit tiếp theo, nên `git diff` giữa hai commit chính là bằng chứng chỉnh sửa cho AI Audit Report và AI gap analysis.
+- Sau khi hoàn thành phiên bản đầu của FR-01, sinh viên dùng công cụ AI thứ hai là **Google Antigravity (Gemini 4 Argon)** để rà soát chéo độc lập theo tiêu chí bảng (data matrix), cách đặt tên TC và mức độ chi tiết (lượt #13 trong `ai/prompt_log.md`), rồi duyệt và áp dụng mẫu chuẩn hoá đó cho cả 4 feature.
+- Output AI của mỗi bước là một commit riêng `[<FR>][B<n>]`; phần rà soát, sửa và bổ sung là commit tiếp theo `[<FR>][B<n>-review]`, nên `git diff` giữa hai commit chính là bằng chứng chỉnh sửa cho AI Audit Report và AI gap analysis.

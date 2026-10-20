@@ -7,7 +7,7 @@
 | SUT | EShop (`ttbhanh/eshop-sut`, bản dùng chung của nhóm: `d1nhnguyen/eshop-sut`) |
 | Nơi báo bug | GitHub Issues của `d1nhnguyen/eshop-sut` |
 | Feature | FR-01 Đăng ký (Pool A) · FR-10 Máy trạng thái đơn hàng (Pool B) · FR-15 Quản lý sản phẩm (Pool C) · Mobile – Đăng nhập (Pool D, FR-20) |
-| Công cụ AI | Claude Code (VS Code extension) |
+| Công cụ AI | Claude Code (VS Code extension) · Google Antigravity (Gemini 4 Argon – rà soát chéo FR-01) |
 
 ## Bảng tự chấm
 

@@ -26,19 +26,27 @@ def git(repo, *args):
 
 
 def read_prompts(path):
-    """[(số lượt, 'YYYY-MM-DD HH:MM', prompt rút gọn)] từ bảng mục lục của prompt_log.md."""
-    rows = re.findall(r"^\| (\d+) \| (\d{4}-\d\d-\d\d \d\d:\d\d) \| `[^`]*` \| (.*?) \|$",
+    """[(số lượt, 'YYYY-MM-DD HH:MM', phiên, prompt rút gọn)] từ bảng mục lục của prompt_log.md."""
+    rows = re.findall(r"^\| (\d+) \| (\d{4}-\d\d-\d\d \d\d:\d\d) \| `([^`]*)` \| (.*?) \|$",
                       Path(path).read_text(encoding="utf-8"), re.M)
-    return [(int(n), when, text.strip()) for n, when, text in rows]
+    return [(int(n), when, sess, text.strip()) for n, when, sess, text in rows]
+
+
+def _fmt_prompt(p):
+    n, at, _, text = p
+    short = text[:70].rstrip() + ("…" if len(text) > 70 else "")
+    return f"lượt #{n} ({at[5:]}): «{short.replace('<', '&lt;')}»"
 
 
 def prompt_before(prompts, when):
     earlier = [p for p in prompts if p[1] <= when]
     if not earlier:
         return f"xem prompt_log lúc {when}"
-    n, at, text = earlier[-1]
-    short = text[:70].rstrip() + ("…" if len(text) > 70 else "")
-    return f"lượt #{n} ({at[5:]}): «{short.replace('<', '&lt;')}»"
+    cur = earlier[-1]
+    if cur[3].startswith("<pasted_content") and len(earlier) >= 2 and earlier[-2][2] != cur[2]:
+        prev = earlier[-2]
+        return f"rà soát chéo Antigravity {_fmt_prompt(prev)} → áp dụng ở {_fmt_prompt(cur)}"
+    return _fmt_prompt(cur)
 
 
 def main():
@@ -66,15 +74,27 @@ def main():
         a["review" if review else "ai"].append((sha, date, title, stat[-1].strip() if stat else ""))
     print("| # | (1) Prompt + Công cụ | (2) Output AI | (3) Verdict gợi ý | (4) Lý do (slide / ISTQB) | (5) Bản sửa sau rà soát |")
     print("| --- | --- | --- | --- | --- | --- |")
-    for i, a in enumerate(artifacts.values(), 1):
+    ag_reviews = [p for p in prompts if p[2] == "421e648d" and "fr-01" in p[3].lower()]
+    row_num = 0
+    for key, a in artifacts.items():
+        row_num += 1
         ai = "<br>".join(f"`{s}` {d} – {t} ({st})" for s, d, t, st in a["ai"]) or "–"
         rv = "<br>".join(f"`{s}` {d} – {t} ({st})" for s, d, t, st in a["review"]) or "Không sửa"
         if a["review"] and prompts:
             rv = f"Theo {prompt_before(prompts, a['review'][0][1])}:<br>{rv}"
         verdict = "INCOMPLETE" if a["review"] else "VALID"
         when = a["ai"][0][1] if a["ai"] else a["review"][0][1]
-        print(f"| {i} | Claude Code – {a['label']}; prompt: {prompt_before(prompts, when)} "
+        print(f"| {row_num} | Claude Code – {a['label']}; prompt: {prompt_before(prompts, when)} "
               f"| {ai} | {verdict} | | {rv} |")
+        if key == ("FR-01", "B7") and ag_reviews:
+            p = ag_reviews[0]
+            nxt = next((q for q in prompts if q[0] == p[0] + 1), None)
+            apply_ref = f" ở {_fmt_prompt(nxt)}" if nxt else ""
+            row_num += 1
+            print(f"| {row_num} | Google Antigravity (Gemini 4 Argon) – FR-01 Rà soát chéo (bảng, tên TC, mức chi tiết); "
+                  f"prompt: {_fmt_prompt(p)} | Bản nhận xét rà soát FR-01 trong `ai/prompt_log.md` mục #{p[0]} "
+                  f"(phát hiện G9–G16, gợi ý kiểm tra chữ có dấu `Đ`, `ă` từ mục 6.3) | VALID | | "
+                  f"Sinh viên duyệt và chuyển sang Claude Code áp dụng{apply_ref} (commits `32f8ff9`…`b7b58bf`) |")
 
 
 if __name__ == "__main__":

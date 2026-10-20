@@ -11,7 +11,7 @@ description: Build the AI usage record required by the FIT@HCMUS AI policy after
 python3 scripts/export_prompt_log.py --since <YYYY-MM-DDTHH:MM> --out ai/prompt_log.md
 ```
 
-- Đọc transcript `~/.claude/projects/<dự án>/*.jsonl`, giữ **nguyên văn** prompt của sinh viên và câu trả lời của AI, thời gian GMT+7, model, danh sách hành động công cụ (thu gọn).
+- Đọc transcript Claude Code (`~/.claude/projects/<dự án>/*.jsonl`) và Google Antigravity (`~/.gemini/antigravity-cli/brain/<phiên>/.system_generated/logs/transcript_full.jsonl`), giữ **nguyên văn** prompt của sinh viên và câu trả lời của AI, thời gian GMT+7, model, danh sách hành động công cụ (thu gọn).
 - Bỏ: nội dung harness tự chèn (`<system-reminder>`, IDE selection), thông báo tác vụ nền (`promptSource = system`), phần suy luận ẩn, nội dung file / output lệnh mà AI đọc.
 - `--since` để loại các phiên không thuộc bài (vd phiên làm thử trước khi bắt đầu). Kiểm tra bảng mục lục đầu file: số lượt phải bằng số prompt sinh viên thực sự gõ.
 - Chạy lại sau mỗi phiên, commit `[ai-log] …`.

@@ -202,13 +202,13 @@ CASES = [
          "EC28 (đại diện thứ hai), EC45", password="Abcdef1 ", note="A1", added=True),
     case("DT-30", "reject", "password",
          "Kiểm tra đăng ký bị từ chối khi chữ hoa duy nhất của Mật khẩu là chữ có dấu `Đ`",
-         "EC21 (đại diện thứ hai), EC45", password="Đbcdef1@", note="A10", origin="SV", added=True),
+         "EC21 (đại diện thứ hai), EC45", password="Đbcdef1@", note="A10", origin="AI-sửa", added=True),
     case("DT-31", "reject", "password",
          "Kiểm tra đăng ký bị từ chối khi chữ thường duy nhất của Mật khẩu là chữ có dấu `ă`",
-         "EC23 (đại diện thứ hai), EC45", password="ABCDEă1@", note="A10", origin="SV", added=True),
+         "EC23 (đại diện thứ hai), EC45", password="ABCDEă1@", note="A10", origin="AI-sửa", added=True),
     case("DT-32", "accept", "password",
          "Kiểm tra đăng ký thành công khi Mật khẩu đủ 4 loại kèm thêm chữ có dấu tiếng Việt",
-         "EC36 (đại diện thứ hai), EC41", password="Mậtkhẩu1@", note="A1, A10", origin="SV", added=True),
+         "EC36 (đại diện thứ hai), EC41", password="Mậtkhẩu1@", note="A1, A10", origin="AI-sửa", added=True),
 ]
 
 BY_ID = {c["id"]: c for c in CASES}

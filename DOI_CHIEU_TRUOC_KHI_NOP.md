@@ -4,7 +4,7 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 
 ## Liêm chính & khai báo AI
 
-- [ ] **Nguồn của bản rà soát FR-01** (G9–G16, FR01-DT-30…32 đang ghi "sinh viên rà soát" / Origin SV). Nếu bản rà soát do công cụ AI khác tạo: khai báo tên công cụ, prompt, output trong AI Audit Report và đổi nhãn Origin / nguồn phát hiện cho đúng.
+- [x] **Nguồn của bản rà soát FR-01** (G9–G16, FR01-DT-30…32): đã khai báo đầy đủ phiên rà soát chéo bằng Google Antigravity (Gemini 4 Argon, lượt #13) trong `ai/prompt_log.md`, `ai/AI_Audit_Report.md`, `ai/AI_Disclosure_Form.md`, `report/FR-01_Dang_ky.md` và cập nhật nhãn Origin / nguồn phát hiện.
 - [ ] **Các phiên AI trước 20/10** (11/10 tóm tắt đề, 14/10 làm thử FR-01, 19/10 lập kế hoạch) đang không nằm trong prompt log. Quyết định có ghi một dòng trong AI Disclosure Form ("đã dùng AI để tìm hiểu đề, không dùng kết quả") hay không.
 - [ ] **Bug report do AI nháp**: AI-01 §11 ghi "Bug report: 100% sinh viên viết; AI không được nháp mô tả", trong khi đề HW02 §11 ghi Anti-AI-Cheat "None". Đã chọn: AI nháp, sinh viên duyệt và tự viết issue → khai báo rõ trong Disclosure Form.
 - [ ] Prompt log có cả phiên tạo repo (`4aefb10a`); kiểm tra nội dung trước khi nộp.
@@ -34,7 +34,7 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 
 - [ ] Điền họ tên, lớp/khoá, giảng viên, ngày, chữ ký trong `ai/AI_Audit_Report.md`, `AI_Disclosure_Form.md`, `AI_Privacy_Checklist.md`.
 - [ ] AI Critique 200–300 từ (sinh viên viết / duyệt); xóa khối chú thích gợi ý trong `ai/AI_Critique.md`.
-- [ ] **AI Audit Report**: bảng mục 3 là nháp tự động (32 artifact; verdict gợi ý 26 VALID / 6 INCOMPLETE). Xác nhận / đổi verdict từng hàng, điền cột (4) lý do có dẫn chiếu slide / ISTQB, tính lại mục 4, viết mục 5 (80–150 chữ) và mục 6 Mandatory Disclosure, xóa các chú thích `NHÁP`.
+- [ ] **AI Audit Report**: bảng mục 3 là nháp tự động (33 artifact; verdict gợi ý 27 VALID / 6 INCOMPLETE). Xác nhận / đổi verdict từng hàng, điền cột (4) lý do có dẫn chiếu slide / ISTQB, tính lại mục 4, viết mục 5 (80–150 chữ) và mục 6 Mandatory Disclosure, xóa các chú thích `NHÁP`.
 - [ ] FR-15, FR-10, Mobile **chưa có commit rà soát** của sinh viên (mọi hàng đang "Không sửa" → VALID). Nếu sửa gì khi duyệt: commit `[<F>][Bn-review]` rồi chạy lại `audit_draft.py --prompt-log ai/prompt_log.md`.
 - [ ] **AI Disclosure Form**: kiểm tra bảng 2.4 (AI nháp), tự viết mục 2.5, xóa chú thích `NHÁP`.
 - [ ] Video demo Agent Skill có **giọng nói của sinh viên** (AI-01 §10), đăng YouTube, điền link vào README.

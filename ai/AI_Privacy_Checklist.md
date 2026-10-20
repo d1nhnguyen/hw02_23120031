@@ -5,7 +5,7 @@ Theo mẫu [AI-05] – FIT@HCMUS – AI Privacy Checklist. Thực hiện trướ
 ## 1. Trước khi dùng AI
 
 - [ ] Đã xác nhận Cấp độ AI cho bài tập này (Cấp 4).
-- [ ] Dùng tài khoản Claude Pro tự chọn (không phải tài khoản cá nhân).
+- [ ] Dùng tài khoản Claude Pro / Google Antigravity tự chọn (không phải tài khoản cá nhân).
 - [ ] Đã đọc Thoả thuận AI của môn học.
 - [ ] Hiểu rõ artifact nào KHÔNG được sinh bằng AI.
 

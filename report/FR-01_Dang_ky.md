@@ -5,7 +5,7 @@
 | Feature | FR-01 – Đăng ký tài khoản (Pool A) |
 | Kênh kiểm thử | Web khách hàng (`/register`, http://localhost:5173) + API `POST /api/register` |
 | Người thực hiện | 23120031 |
-| Công cụ AI | Claude Code (VS Code extension) |
+| Công cụ AI | Claude Code (VS Code extension) · Google Antigravity (Gemini 4 Argon – rà soát chéo) |
 | Kỹ thuật | Domain Testing (S04 – bước 1–3), Boundary Value Analysis (S04 – bước 4) |
 
 ## 0. Đặc tả (trích nguyên văn README của SUT)
@@ -444,7 +444,7 @@ Với mật khẩu `Abcdef1␣` form Web gửi request; `web_results_workaround.
 
 ## 6. Bước 6 – AI gap analysis
 
-> G1–G8: AI (Claude Code) tự phát hiện trong lúc làm các bước 1–5. G9–G16: phát hiện khi sinh viên rà soát báo cáo (đối chiếu [UC] Table 6, [S07], Testcase Checklist); phần sửa nằm ở các commit `[FR-01][Bn-review]`.
+> G1–G8: AI (Claude Code) tự phát hiện trong lúc làm các bước 1–5. G9–G16: phát hiện khi sinh viên dùng Google Antigravity (Gemini 4 Argon, lượt #13 trong `ai/prompt_log.md`) rà soát chéo báo cáo theo tiêu chí bảng, cách đặt tên TC và mức độ chi tiết (đối chiếu [UC] Table 6, [S07], Testcase Checklist); sinh viên duyệt và chuyển sang Claude Code (lượt #14) thực hiện ở các commit `[FR-01][Bn-review]`.
 
 ### 6.1 Những gì AI bỏ sót hoặc làm sai
 
@@ -458,26 +458,26 @@ Với mật khẩu `Abcdef1␣` form Web gửi request; `web_results_workaround.
 | G6 | Kiểm tra "tài khoản gốc bị ảnh hưởng" dựa vào số tài khoản trùng email = 1, bị nhiễm trạng thái do test case trước tạo ra → kết luận sai cho FR01-DT-18, FR01-BV-19 | Oracle / test case không độc lập | **Độ phức tạp feature**: một lỗi (cho trùng email) làm thay đổi trạng thái dùng chung giữa các test case | Đối chiếu thủ công bằng `curl` | Chỉ dựa vào việc tài khoản gốc còn đăng nhập được |
 | G7 | Email 254 ký tự bị tính thành 255 | Dữ liệu test | Lỗi tính toán của AI | `assert` trong `cases.py` | Sửa |
 | G8 | Trước khi commit B3, bảng phủ tính cả test case invalid là phủ lớp valid; FR01-DT-19 ghi ô Xác nhận rỗng thay vì `= MK` | Bảng phủ / dữ liệu | AI áp dụng quy tắc Minimum Set chưa chặt | AI tự rà soát trước khi commit (không có trong lịch sử commit) | Sửa trước commit |
-| G9 | Bảng BVA gom 4 cột dữ liệu thành 1 cột "Giá trị", lệch cấu trúc data matrix của bảng 3.2 và mẫu Table 6 [UC] | Định dạng bảng | **Giới hạn công cụ AI**: ưu tiên bảng ngắn gọn, không giữ cấu trúc nhất quán giữa các bảng | Sinh viên rà soát | Sinh bảng từ `cases.py`, giữ đủ cột (B4-review) |
-| G10 | Bảng kết quả 5.3 gộp nhiều test case vào một dòng (48 test case còn 18 dòng), thiếu FR01-DT-29, không gắn bằng chứng cho từng test case | Báo cáo kết quả | **Giới hạn công cụ AI**: tóm tắt thay vì báo cáo đủ chi tiết như mẫu [TPL] | Sinh viên rà soát | Mỗi test case một dòng + cột Bằng chứng (B5-review) |
-| G11 | ID `DT-01`, `BV-01` không có mã feature, sẽ trùng khi gộp báo cáo 4 feature | Quy ước đặt tên | **Do prompt**: prompt chỉ nói về từng bước của một feature, không nhắc báo cáo chung | Sinh viên rà soát | Đổi sang `FR01-DT-nn`, `FR01-BV-nn` (B3-review) |
-| G12 | Ô dữ liệu ghi "mặc định", "= MK"; kết quả mong đợi ghi "Như FR01-DT-01" → test case không Self-standing, không Repeatable | Chất lượng test case | **Giới hạn công cụ AI**: rút gọn bảng, vi phạm checklist [S07] mà chính nó đã dẫn trong phần phương pháp | Sinh viên rà soát | Giá trị cụ thể, kết quả mong đợi tường minh kèm mã lớp đầu ra (B3-review) |
-| G13 | 7 dòng dẫn chiếu ở bảng BVA dùng tên dạng danh từ, không theo Action + Function + Condition; tên FR01-DT-02 dễ nhầm với FR01-DT-25 | Tên test case | Như G12 | Sinh viên rà soát | Dùng tên chính thức của mục 3.2; sửa tên FR01-DT-02 (B3-, B4-review) |
-| G14 | FR01-BV-19 là test case kết hợp lớp, không nêu biên nào được kiểm tra | Áp dụng BVA | **Giới hạn công cụ AI**: xếp test case vào BVA mà không chỉ ra biến có thứ tự | Sinh viên rà soát | Nêu biên số khoảng trắng đầu email = 1 (LB của EC6); thêm vào bảng 4.1 (B4-review) |
-| G15 | Tổng số test case lệch giữa các mục (49 ở mục 5, nhưng mục 6 đã thêm FR01-DT-29) | Số liệu | **Giới hạn công cụ AI**: thêm test case nhưng không cập nhật lại các tổng | Sinh viên rà soát | Bảng tổng hợp sinh tự động từ `cases.py` + kết quả (B5-review) |
-| G16 | Không có test case cho chữ có dấu trong mật khẩu (`Đ`, `ă`); AI chỉ nêu thành câu hỏi ở 6.3 | Test case thiếu | **Độ phức tạp / đặc tả mơ hồ**: AI dừng ở việc nêu câu hỏi thay vì đặt giả định và thiết kế | Sinh viên rà soát | Thêm A10 và FR01-DT-30…FR01-DT-32 (Origin SV) |
+| G9 | Bảng BVA gom 4 cột dữ liệu thành 1 cột "Giá trị", lệch cấu trúc data matrix của bảng 3.2 và mẫu Table 6 [UC] | Định dạng bảng | **Giới hạn công cụ AI**: ưu tiên bảng ngắn gọn, không giữ cấu trúc nhất quán giữa các bảng | Rà soát chéo (SV + Antigravity, lượt #13) | Sinh bảng từ `cases.py`, giữ đủ cột (B4-review) |
+| G10 | Bảng kết quả 5.3 gộp nhiều test case vào một dòng (48 test case còn 18 dòng), thiếu FR01-DT-29, không gắn bằng chứng cho từng test case | Báo cáo kết quả | **Giới hạn công cụ AI**: tóm tắt thay vì báo cáo đủ chi tiết như mẫu [TPL] | Rà soát chéo (SV + Antigravity, lượt #13) | Mỗi test case một dòng + cột Bằng chứng (B5-review) |
+| G11 | ID `DT-01`, `BV-01` không có mã feature, sẽ trùng khi gộp báo cáo 4 feature | Quy ước đặt tên | **Do prompt**: prompt chỉ nói về từng bước của một feature, không nhắc báo cáo chung | Rà soát chéo (SV + Antigravity, lượt #13) | Đổi sang `FR01-DT-nn`, `FR01-BV-nn` (B3-review) |
+| G12 | Ô dữ liệu ghi "mặc định", "= MK"; kết quả mong đợi ghi "Như FR01-DT-01" → test case không Self-standing, không Repeatable | Chất lượng test case | **Giới hạn công cụ AI**: rút gọn bảng, vi phạm checklist [S07] mà chính nó đã dẫn trong phần phương pháp | Rà soát chéo (SV + Antigravity, lượt #13) | Giá trị cụ thể, kết quả mong đợi tường minh kèm mã lớp đầu ra (B3-review) |
+| G13 | 7 dòng dẫn chiếu ở bảng BVA dùng tên dạng danh từ, không theo Action + Function + Condition; tên FR01-DT-02 dễ nhầm với FR01-DT-25 | Tên test case | Như G12 | Rà soát chéo (SV + Antigravity, lượt #13) | Dùng tên chính thức của mục 3.2; sửa tên FR01-DT-02 (B3-, B4-review) |
+| G14 | FR01-BV-19 là test case kết hợp lớp, không nêu biên nào được kiểm tra | Áp dụng BVA | **Giới hạn công cụ AI**: xếp test case vào BVA mà không chỉ ra biến có thứ tự | Rà soát chéo (SV + Antigravity, lượt #13) | Nêu biên số khoảng trắng đầu email = 1 (LB của EC6); thêm vào bảng 4.1 (B4-review) |
+| G15 | Tổng số test case lệch giữa các mục (49 ở mục 5, nhưng mục 6 đã thêm FR01-DT-29) | Số liệu | **Giới hạn công cụ AI**: thêm test case nhưng không cập nhật lại các tổng | Rà soát chéo (SV + Antigravity, lượt #13) | Bảng tổng hợp sinh tự động từ `cases.py` + kết quả (B5-review) |
+| G16 | Không có test case cho chữ có dấu trong mật khẩu (`Đ`, `ă`); AI chỉ nêu thành câu hỏi ở 6.3 | Test case thiếu | **Độ phức tạp / đặc tả mơ hồ**: AI dừng ở việc nêu câu hỏi thay vì đặt giả định và thiết kế | Rà soát chéo (SV + Antigravity, lượt #13) | Thêm A10 và FR01-DT-30…FR01-DT-32 (Origin AI-sửa) |
 
 ### 6.2 Test case bổ sung
 
-FR01-DT-29 do AI thêm sau khảo sát (G1); FR01-DT-30…FR01-DT-32 do sinh viên thêm khi rà soát (G16). Kết quả thực thi nằm ở mục 5.3.
+FR01-DT-29 do Claude Code thêm sau khảo sát (G1); FR01-DT-30…FR01-DT-32 được bổ sung từ điểm mở 6.3 sau bước rà soát chéo với Antigravity (G16). Kết quả thực thi nằm ở mục 5.3.
 
 <!-- BEGIN:T62 -->
 | ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Họ Tên | Email | Mật khẩu | Xác nhận | Kết quả mong đợi | Kênh | Origin |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | FR01-DT-29 | Kiểm tra đăng ký bị từ chối khi ký tự đặc biệt duy nhất của Mật khẩu là dấu cách | EC28 (đại diện thứ hai), EC45 | `Nguyen␣Van␣A` | `fr01.dt29@example.com` | `Abcdef1␣` | `Abcdef1␣` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45); A1 | Web, API | AI |
-| FR01-DT-30 | Kiểm tra đăng ký bị từ chối khi chữ hoa duy nhất của Mật khẩu là chữ có dấu `Đ` | EC21 (đại diện thứ hai), EC45 | `Nguyen␣Van␣A` | `fr01.dt30@example.com` | `Đbcdef1@` | `Đbcdef1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45); A10 | Web, API | SV |
-| FR01-DT-31 | Kiểm tra đăng ký bị từ chối khi chữ thường duy nhất của Mật khẩu là chữ có dấu `ă` | EC23 (đại diện thứ hai), EC45 | `Nguyen␣Van␣A` | `fr01.dt31@example.com` | `ABCDEă1@` | `ABCDEă1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45); A10 | Web, API | SV |
-| FR01-DT-32 | Kiểm tra đăng ký thành công khi Mật khẩu đủ 4 loại kèm thêm chữ có dấu tiếng Việt | EC36 (đại diện thứ hai), EC41 | `Nguyen␣Van␣A` | `fr01.dt32@example.com` | `Mậtkhẩu1@` | `Mậtkhẩu1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); A1, A10 | Web, API | SV |
+| FR01-DT-30 | Kiểm tra đăng ký bị từ chối khi chữ hoa duy nhất của Mật khẩu là chữ có dấu `Đ` | EC21 (đại diện thứ hai), EC45 | `Nguyen␣Van␣A` | `fr01.dt30@example.com` | `Đbcdef1@` | `Đbcdef1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45); A10 | Web, API | AI-sửa |
+| FR01-DT-31 | Kiểm tra đăng ký bị từ chối khi chữ thường duy nhất của Mật khẩu là chữ có dấu `ă` | EC23 (đại diện thứ hai), EC45 | `Nguyen␣Van␣A` | `fr01.dt31@example.com` | `ABCDEă1@` | `ABCDEă1@` | Từ chối, báo mật khẩu không đủ mạnh; không tạo tài khoản; API trả 4xx (EC45); A10 | Web, API | AI-sửa |
+| FR01-DT-32 | Kiểm tra đăng ký thành công khi Mật khẩu đủ 4 loại kèm thêm chữ có dấu tiếng Việt | EC36 (đại diện thứ hai), EC41 | `Nguyen␣Van␣A` | `fr01.dt32@example.com` | `Mậtkhẩu1@` | `Mậtkhẩu1@` | Đăng ký thành công: Web chuyển tới trang Đăng nhập; API trả `200` + `id`; đăng nhập được bằng email + mật khẩu vừa nhập (EC41); A1, A10 | Web, API | AI-sửa |
 <!-- END:T62 -->
 
 ### 6.3 Điểm còn mở (chưa xử lý)

@@ -1,6 +1,6 @@
-# Phụ lục A — Prompt log (trích tự động từ transcript Claude Code)
+# Phụ lục A — Prompt log (trích tự động từ transcript Claude Code & Google Antigravity)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-21 01:05 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-21 01:29 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -16,12 +16,14 @@
 | 10 | 2026-10-20 21:25 | `1946c20d` | [Request interrupted by user] |
 | 11 | 2026-10-20 21:26 | `1946c20d` | về phần tên file ở pool mobile, m-02 ko phải là tên chính thức đó chỉ là quy định trong nh |
 | 12 | 2026-10-20 21:31 | `1946c20d` | Tiếp tục làm các bước, khi nào có vấn đề nào không rõ hãy dừng lại hỏi tôi, đọc kỹ các bài |
-| 13 | 2026-10-20 22:37 | `1946c20d` | <pasted_content id="5e2c"> ### 1. Về Bảng (Cấu trúc & tính nhất quán) • Đạt chuẩn: • Đủ ch |
-| 14 | 2026-10-20 22:52 | `1946c20d` | tiếp tục chuyển khai các feature tiếp theo, dừng khi cần và nhớ tất cả các điểm cần tôi đố |
-| 15 | 2026-10-21 00:06 | `1946c20d` | tiếp tục |
-| 16 | 2026-10-21 00:13 | `1946c20d` | kiểm tra đã xong chưa |
-| 17 | 2026-10-21 00:15 | `1946c20d` | theo dõi hoặc nhờ agent khác, ko tự dừng vì sau khi dừng không tự chạy lại được? |
-| 18 | 2026-10-21 00:26 | `1946c20d` | kiếm tra lại, vscode vừa bị dừng |
+| 13 | 2026-10-20 22:30 | `421e648d` | kiểm tra fr-01 đã ổn chưa (bảng, cách đặt tên TC, mức độ chi tiết), ko cần ghi log phần nà |
+| 14 | 2026-10-20 22:37 | `1946c20d` | <pasted_content id="5e2c"> ### 1. Về Bảng (Cấu trúc & tính nhất quán) • Đạt chuẩn: • Đủ ch |
+| 15 | 2026-10-20 22:52 | `1946c20d` | tiếp tục chuyển khai các feature tiếp theo, dừng khi cần và nhớ tất cả các điểm cần tôi đố |
+| 16 | 2026-10-21 00:06 | `1946c20d` | tiếp tục |
+| 17 | 2026-10-21 00:13 | `1946c20d` | kiểm tra đã xong chưa |
+| 18 | 2026-10-21 00:15 | `1946c20d` | theo dõi hoặc nhờ agent khác, ko tự dừng vì sau khi dừng không tự chạy lại được? |
+| 19 | 2026-10-21 00:26 | `1946c20d` | kiếm tra lại, vscode vừa bị dừng |
+| 20 | 2026-10-21 01:16 | `421e648d` | thêm log phần này vào AI-log và các tài liệu cần thiết khác |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -734,7 +736,98 @@ Bạn trả lời câu 1 và 4 là tôi làm tiếp FR-15 được ngay. Câu 2 
 
 </details>
 
-## #13 · 2026-10-20 22:37:45 · phiên `1946c20d`
+## #13 · 2026-10-20 22:30:38 · phiên `421e648d`
+
+- **Công cụ AI:** Google Antigravity IDE, model `Gemini 4 Argon (Medium)`
+
+**Prompt (nguyên văn):**
+
+````text
+kiểm tra fr-01 đã ổn chưa (bảng, cách đặt tên TC, mức độ chi tiết), ko cần ghi log phần này
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Mình đã đối chiếu [`FR-01_Dang_ky.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md) với đề bài [`2026.HW02.Domain Testing_En.md`](file:///home/npdinh/study/Homeworks/HW02/2026.HW02.Domain%20Testing_En.md), quy ước trong [`PLAN.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/PLAN.md), [`00_Phuong_phap.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/00_Phuong_phap.md) và các slide/template của môn (`S04`, `UC Analysis`, `S07`, `EN.Test_Cases_AI_First`, `Testcase Checklist.xlsx`).
+
+Nhìn chung khung 7 bước, cách tách biến dẫn xuất (`I3.L/U/W/D/S`), bảng giả định (`A1`–`A9`) và thủ tục kiểm chứng hậu điều kiện đã **rất chắc chắn**. Tuy nhiên, xét riêng 3 tiêu chí **bảng**, **cách đặt tên TC**, và **mức độ chi tiết**, có các điểm sau bạn nên chỉnh để tránh mất điểm:
+
+---
+
+### 1. Về Bảng (Cấu trúc & tính nhất quán)
+
+* **Đạt chuẩn:**
+  * Đủ chuỗi bảng theo `[S04]` và `[UC]`: Biến Input/Output ([mục 1.2–1.3](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L38-L66)) $\rightarrow$ Complete Set of Partitions có cả phân vùng Output `EC41`–`EC46` ([mục 2.2](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L106-L157)) $\rightarrow$ Minimum Set + Bảng phủ 46/46 lớp ([mục 3.2–3.3](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L192-L263)) $\rightarrow$ BVA ([mục 4.1–4.2](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L266-L317)).
+  * Bảng BVA dẫn chiếu lại các điểm biên đã có trong Minimum Set (`(DT-19)`, `(DT-01)`...) giúp tránh trùng lặp (đạt tiêu chí *Economical / Non-redundant*).
+* **Cần chỉnh:**
+  1. **Bảng 4.2 (BVA) bị lệch cấu trúc cột so với Bảng 3.2 (Minimum Set):**
+     * Ở [bảng 3.2](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L198), bạn tách 4 cột dữ liệu `Họ Tên | Email | Mật khẩu | Xác nhận` đúng chuẩn **Data Matrix**.
+     * Sang [bảng 4.2](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L286), 4 cột này bị gom lại thành 1 cột `Giá trị` duy nhất. Theo mẫu Table 6 trong `[UC]` và slide 27 của `[S04]`, bảng BVA vẫn phải giữ nguyên các cột Input của ma trận dữ liệu như bảng Minimum Set.
+  2. **Bảng 5.3 (Kết quả thực thi) đang gộp nhiều TC vào 1 dòng:**
+     * Tại [bảng 5.3](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L357-L376), bạn đang gộp `DT-03…DT-07`, `DT-11…DT-16`, `DT-20…DT-25`, `BV-01…BV-03`, `BV-04…BV-08`, `BV-09…BV-13`, `BV-14…BV-18` (48 TC chỉ còn 18 dòng, và thiếu `DT-29`).
+     * Trong khi ở `evidence/FR-01/web/` bạn đã có ảnh riêng cho từng TC (`DT-11.png`…`DT-16.png`), việc gộp dòng làm mất chi tiết kết quả thực tế (ví dụ HTTP response / thông báo cụ thể trên từng dữ liệu) và không gắn được link bằng chứng cho từng TC. Nên tách mỗi TC 1 dòng (hoặc thêm cột `Bằng chứng`).
+  3. **Khớp lại mô tả cột trong `PLAN.md`:**
+     * Dòng 28 của [`PLAN.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/PLAN.md#L28) ghi template 1 bảng gộp (`ID | Tiêu đề | Lớp/biên phủ | Tiền điều kiện | Các bước | Dữ liệu | KQMĐ | KQTT | Trạng thái | Bug ID | Origin`), trong khi báo cáo tách thủ tục ra mục 3.1 (Data Matrix) và tách bảng Thiết kế (3.2, 4.2) với bảng Thực thi (5.3). Cách làm trong báo cáo gọn và đúng mẫu Data Matrix hơn, nhưng bạn nên cập nhật lại dòng 28 của `PLAN.md` để không tự mâu thuẫn.
+
+---
+
+### 2. Về Cách đặt tên TC (ID & Tiêu đề)
+
+* **Về ID (`DT-01`…`DT-29`, `BV-01`…`BV-21`):**
+  * Khi ghép 4 feature (`FR-01`, `FR-10`, `FR-15`, `Mobile`) vào báo cáo chung hoặc bảng tổng hợp, nếu cả 4 bài đều dùng `DT-01`, `BV-01` thì ID sẽ bị trùng. Theo slide 6 của `EN.Test_Cases_AI_First.pdf` (`TC-LOGIN-003`) và `Test cases_Template_En.xlsx` (`01 - 001`), nên có mã chức năng ở đầu (ví dụ `FR01-DT-01`, `FR01-BV-01`) hoặc quy ước rõ ở mục đầu.
+* **Về cú pháp tiêu đề (`Action + Function + Condition`):**
+  * Đa số các TC đã tuân thủ cấu trúc: `Kiểm tra` (Action) + `đăng ký thành công / bị từ chối` (Function + Outcome) + `khi ...` (Condition).
+  * **Các dòng cần sửa tên:**
+    * Trong [bảng 4.2](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L288-L307), 7 dòng dẫn chiếu lại `(DT-19)`, `(DT-20)`, `(DT-01)`, `(DT-21…DT-24)`, `(DT-21)`, `(DT-08)` đang viết tên rút gọn kiểu danh từ (`"Mật khẩu độ dài 0"`, `"Mật khẩu dài 6 ký tự"`, `"Họ Tên độ dài 0"`), **không theo cú pháp `Action + Function + Condition`** và lệch với tên chính thức ở bảng 3.2.
+    * `DT-02` ([dòng 201](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L201)): *"…và mật khẩu có ký tự ngoài tập"* dễ gây hiểu nhầm với `DT-25` (chỉ có ký tự ngoài tập). Nên ghi rõ: *"…và mật khẩu đủ 4 loại kèm thêm ký tự ngoài tập"*.
+    * `BV-19` ([dòng 313](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L313)) và `DT-29` ([dòng 419](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L419))其實 là test case phân vùng (Equivalence Partitioning / kết hợp lớp) hơn là giá trị biên thuần túy — đặt `DT-29` ở DT là đúng, còn `BV-19` nên giải thích rõ là biên độ dài khoảng trắng dẫn đầu = 1 (`LB` của số khoảng trắng đầu chuỗi).
+
+---
+
+### 3. Về Mức độ chi tiết (Dữ liệu, Expected, Actual, Độ phủ)
+
+1. **Tránh ghi chữ `"mặc định"` và `"Như DT-01"` trong các ô dữ liệu / kết quả mong đợi:**
+   * Theo `EN.Test_Cases_AI_First.pdf` (slide 10, 12, 14) và `Testcase Checklist.xlsx`, một test case tốt phải **Repeatable & Self-standing** (có *concrete data*, không bắt người chạy tra cứu ngược lên test case trước).
+   * Ở [bảng 3.2](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L202-L232), nên thay chữ `mặc định` bằng giá trị cụ thể (`Nguyen Van A`, `Abcdef1@`), và thay `"Như DT-01"` / `"Như DT-17"` bằng nội dung tường minh hoặc mã kết quả đầu ra (`EC41`).
+2. **Dữ liệu biên dài (`BV-05`, `BV-16`, `BV-18`) cần ghi công thức tạo chuỗi chính xác:**
+   * Ở `BV-18` ([dòng 312](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L312)), bạn ghi *"phần local 64 ký tự + `@` + domain 189 ký tự (các nhãn ≤ 63 ký tự, kết thúc `.com`)"*. Nên ghi rõ biểu thức chuỗi đúng như trong `cases.py` (ví dụ `'a'*64 + '@' + 'b'*63 + '.' + 'c'*63 + '.' + 'd'*57 + '.com'`) để bất kỳ ai chạy lại đều nhập đúng một giá trị.
+3. **Mức độ chi tiết của Expected Result ở Bảng 4.2 (BVA):**
+   * Các dòng `BV-14`, `BV-15`, `BV-16` ([dòng 308–310](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L308-L310)) chỉ ghi độc một chữ `"Thành công"`, trong khi `BV-04`, `BV-06` ghi `"Thành công, đăng nhập được"`, còn `DT-01` ghi đầy đủ cả Web, API và kiểm chứng đăng nhập. Nên thống nhất mức độ chi tiết giữa các dòng.
+4. **Thống nhất tổng số TC giữa mục 3, 4, 5 và 6 (`49` vs `50`):**
+   * Mục 3.2 (28 TC) + Mục 4.2 (21 TC) = **49 TC** (đang dùng ở [bảng 5.5](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L390-L396)).
+   * Nhưng [mục 6.2](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md#L416-L420) bổ sung thêm `DT-29` (đã chạy cả Web và API). Bạn nên ghi chú rõ ở bảng 5.5 (hoặc cộng `DT-29` vào tổng thành 50 TC) để khi đưa sang bảng Test Summary ở `README.md` không bị lệch số liệu.
+5. **Cột `Origin` và dấu ấn rà soát của Sinh viên (`SV` / `AI-sửa`):**
+   * Hiện tại cả 49 TC ở bảng 3.2, 4.2 và `DT-29` ở bảng 6.2 đều ghi `Origin = AI`, và trong lịch sử git chưa có commit `[FR-01][B<n>-review]` nào như quy ước ở [`PLAN.md` dòng 26–27](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/PLAN.md#L26-L27).
+   * Theo yêu cầu **Human review** và **AI gap analysis** của đề bài, bạn nên tự rà soát, chỉnh sửa/bổ sung ít nhất một vài test case hoặc điều kiện (đánh dấu `AI-sửa` hoặc `SV`, ví dụ các trường hợp do bạn tự phát hiện hoặc điểm mở ở mục 6.3 như chữ tiếng Việt có dấu trong mật khẩu `Đ`, `ă`...) và tạo commit review tương ứng.
+
+Bạn muốn mình hỗ trợ chỉnh lại trực tiếp các bảng trong [`FR-01_Dang_ky.md`](file:///home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md) theo các điểm trên không, hay bạn sẽ tự sửa để tạo commit `[FR-01][review]`?
+````
+
+<details><summary>Hành động AI đã thực hiện (18)</summary>
+
+1. `run_command` — List workspace files
+2. `run_command` — Search for fr-01 or test files in study directory
+3. `run_command` — Check recently modified files in study
+4. `run_command` — List files in Homeworks/HW02
+5. `run_command` — Find non-evidence files in HW02_23120031
+6. `read_file` — /home/npdinh/study/Homeworks/HW02/2026.HW02.Domain Testing_En.md
+7. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/PLAN.md
+8. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md
+9. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/00_Phuong_phap.md
+10. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md
+11. `run_command` — Check skills and HW01 testcases format
+12. `run_command` — Check git log and slides directory
+13. `read_file` — /home/npdinh/study/Homeworks/Slides/Refs/EN.DOMAIN TESTING - UC Analysis.pdf
+14. `read_file` — /home/npdinh/study/Homeworks/Slides/S07_Test Case.pdf
+15. `read_file` — /home/npdinh/study/Homeworks/Slides/EN.Test_Cases_AI_First.pdf
+16. `read_file` — /home/npdinh/study/Homeworks/Slides/S04_Domain Testing.pdf
+17. `run_command` — Inspect Excel templates for Test Cases and Checklist
+18. `run_command` — Read Excel template headers and rows using zipfile
+
+</details>
+
+## #14 · 2026-10-20 22:37:45 · phiên `1946c20d`
 
 - **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
 
@@ -904,7 +997,7 @@ Nếu không có gì cần sửa thêm, tôi chuyển sang FR-15 theo cùng mẫ
 
 </details>
 
-## #14 · 2026-10-20 22:52:01 · phiên `1946c20d`
+## #15 · 2026-10-20 22:52:01 · phiên `1946c20d`
 
 - **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
 
@@ -1095,7 +1188,7 @@ Mốc T62 sẽ được thêm cùng mục 6 sau khi có kết quả. Tôi chờ 
 
 </details>
 
-## #15 · 2026-10-21 00:06:22 · phiên `1946c20d`
+## #16 · 2026-10-21 00:06:22 · phiên `1946c20d`
 
 - **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
 
@@ -1127,7 +1220,7 @@ Script bằng chứng đã sẵn sàng. Tôi chờ lượt chạy Mobile hoàn t
 
 </details>
 
-## #16 · 2026-10-21 00:13:06 · phiên `1946c20d`
+## #17 · 2026-10-21 00:13:06 · phiên `1946c20d`
 
 - **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
 
@@ -1163,7 +1256,7 @@ Lượt chạy xong là tôi sẽ:
 
 </details>
 
-## #17 · 2026-10-21 00:15:52 · phiên `1946c20d`
+## #18 · 2026-10-21 00:15:52 · phiên `1946c20d`
 
 - **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
 
@@ -1202,7 +1295,7 @@ Tôi sẽ điền README một lần, khi có cả số liệu Mobile. Monitor s
 
 </details>
 
-## #18 · 2026-10-21 00:26:06 · phiên `1946c20d`
+## #19 · 2026-10-21 00:26:06 · phiên `1946c20d`
 
 - **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
 
@@ -1242,9 +1335,64 @@ Mobile đã chạy xong (10 Pass / 13 Fail / 1 Blocked); bảng bug khớp với
 B5 đã commit (23 TC). Đang commit B6 (gap analysis + MOB-DT-14), sau đó là B7 (bug report).
 
 Mobile B5–B7 đã commit xong, working tree sạch. Tiếp theo: cập nhật prompt log và push.
+
+Đã push. Bây giờ điền phần tổng hợp kiểm thử trong README và nháp các tài liệu AI.
+
+Số liệu severity khớp. Giờ nháp bảng AI Audit bằng skill ai-audit-log.
+
+Tôi sẽ cải tiến script `audit_draft.py` của skill để mỗi hàng ghi đúng lượt prompt trong prompt log (thay vì giờ commit), và thêm hàng cho artifact `[skill]` / `[report]`.
+
+Tôi commit các tài liệu AI đã nháp rồi push.
+
+Đã push. Tôi chạy thử khâu xuất PDF để phát hiện sớm lỗi định dạng (bản chính thức sẽ xuất lại sau khi bạn duyệt xong).
+
+Đã xong toàn bộ phần Mobile và nháp xong hồ sơ AI; tất cả đã commit và push lên repo. Giờ phần còn lại đều cần bạn quyết định hoặc tự viết.
+
+**Mobile – Đăng nhập (B5–B7)**
+- Kết quả chạy 24 test case trên Pixel 2 và qua API: **10 Pass, 13 Fail, 1 Blocked** (MOB-DT-05). Danh sách test case của từng bug khớp với bảng kết quả T53.
+- Có 5 bug: 1 Critical, 2 Major, 2 Minor (chi tiết ở [Bug_Report.md](bugs/Bug_Report.md)).
+- Ba commit tách theo cùng cách đã làm với FR-15:
+  - B5 gồm 23 test case thiết kế ban đầu.
+  - B6 thêm MOB-DT-14 và AI gap analysis.
+  - B7 là bản nháp bug report.
+
+**README:** đã điền phần Test summary cho cả 4 feature.
+
+| | Thiết kế | Pass | Fail | Blocked | Chưa chạy | Bug |
+| --- | --- | --- | --- | --- | --- | --- |
+| Theo test case | 185 | 76 | 103 | 6 | 0 | 22 |
+| Theo lượt chạy | 306 lượt | 153 | 136 | 17 | – | |
+
+Ở cách đếm theo lượt chạy còn 64 lượt "Không áp dụng", vì kênh đó không có thao tác tương ứng.
+
+**Hồ sơ AI (bản nháp, cần bạn duyệt)**
+- [AI_Audit_Report.md](ai/AI_Audit_Report.md): bảng có 32 artifact, mỗi hàng ghi lượt prompt tương ứng. Verdict hiện chỉ là gợi ý tự động (26 VALID, 6 INCOMPLETE). Cột "Lý do", mục 5 và mục 6 để trống cho bạn.
+- [AI_Disclosure_Form.md](ai/AI_Disclosure_Form.md): tôi chỉ điền phần dữ kiện (giai đoạn dùng AI, 3 prompt chính nguyên văn, bảng những gì AI đã làm). Mục 2.5 "cách tôi rà soát" để bạn tự viết.
+- [AI_Critique.md](ai/AI_Critique.md): chỉ có danh sách ví dụ lấy từ phần gap analysis, nằm trong chú thích. Bài viết là của bạn.
+- Tôi cũng cải tiến script `audit_draft.py` trong skill ai-audit-log.
+
+Tôi đã xuất thử PDF cho báo cáo Mobile và bug report, ảnh và bảng hiển thị ổn. Bản chính thức sẽ xuất sau khi bạn duyệt xong.
+
+**Cần bạn trả lời:**
+1. Bản rà soát FR-01 (lượt #13) là bạn tự viết hay lấy từ một công cụ AI khác? Câu trả lời quyết định nhãn Origin SV và cách khai báo trong hồ sơ AI.
+2. Bạn tạo 22 issue trên `d1nhnguyen/eshop-sut` (bug Mobile dùng tiêu đề `[FR-20]`) rồi gửi tôi các số BUG-NN để tôi điền vào báo cáo.
+3. Có muốn tôi gắn `skills/` vào `.claude/skills` để quay video demo skill không?
+
+**Việc của bạn trước khi nộp** (đã ghi đầy đủ trong [DOI_CHIEU_TRUOC_KHI_NOP.md](DOI_CHIEU_TRUOC_KHI_NOP.md)):
+- Duyệt verdict trong bảng audit. FR-15, FR-10 và Mobile chưa có commit rà soát nào của bạn; nếu bạn sửa gì thì commit theo dạng `[F][Bn-review]`.
+- Viết AI Critique, kết luận và Mandatory Disclosure.
+- Điền họ tên, lớp, chữ ký.
+- Quay video bằng giọng của bạn.
+- Điền điểm tự chấm.
+- Hỏi TA các giả định đã liệt kê.
+- Xác nhận mức độ nghiêm trọng của các bug.
+
+Sau khi bạn xong các việc trên, tôi sẽ xuất PDF, tạo `git_commit_log.txt` và đóng file zip.
+
+Backend, emulator Pixel 2 và Metro vẫn đang chạy nền; tôi để nguyên để bạn dùng khi quay video.
 ````
 
-<details><summary>Hành động AI đã thực hiện (40)</summary>
+<details><summary>Hành động AI đã thực hiện (68)</summary>
 
 1. `Bash` — Check services, mobile run progress, git status
 2. `Bash` — Detach backend; make mobile runner resumable
@@ -1286,5 +1434,107 @@ Mobile B5–B7 đã commit xong, working tree sạch. Tiếp theo: cập nhật 
 38. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/MOB-B4.png
 39. `Bash` — Commit Mobile B7 bug drafts and evidence
 40. `Bash` — Regenerate prompt log from transcripts
+41. `Bash` — Commit prompt log and push to remote
+42. `Bash` — Show README and AI Audit Report skeleton
+43. `Bash` — Locate brief's test summary requirements
+44. `Bash` — Collect T55 summary tables from all feature reports
+45. `Bash` — Write README test summary and verify bug severities
+46. `Bash` — Generate AI audit table draft from git history
+47. `Bash` — List non-step commits and view Disclosure Form skeleton
+48. `Bash` — Extract gap analysis rows from all reports
+49. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/scripts/audit_draft.py
+50. `Edit` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/scripts/audit_draft.py
+51. `Bash` — Run improved audit draft with prompt mapping
+52. `Bash` — Fix ellipsis and add review prompt reference, rerun
+53. `Bash` — Insert audit table draft and tentative accuracy summary
+54. `Bash` — Fix broken table header line in audit report
+55. `Bash` — View rest of Disclosure Form, Critique skeleton, checklist head
+56. `Bash` — Extract key prompts verbatim from prompt log
+57. `Bash` — Draft factual parts of AI Disclosure Form
+58. `Bash` — Count test case origins per feature
+59. `Bash` — Correct test case origin counts in Disclosure Form
+60. `Bash` — Add critique hints, update skill docs and checklist
+61. `Bash` — Commit skill and README, regenerate audit table
+62. `Bash` — Commit AI document drafts and push
+63. `Bash` — Show PDF build script and existing PDFs
+64. `Bash` — Trial-build PDFs into scratchpad and render sample pages
+65. `Bash` — Render a results-table page and a bug page
+66. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/pdf/t-09.png
+67. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/pdf/b-14.png
+68. `Bash` — Check which test environment processes still run
+
+</details>
+
+## #20 · 2026-10-21 01:16:02 · phiên `421e648d`
+
+- **Công cụ AI:** Google Antigravity IDE, model `Gemini 4 Argon (Medium)`
+
+**Prompt (nguyên văn):**
+
+````text
+thêm log phần này vào AI-log và các tài liệu cần thiết khác
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Đã cập nhật nhật ký sử dụng AI và toàn bộ tài liệu liên quan để ghi nhận đầy đủ phiên rà soát chéo FR-01 bằng Google Antigravity (Gemini 4 Argon):
+
+1. **`scripts/export_prompt_log.py` & `skills/ai-audit-log/scripts/export_prompt_log.py`**: bổ sung trích xuất tự động transcript của Google Antigravity (`~/.gemini/antigravity-cli/brain/421e648d.../transcript_full.jsonl`) cùng với Claude Code theo đúng thứ tự thời gian.
+2. **`ai/prompt_log.md` (Phụ lục A)**: cập nhật đầy đủ 20 lượt tương tác (thêm lượt #13 lúc `2026-10-20 22:30:38` rà soát FR-01 trên Antigravity và lượt #20 lúc `2026-10-21 01:16:02` cập nhật hồ sơ AI).
+3. **`skills/ai-audit-log/scripts/audit_draft.py` & `ai/AI_Audit_Report.md`**: khai báo thêm công cụ Google Antigravity (Gemini 4 Argon); cập nhật bảng audit 32 artifact dẫn chiếu rõ lượt #13 (Antigravity rà soát) → lượt #14 (Claude Code áp dụng vào các commit `[FR-01][Bn-review]`).
+4. **`ai/AI_Disclosure_Form.md`, `ai/AI_Critique.md`, `ai/AI_Privacy_Checklist.md`**: bổ sung công cụ Antigravity, đánh dấu giai đoạn `phản hồi`, thêm prompt chính lượt #13, cập nhật bảng đóng góp 2.4 và trích dẫn IEEE `[2]`.
+5. **`report/FR-01_Dang_ky.md`, `scripts/fr01/cases.py`, `report/00_Phuong_phap.md`, `README.md`, `DOI_CHIEU_TRUOC_KHI_NOP.md`**: cập nhật công cụ AI, đổi nguồn phát hiện `G9–G16` thành `Rà soát chéo (SV + Antigravity, lượt #13)`, đổi `Origin` của `FR01-DT-30…32` thành `AI-sửa` và đánh dấu hoàn tất mục đối chiếu nguồn rà soát FR-01.
+````
+
+<details><summary>Hành động AI đã thực hiện (47)</summary>
+
+1. `run_command` — Check git log and status of HW02_23120031
+2. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/export_prompt_log.py
+3. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Audit_Report.md
+4. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Disclosure_Form.md
+5. `run_command` — List files in HW02_23120031 and skills/ai-audit-log
+6. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/README.md
+7. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Privacy_Checklist.md
+8. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Critique.md
+9. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/SKILL.md
+10. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/scripts/audit_draft.py
+11. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md
+12. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md
+13. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/prompt_log.md
+14. `run_command` — Compare export_prompt_log.py and check Antigravity transcript.jsonl
+15. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/prompt_log.md
+16. `run_command` — Inspect steps in Antigravity transcript_full.jsonl
+17. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/prompt_log.md
+18. `run_command` — List Antigravity brain conversations
+19. `run_command` — Check user inputs in Antigravity brain transcripts
+20. `run_command` — Check all Claude Code prompts since 2026-10-20 20:40
+21. `run_command` — Search repo for references to AI tools, Origin, and FR-01 review
+22. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/cases.py
+23. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/report_tables.py
+24. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/report_lib.py
+25. `read_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/PLAN.md
+26. `run_command` — Inspect USER_INPUT and PLANNER_RESPONSE in transcript_full.jsonl
+27. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/cases.py
+28. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md
+29. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md
+30. `run_command` — Regenerate FR-01 cases.json and report tables
+31. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/README.md
+32. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/00_Phuong_phap.md
+33. `write_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/export_prompt_log.py
+34. `write_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/scripts/export_prompt_log.py
+35. `run_command` — Run export_prompt_log.py and check prompt_log.md summary table
+36. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/scripts/audit_draft.py
+37. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/SKILL.md
+38. `run_command` — Run audit_draft.py with updated prompt_log.md
+39. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/skills/ai-audit-log/scripts/audit_draft.py
+40. `run_command` — Generate updated audit table to /tmp/audit_table.md
+41. `read_file` — /tmp/audit_table.md
+42. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Audit_Report.md
+43. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Disclosure_Form.md
+44. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Critique.md
+45. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Privacy_Checklist.md
+46. `edit_file` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md
+47. `run_command` — Regenerate prompt_log.md and check git status
 
 </details>
