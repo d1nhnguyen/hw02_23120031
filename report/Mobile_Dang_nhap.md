@@ -200,13 +200,39 @@ Dữ liệu và kết quả mong đợi được sinh từ `scripts/mobile/cases
 
 ### 4.1 Xác định biên
 
-| Biến | Phân vùng | LB | UB | Bước nhảy | Nhỏ nhất nhập được | Lớn nhất nhập được |
-| --- | --- | --- | --- | --- | --- | --- |
+| Biến | Phân vùng | LB | UB | Bước nhảy | Điểm kiểm tra |
+| --- | --- | --- | --- | --- | --- |
+| I3 số lần sai liên tiếp trước lần thử | EC12 (0–2) / EC13 (≥ 3) | 0; 3 | 2; – | 1 lần | 0, 1, 2, 3, 4 |
+| Bộ đếm `login_attempts` | tăng 1 mỗi lần sai, khóa khi đạt 3 | – | 3 | 1 | sau lần sai thứ 2 → 3 |
+| I4 thời gian từ lúc khóa | EC14 (< 30 giây) / EC15 (≥ 30 giây) | 30 giây | – | 2 giây (sai số thao tác trên Mobile ~1 giây) | 0, 28, 32, 35 giây |
+| Độ dài mật khẩu so với mật khẩu đúng | EC7 / EC8 | 9 ký tự (`Test1234!`) | 9 | 1 ký tự | 8, 9, 10 ký tự |
+| Độ dài email so với email đúng | EC1 / EC4 | 14 ký tự (`test@eshop.com`) | 14 | 1 ký tự | 13, 14, 15 ký tự |
 
 ### 4.2 Boundary Value Test Cases
 
-| ID | Tên test case (Action + Function + Condition) | Partition tested | Giá trị | Kết quả mong đợi | Origin |
-| --- | --- | --- | --- | --- | --- |
+Thủ tục: mục 3.1. Bảng giữ các cột dữ liệu của data matrix như mục 3.2. Dòng có ID trong ngoặc là điểm biên đã có trong Minimum Set, chỉ dẫn chiếu.
+
+<!-- BEGIN:T42 -->
+| ID | Tên test case (Action + Function + Condition) | Partition tested | Email | Mật khẩu | Các lần thử trước (tiền điều kiện) | Chờ trước lần thử | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| (MOB-DT-01) | Kiểm tra đăng nhập thành công với email và mật khẩu đúng | EC12 – 0 lần sai (LB) | `test@eshop.com` | `Test1234!` | – | – | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17) | Mobile, API | xem 3.2 |
+| MOB-BV-01 | Kiểm tra đăng nhập thành công khi trước đó sai 1 lần | EC12 – 1 lần sai (LB+1) | `test@eshop.com` | `Test1234!` | 1 × sai (`Sai12345!`) | – | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17) | Mobile, API | AI |
+| MOB-BV-02 | Kiểm tra đăng nhập thành công khi trước đó sai 2 lần liên tiếp | EC12/EC13 – 2 lần sai (UB của EC12) | `test@eshop.com` | `Test1234!` | 2 × sai (`Sai12345!`) | – | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); A2 | Mobile, API | AI |
+| (MOB-DT-13) | Kiểm tra đăng nhập bị từ chối dù mật khẩu đúng khi đã sai 3 lần liên tiếp | EC13 – 3 lần sai (LB của EC13) | `test@eshop.com` | `Test1234!` | 3 × sai (`Sai12345!`) | – | Từ chối dù mật khẩu đúng (tài khoản đang bị khóa), ở lại màn hình Đăng nhập; API trả 4xx, không có `token` (EC20); A2 | Mobile, API | xem 3.2 |
+| MOB-BV-03 | Kiểm tra đăng nhập bị từ chối dù mật khẩu đúng khi trước đó sai 4 lần liên tiếp | EC13 – 4 lần sai (LB+1 của EC13) | `test@eshop.com` | `Test1234!` | 4 × sai (`Sai12345!`) | – | Từ chối dù mật khẩu đúng (tài khoản đang bị khóa), ở lại màn hình Đăng nhập; API trả 4xx, không có `token` (EC20) | Mobile, API | AI |
+| MOB-BV-04 | Kiểm tra lần sai thứ 3 liên tiếp đưa bộ đếm lên 3 và khóa tài khoản | EC19 – bộ đếm 2 → 3 (biên khóa) | `test@eshop.com` | `Sai12345!` | 2 × sai (`Sai12345!`) | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 3 (EC18, EC19); sau lần này `locked_until` ≈ thời điểm hiện tại + 30 giây | Mobile, API | AI |
+| (MOB-DT-13) | Kiểm tra đăng nhập bị từ chối dù mật khẩu đúng khi đã sai 3 lần liên tiếp | EC14 – 0 giây sau khi khóa | `test@eshop.com` | `Test1234!` | 3 × sai (`Sai12345!`) | – | Từ chối dù mật khẩu đúng (tài khoản đang bị khóa), ở lại màn hình Đăng nhập; API trả 4xx, không có `token` (EC20); A2 | Mobile, API | xem 3.2 |
+| MOB-BV-05 | Kiểm tra đăng nhập bị từ chối khi mới qua 28 giây khóa | EC14/EC15 – 28 giây (UB-1 của EC14, sai số thao tác ~1 giây) | `test@eshop.com` | `Test1234!` | 3 × sai (`Sai12345!`) | 28 giây | Từ chối dù mật khẩu đúng (tài khoản đang bị khóa), ở lại màn hình Đăng nhập; API trả 4xx, không có `token` (EC20) | Mobile, API | AI |
+| MOB-BV-06 | Kiểm tra đăng nhập thành công khi đã qua 32 giây khóa | EC14/EC15 – 32 giây (LB+1 của EC15, sai số thao tác ~1 giây) | `test@eshop.com` | `Test1234!` | 3 × sai (`Sai12345!`) | 32 giây | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17) | Mobile, API | AI |
+| (MOB-DT-04) | Kiểm tra đăng nhập thành công khi đã hết 30 giây khóa | EC15 – 35 giây | `test@eshop.com` | `Test1234!` | 3 × sai (`Sai12345!`) | 35 giây | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17); tiền điều kiện: 3 lần sai liên tiếp rồi chờ 35 giây | Mobile, API | xem 3.2 |
+| (MOB-DT-01) | Kiểm tra đăng nhập thành công với email và mật khẩu đúng | EC7 – mật khẩu đúng độ dài | `test@eshop.com` | `Test1234!` | – | – | Đăng nhập thành công: rời màn hình Đăng nhập, thanh tiêu đề hiện “Chào, Test User”, mở được Hồ sơ; API trả `200` + `token`; bộ đếm = 0 (EC17) | Mobile, API | xem 3.2 |
+| MOB-BV-07 | Kiểm tra đăng nhập bị từ chối khi mật khẩu thiếu 1 ký tự cuối | EC7/EC8 – độ dài mật khẩu − 1 | `test@eshop.com` | `Test1234` | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19) | Mobile, API | AI |
+| MOB-BV-08 | Kiểm tra đăng nhập bị từ chối khi mật khẩu thừa 1 ký tự | EC7/EC8 – độ dài mật khẩu + 1 | `test@eshop.com` | `Test1234!!` | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 1 (EC18, EC19) | Mobile, API | AI |
+| MOB-BV-09 | Kiểm tra đăng nhập bị từ chối khi email thiếu 1 ký tự cuối | EC1/EC4 – độ dài email − 1 | `test@eshop.co` | `Test1234!` | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 0 (EC18, EC19) | Mobile, API | AI |
+| MOB-BV-10 | Kiểm tra đăng nhập bị từ chối khi email thừa 1 ký tự | EC1/EC4 – độ dài email + 1 | `test@eshop.comm` | `Test1234!` | – | – | Từ chối, hiện thông báo lỗi chung (không nêu trường sai), ở lại màn hình Đăng nhập; API trả 4xx; bộ đếm = 0 (EC18, EC19) | Mobile, API | AI |
+
+Tổng: 10 test case BVA mới (MOB-BV-01…MOB-BV-10); 5 dòng có ID trong ngoặc là điểm biên đã được phủ bởi test case Minimum Set (mục 3.2), chỉ dẫn chiếu, không chạy lại.
+<!-- END:T42 -->
 
 ## 5. Bước 5 – Kết quả thực thi
 
