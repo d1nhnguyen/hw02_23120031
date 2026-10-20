@@ -77,6 +77,7 @@ Biến I3 là chuỗi nhưng ràng buộc của nó đo trên 5 đại lượng 
 | A7 | Khi từ chối: không tạo tài khoản, ở lại trang Đăng ký, có thông báo lỗi chỉ đúng lý do; API trả mã lỗi 4xx kèm thông báo | Đặc tả không quy định câu chữ / mã lỗi; quy ước REST |
 | A8 | "Xác nhận mật khẩu" là yêu cầu của giao diện; các lớp của biến I4 chỉ thực thi trên kênh Web | `api_specification.md` 1.1 không có trường này |
 | A9 | Kiểm tra trùng email áp dụng cho mọi tài khoản đã có, kể cả tài khoản seed `admin@eshop.com`, `test@eshop.com` | FR-01 "duy nhất trong hệ thống" |
+| A10 | "Chữ hoa" / "chữ thường" là chữ cái Latin không dấu `A–Z` / `a–z`. Chữ có dấu (`Đ`, `Ă`, `ê`…) không làm thỏa điều kiện chữ hoa / chữ thường, nhưng không bị cấm khi mật khẩu đã đủ 4 loại (giống A1) | Đặc tả không nói rõ; cách hiểu thông dụng của quy tắc mật khẩu; đã dùng khi định nghĩa I3.U, I3.W. Cần TA xác nhận |
 
 ### 1.5 Ngoài phạm vi
 
