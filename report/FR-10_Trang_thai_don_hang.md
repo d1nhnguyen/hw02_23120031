@@ -142,15 +142,102 @@ Tổng: 25 lớp đầu vào (9 valid, 16 invalid) và 5 lớp đầu ra.
 
 ### 3.1 Thủ tục thực hiện
 
+Mọi test case dùng chung thủ tục, chỉ dữ liệu thay đổi → dạng **data matrix** [DR]. ID có tiền tố `FR10-`. Trong bảng: `(bỏ trống / không gửi)` là không gửi trường `status`; `(rỗng)` là chuỗi rỗng; `␣` là một dấu cách.
+
+**Tiền điều kiện chung – dựng trước mỗi test case (self-standing, self-cleaning)**
+
+1. Khởi động lại backend (dữ liệu seed, chưa có đơn).
+2. Đăng ký User B `fr10.userb@example.com / Abcdef1@` (`POST /api/register`).
+3. Tạo đơn bằng `POST /api/checkout` và đưa về trạng thái bằng các chuyển đổi hợp lệ của Admin:
+
+| Đơn | Chủ đơn | Trạng thái | Cách dựng |
+| --- | --- | --- | --- |
+| #1 | `test@eshop.com` | `pending` | tạo mới |
+| #2 | `test@eshop.com` | `confirmed` | `pending → confirmed` |
+| #3 | `test@eshop.com` | `shipping` | `pending → confirmed → shipping` |
+| #4 | `test@eshop.com` | `delivered` | `pending → confirmed → shipping → delivered` |
+| #5 | `test@eshop.com` | `canceled` | `pending → canceled` |
+| #6 | `test@eshop.com` | `pending` | tạo mới |
+| #7 | User B | `pending` | tạo mới |
+
+4. Đọc `GET /api/admin/orders`, kiểm tra đúng bảng trên; nếu không dựng được, test case **Blocked**.
+
+**P-WEB-ADMIN** – Web Admin `http://localhost:5174` (đăng nhập `admin@eshop.com`) → tab "Đơn hàng" → ở dòng đơn theo cột dữ liệu bấm nút ứng với trạng thái đích (Xác nhận → `confirmed`, Giao hàng → `shipping`, Hoàn thành → `delivered`, Hủy → `canceled`, Đánh dấu Đã giao → `delivered`), chấp nhận hộp thoại nếu có.
+
+**P-WEB-USER** – Web `http://localhost:5173` đăng nhập `test@eshop.com / Test1234!` → trang Hồ sơ → "Lịch sử đơn hàng" → bấm "Hủy đơn" ở đơn theo cột dữ liệu, chấp nhận hộp thoại nếu có.
+
+**P-API** – Admin: `PUT /api/admin/orders/<đơn>/status` body `{"status": <giá trị>}` với token Admin. User: `PUT /api/orders/<đơn>/cancel` với token của tác nhân.
+
+**Kiểm chứng (mọi kênh):** so `GET /api/admin/orders` trước / sau – trạng thái đơn được thao tác và các đơn khác; với kênh API kiểm tra thêm mã HTTP và thông báo.
+
+Chuyển đổi không có nút trên giao diện chỉ chạy P-API; việc giao diện không có nút được kiểm tra riêng ở FR10-DT-26, FR10-DT-27.
+
 ### 3.2 Minimum Set of Test Cases
 
-| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Dữ liệu | Kết quả mong đợi | Origin |
-| --- | --- | --- | --- | --- | --- |
+Dữ liệu và kết quả mong đợi được sinh từ `scripts/fr10/cases.py` (cùng nguồn với script thực thi) bằng `scripts/fr10/report_tables.py`.
+
+<!-- BEGIN:T32 -->
+**Test case valid** – mỗi test case phủ nhiều lớp valid nhất có thể:
+
+| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Tác nhân | Thao tác | Đơn | Trạng thái hiện tại | Giá trị `status` | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| FR10-DT-01 | Kiểm tra Admin xác nhận đơn đang chờ xác nhận thành công | EC1, EC18, EC23, EC26 | Admin | Đổi trạng thái | #1 | `pending` | `confirmed` | Đơn #1 chuyển `pending` → `confirmed`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | AI |
+| FR10-DT-02 | Kiểm tra Admin chuyển đơn đã xác nhận sang đang giao thành công | EC2, EC18, EC23, EC26 | Admin | Đổi trạng thái | #2 | `confirmed` | `shipping` | Đơn #2 chuyển `confirmed` → `shipping`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | AI |
+| FR10-DT-03 | Kiểm tra Admin hoàn tất đơn đang giao thành công | EC3, EC18, EC23, EC26 | Admin | Đổi trạng thái | #3 | `shipping` | `delivered` | Đơn #3 chuyển `shipping` → `delivered`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | AI |
+| FR10-DT-04 | Kiểm tra Admin hủy đơn đang chờ xác nhận thành công | EC4, EC18, EC23, EC26 | Admin | Đổi trạng thái | #1 | `pending` | `canceled` | Đơn #1 chuyển `pending` → `canceled`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | AI |
+| FR10-DT-05 | Kiểm tra Admin hủy đơn đã xác nhận thành công | EC5, EC18, EC23, EC26 | Admin | Đổi trạng thái | #2 | `confirmed` | `canceled` | Đơn #2 chuyển `confirmed` → `canceled`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | AI |
+| FR10-DT-06 | Kiểm tra User hủy đơn đang chờ xác nhận của mình thành công | EC6, EC23, EC26 | User chủ đơn | Hủy đơn | #1 | `pending` | – | Đơn #1 chuyển `pending` → `canceled`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | AI |
+| FR10-DT-07 | Kiểm tra User hủy đơn đã xác nhận của mình thành công | EC7, EC23, EC26 | User chủ đơn | Hủy đơn | #2 | `confirmed` | – | Đơn #2 chuyển `confirmed` → `canceled`; các đơn khác giữ nguyên; API trả 2xx (EC26) | Web, API | AI |
+| FR10-DT-26 | Kiểm tra Web Admin chỉ hiện thao tác hợp lệ cho từng trạng thái đơn | EC30 (Admin) | Admin | Xem tab Đơn hàng | #1–#5 | – | – | Web Admin hiện: Chờ xác nhận – Xác nhận, Hủy; Đã xác nhận – Giao hàng, Hủy; Đang giao – Hoàn thành; Đã giao, Đã hủy – không có nút (EC30) | Web | AI |
+| FR10-DT-27 | Kiểm tra trang Hồ sơ chỉ hiện nút Hủy đơn cho đơn được phép hủy | EC30 (User) | User chủ đơn | Xem Lịch sử đơn hàng | #1–#5 | – | – | Trang Hồ sơ hiện nút "Hủy đơn" chỉ ở đơn Chờ xác nhận, Đã xác nhận; không có ở Đang giao, Đã giao, Đã hủy (EC30) | Web | AI |
+
+**Test case invalid** – mỗi test case phủ đúng một lớp invalid, các biến còn lại hợp lệ:
+
+| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Tác nhân | Thao tác | Đơn | Trạng thái hiện tại | Giá trị `status` | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| FR10-DT-08 | Kiểm tra Admin chuyển đơn đã giao sang đã hủy bị từ chối | EC8, EC27 | Admin | Đổi trạng thái | #4 | `delivered` | `canceled` | Từ chối, báo chuyển đổi không hợp lệ; đơn #4 giữ `delivered`; các đơn khác giữ nguyên; API trả 4xx (EC27) | API | AI |
+| FR10-DT-09 | Kiểm tra Admin chuyển đơn đã hủy sang đã giao bị từ chối | EC9, EC27 | Admin | Đổi trạng thái | #5 | `canceled` | `delivered` | Từ chối, báo chuyển đổi không hợp lệ; đơn #5 giữ `canceled`; các đơn khác giữ nguyên; API trả 4xx (EC27); trên Web Admin bấm nút "Đánh dấu Đã giao" có sẵn ở đơn đã hủy | Web, API | AI |
+| FR10-DT-10 | Kiểm tra Admin chuyển đơn chờ xác nhận thẳng sang đang giao bị từ chối | EC10, EC27 | Admin | Đổi trạng thái | #1 | `pending` | `shipping` | Từ chối, báo chuyển đổi không hợp lệ; đơn #1 giữ `pending`; các đơn khác giữ nguyên; API trả 4xx (EC27); A3 | API | AI |
+| FR10-DT-11 | Kiểm tra Admin chuyển đơn đang giao lùi về đã xác nhận bị từ chối | EC11, EC27 | Admin | Đổi trạng thái | #3 | `shipping` | `confirmed` | Từ chối, báo chuyển đổi không hợp lệ; đơn #3 giữ `shipping`; các đơn khác giữ nguyên; API trả 4xx (EC27); A3 | API | AI |
+| FR10-DT-12 | Kiểm tra Admin chuyển đơn đã xác nhận sang chính trạng thái đã xác nhận bị từ chối | EC12, EC27 | Admin | Đổi trạng thái | #2 | `confirmed` | `confirmed` | Từ chối, báo chuyển đổi không hợp lệ; đơn #2 giữ `confirmed`; các đơn khác giữ nguyên; API trả 4xx (EC27); A2 | API | AI |
+| FR10-DT-13 | Kiểm tra Admin hủy đơn đang giao bị từ chối | EC13, EC27 | Admin | Đổi trạng thái | #3 | `shipping` | `canceled` | Từ chối, báo chuyển đổi không hợp lệ; đơn #3 giữ `shipping`; các đơn khác giữ nguyên; API trả 4xx (EC27); A1 | API | AI |
+| FR10-DT-14 | Kiểm tra User hủy đơn đang giao bị từ chối | EC14, EC27 | User chủ đơn | Hủy đơn | #3 | `shipping` | – | Từ chối, báo chuyển đổi không hợp lệ; đơn #3 giữ `shipping`; các đơn khác giữ nguyên; API trả 4xx (EC27); trên Web bấm nút "Hủy đơn" có sẵn ở đơn đang giao | Web, API | AI |
+| FR10-DT-15 | Kiểm tra User hủy đơn đã giao bị từ chối | EC15, EC27 | User chủ đơn | Hủy đơn | #4 | `delivered` | – | Từ chối, báo chuyển đổi không hợp lệ; đơn #4 giữ `delivered`; các đơn khác giữ nguyên; API trả 4xx (EC27) | API | AI |
+| FR10-DT-16 | Kiểm tra User hủy đơn đã hủy bị từ chối | EC16, EC27 | User chủ đơn | Hủy đơn | #5 | `canceled` | – | Từ chối, báo chuyển đổi không hợp lệ; đơn #5 giữ `canceled`; các đơn khác giữ nguyên; API trả 4xx (EC27) | API | AI |
+| FR10-DT-17 | Kiểm tra User hủy đơn của người dùng khác bị từ chối | EC17, EC27 | User khác (test@eshop.com hủy đơn của User B) | Hủy đơn | #7 | `pending` | – | Từ chối, báo chuyển đổi không hợp lệ; đơn #7 giữ `pending`; các đơn khác giữ nguyên; API trả 4xx (EC27); A6; đơn #7 của User B giữ `pending` | API | AI |
+| FR10-DT-18 | Kiểm tra Admin đổi trạng thái bị từ chối khi status ngoài tập | EC19, EC28 | Admin | Đổi trạng thái | #1 | `pending` | `abc` | Từ chối, báo trạng thái không hợp lệ; đơn #1 giữ `pending`; API trả 4xx (EC28) | API | AI |
+| FR10-DT-19 | Kiểm tra Admin đổi trạng thái bị từ chối khi status sai chữ hoa / thường | EC20, EC28 | Admin | Đổi trạng thái | #1 | `pending` | `Confirmed` | Từ chối, báo trạng thái không hợp lệ; đơn #1 giữ `pending`; API trả 4xx (EC28) | API | AI |
+| FR10-DT-20 | Kiểm tra Admin đổi trạng thái bị từ chối khi status rỗng | EC21, EC28 | Admin | Đổi trạng thái | #1 | `pending` | (rỗng) | Từ chối, báo trạng thái không hợp lệ; đơn #1 giữ `pending`; API trả 4xx (EC28) | API | AI |
+| FR10-DT-21 | Kiểm tra Admin đổi trạng thái bị từ chối khi không gửi status | EC22, EC28 | Admin | Đổi trạng thái | #1 | `pending` | (bỏ trống / không gửi) | Từ chối, báo trạng thái không hợp lệ; đơn #1 giữ `pending`; API trả 4xx (EC28) | API | AI |
+| FR10-DT-22 | Kiểm tra Admin đổi trạng thái đơn không tồn tại bị từ chối | EC24 (Admin), EC29 | Admin | Đổi trạng thái | #9999 | – | `confirmed` | Từ chối, báo không tìm thấy đơn; API trả 404; các đơn giữ nguyên (EC29) | API | AI |
+| FR10-DT-23 | Kiểm tra Admin đổi trạng thái bị từ chối khi mã đơn không phải số | EC25 (Admin), EC29 | Admin | Đổi trạng thái | `abc` | – | `confirmed` | Từ chối, báo không tìm thấy đơn; API trả 404; các đơn giữ nguyên (EC29) | API | AI |
+| FR10-DT-24 | Kiểm tra User hủy đơn không tồn tại bị từ chối | EC24 (User), EC29 | User chủ đơn | Hủy đơn | #9999 | – | – | Từ chối, báo không tìm thấy đơn; API trả 404; các đơn giữ nguyên (EC29) | API | AI |
+| FR10-DT-25 | Kiểm tra User hủy đơn bị từ chối khi mã đơn không phải số | EC25 (User), EC29 | User chủ đơn | Hủy đơn | `abc` | – | – | Từ chối, báo không tìm thấy đơn; API trả 404; các đơn giữ nguyên (EC29) | API | AI |
+<!-- END:T32 -->
 
 ### 3.3 Bảng phủ phân vùng
 
-| EC | Test case phủ |
-| --- | --- |
+<!-- BEGIN:T33 -->
+| EC | Test case phủ | | EC | Test case phủ |
+| --- | --- | --- | --- | --- |
+| EC1 | FR10-DT-01 | | EC16 | FR10-DT-16 |
+| EC2 | FR10-DT-02 | | EC17 | FR10-DT-17 |
+| EC3 | FR10-DT-03 | | EC18 | FR10-DT-01…FR10-DT-05 |
+| EC4 | FR10-DT-04 | | EC19 | FR10-DT-18 |
+| EC5 | FR10-DT-05 | | EC20 | FR10-DT-19 |
+| EC6 | FR10-DT-06 | | EC21 | FR10-DT-20 |
+| EC7 | FR10-DT-07 | | EC22 | FR10-DT-21 |
+| EC8 | FR10-DT-08 | | EC23 | FR10-DT-01…FR10-DT-07 |
+| EC9 | FR10-DT-09 | | EC24 | FR10-DT-22, FR10-DT-24 |
+| EC10 | FR10-DT-10 | | EC25 | FR10-DT-23, FR10-DT-25 |
+| EC11 | FR10-DT-11 | | EC26 | FR10-DT-01…FR10-DT-07 |
+| EC12 | FR10-DT-12 | | EC27 | FR10-DT-08…FR10-DT-17 |
+| EC13 | FR10-DT-13 | | EC28 | FR10-DT-18…FR10-DT-21 |
+| EC14 | FR10-DT-14 | | EC29 | FR10-DT-22…FR10-DT-25 |
+| EC15 | FR10-DT-15 | | EC30 | FR10-DT-26, FR10-DT-27 |
+
+30 / 30 lớp được phủ bởi 27 test case Minimum Set (9 valid, 18 invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có test case riêng.
+<!-- END:T33 -->
 
 ## 4. Bước 4 – Boundary Value Analysis
 

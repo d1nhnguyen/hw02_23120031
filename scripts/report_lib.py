@@ -80,10 +80,15 @@ class Feature:
                 f"| Kết quả mong đợi | Kênh | Origin |\n| {sep} |")
         return "\n".join([head] + [self.design_row(c) for c in cases])
 
+    @staticmethod
+    def is_valid(c):
+        # "ui": kiểm tra giao diện chỉ cho phép hành vi đúng – xếp cùng nhóm valid
+        return c["expect"] in ("accept", "ui")
+
     def t32(self):
         dt = [c for c in self.cases if c["section"] == "DT"]
-        valid = [c for c in dt if c["expect"] == "accept"]
-        invalid = [c for c in dt if c["expect"] != "accept"]
+        valid = [c for c in dt if self.is_valid(c)]
+        invalid = [c for c in dt if not self.is_valid(c)]
         return ("**Test case valid** – mỗi test case phủ nhiều lớp valid nhất có thể:\n\n" + self.design_table(valid)
                 + "\n\n**Test case invalid** – mỗi test case phủ đúng một lớp invalid, các biến còn lại hợp lệ:\n\n"
                 + self.design_table(invalid))
@@ -120,7 +125,7 @@ class Feature:
             lines.append(f"| {a} | {x} | | {b} | {y} |")
         covered = sum(1 for n in range(1, self.n_ec + 1) if cover.get(n))
         dt = [c for c in self.cases if c["section"] == "DT"]
-        valid = sum(c["expect"] == "accept" for c in dt)
+        valid = sum(self.is_valid(c) for c in dt)
         note = " Các đại diện bổ sung sau rà soát (mục 6.2) ghi sau dấu `;`." if extra else ""
         return ("\n".join(lines) + f"\n\n{covered} / {self.n_ec} lớp được phủ bởi {len(dt)} test case Minimum Set "
                 f"({valid} valid, {len(dt) - valid} invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp "
