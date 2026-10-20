@@ -25,6 +25,8 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | FR15-B4 | | FR-15 | Quản lý sản phẩm cho lưu Tên rỗng (API) hoặc chỉ gồm khoảng trắng | Major | Backend, Web Admin | FR15-DT-05, FR15-DT-06, FR15-DT-17, FR15-DT-18 |
 | FR15-B5 | | FR-15 | Quản lý sản phẩm cho lưu Danh mục thiếu hoặc không có trong danh sách | Major | Backend | FR15-DT-12…FR15-DT-14, FR15-DT-24…FR15-DT-26, FR15-BV-18, FR15-BV-20 |
 | FR15-B6 | | FR-15 | Sửa / Xóa sản phẩm không tồn tại trả 200 "Product updated / deleted" thay vì 404 | Minor | Backend | FR15-DT-27…FR15-DT-29, FR15-DT-31…FR15-DT-33, FR15-BV-21, FR15-BV-24, FR15-BV-25, FR15-BV-27 |
+| FR10-B1 | | FR-10 | Đơn đã hủy chuyển được sang "Đã giao"; Web Admin hiện nút "Đánh dấu Đã giao" cho đơn đã hủy | Critical | Backend, Web Admin | FR10-DT-09, FR10-DT-26 |
+| FR10-B2 | | FR-10 | User hủy được đơn đang giao; trang Hồ sơ hiện nút "Hủy đơn" cho đơn đang giao | Major | Backend, Web | FR10-DT-14, FR10-DT-27 |
 
 ## Chi tiết
 
@@ -408,6 +410,64 @@ Môi trường: như FR-01; Web Admin `http://localhost:5174` đăng nhập `adm
 **Bằng chứng:** `bugs/screenshots/FR15-B6.png`
 
 ![FR15-B6](screenshots/FR15-B6.png)
+
+### FR-10 – Máy trạng thái đơn hàng
+
+Môi trường: như FR-01; bộ dữ liệu 7 đơn của `test@eshop.com` / User B dựng bằng `scripts/fr10/fixture.py` (đơn #3 `shipping`, #5 `canceled`).
+
+### FR10-B1 – Đơn đã hủy chuyển được sang "Đã giao"; Web Admin hiện nút "Đánh dấu Đã giao" cho đơn đã hủy
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-10 ("`delivered` và `canceled` là trạng thái kết thúc — không được phép chuyển sang bất kỳ trạng thái nào khác") |
+| Thành phần | Backend `PUT /api/admin/orders/:id/status`; Web Admin tab "Đơn hàng" |
+| Loại | Lỗi lập trình (thiếu ràng buộc trạng thái kết thúc) |
+| Mức độ / Ưu tiên | Critical / Cao |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | FR10-DT-09 (Web, API), FR10-DT-26 (Web) |
+
+**Các bước tái hiện**
+
+1. Tạo đơn (`POST /api/checkout` bằng `test@eshop.com`), Admin hủy đơn (`status = canceled`) → đơn "Đã hủy".
+2. Web Admin → tab "Đơn hàng": dòng đơn "Đã hủy" có nút "Đánh dấu Đã giao" → bấm nút.
+3. Hoặc gửi `PUT /api/admin/orders/<id>/status` với `{"status": "delivered"}`.
+
+**Kết quả mong đợi:** đơn đã hủy không có thao tác nào; API trả 4xx "chuyển đổi không hợp lệ"; đơn giữ "Đã hủy".
+
+**Kết quả thực tế:** HTTP 200 "Order status updated"; đơn chuyển sang "Đã giao". Các chuyển đổi khác ra khỏi `canceled` (`→ pending`, `→ canceled`) và ra khỏi `delivered` đều bị từ chối đúng – chỉ cạnh `canceled → delivered` bị lọt.
+
+**Phân tích:** đơn đã hủy được tính vào doanh thu (FR-13 chỉ tính đơn `delivered`); giao diện Admin chủ động mời thao tác sai.
+
+**Bằng chứng:** `bugs/screenshots/FR10-B1.png`
+
+![FR10-B1](screenshots/FR10-B1.png)
+
+### FR10-B2 – User hủy được đơn đang giao; trang Hồ sơ hiện nút "Hủy đơn" cho đơn đang giao
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-10 ("Khi đơn hàng đã ở trạng thái `shipping`, User không được phép tự hủy"); FR-20 nêu cùng quy tắc |
+| Thành phần | Backend `PUT /api/orders/:id/cancel`; Web trang Hồ sơ – "Lịch sử đơn hàng" |
+| Loại | Lỗi lập trình |
+| Mức độ / Ưu tiên | Major / Cao |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | FR10-DT-14 (Web, API), FR10-DT-27 (Web) |
+
+**Các bước tái hiện**
+
+1. Tạo đơn của `test@eshop.com`; Admin chuyển `pending → confirmed → shipping`.
+2. Đăng nhập Web bằng `test@eshop.com / Test1234!` → trang Hồ sơ: đơn "Đang giao" có nút "Hủy đơn" → bấm nút.
+3. Hoặc gửi `PUT /api/orders/<id>/cancel` bằng token của `test@eshop.com`.
+
+**Kết quả mong đợi:** không có nút hủy ở đơn đang giao; API trả 4xx; đơn giữ "Đang giao".
+
+**Kết quả thực tế:** HTTP 200 "Order canceled successfully", Web hiện "Hủy đơn thành công!", đơn chuyển "Đã hủy". Hủy đơn "Đã giao" / "Đã hủy" thì bị từ chối đúng (400 "Cannot cancel this order.").
+
+**Phân tích:** khách hủy được đơn khi hàng đã rời kho; Mobile dùng cùng API nên nhiều khả năng cũng bị (thuộc người làm Pool D – Lịch sử đơn hàng).
+
+**Bằng chứng:** `bugs/screenshots/FR10-B2.png`
+
+![FR10-B2](screenshots/FR10-B2.png)
 
 ## Ảnh trang GitHub Issues
 

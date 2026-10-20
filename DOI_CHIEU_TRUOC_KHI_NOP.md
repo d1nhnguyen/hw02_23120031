@@ -20,12 +20,12 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 ## Quyết định phương pháp (đã áp dụng, cần sinh viên xác nhận)
 
 - [ ] Test case bị một lỗi khác che → **Blocked** ở lượt chính thức + lượt **khảo sát** không tính verdict (FR-01: 15 test case Web).
-- [ ] Mức độ nghiêm trọng của từng bug (FR-01: 2 Critical, 4 Major, 3 Minor; FR-15: 5 Major, 1 Minor).
+- [ ] Mức độ nghiêm trọng của từng bug (FR-01: 2 Critical, 4 Major, 3 Minor; FR-15: 5 Major, 1 Minor; FR-10: 1 Critical, 1 Major).
 - [ ] Cách đếm số liệu tổng: theo lượt chạy từng kênh (Web/API) và theo test case gộp kênh.
 
 ## GitHub Issues
 
-- [ ] Tạo issue cho FR01-B1…FR01-B9, FR15-B1…FR15-B6 trên `d1nhnguyen/eshop-sut` (số tiếp theo lúc kiểm tra 20/10: BUG-12), đính kèm ảnh trong `bugs/screenshots/`.
+- [ ] Tạo issue cho FR01-B1…FR01-B9, FR15-B1…FR15-B6, FR10-B1…FR10-B2 trên `d1nhnguyen/eshop-sut` (số tiếp theo lúc kiểm tra 20/10: BUG-12), đính kèm ảnh trong `bugs/screenshots/`.
 - [ ] Gửi lại số BUG-NN để điền vào `bugs/Bug_Report.md` và mục 7 mỗi báo cáo; chụp trang issue lưu `bugs/screenshots/BUG-NN_issue.png`.
 - [ ] Kiểm tra không trùng bug với thành viên khác trong nhóm.
 
