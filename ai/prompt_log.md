@@ -1,6 +1,6 @@
 # Phụ lục A — Prompt log (trích tự động từ transcript Claude Code)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 21:27 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 22:12 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -15,6 +15,7 @@
 | 9 | 2026-10-20 21:23 | `1946c20d` | tôi đã tạo repo rồi, các commit có thể ko cần thêm co-authored claude. Thực hiện tiếp |
 | 10 | 2026-10-20 21:25 | `1946c20d` | [Request interrupted by user] |
 | 11 | 2026-10-20 21:26 | `1946c20d` | về phần tên file ở pool mobile, m-02 ko phải là tên chính thức đó chỉ là quy định trong nh |
+| 12 | 2026-10-20 21:31 | `1946c20d` | Tiếp tục làm các bước, khi nào có vấn đề nào không rõ hãy dừng lại hỏi tôi, đọc kỹ các bài |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -514,9 +515,26 @@ về phần tên file ở pool mobile, m-02 ko phải là tên chính thức đ�
 Các chỗ nhắc "M-02" trong `ai/prompt_log.md` là log nguyên văn nên tôi giữ nguyên. Tôi sửa README, PLAN, file báo cáo và bộ nhớ.
 
 Đủ các khung. Tôi chia thành các commit rõ ràng, không có dòng Co-Authored-By, rồi push.
+
+Đã push 7 commit. Có một điểm lạ: log báo "11 lượt từ 2 phiên" trong khi tôi chỉ chạy một phiên. Tôi kiểm tra phiên thứ hai là gì.
+
+Giai đoạn 0 đã xong và đã push lên `d1nhnguyen/HW02_23120031` (tổng cộng 7 commit). Phiên thứ hai trong log là phiên Claude Code bạn dùng để tạo repo. Đó cũng là việc dùng AI cho HW02 nên được ghi vào log là đúng; script không trích nhầm.
+
+**Những gì đã thêm trong lượt này** (các commit mới không còn dòng Co-Authored-By):
+- **Đổi tên feature Pool D** thành "Mobile – Đăng nhập (FR-20)", file báo cáo là [report/Mobile_Dang_nhap.md](HW02/HW02_23120031/report/Mobile_Dang_nhap.md), tag commit là `[Mobile]`. Riêng `prompt_log.md` vẫn còn chữ "M-02" vì log phải giữ nguyên văn.
+- **Khung báo cáo cho 4 feature** trong `report/`: mỗi file có mục 0 là đặc tả trích nguyên văn từ SRS, tiếp theo là mục 1–7 ứng với bước B1–B7, mỗi mục có sẵn bảng trống.
+- **Khung hồ sơ AI** trong `ai/`: AI Audit Report (AI-02), Disclosure Form (AI-03, đã khai Cấp 4 và trích dẫn IEEE), Privacy Checklist (AI-05) và AI Critique. Thêm [bugs/Bug_Report.md](HW02/HW02_23120031/bugs/Bug_Report.md) có mẫu chi tiết cho mỗi bug.
+- **Script xuất PDF** [scripts/build_pdf.sh](HW02/HW02_23120031/scripts/build_pdf.sh): đã thử với README, ra đúng khổ A4 và tiếng Việt có dấu hiển thị chuẩn.
+
+**Cần bạn để ý:**
+- 3 commit đầu đã lên GitHub vẫn còn dòng Co-Authored-By. Muốn bỏ thì phải viết lại lịch sử và force-push, nên tôi chưa làm. Bạn muốn thì báo tôi.
+- Họ tên và lớp/khoá trong các file AI đang để trống.
+- Emulator, backend và Expo vẫn đang chạy nền.
+
+**Bước tiếp theo là FR-01 B1** (xác định biến Input/Output), bắt đầu bằng prompt do bạn tự viết. Tôi vẫn đề xuất mở một phiên Claude Code mới cho mỗi feature. Khi có output, tôi sẽ lưu bản gốc vào `ai/raw/FR-01_B1.md` trước, rồi bạn duyệt, sửa và commit `[FR-01][B1]`.
 ````
 
-<details><summary>Hành động AI đã thực hiện (9)</summary>
+<details><summary>Hành động AI đã thực hiện (10)</summary>
 
 1. `Bash` — Find all M-02 references outside the log
 2. `Bash` — Rename mobile report and drop M-02 label
@@ -527,5 +545,151 @@ Các chỗ nhắc "M-02" trong `ai/prompt_log.md` là log nguyên văn nên tôi
 7. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Privacy_Checklist.md
 8. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/ai/AI_Critique.md
 9. `Bash` — Commit setup work in steps and push
+10. `Bash` — Inspect log table and session files
+
+</details>
+
+## #12 · 2026-10-20 21:31:09 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+Tiếp tục làm các bước, khi nào có vấn đề nào không rõ hãy dừng lại hỏi tôi, đọc kỹ các bài giảng/hướng dẫn về domain testing có trong @slides và @slides/refs, cũng như cách viết các test cases có trong đó
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Tôi sẽ đọc kỹ toàn bộ tài liệu về Domain Testing và cách viết test case trước khi làm FR-01. Bước đầu là trích text và xem độ dài từng file.
+
+PIL có sẵn. Tôi ghép 2 trang vào một ảnh để giảm số lần đọc, rồi xem từng cặp, bắt đầu từ ví dụ UC Analysis (bảng phân vùng và bộ test case mẫu).
+
+File PDF này bị hỏng xref nên pdftoppm báo lỗi hàng loạt. Tôi kiểm tra xem trang nào vẫn render được.
+
+Hầu hết các trang render ra gần trắng (khoảng 1.3KB), tức nội dung trong PDF bị hỏng. Tôi thử repair bằng công cụ khác.
+
+Ghostscript render được 30 trang và trang nào cũng có nội dung. Tôi ghép 4 trang một ảnh để đọc.
+
+Đếm lại số liệu ở dòng tổng kết: thực tế có 19 lớp valid và 21 lớp invalid, không phải 17 và 23. Tôi sửa rồi ghép vào báo cáo và commit.
+
+Assert ở cuối `cases.py` dùng sai chỉ số: BV-05 nằm ở vị trí 32, không phải 33. Tôi đổi sang tra theo ID cho chắc, rồi viết runner cho API.
+
+`playwright-core` đã cài xong (cùng phiên bản mà Playwright MCP đang dùng). Giờ tôi viết runner Web `run_web.mjs`.
+
+Runner Web đã sẵn sàng. Tôi restart backend để có dữ liệu sạch rồi chạy 49 TC trên kênh Web.
+
+Runner Web đã viết lại. Runner API cũng cần cùng quy tắc kiểm tra lý do từ chối, nên tôi cập nhật nốt.
+
+Đã commit B6 (`6ab932b`). Sang **FR-01 B7 (bug report)**. Trước khi nháp, tôi đọc tài liệu về báo cáo bug của môn ("Reporting and Analyzing Bugs") để làm đúng format.
+
+Đã tạo đủ 10 ảnh bằng chứng. Tôi xem lại vài ảnh tiêu biểu để chắc chúng thể hiện đúng lỗi.
+
+Bug report đã nháp xong. Tôi điền mục 7 của báo cáo FR-01 (bảng bug trỏ sang `bugs/Bug_Report.md`) rồi commit B7.
+
+Mục 7 nằm cuối file nên không có heading kết thúc để script splice tìm. Tôi thay trực tiếp từ heading mục 7 đến hết file, rồi commit.
+````
+
+<details><summary>Hành động AI đã thực hiện (97)</summary>
+
+1. `Bash` — Extract reference PDFs and report sizes
+2. `Bash` — Report sizes of remaining reference PDFs
+3. `Bash` — Read EN.DOMAIN TESTING reference text
+4. `Bash` — Read UC Analysis and Exe reference text
+5. `Bash` — Render image-only slide pages to PNG
+6. `Bash` — Tile slide pages into pairs
+7. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/uc_a.png
+8. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/uc_b.png
+9. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/uc_c.png
+10. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/exe_a.png
+11. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/exe_b.png
+12. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/exe_c.png
+13. `Bash` — Render and tile How-to-write-testcases slides
+14. `Bash` — List rendered testcase-slide images
+15. `Bash` — Check available PDF repair tools
+16. `Bash` — Render damaged PDF with Ghostscript
+17. `Bash` — Tile Ghostscript pages four per image
+18. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/gs/t_grp_00.png
+19. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/gs/t_grp_01.png
+20. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/gs/t_grp_02.png
+21. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/gs/t_grp_03.png
+22. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/gs/t_grp_04.png
+23. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/gs/t_grp_05.png
+24. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/gs/t_grp_06.png
+25. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/gs/t_grp_07.png
+26. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/img/s07-08.png
+27. `Bash` — Dump course test case template and checklist
+28. `Bash` — Start web frontend on port 5173
+29. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/00_Phuong_phap.md
+30. `Bash` — Restructure report skeletons and commit
+31. `ToolSearch` — query=select:mcp__playwright__browser_navigate,mcp__playwright__br, max_results=10
+32. `mcp__playwright__browser_navigate` — url=http://localhost:5173/register
+33. `mcp__playwright__browser_evaluate` — function=() => ({
+  h1: [...document.querySelectorAll('h1,h2')].map(h
+34. `mcp__playwright__browser_take_screenshot` — scale=css, filename=HW02/HW02_23120031/evidence/FR-01/B1_form_dang_ky.png
+35. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/evidence/FR-01/B1_form_dang_ky.png
+36. `Bash` — Create section splice helper script
+37. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr01_b1.md
+38. `Bash` — Insert FR-01 B1 section and commit
+39. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr01_b2.md
+40. `Bash` — Verify EC counts, insert B2 and commit
+41. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr01_b3.md
+42. `Bash` — Fix coverage table, insert B3 and commit
+43. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr01_b4.md
+44. `Bash` — Insert B4, check rendering, commit
+45. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/cases.py
+46. `Edit` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/cases.py
+47. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/run_api.py
+48. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/restart_backend.sh
+49. `Bash` — Restart backend, inspect admin users response
+50. `Bash` — Fix long email length and export cases
+51. `Bash` — Look for installed Playwright package and browsers
+52. `Bash` — Add package.json with playwright-core and install
+53. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/run_web.mjs
+54. `Bash` — Reset backend and run FR-01 web tests
+55. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/explore_web_password.mjs
+56. `Bash` — Probe which special characters web form accepts
+57. `Bash` — Add target and workaround fields to FR-01 cases
+58. `Edit` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/cases.py
+59. `Bash` — Regenerate cases and check workaround values
+60. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/run_web.mjs
+61. `Bash` — Add rejection-reason check to API runner
+62. `Bash` — Web run 1 with reason-aware verdicts
+63. `Bash` — Patch verdict logic; rerun web runs 1 and 2
+64. `Bash` — Extend password exploration with space cases
+65. `Bash` — Switch workaround to space password; rerun run 2
+66. `Bash` — Fix message capture; rerun run 2 and API run
+67. `Bash` — Run FR-01 API tests on fresh backend
+68. `Bash` — Inspect duplicate and trim results; manual confirmation
+69. `Bash` — Fix duplicate notes; rerun web run 2 and API
+70. `Bash` — Tabulate FR-01 verdicts across runs
+71. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr01_b5.md
+72. `Bash` — Insert B5 section and commit with evidence
+73. `Bash` — Add DT-29, ONLY filter; run DT-29 on both channels
+74. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr01_b6.md
+75. `Bash` — Insert B6 section and commit
+76. `Bash` — Read bug reporting reference text
+77. `Bash` — Read two teammate issues for format
+78. `Bash` — Start web admin on port 5174
+79. `mcp__playwright__browser_navigate` — url=http://localhost:5174
+80. `Bash` — Wait until web admin responds
+81. `mcp__playwright__browser_navigate` — url=http://localhost:5174
+82. `mcp__playwright__browser_snapshot`
+83. `mcp__playwright__browser_fill_form` — fields=[{'target': 'f2e6', 'name': 'Email', 'type': 'textbox', 'val
+84. `mcp__playwright__browser_click` — target=f2e8, element=Login button
+85. `mcp__playwright__browser_snapshot` — depth=6
+86. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/bug_evidence.mjs
+87. `Bash` — Reproduce FR-01 bugs and capture evidence
+88. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-B1.png
+89. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-B6.png
+90. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-admin-users.png
+91. `Bash` — Fix evidence screenshots and recapture
+92. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-B1.png
+93. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR01-admin-users.png
+94. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/Bug_Report.md
+95. `Bash` — Write FR-01 section 7 draft
+96. `Bash` — Insert section 7, commit B7, push
+97. `Bash` — Fix remote URL, update prompt log, push
 
 </details>
