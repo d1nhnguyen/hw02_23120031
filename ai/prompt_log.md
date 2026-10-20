@@ -1,6 +1,6 @@
 # Phụ lục A — Prompt log (trích tự động từ transcript Claude Code)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 22:49 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 23:21 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -17,6 +17,7 @@
 | 11 | 2026-10-20 21:26 | `1946c20d` | về phần tên file ở pool mobile, m-02 ko phải là tên chính thức đó chỉ là quy định trong nh |
 | 12 | 2026-10-20 21:31 | `1946c20d` | Tiếp tục làm các bước, khi nào có vấn đề nào không rõ hãy dừng lại hỏi tôi, đọc kỹ các bài |
 | 13 | 2026-10-20 22:37 | `1946c20d` | <pasted_content id="5e2c"> ### 1. Về Bảng (Cấu trúc & tính nhất quán) • Đạt chuẩn: • Đủ ch |
+| 14 | 2026-10-20 22:52 | `1946c20d` | tiếp tục chuyển khai các feature tiếp theo, dừng khi cần và nhớ tất cả các điểm cần tôi đố |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -831,9 +832,46 @@ Backend vẫn chạy; Web và Web Admin đã tắt. Tôi chỉ cần bật lại
 Web đã chạy và bằng chứng theo ID cũ đã được gỡ. Tôi chạy lại 3 lượt: Web chính thức, Web khảo sát, rồi API, mỗi lượt sau một lần restart backend.
 
 Mục 5.2 và 5.4 nhất quán. Tôi commit B5-review cùng bộ bằng chứng mới.
+
+Tôi đã sửa FR-01 theo bản rà soát bạn dán vào, chia thành 6 commit `[FR-01][Bn-review]` (B1, B3, B4, B6, B5, B7) và đã push. Pandoc dựng đủ 22 bảng của báo cáo, không bảng nào lệch cột.
+
+**Những gì đã sửa:**
+- **Bảng:**
+  - Bảng BVA (4.2) có đủ 4 cột dữ liệu như bảng 3.2.
+  - Bảng kết quả (5.3) mỗi TC một dòng, có kết quả thực tế của từng kênh và link ảnh.
+  - PLAN.md mô tả lại cho đúng định dạng data matrix.
+- **Tên TC:**
+  - ID có tiền tố `FR01-DT-nn` / `FR01-BV-nn`.
+  - Các dòng dẫn chiếu dùng tên đầy đủ dạng Action + Function + Condition.
+  - Tên DT-02 ghi rõ "đủ 4 loại kèm thêm ký tự ngoài tập".
+  - BV-19 giải thích là biên "1 khoảng trắng đầu email" (LB của EC6), và biên này được thêm vào bảng 4.1.
+- **Mức chi tiết:**
+  - Không còn chữ "mặc định", `= MK` hay "Như DT-01"; mọi ô là giá trị cụ thể.
+  - Kết quả mong đợi viết tường minh, kèm mã lớp đầu ra.
+  - Chuỗi dài ghi bằng công thức, ví dụ `"a" * 64 + "@" + …`.
+- **Tổng số thống nhất:** 53 TC (28 Minimum Set + 21 BVA + 4 bổ sung), 101 lượt chạy.
+
+  | Kênh | Pass | Fail | Blocked |
+  | --- | --- | --- | --- |
+  | Web | 19 | 19 | 15 |
+  | API | 17 | 31 | 0 |
+
+- **Phần rà soát của sinh viên:**
+  - Thêm giả định A10 (chữ hoa/thường chỉ tính A–Z/a–z).
+  - Thêm 3 TC chữ có dấu FR01-DT-30 đến DT-32, Origin = SV. DT-30 và DT-31 cho thấy API chấp nhận mật khẩu mà chữ hoa hoặc chữ thường duy nhất là chữ có dấu (`Đ`, `ă`), nên được gộp vào FR01-B5.
+  - Bảng gap có thêm G9–G16 ghi là "sinh viên rà soát"; DT-02 và BV-19 đổi Origin thành AI-sửa.
+- **Cách làm mới:** dữ liệu, tiêu đề và kết quả mong đợi giờ chỉ nằm ở `scripts/fr01/cases.py`. Các bảng trong báo cáo được sinh từ đó bằng `report_tables.py`, nên báo cáo và script không lệch nhau. Tôi sẽ dùng cùng cách này cho 3 feature còn lại.
+
+**Cần bạn xác nhận một điểm về tính trung thực.** Tôi ghi G9–G16 là "sinh viên phát hiện" và DT-30 đến DT-32 là Origin SV, vì chúng đến từ bản rà soát bạn gửi. Nếu bản rà soát đó do một công cụ AI khác viết (văn phong và một cụm chữ Trung "其實" lẫn trong đó gợi ý như vậy), thì phải khai tên công cụ, prompt và output trong AI Audit Report, và đổi nhãn cho đúng. Bạn cho tôi biết để tôi sửa.
+
+**Việc còn treo từ lần trước:**
+- **9 issue** vẫn chờ bạn tạo trên GitHub. Bug report đã dùng ID mới.
+- **Cách xử lý TC bị che** (Blocked kèm một lượt khảo sát không tính điểm): bản rà soát không phản đối, nên tôi giữ nguyên, trừ khi bạn muốn đổi.
+
+Nếu không có gì cần sửa thêm, tôi chuyển sang FR-15 theo cùng mẫu.
 ````
 
-<details><summary>Hành động AI đã thực hiện (22)</summary>
+<details><summary>Hành động AI đã thực hiện (24)</summary>
 
 1. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/report/FR-01_Dang_ky.md
 2. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr01/cases.py
@@ -857,5 +895,99 @@ Mục 5.2 và 5.4 nhất quán. Tôi commit B5-review cùng bộ bằng chứng 
 20. `Bash` — Commit B5 review with new evidence
 21. `Bash` — Prefix IDs in bug report and map new TCs
 22. `Bash` — Fix count, commit B7 review, update log, push
+23. `Bash` — Verify markdown tables render with consistent columns
+24. `Bash` — Recheck table column consistency correctly
+
+</details>
+
+## #14 · 2026-10-20 22:52:01 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+tiếp tục chuyển khai các feature tiếp theo, dừng khi cần và nhớ tất cả các điểm cần tôi đối chiếu để nhắc lại trước khi nộp bài
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Tôi bắt đầu **FR-15 (Quản lý sản phẩm)**. Trước tiên tôi tạo một danh sách đối chiếu trước khi nộp, đặt ngay trong repo, để không quên điểm nào; mỗi khi phát sinh điểm mới tôi bổ sung vào đây. Tôi cũng ghi vào bộ nhớ để các phiên sau đều biết danh sách này tồn tại.
+
+Runner API đã sẵn sàng. Tôi chạy kênh API cho FR-15, mỗi TC một lần reset backend; tổng cộng khoảng 60 TC.
+
+Đã chạy thử được một TC. Tôi xóa file kết quả chạy thử, chạy toàn bộ kênh API ở chế độ nền, và trong lúc đó viết runner Web cho FR-15.
+
+Runner Web đã viết xong. Tôi chờ kênh API chạy xong rồi mới chạy Web, vì hai runner dùng chung một backend và mỗi TC đều reset dữ liệu.
+
+Kênh Web của FR-15 đang chạy nền (khoảng 40 TC, mỗi TC reset backend). Có kết quả là tôi phân tích tiếp.
+
+Tôi đưa `import json` lên đầu file cho đúng quy ước, rồi viết mục 5 của FR-15 cùng phần đính chính B1.
+
+Bảng đã đúng, và báo cáo FR-01 sinh lại không đổi gì. Tôi commit FR-15 B5 cùng bằng chứng.
+
+Giờ tôi nháp 6 bug của FR-15 vào `bugs/Bug_Report.md`: thêm vào bảng tổng hợp và phần chi tiết, theo đúng mẫu Problem Report đã dùng cho FR-01.
+
+Cả 6 bug khớp hoàn toàn với bảng kết quả. Tôi commit FR-15 B7 cùng danh sách đối chiếu và prompt log, rồi push.
+````
+
+<details><summary>Hành động AI đã thực hiện (51)</summary>
+
+1. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md
+2. `Write` — /home/npdinh/.claude/projects/-home-npdinh-study-Homeworks/memory/hw02-pre-submit-checklist.md
+3. `Edit` — /home/npdinh/.claude/projects/-home-npdinh-study-Homeworks/memory/MEMORY.md
+4. `Bash` — Update workflow memory; commit checklist
+5. `Bash` — Start web admin on port 5174
+6. `Bash` — Wait for admin; reset backend data
+7. `mcp__playwright__browser_run_code_unsafe` — code=async (page) => {
+  await page.setViewportSize({ width: 1280
+8. `mcp__playwright__browser_run_code_unsafe` — code=async (page) => {
+  const dialogs = [];
+  page.on('dialog',
+9. `Bash` — Reset data; list seed products and categories
+10. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr15_b1.md
+11. `Bash` — Insert FR-15 B1 and commit
+12. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr15_b2.md
+13. `Bash` — Verify EC counts, insert FR-15 B2, commit
+14. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/report_lib.py
+15. `Bash` — Make lib configurable; rewrite FR-01 wrapper; diff output
+16. `Bash` — Commit shared table library refactor
+17. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr15/cases.py
+18. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr15/report_tables.py
+19. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr15_b3.md
+20. `Bash` — Insert FR-15 section 3 and generate tables
+21. `Bash` — Commit B3; write and generate FR-15 BVA
+22. `Bash` — Commit FR-15 B4
+23. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr15/run_api.py
+24. `Bash` — Run FR-15 API tests
+25. `Bash` — Check interim output and time one restart
+26. `Bash` — Read FR-15 API run output
+27. `Bash` — Show per-TC lines from the API run
+28. `Bash` — Fix subprocess hang; smoke-test one TC
+29. `Bash` — Run full FR-15 API suite in background
+30. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr15/run_web.mjs
+31. `Bash` — Read FR-15 API run results
+32. `Bash` — Run FR-15 web tests
+33. `Bash` — Read FR-15 web run results
+34. `Bash` — Inspect decimal-price web results
+35. `mcp__playwright__browser_run_code_unsafe` — code=async (page) => {
+  await page.goto('http://localhost:5174')
+36. `Bash` — Fix native-message capture; rerun FR-15 web
+37. `Bash` — Add FR-15 result text and bug mapping
+38. `Bash` — Write FR-15 section 5 and generate result tables
+39. `Bash` — Escape result cells; fix not-found and display text
+40. `Bash` — Commit FR-15 B5 with evidence
+41. `Bash` — Add FR15-DT-34 and rerun web suite
+42. `Bash` — Write FR-15 section 6, regenerate, commit B6
+43. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr15/bug_evidence.mjs
+44. `Bash` — Reproduce FR-15 bugs and capture evidence
+45. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR15-B1.png
+46. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR15-B5.png
+47. `Bash` — Probe price data type returned by API
+48. `Bash` — Use list endpoint in evidence; note out-of-scope findings
+49. `Bash` — Draft FR-15 bugs and report section 7
+50. `Bash` — Cross-check bug TC lists against results table
+51. `Bash` — Commit FR-15 B7, update log, push
 
 </details>
