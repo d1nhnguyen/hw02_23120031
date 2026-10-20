@@ -19,6 +19,12 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | FR01-B7 | | FR-01 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; FR01-DT-11…FR01-DT-16 (lượt khảo sát Web) |
 | FR01-B8 | | FR-01 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối, không đăng nhập được bằng email bình thường | Minor | Backend | FR01-DT-02, FR01-BV-19 |
 | FR01-B9 | | FR-01 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | FR01-DT-09 |
+| FR15-B1 | | FR-15 | Quản lý sản phẩm cho lưu Giá bằng 0 hoặc âm khi Thêm và Sửa | Major | Backend, Web Admin | FR15-DT-08, FR15-DT-09, FR15-DT-20, FR15-DT-21, FR15-BV-11, FR15-BV-12, FR15-BV-17 |
+| FR15-B2 | | FR-15 | Quản lý sản phẩm cho lưu khi thiếu Giá hoặc Giá không phải số | Major | Backend, Web Admin | FR15-DT-10, FR15-DT-11, FR15-DT-22, FR15-DT-23 |
+| FR15-B3 | | FR-15 | Quản lý sản phẩm cho lưu Tên dài hơn 255 ký tự | Major | Backend, Web Admin | FR15-DT-07, FR15-DT-19, FR15-BV-05, FR15-BV-07, FR15-BV-10 |
+| FR15-B4 | | FR-15 | Quản lý sản phẩm cho lưu Tên rỗng (API) hoặc chỉ gồm khoảng trắng | Major | Backend, Web Admin | FR15-DT-05, FR15-DT-06, FR15-DT-17, FR15-DT-18 |
+| FR15-B5 | | FR-15 | Quản lý sản phẩm cho lưu Danh mục thiếu hoặc không có trong danh sách | Major | Backend | FR15-DT-12…FR15-DT-14, FR15-DT-24…FR15-DT-26, FR15-BV-18, FR15-BV-20 |
+| FR15-B6 | | FR-15 | Sửa / Xóa sản phẩm không tồn tại trả 200 "Product updated / deleted" thay vì 404 | Minor | Backend | FR15-DT-27…FR15-DT-29, FR15-DT-31…FR15-DT-33, FR15-BV-21, FR15-BV-24, FR15-BV-25, FR15-BV-27 |
 
 ## Chi tiết
 
@@ -248,6 +254,160 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 **Bằng chứng:** `bugs/screenshots/FR01-B9.png`
 
 ![FR01-B9](screenshots/FR01-B9.png)
+
+### FR-15 – Quản lý sản phẩm
+
+Môi trường: như FR-01; Web Admin `http://localhost:5174` đăng nhập `admin@eshop.com`; API gửi kèm token admin. Dữ liệu seed: 5 sản phẩm id 1–5, danh mục id 1–3.
+
+### FR15-B1 – Quản lý sản phẩm cho lưu Giá bằng 0 hoặc âm khi Thêm và Sửa
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-15 ("Giá: bắt buộc, phải là số dương (> 0)") |
+| Thành phần | Backend `POST` / `PUT /api/products`; Web Admin tab Sản phẩm (ô Giá không đặt `min`) |
+| Loại | Lỗi lập trình (thiếu kiểm tra) |
+| Mức độ / Ưu tiên | Major / Cao |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | FR15-DT-08, FR15-DT-09, FR15-DT-20, FR15-DT-21, FR15-BV-11, FR15-BV-12, FR15-BV-17 (Web và API) |
+
+**Các bước tái hiện**
+
+1. Web Admin → tab "Sản phẩm" → nhập Tên `Gia am tu Web Admin`, Giá `-50000`, Danh mục `Điện thoại` → bấm "Lưu sản phẩm".
+2. Hoặc gửi `POST /api/products` với `{"name": "Sac nhanh USB-C 20W", "price": 0, "category_id": 3}`; `PUT /api/products/2` với Giá `-1`.
+
+**Kết quả mong đợi:** từ chối, báo Giá phải lớn hơn 0; không tạo / không sửa sản phẩm.
+
+**Kết quả thực tế:** sản phẩm được tạo / sửa với Giá `-50000`, `0`, `-1`, `-0.01`; danh sách Admin hiện `-50000 ₫`. Khi Sửa, Web còn hiện "Cập nhật thành công!".
+
+**Phân tích:** sản phẩm giá âm / bằng 0 xuất hiện trong cửa hàng, ảnh hưởng tổng tiền giỏ hàng và doanh thu (FR-07, FR-08, FR-13). Liên quan: FR15-B2.
+
+**Bằng chứng:** `bugs/screenshots/FR15-B1.png`, `bugs/screenshots/FR15-admin-products.png`
+
+![FR15-B1](screenshots/FR15-B1.png)
+
+### FR15-B2 – Quản lý sản phẩm cho lưu khi thiếu Giá hoặc Giá không phải số
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-15 ("Giá: bắt buộc, phải là số") |
+| Thành phần | Backend `POST` / `PUT /api/products`; Web Admin (ô Giá không `required`) |
+| Loại | Lỗi lập trình (thiếu kiểm tra) |
+| Mức độ / Ưu tiên | Major / Cao |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | FR15-DT-10, FR15-DT-22 (Web và API), FR15-DT-11, FR15-DT-23 (API) |
+
+**Các bước tái hiện**
+
+1. Web Admin → tab "Sản phẩm" → nhập Tên `Sac nhanh USB-C 20W`, để trống Giá → bấm "Lưu sản phẩm".
+2. Hoặc gửi `POST /api/products` không có trường `price`, hoặc với `"price": "abc"`; `PUT /api/products/3` với `"price": "abc"`.
+
+**Kết quả mong đợi:** từ chối, báo thiếu Giá / Giá không hợp lệ.
+
+**Kết quả thực tế:** sản phẩm được tạo / sửa với Giá rỗng, `null` hoặc `"abc"`.
+
+**Bằng chứng:** `bugs/screenshots/FR15-B2.png`
+
+![FR15-B2](screenshots/FR15-B2.png)
+
+### FR15-B3 – Quản lý sản phẩm cho lưu Tên dài hơn 255 ký tự
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-15 ("Tên sản phẩm: bắt buộc, tối đa 255 ký tự") |
+| Thành phần | Backend `POST` / `PUT /api/products`; Web Admin (ô Tên không đặt `maxlength`) |
+| Loại | Lỗi lập trình (thiếu kiểm tra) |
+| Mức độ / Ưu tiên | Major / Trung bình |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | FR15-DT-07, FR15-DT-19, FR15-BV-05, FR15-BV-07, FR15-BV-10 (Web và API) |
+
+**Các bước tái hiện**
+
+1. Gửi `POST /api/products` với Tên `"A" * 256` (256 ký tự), Giá `350000`, Danh mục `3`.
+2. Lặp lại với Tên `"Ố" * 256`; `PUT /api/products/4` với Tên `"B" * 300`. Trên Web Admin dán chuỗi 256 ký tự vào ô Tên cũng lưu được.
+
+**Kết quả mong đợi:** từ chối, báo Tên vượt quá 255 ký tự.
+
+**Kết quả thực tế:** lưu thành công Tên 256 và 300 ký tự. Biên 255 ký tự (kể cả chữ có dấu) được chấp nhận đúng.
+
+**Bằng chứng:** `bugs/screenshots/FR15-B3.png`
+
+![FR15-B3](screenshots/FR15-B3.png)
+
+### FR15-B4 – Quản lý sản phẩm cho lưu Tên rỗng (API) hoặc chỉ gồm khoảng trắng
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-15 ("Tên sản phẩm: bắt buộc"); giả định A2 (Tên chỉ có khoảng trắng coi như bỏ trống) |
+| Thành phần | Backend `POST` / `PUT /api/products`; Web Admin (thuộc tính `required` chỉ chặn ô trống) |
+| Loại | Lỗi lập trình (thiếu kiểm tra phía server) |
+| Mức độ / Ưu tiên | Major / Cao |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | FR15-DT-05, FR15-DT-17 (API), FR15-DT-06, FR15-DT-18 (Web và API) |
+
+**Các bước tái hiện**
+
+1. Web Admin → tab "Sản phẩm" → nhập Tên `␣␣␣` (3 dấu cách), Giá `350000` → bấm "Lưu sản phẩm".
+2. Hoặc gửi `POST /api/products` với `"name": ""`; `PUT /api/products/5` với `"name": ""`.
+
+**Kết quả mong đợi:** từ chối, báo thiếu Tên sản phẩm.
+
+**Kết quả thực tế:** sản phẩm được tạo / sửa với Tên rỗng hoặc chỉ có khoảng trắng; danh sách Admin hiện dòng sản phẩm không có tên. Trên Web, Tên rỗng bị trình duyệt chặn nhưng Tên toàn khoảng trắng thì không.
+
+**Bằng chứng:** `bugs/screenshots/FR15-B4.png`
+
+![FR15-B4](screenshots/FR15-B4.png)
+
+### FR15-B5 – Quản lý sản phẩm cho lưu Danh mục thiếu hoặc không có trong danh sách
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-15 ("Danh mục: bắt buộc, phải chọn từ danh sách có sẵn") |
+| Thành phần | Backend `POST` / `PUT /api/products` (Web Admin dùng ô chọn nên không nhập được giá trị ngoài danh sách) |
+| Loại | Lỗi lập trình (thiếu kiểm tra phía server) |
+| Mức độ / Ưu tiên | Major / Trung bình |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | FR15-DT-12…FR15-DT-14, FR15-DT-24…FR15-DT-26, FR15-BV-18, FR15-BV-20 (API) |
+
+**Các bước tái hiện**
+
+1. Gửi `POST /api/products` với `{"name": "Sac nhanh USB-C 20W", "price": 350000}` (không có `category_id`).
+2. Lặp lại với `"category_id": 99`, `0`, `"abc"`; `PUT /api/products/1` với `"category_id": 4` (danh mục có sẵn: 1, 2, 3).
+
+**Kết quả mong đợi:** từ chối, báo Danh mục không hợp lệ.
+
+**Kết quả thực tế:** sản phẩm được lưu với `category_id` `null`, `99`, `0`, `"abc"`, `4`.
+
+**Phân tích:** sản phẩm không thuộc danh mục nào; lọc / xóa danh mục (FR-14) và hiển thị danh mục ở chi tiết sản phẩm (FR-06) có thể sai.
+
+**Bằng chứng:** `bugs/screenshots/FR15-B5.png`
+
+![FR15-B5](screenshots/FR15-B5.png)
+
+### FR15-B6 – Sửa / Xóa sản phẩm không tồn tại trả 200 thay vì 404
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-15 (Sửa / Xóa một sản phẩm); giả định A6 (404 khi không tồn tại) |
+| Thành phần | Backend `PUT` / `DELETE /api/products/:id` |
+| Loại | Lỗi lập trình |
+| Mức độ / Ưu tiên | Minor / Thấp |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | FR15-DT-27…FR15-DT-29, FR15-DT-31…FR15-DT-33, FR15-BV-21, FR15-BV-24, FR15-BV-25, FR15-BV-27 (API) |
+
+**Các bước tái hiện**
+
+1. Gửi `PUT /api/products/9999` với body hợp lệ; `DELETE /api/products/9999`.
+2. Lặp lại với id `0`, `abc` và với sản phẩm vừa bị xóa.
+
+**Kết quả mong đợi:** HTTP 404, báo không tìm thấy sản phẩm.
+
+**Kết quả thực tế:** HTTP 200 `{"message": "Product updated"}` / `{"message": "Product deleted"}`; dữ liệu không đổi.
+
+**Phân tích:** client (Web Admin) báo thao tác thành công dù không có gì xảy ra, che giấu lỗi khi hai admin cùng thao tác trên một sản phẩm.
+
+**Bằng chứng:** `bugs/screenshots/FR15-B6.png`
+
+![FR15-B6](screenshots/FR15-B6.png)
 
 ## Ảnh trang GitHub Issues
 

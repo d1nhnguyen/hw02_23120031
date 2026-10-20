@@ -19,12 +19,12 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 ## Quyết định phương pháp (đã áp dụng, cần sinh viên xác nhận)
 
 - [ ] Test case bị một lỗi khác che → **Blocked** ở lượt chính thức + lượt **khảo sát** không tính verdict (FR-01: 15 test case Web).
-- [ ] Mức độ nghiêm trọng của từng bug (FR-01: 2 Critical, 4 Major, 3 Minor).
+- [ ] Mức độ nghiêm trọng của từng bug (FR-01: 2 Critical, 4 Major, 3 Minor; FR-15: 5 Major, 1 Minor).
 - [ ] Cách đếm số liệu tổng: theo lượt chạy từng kênh (Web/API) và theo test case gộp kênh.
 
 ## GitHub Issues
 
-- [ ] Tạo issue cho FR01-B1…FR01-B9 trên `d1nhnguyen/eshop-sut` (số tiếp theo lúc kiểm tra 20/10: BUG-12), đính kèm ảnh trong `bugs/screenshots/`.
+- [ ] Tạo issue cho FR01-B1…FR01-B9, FR15-B1…FR15-B6 trên `d1nhnguyen/eshop-sut` (số tiếp theo lúc kiểm tra 20/10: BUG-12), đính kèm ảnh trong `bugs/screenshots/`.
 - [ ] Gửi lại số BUG-NN để điền vào `bugs/Bug_Report.md` và mục 7 mỗi báo cáo; chụp trang issue lưu `bugs/screenshots/BUG-NN_issue.png`.
 - [ ] Kiểm tra không trùng bug với thành viên khác trong nhóm.
 
@@ -40,3 +40,9 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 ## Môi trường
 
 - [ ] Bản SUT local đã sửa `frontend-mobile/App.js:16` (API_URL → `10.0.2.2`) để chạy trên Android Emulator – đã ghi trong PLAN.md.
+
+## Quan sát ngoài phạm vi (báo cho thành viên phụ trách nếu cần)
+
+- [ ] FR-06 (chi tiết sản phẩm): `GET /api/products/:id` trả `price` dạng **chuỗi** với sản phẩm có id chẵn, dạng số với id lẻ (danh sách `GET /api/products` luôn là số) – phát hiện khi làm FR-15.
+- [ ] FR-21 (giao diện chung): trang Đăng ký không có thẻ `<h1>`, nút "Đăng Ký" màu đỏ – phát hiện khi làm FR-01.
+- [ ] FR-21: danh sách sản phẩm trong Web Admin hiển thị giá không có phân cách hàng nghìn (`30000000 ₫`) – phát hiện khi làm FR-15.
