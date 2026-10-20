@@ -263,7 +263,7 @@ Dữ liệu và kết quả mong đợi được sinh từ `scripts/fr01/cases.p
 | EC22 | FR01-DT-01…FR01-DT-07 | | EC45 | FR01-DT-20…FR01-DT-25; bổ sung: FR01-DT-29, FR01-DT-30, FR01-DT-31 (mục 6.2) |
 | EC23 | FR01-DT-22; bổ sung: FR01-DT-31 (mục 6.2) | | EC46 | FR01-DT-27, FR01-DT-28 |
 
-46 / 46 lớp được phủ bởi 28 test case Minimum Set (7 valid, 21 invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có đúng một test case riêng. Các đại diện bổ sung sau rà soát (mục 6.2) ghi sau dấu `;`.
+46 / 46 lớp được phủ bởi 28 test case Minimum Set (7 valid, 21 invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có test case riêng. Các đại diện bổ sung sau rà soát (mục 6.2) ghi sau dấu `;`.
 <!-- END:T33 -->
 
 ## 4. Bước 4 – Boundary Value Analysis
@@ -439,7 +439,7 @@ Với mật khẩu `Abcdef1␣` form Web gửi request; `web_results_workaround.
 | API | 53 | 48 | 17 | 31 | 0 | 5 (biến Xác nhận mật khẩu, A8) |
 | **Tổng lượt chạy** | | **101** | **36** | **50** | **15** | |
 
-53 test case = 28 Minimum Set (mục 3.2) + 21 BVA (mục 4.2) + 4 bổ sung sau rà soát (mục 6.2). Gộp 2 kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 0 Pass, 48 Fail, 5 Blocked.
+53 test case = 28 Minimum Set (mục 3.2) + 21 BVA (mục 4.2) + 4 bổ sung sau rà soát (mục 6.2). Gộp các kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 0 Pass, 48 Fail, 5 Blocked.
 <!-- END:T55 -->
 
 ## 6. Bước 6 – AI gap analysis

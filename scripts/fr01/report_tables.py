@@ -1,20 +1,16 @@
 """Sinh các bảng của report/FR-01_Dang_ky.md từ cases.py và file kết quả trong evidence/FR-01/.
 
-Mỗi bảng nằm giữa hai mốc <!-- BEGIN:<mã> --> và <!-- END:<mã> --> trong báo cáo:
-  T32 Minimum Set · T33 bảng phủ phân vùng · T42 Boundary Value Test Cases · T62 test case bổ sung
-  T53 kết quả theo test case · T55 tổng hợp
-Dùng: python3 report_tables.py T32 T33   (không truyền mã nào = sinh tất cả)
+Dùng: python3 report_tables.py T32 T33   (không truyền mã nào = sinh tất cả; danh sách mã: xem report_lib.py)
 """
-import json
-import re
 import sys
 from pathlib import Path
 
-from cases import BY_ID, CASES, PREFIX
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from report_lib import Feature  # noqa: E402
+
+from cases import CASES, PREFIX  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-REPORT = ROOT / "report" / "FR-01_Dang_ky.md"
-EVIDENCE = ROOT / "evidence" / "FR-01"
 FIELD_VN = {"name": "Họ Tên", "email": "Email", "password": "Mật khẩu", "confirm": "Xác nhận mật khẩu"}
 
 # Thứ tự bảng BVA: test case BV mới xen với các điểm biên đã có trong Minimum Set (dẫn chiếu, không chạy lại)
@@ -36,113 +32,11 @@ BV_ORDER = [
 ]
 
 
-def code(value):
-    """Giá trị trong ô bảng: dấu cách hiện thành ␣, rỗng ghi rõ (rỗng)."""
-    if value == "":
-        return "(rỗng)"
-    v = value.replace(" ", "␣").replace("|", "\\|")
-    longest = max((len(m) for m in re.findall(r"`+", v)), default=0)
-    fence = "`" * (longest + 1)
-    pad = " " if v.startswith("`") or v.endswith("`") else ""
-    return f"{fence}{pad}{v}{pad}{fence}"
-
-
-def cell(c, field):
-    if field in c["show"]:
-        return c["show"][field]
-    if field == "confirm" and c["confirm"] == c["password"] and "password" in c["show"]:
+def display(c, key):
+    # Xác nhận mật khẩu dài: hiển thị cùng công thức với Mật khẩu
+    if key == "confirm" and c["confirm"] == c["password"] and "password" in c["show"]:
         return c["show"]["password"]
-    return code(c[field])
-
-
-def channel(c):
-    return "Web, API" if "api" in c["channels"] else "Web"
-
-
-def design_row(c, tc_id=None, covers=None, origin=None):
-    return (f"| {tc_id or c['id']} | {c['title']} | {covers or c['covers']} | {cell(c, 'name')} | {cell(c, 'email')} "
-            f"| {cell(c, 'password')} | {cell(c, 'confirm')} | {c['expected']} | {channel(c)} | {origin or c['origin']} |")
-
-
-def design_table(cases, covers_header="Phân vùng phủ"):
-    head = (f"| ID | Tên test case (Action + Function + Condition) | {covers_header} | Họ Tên | Email | Mật khẩu "
-            "| Xác nhận | Kết quả mong đợi | Kênh | Origin |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
-    return "\n".join([head] + [design_row(c) for c in cases])
-
-
-def t32():
-    dt = [c for c in CASES if c["section"] == "DT"]
-    valid = [c for c in dt if c["expect"] == "accept"]
-    invalid = [c for c in dt if c["expect"] == "reject"]
-    return ("**Test case valid** – mỗi test case phủ nhiều lớp valid nhất có thể:\n\n" + design_table(valid)
-            + "\n\n**Test case invalid** – mỗi test case phủ đúng một lớp invalid, các biến còn lại hợp lệ:\n\n"
-            + design_table(invalid))
-
-
-def compress(ids):
-    """FR01-DT-01, 03, 04, 05 -> 'FR01-DT-01, FR01-DT-03…FR01-DT-05'."""
-    nums = sorted(int(i.rsplit("-", 1)[1]) for i in ids)
-    groups, start = [], None
-    for k, n in enumerate(nums):
-        if start is None:
-            start = n
-        if k + 1 == len(nums) or nums[k + 1] != n + 1:
-            groups.append((start, n))
-            start = None
-    name = lambda n: f"{PREFIX}-DT-{n:02d}"
-    return ", ".join(name(a) if a == b else f"{name(a)}, {name(b)}" if b == a + 1 else f"{name(a)}…{name(b)}"
-                     for a, b in groups)
-
-
-def t33():
-    cover, extra = {}, {}
-    for c in CASES:
-        target = cover if c["section"] == "DT" else extra if c["section"] == "GAP" else None
-        if target is None:
-            continue
-        for ec in re.findall(r"EC(\d+)", c["covers"]):
-            target.setdefault(int(ec), []).append(c["id"])
-    rows = []
-    for n in range(1, 47):
-        text = compress(cover.get(n, []))
-        if n in extra:
-            text += f"; bổ sung: {', '.join(extra[n])} (mục 6.2)"
-        rows.append((f"EC{n}", text))
-    half = (len(rows) + 1) // 2
-    lines = ["| EC | Test case phủ | | EC | Test case phủ |", "| --- | --- | --- | --- | --- |"]
-    for (a, x), (b, y) in zip(rows[:half], rows[half:] + [("", "")]):
-        lines.append(f"| {a} | {x} | | {b} | {y} |")
-    covered = sum(1 for n in range(1, 47) if cover.get(n))
-    dt = [c for c in CASES if c["section"] == "DT"]
-    valid = sum(c["expect"] == "accept" for c in dt)
-    return ("\n".join(lines) + f"\n\n{covered} / 46 lớp được phủ bởi {len(dt)} test case Minimum Set ({valid} valid, "
-            f"{len(dt) - valid} invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có đúng một "
-            "test case riêng. Các đại diện bổ sung sau rà soát (mục 6.2) ghi sau dấu `;`.")
-
-
-def t42():
-    rows = []
-    for item in BV_ORDER:
-        if isinstance(item, tuple):
-            c = BY_ID[f"{PREFIX}-{item[0]}"]
-            rows.append(design_row(c, tc_id=f"({c['id']})", covers=item[1], origin="xem 3.2"))
-        else:
-            rows.append(design_row(BY_ID[f"{PREFIX}-{item}"]))
-    head = design_table([], covers_header="Partition tested")
-    new = sum(1 for i in BV_ORDER if not isinstance(i, tuple))
-    refs = len(BV_ORDER) - new
-    return (head + "\n" + "\n".join(rows) + f"\n\nTổng: {new} test case BVA mới ({PREFIX}-BV-01…{PREFIX}-BV-21); "
-            f"{refs} dòng có ID trong ngoặc là điểm biên đã được phủ bởi test case Minimum Set (mục 3.2), "
-            "chỉ dẫn chiếu, không chạy lại.")
-
-
-def t62():
-    return design_table([c for c in CASES if c["section"] == "GAP"])
-
-
-def load(name):
-    path = EVIDENCE / name
-    return {r["id"]: r for r in json.loads(path.read_text(encoding="utf-8"))["results"]} if path.exists() else {}
+    return None
 
 
 def bugs_for(c, ch, verdict):
@@ -170,7 +64,7 @@ def first_sentence(text):
     return text.split("!")[0] + "!" if "!" in text else text
 
 
-def web_actual(r):
+def web_actual(r, c):
     parts = []
     if r["target"] == "confirm" and not r["confirm_field"]:
         parts.append("không có ô Xác nhận mật khẩu")
@@ -212,63 +106,13 @@ def api_actual(r, c):
     return "; ".join(parts)
 
 
-def t53():
-    web, api = load("web_results.json"), load("api_results.json")
-    lines = ["| TC | Web | Kết quả thực tế – Web | API | Kết quả thực tế – API | Bằng chứng | Bug |",
-             "| --- | --- | --- | --- | --- | --- | --- |"]
-    for c in CASES:
-        w, a = web.get(c["id"]), api.get(c["id"])
-        bugs = []
-        for ch, r in (("web", w), ("api", a)):
-            for b in bugs_for(c, ch, r["verdict"] if r else None):
-                if b not in bugs:
-                    bugs.append(b)
-        proof = f"[ảnh Web](../evidence/FR-01/web/{c['id']}.png)" + (" · `api_results.json`" if a else "")
-        lines.append(f"| {c['id']} | {w['verdict'] if w else '–'} | {web_actual(w) if w else '–'} "
-                     f"| {a['verdict'] if a else '–'} | {api_actual(a, c) if a else 'Không áp dụng (A8)'} "
-                     f"| {proof} | {', '.join(bugs) or '–'} |")
-    return "\n".join(lines)
-
-
-def t55():
-    web, api = load("web_results.json"), load("api_results.json")
-    count = lambda res, v: sum(r["verdict"] == v for r in res.values())
-    n = len(CASES)
-    na = n - len(api)
-    total = len(web) + len(api)
-    lines = ["| Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |",
-             "| --- | --- | --- | --- | --- | --- | --- |",
-             f"| Web | {n} | {len(web)} | {count(web, 'Pass')} | {count(web, 'Fail')} | {count(web, 'Blocked')} | 0 |",
-             f"| API | {n} | {len(api)} | {count(api, 'Pass')} | {count(api, 'Fail')} | 0 | {na} (biến Xác nhận mật khẩu, A8) |",
-             f"| **Tổng lượt chạy** | | **{total}** | **{count(web, 'Pass') + count(api, 'Pass')}** "
-             f"| **{count(web, 'Fail') + count(api, 'Fail')}** | **{count(web, 'Blocked')}** | |"]
-    per_tc = {"Pass": 0, "Fail": 0, "Blocked": 0}
-    for c in CASES:
-        verdicts = [r["verdict"] for r in (web.get(c["id"]), api.get(c["id"])) if r]
-        key = "Fail" if "Fail" in verdicts else "Blocked" if "Blocked" in verdicts else "Pass"
-        per_tc[key] += 1
-    sections = {s: sum(c["section"] == s for c in CASES) for s in ("DT", "BV", "GAP")}
-    return ("\n".join(lines) + f"\n\n{n} test case = {sections['DT']} Minimum Set (mục 3.2) + {sections['BV']} BVA "
-            f"(mục 4.2) + {sections['GAP']} bổ sung sau rà soát (mục 6.2). Gộp 2 kênh theo test case (Fail nếu Fail ở "
-            f"bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): {per_tc['Pass']} Pass, {per_tc['Fail']} Fail, "
-            f"{per_tc['Blocked']} Blocked.")
-
-
-TABLES = {"T32": t32, "T33": t33, "T42": t42, "T62": t62, "T53": t53, "T55": t55}
-
-
-def main(codes):
-    text = REPORT.read_text(encoding="utf-8")
-    for key in codes or TABLES:
-        begin, end = f"<!-- BEGIN:{key} -->", f"<!-- END:{key} -->"
-        if begin not in text:
-            print(f"bỏ qua {key}: không có mốc trong báo cáo")
-            continue
-        i, j = text.index(begin) + len(begin), text.index(end)
-        text = text[:i] + "\n" + TABLES[key]() + "\n" + text[j:]
-        print(f"đã sinh {key}")
-    REPORT.write_text(text, encoding="utf-8")
-
+FEATURE = Feature(
+    prefix=PREFIX, cases=CASES,
+    fields=[("name", "Họ Tên"), ("email", "Email"), ("password", "Mật khẩu"), ("confirm", "Xác nhận")],
+    report=ROOT / "report" / "FR-01_Dang_ky.md", evidence=ROOT / "evidence" / "FR-01", n_ec=46, bv_order=BV_ORDER,
+    web_actual=web_actual, api_actual=api_actual, bugs_for=bugs_for, display=display,
+    na_text="Không áp dụng (A8)", na_note=" (biến Xác nhận mật khẩu, A8)",
+)
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    FEATURE.update(sys.argv[1:])
