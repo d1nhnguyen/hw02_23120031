@@ -392,10 +392,38 @@ Mỗi test case một dòng. Bảng sinh từ `evidence/FR-10/web_results.json` 
 
 ## 6. Bước 6 – AI gap analysis
 
-| # | AI bỏ sót / làm sai | Loại (EC / TC / biên / expected sai / bug) | Nguyên nhân (prompt / giới hạn công cụ AI / độ phức tạp feature) | Phát hiện bằng cách nào | Đã xử lý |
+> G1–G3: AI (Claude Code) tự phát hiện trong lúc làm các bước 1–5 của FR-10. Sinh viên rà soát và bổ sung các điểm tự phát hiện ở commit `[FR-10][Bn-review]`.
+
+### 6.1 Những gì AI bỏ sót hoặc làm sai
+
+| # | AI bỏ sót / làm sai | Loại | Nguyên nhân | Phát hiện bằng cách nào | Đã xử lý |
 | --- | --- | --- | --- | --- | --- |
+| G1 | Script Web bản đầu tìm dòng đơn bằng biểu thức `#<id>(\D|$)` trên `textContent` của cả dòng; ở trang Hồ sơ các ô nối liền (`#110/20/2026…`) nên không tìm thấy dòng nào → FR10-DT-06, FR10-DT-07 **Fail giả**, FR10-DT-14 **Pass giả** ("không có nút Hủy đơn" bị hiểu là giao diện đã chặn) | Oracle / script | **Giới hạn công cụ AI**: giả định văn bản các ô có khoảng cách; không đối chiếu với quan sát ở bước 1 trước khi kết luận | Kết quả mâu thuẫn với ảnh bước 1 (trang Hồ sơ có nút "Hủy đơn" ở #1, #2, #3) | Tìm dòng theo ô mã đơn khớp chính xác; chạy lại toàn bộ |
+| G2 | Oracle của test case "từ chối" chỉ kiểm tra có thông báo, không đánh giá thông báo có "phù hợp" (đặc tả) hay không – vd `status = abc` nhận "Invalid state transition from pending to abc" | Kết quả mong đợi chưa đủ chặt | **Đặc tả mơ hồ**: "thông báo phù hợp" không định nghĩa; AI chọn tiêu chí lỏng | AI rà soát kết quả bước 5 | Ghi nhận ở 6.3, không tính là lỗi |
+| G3 | Ghi nhận thông báo trên Web lấy cả dòng đơn vừa đổi trạng thái (`#1 … Đã hủy`) như một "thông báo" | Bằng chứng | **Giới hạn công cụ AI**: so khác biệt văn bản trang trước / sau mà không lọc phần dữ liệu | Đọc output | Lọc khi diễn giải kết quả (mục 5.3) |
+
+### 6.2 Test case bổ sung
+
+Không bổ sung test case sau rà soát của AI: các lỗi tìm thấy nằm trong phạm vi các lớp đã thiết kế (EC9, EC14, EC30).
+
+### 6.3 Điểm còn mở (chưa xử lý)
+
+- A1 (Admin không được hủy đơn `shipping`): SUT từ chối `shipping → canceled` đúng theo A1; nếu TA xác nhận Admin được hủy đơn đang giao thì FR10-DT-13 phải đổi kết quả mong đợi.
+- Mức độ "phù hợp" của thông báo lỗi (G2) và ngôn ngữ thông báo (API trả tiếng Anh trong khi FR-21 yêu cầu giao diện tiếng Việt – thuộc FR-21).
+
+### 6.4 Nhận xét
+
+- **Do prompt:** không có yêu cầu đối chiếu kết quả với quan sát bước 1, nên AI suýt chấp nhận kết quả sai của G1; chỉ phát hiện vì kết quả mâu thuẫn rõ với ảnh đã chụp.
+- **Do giới hạn công cụ AI:** lỗi lặp lại ở cả 3 feature là oracle / bộ chọn phần tử của script (FR-01 G2, G5; FR-15 G3; FR-10 G1) – AI viết test tự động nhanh nhưng dễ sinh Pass / Fail giả.
+- **Do độ phức tạp feature:** lỗi của FR-10 nằm ở hai cạnh lạ (`canceled → delivered`, User hủy `shipping`) mà cả giao diện lẫn API đều cho phép – chỉ phát hiện được nhờ phân vùng tách riêng "đi ra từ `canceled`" và "User hủy `shipping`" (G5).
 
 ## 7. Bước 7 – Bug
 
-| Bug ID | Tiêu đề | Mức độ | TC liên quan | GitHub Issue |
-| --- | --- | --- | --- | --- |
+Chi tiết từng bug: `bugs/Bug_Report.md`. Cột Issue điền số `BUG-NN` sau khi tạo issue trên repo nhóm.
+
+| Mã | Tiêu đề | Mức độ | Thành phần | TC liên quan | GitHub Issue |
+| --- | --- | --- | --- | --- | --- |
+| FR10-B1 | Đơn đã hủy chuyển được sang "Đã giao"; Web Admin hiện nút "Đánh dấu Đã giao" cho đơn đã hủy | Critical | Backend, Web Admin | FR10-DT-09, FR10-DT-26 | |
+| FR10-B2 | User hủy được đơn đang giao; trang Hồ sơ hiện nút "Hủy đơn" cho đơn đang giao | Major | Backend, Web | FR10-DT-14, FR10-DT-27 | |
+
+Tổng: 2 bug (1 Critical, 1 Major).
