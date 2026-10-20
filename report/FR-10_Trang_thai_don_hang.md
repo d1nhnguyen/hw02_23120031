@@ -301,12 +301,94 @@ Tổng: 20 test case BVA mới (FR10-BV-01…FR10-BV-20); 11 dòng có ID trong 
 
 ## 5. Bước 5 – Kết quả thực thi
 
-| TC | Kênh | Kết quả thực tế | Status | Bug ID |
-| --- | --- | --- | --- | --- |
+### 5.1 Môi trường và cách chạy
 
-| Thiết kế | Đã chạy | Pass | Fail | Blocked / chưa chạy | Số bug |
-| --- | --- | --- | --- | --- | --- |
-| | | | | | |
+| Mục | Giá trị |
+| --- | --- |
+| Ngày chạy | 2026-10-20 |
+| Người chạy | 23120031 (script tự động, kết quả được rà soát thủ công) |
+| SUT | `eshop-sut-main` (trùng với `d1nhnguyen/eshop-sut`), Node 20.19.5 |
+| Web | Web Admin `http://localhost:5174`, Web `http://localhost:5173`, Chrome 155 (headless, Playwright) |
+| API | `http://localhost:3000/api`, gọi bằng Python `urllib` với token Admin / `test@eshop.com` |
+| Dữ liệu | Bộ dữ liệu 7 đơn (mục 3.1) được dựng lại **trước mỗi test case** (`scripts/fr10/fixture.py`) |
+| Script | `scripts/fr10/cases.py` (dữ liệu), `fixture.py`, `run_web.mjs` (P-WEB-ADMIN / P-WEB-USER), `run_api.py` (P-API), `report_tables.py` |
+| Bằng chứng | `evidence/FR-10/web_results.json`, `api_results.json`; ảnh sau thao tác của từng test case `evidence/FR-10/web/<ID>.png` |
+
+Cách kết luận (A5): so trạng thái mọi đơn trước / sau. "Thành công" Pass khi chỉ đơn được thao tác đổi sang đúng trạng thái đích. "Từ chối" Pass khi không đơn nào đổi trạng thái **và** API trả 4xx kèm thông báo (trên Web: không có nút cho thao tác, hoặc có thông báo lỗi). "Không tìm thấy" Pass khi API trả 404.
+
+### 5.2 Phát hiện chính
+
+- API thực thi đúng phần lớn sơ đồ: 5 cạnh hợp lệ chạy được; bỏ bước, lùi, giữ nguyên, đi ra từ `delivered`, `shipping → canceled`, giá trị `status` sai đều bị từ chối (400 "Invalid state transition from … to …"); đơn không tồn tại / của người khác trả 404.
+- **Hai lỗ hổng của sơ đồ:** Admin chuyển được `canceled → delivered` (Web Admin còn hiện sẵn nút "Đánh dấu Đã giao" cho đơn đã hủy); User hủy được đơn `shipping` (trang Hồ sơ hiện nút "Hủy đơn" cho đơn đang giao).
+- Thông báo lỗi cho giá trị `status` không hợp lệ dùng chung câu "Invalid state transition from pending to abc"; đặc tả chỉ yêu cầu "thông báo phù hợp" nên không tính là lỗi.
+
+### 5.3 Kết quả theo test case
+
+Mỗi test case một dòng. Bảng sinh từ `evidence/FR-10/web_results.json` và `api_results.json`.
+
+<!-- BEGIN:T53 -->
+| TC | Web | Kết quả thực tế – Web | API | Kết quả thực tế – API | Bằng chứng | Bug |
+| --- | --- | --- | --- | --- | --- | --- |
+| FR10-DT-01 | Pass | Bấm “Xác nhận”, không có thông báo lỗi; đơn #1 chuyển `pending` → `confirmed` | Pass | HTTP 200 “Order status updated”; đơn #1 chuyển `pending` → `confirmed` | [ảnh Web](../evidence/FR-10/web/FR10-DT-01.png) · `api_results.json` | – |
+| FR10-DT-02 | Pass | Bấm “Giao hàng”, không có thông báo lỗi; đơn #2 chuyển `confirmed` → `shipping` | Pass | HTTP 200 “Order status updated”; đơn #2 chuyển `confirmed` → `shipping` | [ảnh Web](../evidence/FR-10/web/FR10-DT-02.png) · `api_results.json` | – |
+| FR10-DT-03 | Pass | Bấm “Hoàn thành”, không có thông báo lỗi; đơn #3 chuyển `shipping` → `delivered` | Pass | HTTP 200 “Order status updated”; đơn #3 chuyển `shipping` → `delivered` | [ảnh Web](../evidence/FR-10/web/FR10-DT-03.png) · `api_results.json` | – |
+| FR10-DT-04 | Pass | Bấm “Hủy”, không có thông báo lỗi; đơn #1 chuyển `pending` → `canceled` | Pass | HTTP 200 “Order status updated”; đơn #1 chuyển `pending` → `canceled` | [ảnh Web](../evidence/FR-10/web/FR10-DT-04.png) · `api_results.json` | – |
+| FR10-DT-05 | Pass | Bấm “Hủy”, không có thông báo lỗi; đơn #2 chuyển `confirmed` → `canceled` | Pass | HTTP 200 “Order status updated”; đơn #2 chuyển `confirmed` → `canceled` | [ảnh Web](../evidence/FR-10/web/FR10-DT-05.png) · `api_results.json` | – |
+| FR10-DT-06 | Pass | Bấm “Hủy đơn”, hiện “Hủy đơn thành công!”; đơn #1 chuyển `pending` → `canceled` | Pass | HTTP 200 “Order canceled successfully”; đơn #1 chuyển `pending` → `canceled` | [ảnh Web](../evidence/FR-10/web/FR10-DT-06.png) · `api_results.json` | – |
+| FR10-DT-07 | Pass | Bấm “Hủy đơn”, hiện “Hủy đơn thành công!”; đơn #2 chuyển `confirmed` → `canceled` | Pass | HTTP 200 “Order canceled successfully”; đơn #2 chuyển `confirmed` → `canceled` | [ảnh Web](../evidence/FR-10/web/FR10-DT-07.png) · `api_results.json` | – |
+| FR10-DT-08 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from delivered to canceled”; đơn #4 giữ nguyên `delivered` | `api_results.json` | – |
+| FR10-DT-09 | Fail | Bấm “Đánh dấu Đã giao”, không có thông báo lỗi; đơn #5 chuyển `canceled` → `delivered` | Fail | HTTP 200 “Order status updated”; đơn #5 chuyển `canceled` → `delivered` | [ảnh Web](../evidence/FR-10/web/FR10-DT-09.png) · `api_results.json` | FR10-B1 |
+| FR10-DT-10 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to shipping”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-DT-11 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from shipping to confirmed”; đơn #3 giữ nguyên `shipping` | `api_results.json` | – |
+| FR10-DT-12 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from confirmed to confirmed”; đơn #2 giữ nguyên `confirmed` | `api_results.json` | – |
+| FR10-DT-13 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from shipping to canceled”; đơn #3 giữ nguyên `shipping` | `api_results.json` | – |
+| FR10-DT-14 | Fail | Bấm “Hủy đơn”, hiện “Hủy đơn thành công!”; đơn #3 chuyển `shipping` → `canceled` | Fail | HTTP 200 “Order canceled successfully”; đơn #3 chuyển `shipping` → `canceled` | [ảnh Web](../evidence/FR-10/web/FR10-DT-14.png) · `api_results.json` | FR10-B2 |
+| FR10-DT-15 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Cannot cancel this order.”; đơn #4 giữ nguyên `delivered` | `api_results.json` | – |
+| FR10-DT-16 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Cannot cancel this order.”; đơn #5 giữ nguyên `canceled` | `api_results.json` | – |
+| FR10-DT-17 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 404 “Order not found”; đơn #7 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-DT-18 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to abc”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-DT-19 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to Confirmed”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-DT-20 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to ”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-DT-21 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to undefined”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-DT-22 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 404 “Order not found”; không đơn nào thay đổi | `api_results.json` | – |
+| FR10-DT-23 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 404 “Order not found”; không đơn nào thay đổi | `api_results.json` | – |
+| FR10-DT-24 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 404 “Order not found”; không đơn nào thay đổi | `api_results.json` | – |
+| FR10-DT-25 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 404 “Order not found”; không đơn nào thay đổi | `api_results.json` | – |
+| FR10-DT-26 | Fail | #1 Chờ xác nhận: Xác nhận, Hủy; #2 Đã xác nhận: Giao hàng, Hủy; #3 Đang giao: Hoàn thành; #4 Đã giao: không có nút; #5 Đã hủy: Đánh dấu Đã giao – sai: #5 Đã hủy: có [Đánh dấu Đã giao], mong đợi [không có] | – | Không áp dụng (giao diện không có thao tác này) | [ảnh Web](../evidence/FR-10/web/FR10-DT-26.png) | FR10-B1 |
+| FR10-DT-27 | Fail | #1 Chờ xác nhận: Hủy đơn; #2 Đã xác nhận: Hủy đơn; #3 Đang giao: Hủy đơn; #4 Đã giao: không có nút; #5 Đã hủy: không có nút – sai: #3 Đang giao: có [Hủy đơn], mong đợi [không có] | – | Không áp dụng (giao diện không có thao tác này) | [ảnh Web](../evidence/FR-10/web/FR10-DT-27.png) | FR10-B2 |
+| FR10-BV-01 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to pending”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-BV-02 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to delivered”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-BV-03 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from confirmed to pending”; đơn #2 giữ nguyên `confirmed` | `api_results.json` | – |
+| FR10-BV-04 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from confirmed to delivered”; đơn #2 giữ nguyên `confirmed` | `api_results.json` | – |
+| FR10-BV-05 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from shipping to pending”; đơn #3 giữ nguyên `shipping` | `api_results.json` | – |
+| FR10-BV-06 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from shipping to shipping”; đơn #3 giữ nguyên `shipping` | `api_results.json` | – |
+| FR10-BV-07 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from delivered to shipping”; đơn #4 giữ nguyên `delivered` | `api_results.json` | – |
+| FR10-BV-08 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from delivered to delivered”; đơn #4 giữ nguyên `delivered` | `api_results.json` | – |
+| FR10-BV-09 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from canceled to canceled”; đơn #5 giữ nguyên `canceled` | `api_results.json` | – |
+| FR10-BV-10 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from canceled to pending”; đơn #5 giữ nguyên `canceled` | `api_results.json` | – |
+| FR10-BV-11 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to  confirmed”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-BV-12 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to confirmed ”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-BV-13 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to confirme”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-BV-14 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 400 “Invalid state transition from pending to confirmedd”; đơn #1 giữ nguyên `pending` | `api_results.json` | – |
+| FR10-BV-15 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 404 “Order not found”; không đơn nào thay đổi | `api_results.json` | – |
+| FR10-BV-16 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 200 “Order status updated”; đơn #7 chuyển `pending` → `confirmed` | `api_results.json` | – |
+| FR10-BV-17 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 404 “Order not found”; không đơn nào thay đổi | `api_results.json` | – |
+| FR10-BV-18 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 404 “Order not found”; không đơn nào thay đổi | `api_results.json` | – |
+| FR10-BV-19 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 200 “Order canceled successfully”; đơn #6 chuyển `pending` → `canceled` | `api_results.json` | – |
+| FR10-BV-20 | – | Không áp dụng (giao diện không có thao tác này) | Pass | HTTP 404 “Order not found”; không đơn nào thay đổi | `api_results.json` | – |
+<!-- END:T53 -->
+
+### 5.4 Tổng hợp
+
+<!-- BEGIN:T55 -->
+| Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |
+| --- | --- | --- | --- | --- | --- | --- |
+| Web | 47 | 11 | 7 | 4 | 0 | 36 |
+| API | 47 | 45 | 43 | 2 | 0 | 2 |
+| **Tổng lượt chạy** | | **56** | **50** | **6** | **0** | |
+
+47 test case = 27 Minimum Set (mục 3.2) + 20 BVA (mục 4.2). Gộp các kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 43 Pass, 4 Fail, 0 Blocked.
+<!-- END:T55 -->
 
 ## 6. Bước 6 – AI gap analysis
 

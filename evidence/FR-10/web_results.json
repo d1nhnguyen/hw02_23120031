@@ -1,0 +1,240 @@
+{
+ "run_at": "2026-10-20T16:30:29.256Z",
+ "results": [
+  {
+   "id": "FR10-DT-01",
+   "expect": "accept",
+   "button": "Xác nhận",
+   "button_found": true,
+   "status": 200,
+   "body": "{\"message\":\"Order status updated\"}",
+   "messages": [
+    "#1\tTest User\t1,000,000 ₫\tDia chi don 1\tĐã xác nhận"
+   ],
+   "changed": {
+    "1": [
+     "pending",
+     "confirmed"
+    ]
+   },
+   "after": "confirmed",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-02",
+   "expect": "accept",
+   "button": "Giao hàng",
+   "button_found": true,
+   "status": 200,
+   "body": "{\"message\":\"Order status updated\"}",
+   "messages": [
+    "#2\tTest User\t2,000,000 ₫\tDia chi don 2\tĐang giao"
+   ],
+   "changed": {
+    "2": [
+     "confirmed",
+     "shipping"
+    ]
+   },
+   "after": "shipping",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-03",
+   "expect": "accept",
+   "button": "Hoàn thành",
+   "button_found": true,
+   "status": 200,
+   "body": "{\"message\":\"Order status updated\"}",
+   "messages": [
+    "#3\tTest User\t3,000,000 ₫\tDia chi don 3\tĐã giao"
+   ],
+   "changed": {
+    "3": [
+     "shipping",
+     "delivered"
+    ]
+   },
+   "after": "delivered",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-04",
+   "expect": "accept",
+   "button": "Hủy",
+   "button_found": true,
+   "status": 200,
+   "body": "{\"message\":\"Order status updated\"}",
+   "messages": [
+    "#1\tTest User\t1,000,000 ₫\tDia chi don 1\tĐã hủy"
+   ],
+   "changed": {
+    "1": [
+     "pending",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-05",
+   "expect": "accept",
+   "button": "Hủy",
+   "button_found": true,
+   "status": 200,
+   "body": "{\"message\":\"Order status updated\"}",
+   "messages": [
+    "#2\tTest User\t2,000,000 ₫\tDia chi don 2\tĐã hủy"
+   ],
+   "changed": {
+    "2": [
+     "confirmed",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-06",
+   "expect": "accept",
+   "button": "Hủy đơn",
+   "button_found": true,
+   "status": 200,
+   "body": "{\"message\":\"Order canceled successfully\"}",
+   "messages": [
+    "Hủy đơn thành công!",
+    "#1\t10/20/2026\t1,000,000 ₫\tĐã hủy"
+   ],
+   "changed": {
+    "1": [
+     "pending",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-07",
+   "expect": "accept",
+   "button": "Hủy đơn",
+   "button_found": true,
+   "status": 200,
+   "body": "{\"message\":\"Order canceled successfully\"}",
+   "messages": [
+    "Hủy đơn thành công!",
+    "#2\t10/20/2026\t2,000,000 ₫\tĐã hủy"
+   ],
+   "changed": {
+    "2": [
+     "confirmed",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-09",
+   "expect": "reject",
+   "button": "Đánh dấu Đã giao",
+   "button_found": true,
+   "status": 200,
+   "body": "{\"message\":\"Order status updated\"}",
+   "messages": [
+    "#5\tTest User\t5,000,000 ₫\tDia chi don 5\tĐã giao"
+   ],
+   "changed": {
+    "5": [
+     "canceled",
+     "delivered"
+    ]
+   },
+   "after": "delivered",
+   "verdict": "Fail",
+   "notes": [
+    "giao diện có nút \"Đánh dấu Đã giao\" cho chuyển đổi không hợp lệ",
+    "đơn #5 bị chuyển `canceled` → `delivered`"
+   ]
+  },
+  {
+   "id": "FR10-DT-14",
+   "expect": "reject",
+   "button": "Hủy đơn",
+   "button_found": true,
+   "status": 200,
+   "body": "{\"message\":\"Order canceled successfully\"}",
+   "messages": [
+    "Hủy đơn thành công!",
+    "#3\t10/20/2026\t3,000,000 ₫\tĐã hủy"
+   ],
+   "changed": {
+    "3": [
+     "shipping",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Fail",
+   "notes": [
+    "giao diện có nút \"Hủy đơn\" cho chuyển đổi không hợp lệ",
+    "đơn #3 bị chuyển `shipping` → `canceled`"
+   ]
+  },
+  {
+   "id": "FR10-DT-26",
+   "expect": "ui",
+   "buttons": {
+    "#1 Chờ xác nhận": [
+     "Xác nhận",
+     "Hủy"
+    ],
+    "#2 Đã xác nhận": [
+     "Giao hàng",
+     "Hủy"
+    ],
+    "#3 Đang giao": [
+     "Hoàn thành"
+    ],
+    "#4 Đã giao": [],
+    "#5 Đã hủy": [
+     "Đánh dấu Đã giao"
+    ]
+   },
+   "verdict": "Fail",
+   "notes": [
+    "#5 Đã hủy: có [Đánh dấu Đã giao], mong đợi [không có]"
+   ]
+  },
+  {
+   "id": "FR10-DT-27",
+   "expect": "ui",
+   "buttons": {
+    "#1 Chờ xác nhận": [
+     "Hủy đơn"
+    ],
+    "#2 Đã xác nhận": [
+     "Hủy đơn"
+    ],
+    "#3 Đang giao": [
+     "Hủy đơn"
+    ],
+    "#4 Đã giao": [],
+    "#5 Đã hủy": []
+   },
+   "verdict": "Fail",
+   "notes": [
+    "#3 Đang giao: có [Hủy đơn], mong đợi [không có]"
+   ]
+  }
+ ]
+}

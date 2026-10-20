@@ -49,15 +49,46 @@ def display(c, key):
 
 
 def bugs_for(c, ch, verdict):
-    return [] if verdict != "Fail" else ["?"]
+    if verdict != "Fail":
+        return []
+    if c["action"] == "ui_admin" or (c["from_state"] == "canceled" and c["status"] == "delivered"):
+        return ["FR10-B1"]
+    if c["action"] == "ui_user" or (c["action"] == "cancel" and c["from_state"] == "shipping"):
+        return ["FR10-B2"]
+    return ["?"]
+
+
+def changes(r, c):
+    moved = [f"đơn #{k} chuyển `{a}` → `{b}`" for k, (a, b) in r.get("changed", {}).items()]
+    return "; ".join(moved) if moved else f"đơn #{c['order']} giữ nguyên `{c['from_state']}`" if c["from_state"] else "không đơn nào thay đổi"
+
+
+def short_body(body):
+    if isinstance(body, str):
+        try:
+            body = json.loads(body)
+        except ValueError:
+            return body[:80]
+    if isinstance(body, dict):
+        return body.get("message") or body.get("error") or str(body)
+    return str(body)
 
 
 def web_actual(r, c):
-    return r.get("summary", "")
+    if c["action"] in ("ui_admin", "ui_user"):
+        shown = "; ".join(f"{k}: {', '.join(v) or 'không có nút'}" for k, v in r["buttons"].items())
+        return shown + (f" – sai: {'; '.join(r['notes'])}" if r["notes"] else "")
+    if not r.get("button_found"):
+        return f"Không có nút “{r['button']}” ở đơn #{c['order']}; {changes(r, c)}"
+    toast = [m for m in r.get("messages", []) if not m.startswith("#")]
+    head = f"Bấm “{r['button']}”" + (f", hiện “{toast[0]}”" if toast else ", không có thông báo lỗi")
+    return f"{head}; {changes(r, c)}"
 
 
 def api_actual(r, c):
-    return r.get("summary", "")
+    if r["verdict"] == "Blocked":
+        return "Không dựng được dữ liệu: " + "; ".join(r["notes"])
+    return f"HTTP {r['status']} “{short_body(r['body'])}”; {changes(r, c)}"
 
 
 FEATURE = Feature(

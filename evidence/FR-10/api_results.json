@@ -1,0 +1,604 @@
+{
+ "run_at": "2026-10-20T23:28:32",
+ "results": [
+  {
+   "id": "FR10-DT-01",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "Order status updated"
+   },
+   "changed": {
+    "1": [
+     "pending",
+     "confirmed"
+    ]
+   },
+   "after": "confirmed",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-02",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "Order status updated"
+   },
+   "changed": {
+    "2": [
+     "confirmed",
+     "shipping"
+    ]
+   },
+   "after": "shipping",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-03",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "Order status updated"
+   },
+   "changed": {
+    "3": [
+     "shipping",
+     "delivered"
+    ]
+   },
+   "after": "delivered",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-04",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "Order status updated"
+   },
+   "changed": {
+    "1": [
+     "pending",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-05",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "Order status updated"
+   },
+   "changed": {
+    "2": [
+     "confirmed",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-06",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "Order canceled successfully"
+   },
+   "changed": {
+    "1": [
+     "pending",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-07",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "Order canceled successfully"
+   },
+   "changed": {
+    "2": [
+     "confirmed",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-08",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from delivered to canceled"
+   },
+   "changed": {},
+   "after": "delivered",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-09",
+   "expect": "reject",
+   "status": 200,
+   "body": {
+    "message": "Order status updated"
+   },
+   "changed": {
+    "5": [
+     "canceled",
+     "delivered"
+    ]
+   },
+   "after": "delivered",
+   "verdict": "Fail",
+   "notes": [
+    "đơn #5 bị chuyển `canceled` → `delivered`"
+   ]
+  },
+  {
+   "id": "FR10-DT-10",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to shipping"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-11",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from shipping to confirmed"
+   },
+   "changed": {},
+   "after": "shipping",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-12",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from confirmed to confirmed"
+   },
+   "changed": {},
+   "after": "confirmed",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-13",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from shipping to canceled"
+   },
+   "changed": {},
+   "after": "shipping",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-14",
+   "expect": "reject",
+   "status": 200,
+   "body": {
+    "message": "Order canceled successfully"
+   },
+   "changed": {
+    "3": [
+     "shipping",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Fail",
+   "notes": [
+    "đơn #3 bị chuyển `shipping` → `canceled`"
+   ]
+  },
+  {
+   "id": "FR10-DT-15",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Cannot cancel this order."
+   },
+   "changed": {},
+   "after": "delivered",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-16",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Cannot cancel this order."
+   },
+   "changed": {},
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-17",
+   "expect": "reject",
+   "status": 404,
+   "body": {
+    "error": "Order not found"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-18",
+   "expect": "invalid_value",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to abc"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-19",
+   "expect": "invalid_value",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to Confirmed"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-20",
+   "expect": "invalid_value",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to "
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-21",
+   "expect": "invalid_value",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to undefined"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-22",
+   "expect": "notfound",
+   "status": 404,
+   "body": {
+    "error": "Order not found"
+   },
+   "changed": {},
+   "after": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-23",
+   "expect": "notfound",
+   "status": 404,
+   "body": {
+    "error": "Order not found"
+   },
+   "changed": {},
+   "after": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-24",
+   "expect": "notfound",
+   "status": 404,
+   "body": {
+    "error": "Order not found"
+   },
+   "changed": {},
+   "after": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-DT-25",
+   "expect": "notfound",
+   "status": 404,
+   "body": {
+    "error": "Order not found"
+   },
+   "changed": {},
+   "after": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-01",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to pending"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-02",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to delivered"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-03",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from confirmed to pending"
+   },
+   "changed": {},
+   "after": "confirmed",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-04",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from confirmed to delivered"
+   },
+   "changed": {},
+   "after": "confirmed",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-05",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from shipping to pending"
+   },
+   "changed": {},
+   "after": "shipping",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-06",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from shipping to shipping"
+   },
+   "changed": {},
+   "after": "shipping",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-07",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from delivered to shipping"
+   },
+   "changed": {},
+   "after": "delivered",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-08",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from delivered to delivered"
+   },
+   "changed": {},
+   "after": "delivered",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-09",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from canceled to canceled"
+   },
+   "changed": {},
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-10",
+   "expect": "reject",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from canceled to pending"
+   },
+   "changed": {},
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-11",
+   "expect": "invalid_value",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to  confirmed"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-12",
+   "expect": "invalid_value",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to confirmed "
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-13",
+   "expect": "invalid_value",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to confirme"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-14",
+   "expect": "invalid_value",
+   "status": 400,
+   "body": {
+    "error": "Invalid state transition from pending to confirmedd"
+   },
+   "changed": {},
+   "after": "pending",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-15",
+   "expect": "notfound",
+   "status": 404,
+   "body": {
+    "error": "Order not found"
+   },
+   "changed": {},
+   "after": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-16",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "Order status updated"
+   },
+   "changed": {
+    "7": [
+     "pending",
+     "confirmed"
+    ]
+   },
+   "after": "confirmed",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-17",
+   "expect": "notfound",
+   "status": 404,
+   "body": {
+    "error": "Order not found"
+   },
+   "changed": {},
+   "after": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-18",
+   "expect": "notfound",
+   "status": 404,
+   "body": {
+    "error": "Order not found"
+   },
+   "changed": {},
+   "after": null,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-19",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "Order canceled successfully"
+   },
+   "changed": {
+    "6": [
+     "pending",
+     "canceled"
+    ]
+   },
+   "after": "canceled",
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR10-BV-20",
+   "expect": "notfound",
+   "status": 404,
+   "body": {
+    "error": "Order not found"
+   },
+   "changed": {},
+   "after": null,
+   "verdict": "Pass",
+   "notes": []
+  }
+ ]
+}
