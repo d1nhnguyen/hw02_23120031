@@ -22,7 +22,7 @@ Phụ lục bắt buộc theo mẫu [AI-02] – FIT@HCMUS – AI Audit Report.
 - Verdict: **VALID** (đúng, dùng nguyên), **INVALID** (sai, loại bỏ), **INCOMPLETE** (chấp nhận sau khi sửa / bổ sung).
 - Lý do dẫn chiếu slide môn học (S04 Domain Testing, S07 Test Case, Test Cases AI-First) hoặc ISTQB Foundation Level.
 - Cột (5) ghi phần đã sửa sau rà soát; chi tiết từng mục nằm ở cột Origin trong bảng test case và mục 6.1 (AI gap analysis) của báo cáo từng feature. Mục 6.1 cũng liệt kê các lỗi AI tự phát hiện và sửa **trước** khi commit (không có commit review riêng).
-- Bảng mục 3 được nháp bằng skill `skills/ai-audit-log` (`audit_draft.py --prompt-log ai/prompt_log.md`); cột (1) là lượt prompt gần nhất trước commit.
+- Bảng mục 3 được nháp bằng `scripts/audit_draft.py --prompt-log ai/prompt_log.md`; cột (1) là lượt prompt gần nhất trước commit.
 
 ## 3. Bảng audit — 1 hàng / artifact
 

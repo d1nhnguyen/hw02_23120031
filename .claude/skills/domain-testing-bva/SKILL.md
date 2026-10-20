@@ -23,6 +23,7 @@ Thiếu mục nào hoặc đặc tả mâu thuẫn → **dừng và hỏi ngư�
 ## Bố cục sản phẩm
 
 ```
+scripts/report_lib.py               # chép scripts/report_lib.py của skill (dùng chung cho mọi feature)
 report/<Feature>.md                 # chép templates/report_template.md, điền mục 0 bằng đặc tả nguyên văn
 scripts/<feature>/cases.py          # NGUỒN DUY NHẤT: tiêu đề, phân vùng phủ, dữ liệu, kết quả mong đợi, Origin
 scripts/<feature>/report_tables.py  # sinh bảng 3.2, 3.3, 4.2, 5.3, 5.5, 6.2 (dùng scripts/report_lib.py)
@@ -78,8 +79,8 @@ Bảng trong báo cáo **không viết tay**: đặt mốc `<!-- BEGIN:T32 --> �
 2. Viết `bug_evidence.*`: tái hiện từng bug, chụp "thẻ bằng chứng" (request, response, dữ liệu lưu) + ảnh giao diện.
 3. Nháp trong `bugs/Bug_Report.md` theo mẫu Problem Report: trường, mức độ / ưu tiên, các bước tái hiện ngắn nhất, mong đợi (trích đặc tả), thực tế, phân tích (hậu quả nghiêm trọng nhất, đường khác dẫn tới lỗi), bằng chứng. Tiêu đề issue `[BUG-NN] [FR-xx] …`.
 4. Đối chiếu bằng script: danh sách TC của mỗi bug phải khớp cột Bug của T53.
-5. **Không tự tạo GitHub issue** – sinh viên duyệt và tạo.
-6. Commit `[<F>][B7]`; cập nhật prompt log (`[ai-log]`).
+5. **Không tự tạo GitHub issue** trừ khi người dùng yêu cầu rõ ràng – mặc định sinh viên duyệt nháp rồi tự tạo issue (đính ảnh trong `bugs/screenshots/`). Sau khi có issue, điền số `BUG-NN` + link vào `bugs/Bug_Report.md` và mục 7 của báo cáo.
+6. Commit `[<F>][B7]`; cập nhật prompt log nếu dự án có (`[ai-log]`).
 
 ## Rà soát của sinh viên
 

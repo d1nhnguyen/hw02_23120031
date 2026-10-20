@@ -72,7 +72,7 @@ Một test case **Fail** nếu Fail ở bất kỳ kênh nào; **Blocked** nếu
 | `bugs/` | Báo cáo bug, ảnh bug và ảnh chụp trang GitHub Issues |
 | `ai/` | AI Audit Report, AI Critique, Disclosure Form, Privacy Checklist, prompt log (Phụ lục A) |
 | `evidence/` | Ảnh / log kết quả chạy test |
-| `scripts/` | Script dựng dữ liệu, chạy test, trích prompt log |
-| `skills/` | Agent Skills |
+| `scripts/` | Script dựng dữ liệu, chạy test, sinh bảng báo cáo, trích prompt log, nháp bảng AI Audit |
+| `.claude/skills/domain-testing-bva/` | Agent Skill áp dụng Domain Testing + BVA cho một feature (`skills` là liên kết tới `.claude/skills`) |
 | `git_commit_log.txt` | Git commit log |
 | `PLAN.md` | Kế hoạch, quy ước làm bài |

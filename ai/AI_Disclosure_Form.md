@@ -63,7 +63,8 @@ Toàn bộ prompt ở Phụ lục A (`ai/prompt_log.md`). Bốn prompt chính (n
 | Bước 5 – thực thi | Script chạy test, chạy test trên SUT, bảng kết quả và ảnh bằng chứng (`scripts/`, `evidence/`) | FR-01: chạy lại 53 test case sau rà soát, mỗi test case một dòng kết quả kèm bằng chứng |
 | Bước 6 – AI gap analysis | Mục 6 mỗi báo cáo (FR-01 G1–G8, FR-15 G1–G5, FR-10 G1–G3, Mobile G1–G5) và test case bổ sung FR01-DT-29, FR15-DT-34, MOB-DT-14 | FR-01 G9–G16, FR01-DT-30…32 phát hiện qua rà soát chéo với Antigravity (lượt #13) |
 | Bước 7 – bug | Nháp mô tả 22 bug (`bugs/Bug_Report.md`) và ảnh bằng chứng | Sinh viên duyệt và tự viết issue trên GitHub (sinh viên xác nhận) |
-| Agent Skills | `skills/domain-testing-bva`, `skills/ai-audit-log` | Hỗ trợ trích log cả Claude Code và Google Antigravity |
+| Agent Skill | `.claude/skills/domain-testing-bva` (quy trình 7 bước, template, thư viện sinh bảng, bài học khi tự động hoá) | |
+| Script hồ sơ AI | `scripts/export_prompt_log.py`, `scripts/audit_draft.py` | Hỗ trợ trích log cả Claude Code và Google Antigravity |
 | Hồ sơ AI | Prompt log (trích tự động), nháp bảng AI Audit Report | Sinh viên duyệt verdict, viết cột lý do và kết luận |
 | AI Critique, điểm tự chấm, video demo | Không | |
 
