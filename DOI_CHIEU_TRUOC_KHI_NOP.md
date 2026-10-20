@@ -13,6 +13,7 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 ## Giả định cần hỏi TA
 
 - [ ] FR-01: A1 (chỉ 7 ký tự `@ $ ! % * ? &` là ký tự đặc biệt), A2 (email phải có TLD), A3 (email trùng không phân biệt hoa thường), A4 (bỏ khoảng trắng đầu/cuối), A5 (không giới hạn độ dài), A10 (chữ hoa/thường chỉ A–Z/a–z).
+- [ ] FR-15: A1 (255 ký tự tính theo ký tự Unicode), A3 (giá được phép là số thập phân dương, không giới hạn trên – ảnh hưởng kết luận về việc ô Giá chặn `0.5`), A6 (mã 404 khi sản phẩm không tồn tại).
 - [ ] Pool D = các chức năng của FR-20; "Mobile – Đăng nhập" kế thừa quy tắc FR-02 (file phân công nhóm cũng ghi nên hỏi TA).
 
 ## Quyết định phương pháp (đã áp dụng, cần sinh viên xác nhận)
