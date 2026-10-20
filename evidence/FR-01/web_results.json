@@ -1,9 +1,9 @@
 {
- "run_at": "2026-10-20T14:58:14.149Z",
+ "run_at": "2026-10-20T15:47:54.931Z",
  "workaround": false,
  "results": [
   {
-   "id": "DT-01",
+   "id": "FR01-DT-01",
    "expect": "accept",
    "target": "all",
    "password_used": "Abcdef1@",
@@ -24,7 +24,7 @@
    "notes": []
   },
   {
-   "id": "DT-02",
+   "id": "FR01-DT-02",
    "expect": "accept",
    "target": "mixed",
    "password_used": "Abc#def1$",
@@ -45,7 +45,7 @@
    "notes": []
   },
   {
-   "id": "DT-03",
+   "id": "FR01-DT-03",
    "expect": "accept",
    "target": "password",
    "password_used": "Abcdef1!",
@@ -66,7 +66,7 @@
    "notes": []
   },
   {
-   "id": "DT-04",
+   "id": "FR01-DT-04",
    "expect": "accept",
    "target": "password",
    "password_used": "Abcdef1%",
@@ -87,7 +87,7 @@
    "notes": []
   },
   {
-   "id": "DT-05",
+   "id": "FR01-DT-05",
    "expect": "accept",
    "target": "password",
    "password_used": "Abcdef1*",
@@ -108,7 +108,7 @@
    "notes": []
   },
   {
-   "id": "DT-06",
+   "id": "FR01-DT-06",
    "expect": "accept",
    "target": "password",
    "password_used": "Abcdef1?",
@@ -129,7 +129,7 @@
    "notes": []
   },
   {
-   "id": "DT-07",
+   "id": "FR01-DT-07",
    "expect": "accept",
    "target": "password",
    "password_used": "Abcdef1&",
@@ -150,7 +150,7 @@
    "notes": []
   },
   {
-   "id": "DT-08",
+   "id": "FR01-DT-08",
    "expect": "reject",
    "target": "name",
    "password_used": "Abcdef1@",
@@ -170,7 +170,7 @@
    "notes": []
   },
   {
-   "id": "DT-09",
+   "id": "FR01-DT-09",
    "expect": "reject",
    "target": "name",
    "password_used": "Abcdef1@",
@@ -192,7 +192,7 @@
    ]
   },
   {
-   "id": "DT-10",
+   "id": "FR01-DT-10",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1@",
@@ -212,7 +212,7 @@
    "notes": []
   },
   {
-   "id": "DT-11",
+   "id": "FR01-DT-11",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1@",
@@ -234,7 +234,7 @@
    ]
   },
   {
-   "id": "DT-12",
+   "id": "FR01-DT-12",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1@",
@@ -256,7 +256,7 @@
    ]
   },
   {
-   "id": "DT-13",
+   "id": "FR01-DT-13",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1@",
@@ -278,7 +278,7 @@
    ]
   },
   {
-   "id": "DT-14",
+   "id": "FR01-DT-14",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1@",
@@ -300,7 +300,7 @@
    ]
   },
   {
-   "id": "DT-15",
+   "id": "FR01-DT-15",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1@",
@@ -322,7 +322,7 @@
    ]
   },
   {
-   "id": "DT-16",
+   "id": "FR01-DT-16",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1@",
@@ -344,7 +344,7 @@
    ]
   },
   {
-   "id": "DT-17",
+   "id": "FR01-DT-17",
    "expect": "reject",
    "target": "dup",
    "password_used": "Newpass1@",
@@ -367,7 +367,7 @@
    ]
   },
   {
-   "id": "DT-18",
+   "id": "FR01-DT-18",
    "expect": "reject",
    "target": "dup",
    "password_used": "Newpass1@",
@@ -390,7 +390,7 @@
    ]
   },
   {
-   "id": "DT-19",
+   "id": "FR01-DT-19",
    "expect": "reject",
    "target": "password",
    "password_used": "",
@@ -410,7 +410,7 @@
    "notes": []
   },
   {
-   "id": "DT-20",
+   "id": "FR01-DT-20",
    "expect": "reject",
    "target": "password",
    "password_used": "Abcd1@",
@@ -430,7 +430,7 @@
    "notes": []
   },
   {
-   "id": "DT-21",
+   "id": "FR01-DT-21",
    "expect": "reject",
    "target": "password",
    "password_used": "abcdef1@",
@@ -450,7 +450,7 @@
    "notes": []
   },
   {
-   "id": "DT-22",
+   "id": "FR01-DT-22",
    "expect": "reject",
    "target": "password",
    "password_used": "ABCDEF1@",
@@ -470,7 +470,7 @@
    "notes": []
   },
   {
-   "id": "DT-23",
+   "id": "FR01-DT-23",
    "expect": "reject",
    "target": "password",
    "password_used": "Abcdefg@",
@@ -490,7 +490,7 @@
    "notes": []
   },
   {
-   "id": "DT-24",
+   "id": "FR01-DT-24",
    "expect": "reject",
    "target": "password",
    "password_used": "Abcdefg1",
@@ -510,7 +510,7 @@
    "notes": []
   },
   {
-   "id": "DT-25",
+   "id": "FR01-DT-25",
    "expect": "reject",
    "target": "password",
    "password_used": "Abcdef1#",
@@ -530,7 +530,7 @@
    "notes": []
   },
   {
-   "id": "DT-26",
+   "id": "FR01-DT-26",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1@",
@@ -552,7 +552,7 @@
    ]
   },
   {
-   "id": "DT-27",
+   "id": "FR01-DT-27",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1@",
@@ -574,7 +574,7 @@
    ]
   },
   {
-   "id": "DT-28",
+   "id": "FR01-DT-28",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1@",
@@ -596,7 +596,7 @@
    ]
   },
   {
-   "id": "BV-01",
+   "id": "FR01-BV-01",
    "expect": "reject",
    "target": "password",
    "password_used": "@",
@@ -616,7 +616,7 @@
    "notes": []
   },
   {
-   "id": "BV-02",
+   "id": "FR01-BV-02",
    "expect": "reject",
    "target": "password",
    "password_used": "A1",
@@ -636,7 +636,7 @@
    "notes": []
   },
   {
-   "id": "BV-03",
+   "id": "FR01-BV-03",
    "expect": "reject",
    "target": "password",
    "password_used": "Abcde1@",
@@ -656,7 +656,7 @@
    "notes": []
   },
   {
-   "id": "BV-04",
+   "id": "FR01-BV-04",
    "expect": "accept",
    "target": "password",
    "password_used": "Abcdefg1@",
@@ -677,7 +677,7 @@
    "notes": []
   },
   {
-   "id": "BV-05",
+   "id": "FR01-BV-05",
    "expect": "accept",
    "target": "password",
    "password_used": "Abcdef1@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -698,7 +698,7 @@
    "notes": []
   },
   {
-   "id": "BV-06",
+   "id": "FR01-BV-06",
    "expect": "accept",
    "target": "password",
    "password_used": "ABCDEa1@",
@@ -719,7 +719,7 @@
    "notes": []
   },
   {
-   "id": "BV-07",
+   "id": "FR01-BV-07",
    "expect": "accept",
    "target": "password",
    "password_used": "Zaaaaa9@",
@@ -740,7 +740,7 @@
    "notes": []
   },
   {
-   "id": "BV-08",
+   "id": "FR01-BV-08",
    "expect": "accept",
    "target": "password",
    "password_used": "Azzzzz0@",
@@ -761,7 +761,7 @@
    "notes": []
   },
   {
-   "id": "BV-09",
+   "id": "FR01-BV-09",
    "expect": "reject",
    "target": "password",
    "password_used": "[bcdef1@",
@@ -781,7 +781,7 @@
    "notes": []
   },
   {
-   "id": "BV-10",
+   "id": "FR01-BV-10",
    "expect": "reject",
    "target": "password",
    "password_used": "A`````1@",
@@ -801,7 +801,7 @@
    "notes": []
   },
   {
-   "id": "BV-11",
+   "id": "FR01-BV-11",
    "expect": "reject",
    "target": "password",
    "password_used": "A{{{{{1@",
@@ -821,7 +821,7 @@
    "notes": []
   },
   {
-   "id": "BV-12",
+   "id": "FR01-BV-12",
    "expect": "reject",
    "target": "password",
    "password_used": "Abcdef/@",
@@ -841,7 +841,7 @@
    "notes": []
   },
   {
-   "id": "BV-13",
+   "id": "FR01-BV-13",
    "expect": "reject",
    "target": "password",
    "password_used": "Abcdef:@",
@@ -861,7 +861,7 @@
    "notes": []
   },
   {
-   "id": "BV-14",
+   "id": "FR01-BV-14",
    "expect": "accept",
    "target": "name",
    "password_used": "Abcdef1@",
@@ -884,7 +884,7 @@
    ]
   },
   {
-   "id": "BV-15",
+   "id": "FR01-BV-15",
    "expect": "accept",
    "target": "name",
    "password_used": "Abcdef1@",
@@ -907,7 +907,7 @@
    ]
   },
   {
-   "id": "BV-16",
+   "id": "FR01-BV-16",
    "expect": "accept",
    "target": "name",
    "password_used": "Abcdef1@",
@@ -930,7 +930,7 @@
    ]
   },
   {
-   "id": "BV-17",
+   "id": "FR01-BV-17",
    "expect": "accept",
    "target": "email",
    "password_used": "Abcdef1@",
@@ -953,7 +953,7 @@
    ]
   },
   {
-   "id": "BV-18",
+   "id": "FR01-BV-18",
    "expect": "accept",
    "target": "email",
    "password_used": "Abcdef1@",
@@ -976,7 +976,7 @@
    ]
   },
   {
-   "id": "BV-19",
+   "id": "FR01-BV-19",
    "expect": "reject",
    "target": "dup",
    "password_used": "Newpass1@",
@@ -999,7 +999,7 @@
    ]
   },
   {
-   "id": "BV-20",
+   "id": "FR01-BV-20",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1@",
@@ -1021,7 +1021,7 @@
    ]
   },
   {
-   "id": "BV-21",
+   "id": "FR01-BV-21",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1@",
@@ -1041,6 +1041,85 @@
    "notes": [
     "giao diện không có ô Xác nhận mật khẩu"
    ]
+  },
+  {
+   "id": "FR01-DT-29",
+   "expect": "reject",
+   "target": "password",
+   "password_used": "Abcdef1 ",
+   "confirm_field": false,
+   "request_sent": true,
+   "status": 200,
+   "body": "{\"message\":\"User registered successfully\",\"id\":3}",
+   "url_after": "/login",
+   "messages": [],
+   "created": true,
+   "matching_accounts_after": 1,
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "FR01-DT-30",
+   "expect": "reject",
+   "target": "password",
+   "password_used": "Đbcdef1@",
+   "confirm_field": false,
+   "request_sent": false,
+   "url_after": "/register",
+   "messages": [
+    {
+     "source": "page",
+     "text": "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT.",
+     "reason": "password"
+    }
+   ],
+   "created": false,
+   "matching_accounts_after": 0,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR01-DT-31",
+   "expect": "reject",
+   "target": "password",
+   "password_used": "ABCDEă1@",
+   "confirm_field": false,
+   "request_sent": false,
+   "url_after": "/register",
+   "messages": [
+    {
+     "source": "page",
+     "text": "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT.",
+     "reason": "password"
+    }
+   ],
+   "created": false,
+   "matching_accounts_after": 0,
+   "verdict": "Pass",
+   "notes": []
+  },
+  {
+   "id": "FR01-DT-32",
+   "expect": "accept",
+   "target": "password",
+   "password_used": "Mậtkhẩu1@",
+   "confirm_field": false,
+   "request_sent": false,
+   "url_after": "/register",
+   "messages": [
+    {
+     "source": "page",
+     "text": "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT.",
+     "reason": "password"
+    }
+   ],
+   "created": false,
+   "matching_accounts_after": 0,
+   "login_ok": false,
+   "verdict": "Fail",
+   "notes": []
   }
  ]
 }

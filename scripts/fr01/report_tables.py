@@ -194,12 +194,13 @@ def web_actual(r):
     return text[0].upper() + text[1:]
 
 
-def api_actual(r):
+def api_actual(r, c):
     body = r["body"]
     msg = (body.get("message") or body.get("error")) if isinstance(body, dict) else str(body)
     parts = [f"HTTP {r['status']} “{msg}”"]
     if r["created"]:
-        parts.append("tạo tài khoản")
+        parts.append(f"tạo thêm tài khoản trùng email (có {r['matching_accounts_after']} tài khoản cùng email)"
+                     if c["duplicate_of"] else "tạo tài khoản")
     elif r["status"] == 200:
         parts.append("tài khoản lưu với email chưa bỏ khoảng trắng")
     else:
@@ -224,7 +225,7 @@ def t53():
                     bugs.append(b)
         proof = f"[ảnh Web](../evidence/FR-01/web/{c['id']}.png)" + (" · `api_results.json`" if a else "")
         lines.append(f"| {c['id']} | {w['verdict'] if w else '–'} | {web_actual(w) if w else '–'} "
-                     f"| {a['verdict'] if a else '–'} | {api_actual(a) if a else 'Không áp dụng (A8)'} "
+                     f"| {a['verdict'] if a else '–'} | {api_actual(a, c) if a else 'Không áp dụng (A8)'} "
                      f"| {proof} | {', '.join(bugs) or '–'} |")
     return "\n".join(lines)
 

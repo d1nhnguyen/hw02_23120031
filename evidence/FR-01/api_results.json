@@ -1,8 +1,8 @@
 {
- "run_at": "2026-10-20T22:04:58",
+ "run_at": "2026-10-20T22:48:31",
  "results": [
   {
-   "id": "DT-01",
+   "id": "FR01-DT-01",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -16,7 +16,7 @@
    "notes": []
   },
   {
-   "id": "DT-02",
+   "id": "FR01-DT-02",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -32,7 +32,7 @@
    ]
   },
   {
-   "id": "DT-03",
+   "id": "FR01-DT-03",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -46,7 +46,7 @@
    "notes": []
   },
   {
-   "id": "DT-04",
+   "id": "FR01-DT-04",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -60,7 +60,7 @@
    "notes": []
   },
   {
-   "id": "DT-05",
+   "id": "FR01-DT-05",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -74,7 +74,7 @@
    "notes": []
   },
   {
-   "id": "DT-06",
+   "id": "FR01-DT-06",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -88,7 +88,7 @@
    "notes": []
   },
   {
-   "id": "DT-07",
+   "id": "FR01-DT-07",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -102,7 +102,7 @@
    "notes": []
   },
   {
-   "id": "DT-08",
+   "id": "FR01-DT-08",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -118,7 +118,7 @@
    ]
   },
   {
-   "id": "DT-09",
+   "id": "FR01-DT-09",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -134,7 +134,7 @@
    ]
   },
   {
-   "id": "DT-10",
+   "id": "FR01-DT-10",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -150,7 +150,7 @@
    ]
   },
   {
-   "id": "DT-11",
+   "id": "FR01-DT-11",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -166,7 +166,7 @@
    ]
   },
   {
-   "id": "DT-12",
+   "id": "FR01-DT-12",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -182,7 +182,7 @@
    ]
   },
   {
-   "id": "DT-13",
+   "id": "FR01-DT-13",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -198,7 +198,7 @@
    ]
   },
   {
-   "id": "DT-14",
+   "id": "FR01-DT-14",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -214,7 +214,7 @@
    ]
   },
   {
-   "id": "DT-15",
+   "id": "FR01-DT-15",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -230,7 +230,7 @@
    ]
   },
   {
-   "id": "DT-16",
+   "id": "FR01-DT-16",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -246,7 +246,7 @@
    ]
   },
   {
-   "id": "DT-17",
+   "id": "FR01-DT-17",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -263,7 +263,7 @@
    ]
   },
   {
-   "id": "DT-18",
+   "id": "FR01-DT-18",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -280,7 +280,7 @@
    ]
   },
   {
-   "id": "DT-19",
+   "id": "FR01-DT-19",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -296,7 +296,7 @@
    ]
   },
   {
-   "id": "DT-20",
+   "id": "FR01-DT-20",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -312,7 +312,7 @@
    ]
   },
   {
-   "id": "DT-21",
+   "id": "FR01-DT-21",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -328,7 +328,7 @@
    ]
   },
   {
-   "id": "DT-22",
+   "id": "FR01-DT-22",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -344,7 +344,7 @@
    ]
   },
   {
-   "id": "DT-23",
+   "id": "FR01-DT-23",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -360,7 +360,7 @@
    ]
   },
   {
-   "id": "DT-24",
+   "id": "FR01-DT-24",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -376,7 +376,7 @@
    ]
   },
   {
-   "id": "DT-25",
+   "id": "FR01-DT-25",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -392,7 +392,7 @@
    ]
   },
   {
-   "id": "BV-01",
+   "id": "FR01-BV-01",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -408,7 +408,7 @@
    ]
   },
   {
-   "id": "BV-02",
+   "id": "FR01-BV-02",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -424,7 +424,7 @@
    ]
   },
   {
-   "id": "BV-03",
+   "id": "FR01-BV-03",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -440,7 +440,7 @@
    ]
   },
   {
-   "id": "BV-04",
+   "id": "FR01-BV-04",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -454,7 +454,7 @@
    "notes": []
   },
   {
-   "id": "BV-05",
+   "id": "FR01-BV-05",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -468,7 +468,7 @@
    "notes": []
   },
   {
-   "id": "BV-06",
+   "id": "FR01-BV-06",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -482,7 +482,7 @@
    "notes": []
   },
   {
-   "id": "BV-07",
+   "id": "FR01-BV-07",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -496,7 +496,7 @@
    "notes": []
   },
   {
-   "id": "BV-08",
+   "id": "FR01-BV-08",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -510,7 +510,7 @@
    "notes": []
   },
   {
-   "id": "BV-09",
+   "id": "FR01-BV-09",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -526,7 +526,7 @@
    ]
   },
   {
-   "id": "BV-10",
+   "id": "FR01-BV-10",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -542,7 +542,7 @@
    ]
   },
   {
-   "id": "BV-11",
+   "id": "FR01-BV-11",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -558,7 +558,7 @@
    ]
   },
   {
-   "id": "BV-12",
+   "id": "FR01-BV-12",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -574,7 +574,7 @@
    ]
   },
   {
-   "id": "BV-13",
+   "id": "FR01-BV-13",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -590,7 +590,7 @@
    ]
   },
   {
-   "id": "BV-14",
+   "id": "FR01-BV-14",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -604,7 +604,7 @@
    "notes": []
   },
   {
-   "id": "BV-15",
+   "id": "FR01-BV-15",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -618,7 +618,7 @@
    "notes": []
   },
   {
-   "id": "BV-16",
+   "id": "FR01-BV-16",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -632,7 +632,7 @@
    "notes": []
   },
   {
-   "id": "BV-17",
+   "id": "FR01-BV-17",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -646,7 +646,7 @@
    "notes": []
   },
   {
-   "id": "BV-18",
+   "id": "FR01-BV-18",
    "expect": "accept",
    "status": 200,
    "body": {
@@ -660,7 +660,7 @@
    "notes": []
   },
   {
-   "id": "BV-19",
+   "id": "FR01-BV-19",
    "expect": "reject",
    "status": 200,
    "body": {
@@ -675,6 +675,68 @@
    "notes": [
     "email trùng vẫn được chấp nhận"
    ]
+  },
+  {
+   "id": "FR01-DT-29",
+   "expect": "reject",
+   "status": 200,
+   "body": {
+    "message": "User registered successfully",
+    "id": 47
+   },
+   "created": true,
+   "matching_accounts_after": 1,
+   "reason": "unknown",
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "FR01-DT-30",
+   "expect": "reject",
+   "status": 200,
+   "body": {
+    "message": "User registered successfully",
+    "id": 48
+   },
+   "created": true,
+   "matching_accounts_after": 1,
+   "reason": "unknown",
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "FR01-DT-31",
+   "expect": "reject",
+   "status": 200,
+   "body": {
+    "message": "User registered successfully",
+    "id": 49
+   },
+   "created": true,
+   "matching_accounts_after": 1,
+   "reason": "unknown",
+   "verdict": "Fail",
+   "notes": [
+    "dữ liệu không hợp lệ vẫn được chấp nhận"
+   ]
+  },
+  {
+   "id": "FR01-DT-32",
+   "expect": "accept",
+   "status": 200,
+   "body": {
+    "message": "User registered successfully",
+    "id": 50
+   },
+   "created": true,
+   "matching_accounts_after": 1,
+   "login_ok": true,
+   "verdict": "Pass",
+   "notes": []
   }
  ]
 }

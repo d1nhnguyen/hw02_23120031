@@ -1,9 +1,9 @@
 {
- "run_at": "2026-10-20T15:04:56.627Z",
+ "run_at": "2026-10-20T15:48:29.871Z",
  "workaround": true,
  "results": [
   {
-   "id": "DT-08",
+   "id": "FR01-DT-08",
    "expect": "reject",
    "target": "name",
    "password_used": "Abcdef1 ",
@@ -23,7 +23,7 @@
    "notes": []
   },
   {
-   "id": "DT-09",
+   "id": "FR01-DT-09",
    "expect": "reject",
    "target": "name",
    "password_used": "Abcdef1 ",
@@ -41,7 +41,7 @@
    ]
   },
   {
-   "id": "DT-10",
+   "id": "FR01-DT-10",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1 ",
@@ -61,7 +61,7 @@
    "notes": []
   },
   {
-   "id": "DT-11",
+   "id": "FR01-DT-11",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1 ",
@@ -79,7 +79,7 @@
    ]
   },
   {
-   "id": "DT-12",
+   "id": "FR01-DT-12",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1 ",
@@ -97,7 +97,7 @@
    ]
   },
   {
-   "id": "DT-13",
+   "id": "FR01-DT-13",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1 ",
@@ -115,7 +115,7 @@
    ]
   },
   {
-   "id": "DT-14",
+   "id": "FR01-DT-14",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1 ",
@@ -133,7 +133,7 @@
    ]
   },
   {
-   "id": "DT-15",
+   "id": "FR01-DT-15",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1 ",
@@ -151,7 +151,7 @@
    ]
   },
   {
-   "id": "DT-16",
+   "id": "FR01-DT-16",
    "expect": "reject",
    "target": "email",
    "password_used": "Abcdef1 ",
@@ -169,7 +169,7 @@
    ]
   },
   {
-   "id": "DT-17",
+   "id": "FR01-DT-17",
    "expect": "reject",
    "target": "dup",
    "password_used": "Newpass1 ",
@@ -188,7 +188,7 @@
    ]
   },
   {
-   "id": "DT-18",
+   "id": "FR01-DT-18",
    "expect": "reject",
    "target": "dup",
    "password_used": "Newpass1 ",
@@ -207,7 +207,7 @@
    ]
   },
   {
-   "id": "DT-26",
+   "id": "FR01-DT-26",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1 ",
@@ -225,7 +225,7 @@
    ]
   },
   {
-   "id": "DT-27",
+   "id": "FR01-DT-27",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1 ",
@@ -243,7 +243,7 @@
    ]
   },
   {
-   "id": "DT-28",
+   "id": "FR01-DT-28",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1 ",
@@ -261,7 +261,7 @@
    ]
   },
   {
-   "id": "BV-14",
+   "id": "FR01-BV-14",
    "expect": "accept",
    "target": "name",
    "password_used": "Abcdef1 ",
@@ -278,7 +278,7 @@
    "notes": []
   },
   {
-   "id": "BV-15",
+   "id": "FR01-BV-15",
    "expect": "accept",
    "target": "name",
    "password_used": "Abcdef1 ",
@@ -295,7 +295,7 @@
    "notes": []
   },
   {
-   "id": "BV-16",
+   "id": "FR01-BV-16",
    "expect": "accept",
    "target": "name",
    "password_used": "Abcdef1 ",
@@ -312,7 +312,7 @@
    "notes": []
   },
   {
-   "id": "BV-17",
+   "id": "FR01-BV-17",
    "expect": "accept",
    "target": "email",
    "password_used": "Abcdef1 ",
@@ -329,7 +329,7 @@
    "notes": []
   },
   {
-   "id": "BV-18",
+   "id": "FR01-BV-18",
    "expect": "accept",
    "target": "email",
    "password_used": "Abcdef1 ",
@@ -346,7 +346,7 @@
    "notes": []
   },
   {
-   "id": "BV-19",
+   "id": "FR01-BV-19",
    "expect": "reject",
    "target": "dup",
    "password_used": "Newpass1 ",
@@ -365,7 +365,7 @@
    ]
   },
   {
-   "id": "BV-20",
+   "id": "FR01-BV-20",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1 ",
@@ -383,7 +383,7 @@
    ]
   },
   {
-   "id": "BV-21",
+   "id": "FR01-BV-21",
    "expect": "reject",
    "target": "confirm",
    "password_used": "Abcdef1 ",

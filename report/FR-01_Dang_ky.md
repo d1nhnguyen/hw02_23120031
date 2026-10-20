@@ -337,7 +337,7 @@ Tổng: 21 test case BVA mới (FR01-BV-01…FR01-BV-21); 8 dòng có ID trong n
 | API | `http://localhost:3000/api`, gọi bằng Python `urllib` |
 | Dữ liệu | Backend được khởi động lại trước mỗi lượt chạy (`scripts/restart_backend.sh`) |
 | Script | `scripts/fr01/cases.py` (dữ liệu), `run_web.mjs` (P-WEB), `run_api.py` (P-API), `explore_web_password.mjs` (khảo sát) |
-| Bằng chứng | `evidence/FR-01/web_results.json`, `api_results.json`, `web_results_workaround.json`, `explore_web_password.json`, ảnh `evidence/FR-01/web/<ID>.png` |
+| Bằng chứng | `evidence/FR-01/web_results.json`, `api_results.json`, `web_results_workaround.json`, `explore_web_password.json`; ảnh sau khi bấm "Đăng Ký" của từng test case: `evidence/FR-01/web/<ID>.png` (lượt khảo sát: `<ID>_wa.png`) |
 
 Cách kết luận (A7): test case "thành công" Pass khi chuyển tới trang Đăng nhập (Web) / HTTP 200 (API), tài khoản xuất hiện trong danh sách người dùng (`GET /api/admin/users`) và đăng nhập được. Test case "từ chối" Pass khi không tạo tài khoản **và** thông báo lỗi nói đúng lý do mong đợi; bị từ chối nhưng sai lý do là Fail. Test case email trùng còn kiểm tra tài khoản gốc `test@eshop.com / Test1234!` vẫn đăng nhập được.
 
@@ -360,48 +360,87 @@ Lượt chạy Web đầu tiên cho thấy **mọi mật khẩu hợp lệ theo 
 
 ### 5.3 Kết quả theo test case
 
-Web = lượt chính thức (P-WEB, dữ liệu đúng thiết kế). Ảnh: `evidence/FR-01/web/<ID>.png`.
+Mỗi test case một dòng, gồm cả 4 test case bổ sung ở mục 6.2. Web = lượt chính thức (P-WEB, dữ liệu đúng thiết kế). Bảng sinh từ `evidence/FR-01/web_results.json` và `api_results.json`.
 
-| TC | Web | API | Kết quả thực tế | Bug |
-| --- | --- | --- | --- | --- |
-| DT-01 | Fail | Pass | Web: "Mật khẩu quá yếu!", không gửi request. API: 200, đăng nhập được | FR01-B1 |
-| DT-02 | Fail | Fail | Web: "Mật khẩu quá yếu!" (`$`). API: 200 nhưng email lưu nguyên `' fr01.dt02@example.com '`, đăng nhập bằng email đã bỏ khoảng trắng thất bại | FR01-B1, FR01-B8 |
-| DT-03…DT-07 | Fail | Pass | Web: "Mật khẩu quá yếu!" với `!`, `%`, `*`, `?`, `&`. API: 200, đăng nhập được | FR01-B1 |
-| DT-08 | Pass | Fail | Web: trình duyệt chặn ô Họ Tên trống ("Please fill out this field."). API: 200, tạo tài khoản không có tên | FR01-B3 |
-| DT-09 | Blocked | Fail | Web: bị chặn vì mật khẩu. API: 200, tạo tài khoản tên `'   '` | FR01-B9 |
-| DT-10 | Pass | Fail | Web: trình duyệt chặn ô Email trống. API: 200, tạo tài khoản không có email | FR01-B3 |
-| DT-11…DT-16 | Blocked | Fail | Web: bị chặn vì mật khẩu. API: 200 với cả 6 kiểu email sai định dạng | FR01-B4 |
-| DT-17 | Blocked | Fail | API: 200, tạo **tài khoản thứ hai** `test@eshop.com`; đăng nhập `Test1234!` vẫn vào tài khoản cũ, `Newpass1@` không đăng nhập được | FR01-B6 |
-| DT-18 | Blocked | Fail | API: 200, tạo thêm tài khoản `TEST@eshop.com` | FR01-B6 |
-| DT-19 | Pass | Fail | Web: trình duyệt chặn ô Mật khẩu trống. API: 200, tạo tài khoản mật khẩu rỗng | FR01-B3 |
-| DT-20…DT-25 | Pass | Fail | Web: "Mật khẩu quá yếu!" (đúng lý do). API: 200 với mật khẩu 6 ký tự, thiếu chữ hoa / chữ thường / chữ số / ký tự đặc biệt, chỉ có `#` | FR01-B5 |
-| DT-26…DT-28 | Fail | – | Giao diện không có ô Xác nhận mật khẩu | FR01-B2 |
-| BV-01…BV-03 | Pass | Fail | Web: "Mật khẩu quá yếu!". API: 200 với mật khẩu dài 1, 2, 7 ký tự | FR01-B5 |
-| BV-04…BV-08 | Fail | Pass | Web: "Mật khẩu quá yếu!" với mật khẩu 9, 1000 ký tự, 1 chữ thường, biên `A/Z/a/z/0/9`. API: 200, đăng nhập được | FR01-B1 |
-| BV-09…BV-13 | Pass | Fail | Web: "Mật khẩu quá yếu!". API: 200 với `[`, `` ` ``, `{`, `/`, `:` thay cho chữ hoa / chữ thường / chữ số | FR01-B5 |
-| BV-14…BV-18 | Blocked | Pass | API: 200 và đăng nhập được với Họ Tên 1 ký tự, `␣A␣`, 1000 ký tự, email `a@b.c`, email 254 ký tự | – |
-| BV-19 | Blocked | Fail | API: 200, tạo tài khoản email `' test@eshop.com'` (không bỏ khoảng trắng nên không phát hiện trùng) | FR01-B6, FR01-B8 |
-| BV-20, BV-21 | Fail | – | Giao diện không có ô Xác nhận mật khẩu | FR01-B2 |
+<!-- BEGIN:T53 -->
+| TC | Web | Kết quả thực tế – Web | API | Kết quả thực tế – API | Bằng chứng | Bug |
+| --- | --- | --- | --- | --- | --- | --- |
+| FR01-DT-01 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-DT-01.png) · `api_results.json` | FR01-B1 |
+| FR01-DT-02 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tài khoản lưu với email chưa bỏ khoảng trắng; không đăng nhập được bằng email đã bỏ khoảng trắng | [ảnh Web](../evidence/FR-01/web/FR01-DT-02.png) · `api_results.json` | FR01-B1, FR01-B8 |
+| FR01-DT-03 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-DT-03.png) · `api_results.json` | FR01-B1 |
+| FR01-DT-04 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-DT-04.png) · `api_results.json` | FR01-B1 |
+| FR01-DT-05 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-DT-05.png) · `api_results.json` | FR01-B1 |
+| FR01-DT-06 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-DT-06.png) · `api_results.json` | FR01-B1 |
+| FR01-DT-07 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-DT-07.png) · `api_results.json` | FR01-B1 |
+| FR01-DT-08 | Pass | Trình duyệt chặn ô Họ Tên: “Please fill out this field.”; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-08.png) · `api_results.json` | FR01-B3 |
+| FR01-DT-09 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-09.png) · `api_results.json` | FR01-B9 |
+| FR01-DT-10 | Pass | Trình duyệt chặn ô Email: “Please fill out this field.”; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-10.png) · `api_results.json` | FR01-B3 |
+| FR01-DT-11 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-11.png) · `api_results.json` | FR01-B4 |
+| FR01-DT-12 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-12.png) · `api_results.json` | FR01-B4 |
+| FR01-DT-13 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-13.png) · `api_results.json` | FR01-B4 |
+| FR01-DT-14 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-14.png) · `api_results.json` | FR01-B4 |
+| FR01-DT-15 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-15.png) · `api_results.json` | FR01-B4 |
+| FR01-DT-16 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-16.png) · `api_results.json` | FR01-B4 |
+| FR01-DT-17 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tạo thêm tài khoản trùng email (có 2 tài khoản cùng email); tài khoản gốc vẫn đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-DT-17.png) · `api_results.json` | FR01-B6 |
+| FR01-DT-18 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tạo thêm tài khoản trùng email (có 3 tài khoản cùng email); tài khoản gốc vẫn đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-DT-18.png) · `api_results.json` | FR01-B6 |
+| FR01-DT-19 | Pass | Trình duyệt chặn ô Mật khẩu: “Please fill out this field.”; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-19.png) · `api_results.json` | FR01-B3 |
+| FR01-DT-20 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-20.png) · `api_results.json` | FR01-B5 |
+| FR01-DT-21 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-21.png) · `api_results.json` | FR01-B5 |
+| FR01-DT-22 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-22.png) · `api_results.json` | FR01-B5 |
+| FR01-DT-23 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-23.png) · `api_results.json` | FR01-B5 |
+| FR01-DT-24 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-24.png) · `api_results.json` | FR01-B5 |
+| FR01-DT-25 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-25.png) · `api_results.json` | FR01-B5 |
+| FR01-DT-26 | Fail | Không có ô Xác nhận mật khẩu; form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | – | Không áp dụng (A8) | [ảnh Web](../evidence/FR-01/web/FR01-DT-26.png) | FR01-B2 |
+| FR01-DT-27 | Fail | Không có ô Xác nhận mật khẩu; form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | – | Không áp dụng (A8) | [ảnh Web](../evidence/FR-01/web/FR01-DT-27.png) | FR01-B2 |
+| FR01-DT-28 | Fail | Không có ô Xác nhận mật khẩu; form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | – | Không áp dụng (A8) | [ảnh Web](../evidence/FR-01/web/FR01-DT-28.png) | FR01-B2 |
+| FR01-BV-01 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-BV-01.png) · `api_results.json` | FR01-B5 |
+| FR01-BV-02 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-BV-02.png) · `api_results.json` | FR01-B5 |
+| FR01-BV-03 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-BV-03.png) · `api_results.json` | FR01-B5 |
+| FR01-BV-04 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-04.png) · `api_results.json` | FR01-B1 |
+| FR01-BV-05 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-05.png) · `api_results.json` | FR01-B1 |
+| FR01-BV-06 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-06.png) · `api_results.json` | FR01-B1 |
+| FR01-BV-07 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-07.png) · `api_results.json` | FR01-B1 |
+| FR01-BV-08 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-08.png) · `api_results.json` | FR01-B1 |
+| FR01-BV-09 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-BV-09.png) · `api_results.json` | FR01-B5 |
+| FR01-BV-10 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-BV-10.png) · `api_results.json` | FR01-B5 |
+| FR01-BV-11 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-BV-11.png) · `api_results.json` | FR01-B5 |
+| FR01-BV-12 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-BV-12.png) · `api_results.json` | FR01-B5 |
+| FR01-BV-13 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-BV-13.png) · `api_results.json` | FR01-B5 |
+| FR01-BV-14 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-14.png) · `api_results.json` | – |
+| FR01-BV-15 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-15.png) · `api_results.json` | – |
+| FR01-BV-16 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-16.png) · `api_results.json` | – |
+| FR01-BV-17 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-17.png) · `api_results.json` | – |
+| FR01-BV-18 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-18.png) · `api_results.json` | – |
+| FR01-BV-19 | Blocked | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản – bị lỗi mật khẩu che, chưa tới điều kiện cần kiểm tra | Fail | HTTP 200 “User registered successfully”; tài khoản lưu với email chưa bỏ khoảng trắng; tài khoản gốc vẫn đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-BV-19.png) · `api_results.json` | FR01-B6, FR01-B8 |
+| FR01-BV-20 | Fail | Không có ô Xác nhận mật khẩu; form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | – | Không áp dụng (A8) | [ảnh Web](../evidence/FR-01/web/FR01-BV-20.png) | FR01-B2 |
+| FR01-BV-21 | Fail | Không có ô Xác nhận mật khẩu; form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | – | Không áp dụng (A8) | [ảnh Web](../evidence/FR-01/web/FR01-BV-21.png) | FR01-B2 |
+| FR01-DT-29 | Fail | Form gửi request, HTTP 200, chuyển tới `/login`; tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-29.png) · `api_results.json` | FR01-B1, FR01-B5 |
+| FR01-DT-30 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-30.png) · `api_results.json` | FR01-B5 |
+| FR01-DT-31 | Pass | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Fail | HTTP 200 “User registered successfully”; tạo tài khoản | [ảnh Web](../evidence/FR-01/web/FR01-DT-31.png) · `api_results.json` | FR01-B5 |
+| FR01-DT-32 | Fail | Form báo “Mật khẩu quá yếu!”, không gửi request; không tạo tài khoản | Pass | HTTP 200 “User registered successfully”; tạo tài khoản; đăng nhập được | [ảnh Web](../evidence/FR-01/web/FR01-DT-32.png) · `api_results.json` | FR01-B1 |
+<!-- END:T53 -->
 
 ### 5.4 Quan sát từ lượt khảo sát trên Web (không tính verdict)
 
 Với mật khẩu `Abcdef1␣` form Web gửi request; `web_results_workaround.json`, ảnh `evidence/FR-01/web/<ID>_wa.png`:
 
-- Họ Tên `␣␣␣` (DT-09) qua được thuộc tính `required` của trình duyệt và được server chấp nhận → FR01-B9.
-- Cả 6 email sai định dạng (DT-11…DT-16) được form gửi đi mà không cảnh báo (ô Email là `type="text"`) và được server chấp nhận → FR01-B7, FR01-B4.
-- Email trùng `test@eshop.com`, `TEST@eshop.com`, `␣test@eshop.com` (DT-17, DT-18, BV-19) được chấp nhận → FR01-B6.
-- Họ Tên / Email ở biên (BV-14…BV-18) đăng ký và đăng nhập được, khớp kết quả API.
+- Họ Tên `␣␣␣` (FR01-DT-09) qua được thuộc tính `required` của trình duyệt và được server chấp nhận → FR01-B9.
+- Cả 6 email sai định dạng (FR01-DT-11…FR01-DT-16) được form gửi đi mà không cảnh báo (ô Email là `type="text"`) và được server chấp nhận → FR01-B7, FR01-B4.
+- Email trùng `test@eshop.com`, `TEST@eshop.com`, `␣test@eshop.com` (FR01-DT-17, FR01-DT-18, FR01-BV-19) được chấp nhận → FR01-B6.
+- Họ Tên / Email ở biên (FR01-BV-14…FR01-BV-18) đăng ký và đăng nhập được, khớp kết quả API.
 - Bản thân việc mật khẩu `Abcdef1␣` (không có ký tự nào thuộc tập `@ $ ! % * ? &`) được chấp nhận ở cả Web và API là vi phạm A1 → FR01-B1, FR01-B5.
 
 ### 5.5 Tổng hợp
 
+<!-- BEGIN:T55 -->
 | Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |
 | --- | --- | --- | --- | --- | --- | --- |
-| Web | 49 | 49 | 17 | 17 | 15 | 0 |
-| API | 49 | 44 | 16 | 28 | 0 | 5 (biến Xác nhận mật khẩu, A8) |
-| **Tổng lượt chạy** | | **93** | **33** | **45** | **15** | |
+| Web | 53 | 53 | 19 | 19 | 15 | 0 |
+| API | 53 | 48 | 17 | 31 | 0 | 5 (biến Xác nhận mật khẩu, A8) |
+| **Tổng lượt chạy** | | **101** | **36** | **50** | **15** | |
 
-Theo test case (gộp 2 kênh: Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 49 test case, 0 Pass, 44 Fail, 5 Blocked (BV-14…BV-18 Pass ở API nhưng Blocked ở Web).
+53 test case = 28 Minimum Set (mục 3.2) + 21 BVA (mục 4.2) + 4 bổ sung sau rà soát (mục 6.2). Gộp 2 kênh theo test case (Fail nếu Fail ở bất kỳ kênh nào, Blocked nếu còn kênh bị Blocked): 0 Pass, 48 Fail, 5 Blocked.
+<!-- END:T55 -->
 
 ## 6. Bước 6 – AI gap analysis
 
@@ -411,21 +450,21 @@ Theo test case (gộp 2 kênh: Fail nếu Fail ở bất kỳ kênh nào, Blocke
 
 | # | AI bỏ sót / làm sai | Loại | Nguyên nhân | Phát hiện bằng cách nào | Đã xử lý |
 | --- | --- | --- | --- | --- | --- |
-| G1 | Lớp EC28 "chỉ có ký tự đặc biệt ngoài tập" dùng `#` làm đại diện; không xét dấu cách – đúng ký tự mà form Web coi là "ký tự đặc biệt". Thiết kế ban đầu không có test case phát hiện việc Web / API chấp nhận mật khẩu không có ký tự nào thuộc tập | Test case / chọn best representative | **Giới hạn công cụ AI**: chọn đại diện "điển hình" thay vì theo rủi ro; trước khi chạy không quan sát được cách SUT xử lý từng ký tự. **Độ phức tạp feature**: các phần tử của cùng một lớp lại được SUT xử lý khác nhau – đúng trường hợp guideline G5 yêu cầu tách lớp | Khảo sát 43 mật khẩu ở bước 5 | Bổ sung DT-29 (mục 6.2) |
+| G1 | Lớp EC28 "chỉ có ký tự đặc biệt ngoài tập" dùng `#` làm đại diện; không xét dấu cách – đúng ký tự mà form Web coi là "ký tự đặc biệt". Thiết kế ban đầu không có test case phát hiện việc Web / API chấp nhận mật khẩu không có ký tự nào thuộc tập | Test case / chọn best representative | **Giới hạn công cụ AI**: chọn đại diện "điển hình" thay vì theo rủi ro; trước khi chạy không quan sát được cách SUT xử lý từng ký tự. **Độ phức tạp feature**: các phần tử của cùng một lớp lại được SUT xử lý khác nhau – đúng trường hợp guideline G5 yêu cầu tách lớp | Khảo sát 43 mật khẩu ở bước 5 | Bổ sung FR01-DT-29 (mục 6.2) |
 | G2 | Bản đầu của script Web coi "bị từ chối với bất kỳ thông báo nào" là Pass → 10 test case Email / Họ Tên / email trùng được báo Pass trong khi thật ra bị từ chối vì "Mật khẩu quá yếu!" | Kết quả mong đợi / oracle quá lỏng | **Giới hạn công cụ AI**: tự động hoá kiểm tra không bám đúng giả định A7 ("thông báo chỉ đúng lý do") mà chính nó đã đặt ra | Rà soát output lượt chạy đầu: mọi test case từ chối đều cùng một câu thông báo | Kiểm tra lý do từ chối theo trường; thêm trạng thái Blocked |
 | G3 | Bản đầu của script không đánh Fail 5 test case Xác nhận mật khẩu khi ô này không tồn tại (chúng "Pass" vì bị từ chối do mật khẩu) | Oracle | Như G2 | Rà soát output | Kiểm tra sự tồn tại của ô trước khi kết luận |
 | G4 | Giả định đường vòng `Abcdef1@␣` sẽ qua được form vì `Abcdef1␣` qua được – khái quát hoá từ một mẫu | Giả định sai | **Giới hạn công cụ AI**: suy luận quá đà từ dữ liệu khảo sát ít | Lượt chạy lại vẫn bị chặn | Khảo sát thêm 10 mật khẩu; chuyển lượt chạy lại thành khảo sát, không tính verdict |
 | G5 | Script đọc thông báo validation của form Đăng nhập sau khi đã chuyển trang, ghi vào bằng chứng như thông báo của form Đăng ký | Bằng chứng sai lệch | **Giới hạn công cụ AI**: không lường trước việc chuyển trang làm thay đổi phần tử được chọn | Đọc output: test case thành công lại có "Please fill out this field." | Chỉ đọc thông báo khi còn ở `/register` |
-| G6 | Kiểm tra "tài khoản gốc bị ảnh hưởng" dựa vào số tài khoản trùng email = 1, bị nhiễm trạng thái do test case trước tạo ra → kết luận sai cho DT-18, BV-19 | Oracle / test case không độc lập | **Độ phức tạp feature**: một lỗi (cho trùng email) làm thay đổi trạng thái dùng chung giữa các test case | Đối chiếu thủ công bằng `curl` | Chỉ dựa vào việc tài khoản gốc còn đăng nhập được |
+| G6 | Kiểm tra "tài khoản gốc bị ảnh hưởng" dựa vào số tài khoản trùng email = 1, bị nhiễm trạng thái do test case trước tạo ra → kết luận sai cho FR01-DT-18, FR01-BV-19 | Oracle / test case không độc lập | **Độ phức tạp feature**: một lỗi (cho trùng email) làm thay đổi trạng thái dùng chung giữa các test case | Đối chiếu thủ công bằng `curl` | Chỉ dựa vào việc tài khoản gốc còn đăng nhập được |
 | G7 | Email 254 ký tự bị tính thành 255 | Dữ liệu test | Lỗi tính toán của AI | `assert` trong `cases.py` | Sửa |
-| G8 | Trước khi commit B3, bảng phủ tính cả test case invalid là phủ lớp valid; DT-19 ghi ô Xác nhận rỗng thay vì `= MK` | Bảng phủ / dữ liệu | AI áp dụng quy tắc Minimum Set chưa chặt | AI tự rà soát trước khi commit (không có trong lịch sử commit) | Sửa trước commit |
+| G8 | Trước khi commit B3, bảng phủ tính cả test case invalid là phủ lớp valid; FR01-DT-19 ghi ô Xác nhận rỗng thay vì `= MK` | Bảng phủ / dữ liệu | AI áp dụng quy tắc Minimum Set chưa chặt | AI tự rà soát trước khi commit (không có trong lịch sử commit) | Sửa trước commit |
 | G9 | Bảng BVA gom 4 cột dữ liệu thành 1 cột "Giá trị", lệch cấu trúc data matrix của bảng 3.2 và mẫu Table 6 [UC] | Định dạng bảng | **Giới hạn công cụ AI**: ưu tiên bảng ngắn gọn, không giữ cấu trúc nhất quán giữa các bảng | Sinh viên rà soát | Sinh bảng từ `cases.py`, giữ đủ cột (B4-review) |
-| G10 | Bảng kết quả 5.3 gộp nhiều test case vào một dòng (48 test case còn 18 dòng), thiếu DT-29, không gắn bằng chứng cho từng test case | Báo cáo kết quả | **Giới hạn công cụ AI**: tóm tắt thay vì báo cáo đủ chi tiết như mẫu [TPL] | Sinh viên rà soát | Mỗi test case một dòng + cột Bằng chứng (B5-review) |
+| G10 | Bảng kết quả 5.3 gộp nhiều test case vào một dòng (48 test case còn 18 dòng), thiếu FR01-DT-29, không gắn bằng chứng cho từng test case | Báo cáo kết quả | **Giới hạn công cụ AI**: tóm tắt thay vì báo cáo đủ chi tiết như mẫu [TPL] | Sinh viên rà soát | Mỗi test case một dòng + cột Bằng chứng (B5-review) |
 | G11 | ID `DT-01`, `BV-01` không có mã feature, sẽ trùng khi gộp báo cáo 4 feature | Quy ước đặt tên | **Do prompt**: prompt chỉ nói về từng bước của một feature, không nhắc báo cáo chung | Sinh viên rà soát | Đổi sang `FR01-DT-nn`, `FR01-BV-nn` (B3-review) |
-| G12 | Ô dữ liệu ghi "mặc định", "= MK"; kết quả mong đợi ghi "Như DT-01" → test case không Self-standing, không Repeatable | Chất lượng test case | **Giới hạn công cụ AI**: rút gọn bảng, vi phạm checklist [S07] mà chính nó đã dẫn trong phần phương pháp | Sinh viên rà soát | Giá trị cụ thể, kết quả mong đợi tường minh kèm mã lớp đầu ra (B3-review) |
-| G13 | 7 dòng dẫn chiếu ở bảng BVA dùng tên dạng danh từ, không theo Action + Function + Condition; tên DT-02 dễ nhầm với DT-25 | Tên test case | Như G12 | Sinh viên rà soát | Dùng tên chính thức của mục 3.2; sửa tên DT-02 (B3-, B4-review) |
-| G14 | BV-19 là test case kết hợp lớp, không nêu biên nào được kiểm tra | Áp dụng BVA | **Giới hạn công cụ AI**: xếp test case vào BVA mà không chỉ ra biến có thứ tự | Sinh viên rà soát | Nêu biên số khoảng trắng đầu email = 1 (LB của EC6); thêm vào bảng 4.1 (B4-review) |
-| G15 | Tổng số test case lệch giữa các mục (49 ở mục 5, nhưng mục 6 đã thêm DT-29) | Số liệu | **Giới hạn công cụ AI**: thêm test case nhưng không cập nhật lại các tổng | Sinh viên rà soát | Bảng tổng hợp sinh tự động từ `cases.py` + kết quả (B5-review) |
+| G12 | Ô dữ liệu ghi "mặc định", "= MK"; kết quả mong đợi ghi "Như FR01-DT-01" → test case không Self-standing, không Repeatable | Chất lượng test case | **Giới hạn công cụ AI**: rút gọn bảng, vi phạm checklist [S07] mà chính nó đã dẫn trong phần phương pháp | Sinh viên rà soát | Giá trị cụ thể, kết quả mong đợi tường minh kèm mã lớp đầu ra (B3-review) |
+| G13 | 7 dòng dẫn chiếu ở bảng BVA dùng tên dạng danh từ, không theo Action + Function + Condition; tên FR01-DT-02 dễ nhầm với FR01-DT-25 | Tên test case | Như G12 | Sinh viên rà soát | Dùng tên chính thức của mục 3.2; sửa tên FR01-DT-02 (B3-, B4-review) |
+| G14 | FR01-BV-19 là test case kết hợp lớp, không nêu biên nào được kiểm tra | Áp dụng BVA | **Giới hạn công cụ AI**: xếp test case vào BVA mà không chỉ ra biến có thứ tự | Sinh viên rà soát | Nêu biên số khoảng trắng đầu email = 1 (LB của EC6); thêm vào bảng 4.1 (B4-review) |
+| G15 | Tổng số test case lệch giữa các mục (49 ở mục 5, nhưng mục 6 đã thêm FR01-DT-29) | Số liệu | **Giới hạn công cụ AI**: thêm test case nhưng không cập nhật lại các tổng | Sinh viên rà soát | Bảng tổng hợp sinh tự động từ `cases.py` + kết quả (B5-review) |
 | G16 | Không có test case cho chữ có dấu trong mật khẩu (`Đ`, `ă`); AI chỉ nêu thành câu hỏi ở 6.3 | Test case thiếu | **Độ phức tạp / đặc tả mơ hồ**: AI dừng ở việc nêu câu hỏi thay vì đặt giả định và thiết kế | Sinh viên rà soát | Thêm A10 và FR01-DT-30…FR01-DT-32 (Origin SV) |
 
 ### 6.2 Test case bổ sung
@@ -458,14 +497,14 @@ Chi tiết từng bug (các bước tái hiện, kết quả mong đợi / thự
 
 | Mã | Tiêu đề | Mức độ | Thành phần | TC liên quan | GitHub Issue |
 | --- | --- | --- | --- | --- | --- |
-| FR01-B1 | Form Đăng ký trên Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ có ký tự đặc biệt `@ $ ! % * ? &` | Critical | Web | DT-01…DT-07, BV-04…BV-08, DT-29 | |
-| FR01-B2 | Form Đăng ký thiếu ô "Xác nhận mật khẩu" | Major | Web | DT-26…DT-28, BV-20, BV-21 | |
-| FR01-B3 | API đăng ký chấp nhận Họ Tên, Email hoặc Mật khẩu rỗng | Major | Backend | DT-08, DT-10, DT-19 | |
-| FR01-B4 | API đăng ký chấp nhận email sai định dạng | Major | Backend | DT-11…DT-16 | |
-| FR01-B5 | API đăng ký chấp nhận mật khẩu không đủ mạnh | Major | Backend | DT-20…DT-25, BV-01…BV-03, BV-09…BV-13, DT-29 | |
-| FR01-B6 | Hệ thống cho đăng ký bằng email đã tồn tại, tạo tài khoản trùng | Critical | Backend | DT-17, DT-18, BV-19 | |
-| FR01-B7 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; DT-11…DT-16 (khảo sát) | |
-| FR01-B8 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối | Minor | Backend | DT-02, BV-19 | |
-| FR01-B9 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | DT-09 | |
+| FR01-B1 | Form Đăng ký trên Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ có ký tự đặc biệt `@ $ ! % * ? &` | Critical | Web | FR01-DT-01…FR01-DT-07, FR01-BV-04…FR01-BV-08, FR01-DT-29 | |
+| FR01-B2 | Form Đăng ký thiếu ô "Xác nhận mật khẩu" | Major | Web | FR01-DT-26…FR01-DT-28, FR01-BV-20, FR01-BV-21 | |
+| FR01-B3 | API đăng ký chấp nhận Họ Tên, Email hoặc Mật khẩu rỗng | Major | Backend | FR01-DT-08, FR01-DT-10, FR01-DT-19 | |
+| FR01-B4 | API đăng ký chấp nhận email sai định dạng | Major | Backend | FR01-DT-11…FR01-DT-16 | |
+| FR01-B5 | API đăng ký chấp nhận mật khẩu không đủ mạnh | Major | Backend | FR01-DT-20…FR01-DT-25, FR01-BV-01…FR01-BV-03, FR01-BV-09…FR01-BV-13, FR01-DT-29 | |
+| FR01-B6 | Hệ thống cho đăng ký bằng email đã tồn tại, tạo tài khoản trùng | Critical | Backend | FR01-DT-17, FR01-DT-18, FR01-BV-19 | |
+| FR01-B7 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; FR01-DT-11…FR01-DT-16 (khảo sát) | |
+| FR01-B8 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối | Minor | Backend | FR01-DT-02, FR01-BV-19 | |
+| FR01-B9 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | FR01-DT-09 | |
 
 Tổng: 9 bug (2 Critical, 4 Major, 3 Minor). Ngoài phạm vi FR-01 (không báo ở đây): trang Đăng ký không có thẻ `<h1>` và nút "Đăng Ký" màu đỏ (FR-21).
