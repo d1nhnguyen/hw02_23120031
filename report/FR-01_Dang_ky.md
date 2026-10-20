@@ -265,13 +265,56 @@ Giá trị mặc định cho các biến không phải đối tượng của tes
 
 ### 4.1 Xác định biên
 
-| Biến | Phân vùng | LB | UB | Bước nhảy | Nhỏ nhất nhập được | Lớn nhất nhập được |
-| --- | --- | --- | --- | --- | --- | --- |
+BVA áp dụng cho các biến / đại lượng có thứ tự. Với mỗi phân vùng xét LB-1, LB, LB+1, UB-1, UB, UB+1 và giá trị lớn nhất nhập được [S04]; điểm nào đã có trong Minimum Set thì dẫn chiếu test case đó thay vì tạo test case trùng [KB – không lặp].
+
+| Biến / đại lượng | Phân vùng | LB | UB | Bước nhảy | Điểm kiểm tra |
+| --- | --- | --- | --- | --- | --- |
+| I3.L độ dài mật khẩu | EC17 (rỗng) / EC19 (1–7) / EC18 (≥ 8) | 1; 8 | 7; không giới hạn (A5) | 1 ký tự | 0, 1, 2, 6, 7, 8, 9, 1000 |
+| I3.U / I3.W / I3.D / I3.S số ký tự mỗi loại | EC21/EC20, EC23/EC22, EC25/EC24, EC27/EC26 (0 / ≥ 1) | 1 | không giới hạn | 1 ký tự | 0, 1 |
+| Khoảng chữ hoa | `A`–`Z` (mã 65–90) | `A` | `Z` | 1 mã ký tự | `@` (64), `A`, `Z`, `[` (91) |
+| Khoảng chữ thường | `a`–`z` (mã 97–122) | `a` | `z` | 1 mã ký tự | `` ` `` (96), `a`, `z`, `{` (123) |
+| Khoảng chữ số | `0`–`9` (mã 48–57) | `0` | `9` | 1 mã ký tự | `/` (47), `0`, `9`, `:` (58) |
+| I1 độ dài Họ Tên (không tính khoảng trắng đầu/cuối) | EC3, EC4 (0) / EC1 (≥ 1) | 1 | không giới hạn (A5) | 1 ký tự | 0, 1, 1000 |
+| I2 độ dài Email | EC5 | 5 (`a@b.c`, ngắn nhất theo A2) | 254 (giới hạn độ dài địa chỉ của RFC 5321) | 1 ký tự | 5, 254 |
+| I2 khoảng trắng đầu email × trùng email | EC6 / EC15 | – | – | – | 1 khoảng trắng + email đã tồn tại |
+| I4 so với I3 | EC37 (khớp) / EC39 (khác) | độ dài = độ dài MK | | 1 ký tự | MK thiếu 1 ký tự cuối, MK thừa 1 ký tự |
 
 ### 4.2 Boundary Value Test Cases
 
-| ID | Tên test case (Action + Function + Condition) | Partition tested | Giá trị | Kết quả mong đợi | Origin |
-| --- | --- | --- | --- | --- | --- |
+Thủ tục: P-WEB / P-API ở mục 3.1. Giá trị mặc định như mục 3.2; email mỗi test case là `fr01.<id>@example.com` trừ khi ghi khác.
+
+| ID | Tên test case (Action + Function + Condition) | Partition tested | Giá trị | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- |
+| (DT-19) | Mật khẩu độ dài 0 | EC17 | `` | Từ chối | | |
+| BV-01 | Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 1 ký tự | EC17/EC19 (LB) | `@` | Từ chối, mật khẩu không đủ mạnh | Web, API | AI |
+| BV-02 | Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 2 ký tự | EC19 (LB+1) | `A1` | Từ chối, mật khẩu không đủ mạnh | Web, API | AI |
+| (DT-20) | Mật khẩu dài 6 ký tự | EC19 (UB-1) | `Abcd1@` | Từ chối | | |
+| BV-03 | Kiểm tra đăng ký bị từ chối khi Mật khẩu dài 7 ký tự và đủ 4 loại ký tự | EC19/EC18 (UB của EC19) | `Abcde1@` | Từ chối, mật khẩu không đủ mạnh | Web, API | AI |
+| (DT-01) | Mật khẩu dài 8 ký tự | EC19/EC18 (LB của EC18) | `Abcdef1@` | Thành công | | |
+| BV-04 | Kiểm tra đăng ký thành công khi Mật khẩu dài 9 ký tự | EC18 (LB+1) | `Abcdefg1@` | Thành công, đăng nhập được | Web, API | AI |
+| BV-05 | Kiểm tra đăng ký thành công khi Mật khẩu dài 1000 ký tự | EC18 (lớn nhất nhập được) | `Abcdef1@` + 992 × `a` | Thành công, đăng nhập được bằng đúng mật khẩu 1000 ký tự (A5) | Web, API | AI |
+| (DT-21…DT-24) | Mỗi loại ký tự có 0 ký tự | EC21, EC23, EC25, EC27 | | Từ chối | | |
+| (DT-01) | Có đúng 1 chữ hoa, 1 chữ số, 1 ký tự đặc biệt | EC20, EC24, EC26 (LB) | `Abcdef1@` | Thành công | | |
+| BV-06 | Kiểm tra đăng ký thành công khi Mật khẩu có đúng 1 chữ thường | EC22 (LB) | `ABCDEa1@` | Thành công, đăng nhập được | Web, API | AI |
+| BV-07 | Kiểm tra đăng ký thành công khi chữ hoa duy nhất là `Z`, chữ thường duy nhất là `a`, chữ số duy nhất là `9` | `Z` (UB chữ hoa), `a` (LB chữ thường), `9` (UB chữ số) | `Zaaaaa9@` | Thành công, đăng nhập được | Web, API | AI |
+| BV-08 | Kiểm tra đăng ký thành công khi chữ hoa duy nhất là `A`, chữ thường duy nhất là `z`, chữ số duy nhất là `0` | `A` (LB chữ hoa), `z` (UB chữ thường), `0` (LB chữ số) | `Azzzzz0@` | Thành công, đăng nhập được | Web, API | AI |
+| (DT-21) | Ký tự liền trước `A` là `@` – mật khẩu không có chữ hoa nhưng có `@` | `@`/`A` | `abcdef1@` | Từ chối | | |
+| BV-09 | Kiểm tra đăng ký bị từ chối khi ký tự liền sau `Z` (`[`) thay cho chữ hoa | `Z`/`[` (UB+1 chữ hoa) | `[bcdef1@` | Từ chối, mật khẩu không đủ mạnh (không có chữ hoa) | Web, API | AI |
+| BV-10 | Kiểm tra đăng ký bị từ chối khi ký tự liền trước `a` (`` ` ``) thay cho chữ thường | `` ` ``/`a` (LB-1 chữ thường) | ``A`````1@`` | Từ chối, mật khẩu không đủ mạnh (không có chữ thường) | Web, API | AI |
+| BV-11 | Kiểm tra đăng ký bị từ chối khi ký tự liền sau `z` (`{`) thay cho chữ thường | `z`/`{` (UB+1 chữ thường) | `A{{{{{1@` | Từ chối, mật khẩu không đủ mạnh (không có chữ thường) | Web, API | AI |
+| BV-12 | Kiểm tra đăng ký bị từ chối khi ký tự liền trước `0` (`/`) thay cho chữ số | `/`/`0` (LB-1 chữ số) | `Abcdef/@` | Từ chối, mật khẩu không đủ mạnh (không có chữ số) | Web, API | AI |
+| BV-13 | Kiểm tra đăng ký bị từ chối khi ký tự liền sau `9` (`:`) thay cho chữ số | `9`/`:` (UB+1 chữ số) | `Abcdef:@` | Từ chối, mật khẩu không đủ mạnh (không có chữ số) | Web, API | AI |
+| (DT-08) | Họ Tên độ dài 0 | EC3 | `` | Từ chối | | |
+| BV-14 | Kiểm tra đăng ký thành công khi Họ Tên dài 1 ký tự | EC3/EC1 (LB) | `A` | Thành công | Web, API | AI |
+| BV-15 | Kiểm tra đăng ký thành công khi Họ Tên có 1 ký tự giữa các khoảng trắng | EC4/EC1 | `␣A␣` | Thành công (A4) | Web, API | AI |
+| BV-16 | Kiểm tra đăng ký thành công khi Họ Tên dài 1000 ký tự | EC1 (lớn nhất nhập được) | 1000 × `A` | Thành công (A5) | Web, API | AI |
+| BV-17 | Kiểm tra đăng ký thành công với Email ngắn nhất hợp lệ | EC5 (LB) | `a@b.c` | Thành công, đăng nhập được | Web, API | AI |
+| BV-18 | Kiểm tra đăng ký thành công với Email dài 254 ký tự | EC5 (UB) | phần local 64 ký tự + `@` + domain 189 ký tự (các nhãn ≤ 63 ký tự, kết thúc `.com`) | Thành công, đăng nhập được | Web, API | AI |
+| BV-19 | Kiểm tra đăng ký bị từ chối khi Email đã tồn tại có thêm khoảng trắng ở đầu | EC6/EC15 | `␣test@eshop.com`, Mật khẩu `Newpass1@` | Từ chối, email đã tồn tại; `test@eshop.com / Test1234!` vẫn đăng nhập được (A4) | Web, API | AI |
+| BV-20 | Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu thiếu ký tự cuối | EC37/EC39 (độ dài - 1) | MK `Abcdef1@`, Xác nhận `Abcdef1` | Từ chối, xác nhận mật khẩu không khớp | Web | AI |
+| BV-21 | Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu thừa 1 ký tự | EC37/EC39 (độ dài + 1) | MK `Abcdef1@`, Xác nhận `Abcdef1@1` | Từ chối, xác nhận mật khẩu không khớp | Web | AI |
+
+Tổng: 21 test case BVA mới (BV-01…BV-21); 7 điểm biên khác đã được phủ bởi test case Domain Testing (dòng có ID trong ngoặc).
 
 ## 5. Bước 5 – Kết quả thực thi
 
