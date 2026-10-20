@@ -433,5 +433,18 @@ Bằng chứng: `evidence/FR-01/web_results_DT-29.json`, `api_results_DT-29.json
 
 ## 7. Bước 7 – Bug
 
-| Bug ID | Tiêu đề | Mức độ | TC liên quan | GitHub Issue |
-| --- | --- | --- | --- | --- |
+Chi tiết từng bug (các bước tái hiện, kết quả mong đợi / thực tế, phân tích, ảnh): `bugs/Bug_Report.md`. Cột Issue điền số `BUG-NN` sau khi tạo issue trên repo nhóm.
+
+| Mã | Tiêu đề | Mức độ | Thành phần | TC liên quan | GitHub Issue |
+| --- | --- | --- | --- | --- | --- |
+| FR01-B1 | Form Đăng ký trên Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ có ký tự đặc biệt `@ $ ! % * ? &` | Critical | Web | DT-01…DT-07, BV-04…BV-08, DT-29 | |
+| FR01-B2 | Form Đăng ký thiếu ô "Xác nhận mật khẩu" | Major | Web | DT-26…DT-28, BV-20, BV-21 | |
+| FR01-B3 | API đăng ký chấp nhận Họ Tên, Email hoặc Mật khẩu rỗng | Major | Backend | DT-08, DT-10, DT-19 | |
+| FR01-B4 | API đăng ký chấp nhận email sai định dạng | Major | Backend | DT-11…DT-16 | |
+| FR01-B5 | API đăng ký chấp nhận mật khẩu không đủ mạnh | Major | Backend | DT-20…DT-25, BV-01…BV-03, BV-09…BV-13, DT-29 | |
+| FR01-B6 | Hệ thống cho đăng ký bằng email đã tồn tại, tạo tài khoản trùng | Critical | Backend | DT-17, DT-18, BV-19 | |
+| FR01-B7 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; DT-11…DT-16 (khảo sát) | |
+| FR01-B8 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối | Minor | Backend | DT-02, BV-19 | |
+| FR01-B9 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | DT-09 | |
+
+Tổng: 9 bug (2 Critical, 4 Major, 3 Minor). Ngoài phạm vi FR-01 (không báo ở đây): trang Đăng ký không có thẻ `<h1>` và nút "Đăng Ký" màu đỏ (FR-21).
