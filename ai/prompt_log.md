@@ -8,13 +8,6 @@
 | 2 | 2026-10-20 21:06 | `1946c20d` | 1. Đây là URL repo chung: https://github.com/d1nhnguyen/eshop-sut, một issues có thể được  |
 | 3 | 2026-10-20 21:10 | `1946c20d` | [Request interrupted by user] |
 | 4 | 2026-10-20 21:11 | `1946c20d` | ko xem các dữ liệu đã cũ, tôi chỉ test trước để hiểu đề bài |
-| 5 | 2026-10-20 21:13 | `1946c20d` | <task-notification> <task-id>bd6kjcg72</task-id> <tool-use-id>toolu_01Lfy99u5ygjDieCV1WHAE |
-| 6 | 2026-10-20 21:14 | `1946c20d` | <task-notification> <task-id>bj6ztu8gl</task-id> <summary>Monitor event: "Expo start progr |
-| 7 | 2026-10-20 21:14 | `1946c20d` | <task-notification> <task-id>bj6ztu8gl</task-id> <summary>Monitor event: "Expo start progr |
-| 8 | 2026-10-20 21:14 | `1946c20d` | <task-notification> <task-id>bj6ztu8gl</task-id> <summary>Monitor event: "Expo start progr |
-| 9 | 2026-10-20 21:14 | `1946c20d` | <task-notification> <task-id>bj6ztu8gl</task-id> <summary>Monitor event: "Expo start progr |
-| 10 | 2026-10-20 21:14 | `1946c20d` | <task-notification> <task-id>bj6ztu8gl</task-id> <summary>Monitor event: "Expo start progr |
-| 11 | 2026-10-20 21:15 | `1946c20d` | <task-notification> <task-id>bj6ztu8gl</task-id> <summary>Monitor event: "Expo start progr |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -254,9 +247,27 @@ Tôi đang chờ emulator boot xong; khi xong tôi sẽ cài Expo Go và mở ap
 2. Hoặc chạy `gh auth login` trong terminal và đăng nhập thêm tài khoản `d1nhnguyen`; sau đó tôi tự tạo repo.
 
 Xong thì báo tôi để push. Remote đã gắn sẵn là `git@github-d1nh:d1nhnguyen/HW02_23120031.git`.
+
+Emulator đã boot (`emulator-5554`), backend trả về dữ liệu sản phẩm. Tôi khởi động Expo cho Android; Expo sẽ tự cài Expo Go lên emulator rồi mở app.
+
+Expo đang build bundle và cài Expo Go, tôi chờ log báo kết quả.
+
+Mới có cảnh báo lệch phiên bản package, chưa phải lỗi. Tôi tiếp tục chờ bundle.
+
+Expo đã mở `exp://192.168.2.238:8081` trên emulator. Tôi chờ bundle xong.
+
+Expo đang tải Expo Go về emulator.
+
+Đang cài Expo Go lên emulator.
+
+Expo Go đã cài xong và đang tải bundle của app.
+
+Bundle đã build xong. Tôi chụp màn hình emulator để xem app có tải được danh sách sản phẩm từ backend không.
+
+Log báo 11 lượt, nhiều hơn số prompt bạn thực sự gõ (4). Có thể các thông báo hệ thống từ tác vụ nền đã bị tính nhầm là prompt. Tôi kiểm tra.
 ````
 
-<details><summary>Hành động AI đã thực hiện (15)</summary>
+<details><summary>Hành động AI đã thực hiện (26)</summary>
 
 1. `Write` — /home/npdinh/.claude/projects/-home-npdinh-study-Homeworks/memory/hw02-plan-decisions.md
 2. `Edit` — /home/npdinh/.claude/projects/-home-npdinh-study-Homeworks/memory/MEMORY.md
@@ -273,168 +284,16 @@ Xong thì báo tôi để push. Remote đã gắn sẵn là `git@github-d1nh:d1n
 13. `Bash` — Start the EShop backend server
 14. `Bash` — Wait for emulator boot and check backend
 15. `ToolSearch` — query=select:Monitor, max_results=1
-
-</details>
-
-## #5 · 2026-10-20 21:13:40 · phiên `1946c20d`
-
-- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
-
-**Prompt (nguyên văn):**
-
-````text
-<task-notification>
-<task-id>bd6kjcg72</task-id>
-<tool-use-id>toolu_01Lfy99u5ygjDieCV1WHAE8c</tool-use-id>
-<output-file>/tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/tasks/bd6kjcg72.output</output-file>
-<status>completed</status>
-<summary>Background command "Wait for emulator boot and check backend" completed (exit code 0)</summary>
-</task-notification>
-````
-
-**Output AI (nguyên văn):**
-
-````markdown
-Emulator đã boot (`emulator-5554`), backend trả về dữ liệu sản phẩm. Tôi khởi động Expo cho Android; Expo sẽ tự cài Expo Go lên emulator rồi mở app.
-
-Expo đang build bundle và cài Expo Go, tôi chờ log báo kết quả.
-````
-
-<details><summary>Hành động AI đã thực hiện (3)</summary>
-
-1. `Bash` — Read boot wait and backend output
-2. `Bash` — Start Expo and open app on emulator
-3. `Monitor` — command=L=/tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f, description=Expo start progress and errors
-
-</details>
-
-## #6 · 2026-10-20 21:14:07 · phiên `1946c20d`
-
-- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
-
-**Prompt (nguyên văn):**
-
-````text
-<task-notification>
-<task-id>bj6ztu8gl</task-id>
-<summary>Monitor event: "Expo start progress and errors"</summary>
-<event>The following packages should be updated for best compatibility with the installed expo version:</event>
-</task-notification>
-````
-
-**Output AI (nguyên văn):**
-
-````markdown
-Mới có cảnh báo lệch phiên bản package, chưa phải lỗi. Tôi tiếp tục chờ bundle.
-````
-
-## #7 · 2026-10-20 21:14:11 · phiên `1946c20d`
-
-- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
-
-**Prompt (nguyên văn):**
-
-````text
-<task-notification>
-<task-id>bj6ztu8gl</task-id>
-<summary>Monitor event: "Expo start progress and errors"</summary>
-<event>Your project may not work correctly until you install the expected versions of the packages.
-› Opening exp://192.168.2.238:8081 on eshop_api34</event>
-</task-notification>
-````
-
-**Output AI (nguyên văn):**
-
-````markdown
-Expo đã mở `exp://192.168.2.238:8081` trên emulator. Tôi chờ bundle xong.
-````
-
-## #8 · 2026-10-20 21:14:32 · phiên `1946c20d`
-
-- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
-
-**Prompt (nguyên văn):**
-
-````text
-<task-notification>
-<task-id>bj6ztu8gl</task-id>
-<summary>Monitor event: "Expo start progress and errors"</summary>
-<event>- Fetching Expo Go</event>
-</task-notification>
-````
-
-**Output AI (nguyên văn):**
-
-````markdown
-Expo đang tải Expo Go về emulator.
-````
-
-## #9 · 2026-10-20 21:14:39 · phiên `1946c20d`
-
-- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
-
-**Prompt (nguyên văn):**
-
-````text
-<task-notification>
-<task-id>bj6ztu8gl</task-id>
-<summary>Monitor event: "Expo start progress and errors"</summary>
-<event>- Installing Expo Go on eshop_api34</event>
-</task-notification>
-````
-
-**Output AI (nguyên văn):**
-
-````markdown
-Đang cài Expo Go lên emulator.
-````
-
-## #10 · 2026-10-20 21:14:44 · phiên `1946c20d`
-
-- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
-
-**Prompt (nguyên văn):**
-
-````text
-<task-notification>
-<task-id>bj6ztu8gl</task-id>
-<summary>Monitor event: "Expo start progress and errors"</summary>
-<event>Logs for your project will appear below.</event>
-</task-notification>
-````
-
-**Output AI (nguyên văn):**
-
-````markdown
-Expo Go đã cài xong và đang tải bundle của app.
-````
-
-## #11 · 2026-10-20 21:15:09 · phiên `1946c20d`
-
-- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
-
-**Prompt (nguyên văn):**
-
-````text
-<task-notification>
-<task-id>bj6ztu8gl</task-id>
-<summary>Monitor event: "Expo start progress and errors"</summary>
-<event>Android Bundled 23360ms index.js (686 modules)</event>
-</task-notification>
-````
-
-**Output AI (nguyên văn):**
-
-````markdown
-Bundle đã build xong. Tôi chụp màn hình emulator để xem app có tải được danh sách sản phẩm từ backend không.
-````
-
-<details><summary>Hành động AI đã thực hiện (5)</summary>
-
-1. `Bash` — Screenshot emulator and check Expo errors
-2. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/android/home.png
-3. `Bash` — Dismiss Expo developer menu on emulator
-4. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/start_env.sh
-5. `Bash` — Commit env script and refreshed prompt log
+16. `Bash` — Read boot wait and backend output
+17. `Bash` — Start Expo and open app on emulator
+18. `Monitor` — command=L=/tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f, description=Expo start progress and errors
+19. `Bash` — Screenshot emulator and check Expo errors
+20. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/android/home.png
+21. `Bash` — Dismiss Expo developer menu on emulator
+22. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/start_env.sh
+23. `Bash` — Commit env script and refreshed prompt log
+24. `Bash` — Inspect which entries were counted as prompts
+25. `Edit` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/export_prompt_log.py
+26. `Bash` — Regenerate log without notifications and commit
 
 </details>

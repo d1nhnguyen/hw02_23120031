@@ -89,7 +89,9 @@ def parse_session(path):
                     if current and tool_names.get(r.get("tool_use_id")) == "AskUserQuestion":
                         current["answers"].append(tool_result_text(r.get("content")))
                 continue
-            if o.get("isMeta") or o.get("isCompactSummary"):
+            # Thông báo tác vụ nền do hệ thống gửi, không phải sinh viên gõ:
+            # output AI sau đó vẫn được gộp vào lượt prompt thật trước đó
+            if o.get("isMeta") or o.get("isCompactSummary") or o.get("promptSource") == "system":
                 continue
             prompt = user_prompt(content)
             if not prompt:
