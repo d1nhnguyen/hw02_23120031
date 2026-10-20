@@ -27,6 +27,11 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | FR15-B6 | | FR-15 | Sửa / Xóa sản phẩm không tồn tại trả 200 "Product updated / deleted" thay vì 404 | Minor | Backend | FR15-DT-27…FR15-DT-29, FR15-DT-31…FR15-DT-33, FR15-BV-21, FR15-BV-24, FR15-BV-25, FR15-BV-27 |
 | FR10-B1 | | FR-10 | Đơn đã hủy chuyển được sang "Đã giao"; Web Admin hiện nút "Đánh dấu Đã giao" cho đơn đã hủy | Critical | Backend, Web Admin | FR10-DT-09, FR10-DT-26 |
 | FR10-B2 | | FR-10 | User hủy được đơn đang giao; trang Hồ sơ hiện nút "Hủy đơn" cho đơn đang giao | Major | Backend, Web | FR10-DT-14, FR10-DT-27 |
+| MOB-B1 | | FR-20 (Mobile – Đăng nhập) | Thanh tiêu đề app Mobile bị thanh trạng thái che trên máy có thanh trạng thái cao, không mở được màn hình Đăng nhập | Critical | Mobile | Quan sát bước 1 (Pixel 6) |
+| MOB-B2 | | FR-20 (Mobile – Đăng nhập) | Mỗi lần đăng nhập sai bộ đếm tăng 2, tài khoản bị khóa ngay sau lần sai thứ 2 | Major | Backend (ảnh hưởng Mobile) | MOB-DT-06, MOB-DT-07, MOB-DT-10…MOB-DT-12, MOB-BV-02, MOB-BV-04, MOB-BV-07, MOB-BV-08 |
+| MOB-B3 | | FR-20 (Mobile – Đăng nhập) | Tài khoản bị khóa 180 giây thay vì 30 giây | Major | Backend (ảnh hưởng Mobile) | MOB-DT-04, MOB-BV-06 |
+| MOB-B4 | | FR-20 (Mobile – Đăng nhập) | Đăng nhập thất bại khi email khác chữ hoa / thường hoặc có khoảng trắng đầu / cuối | Minor | Backend (ảnh hưởng Mobile) | MOB-DT-02, MOB-DT-03 |
+| MOB-B5 | | FR-20 (Mobile – Đăng nhập) | Màn hình Đăng nhập Mobile dùng nhãn tiếng Anh "Username" cho ô Email và nút "Sign In" | Minor | Mobile | Quan sát bước 1 |
 
 ## Chi tiết
 
@@ -468,6 +473,131 @@ Môi trường: như FR-01; bộ dữ liệu 7 đơn của `test@eshop.com` / Us
 **Bằng chứng:** `bugs/screenshots/FR10-B2.png`
 
 ![FR10-B2](screenshots/FR10-B2.png)
+
+### Mobile – Đăng nhập (Pool D, FR-20)
+
+Môi trường: Expo Go SDK 54 trên Android Emulator Android 14 – Pixel 6 (`eshop_api34`, 1080×2400) và Pixel 2 (`eshop_api34_pixel2`, 1080×1920); backend `http://10.0.2.2:3000/api`. Quy tắc đăng nhập theo FR-02 (giả định A1 của báo cáo Mobile). Tiêu đề issue dùng `[FR-20]` như nhóm đã làm với bug mobile.
+
+### MOB-B1 – Thanh tiêu đề app Mobile bị thanh trạng thái che, không mở được màn hình Đăng nhập
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-20 (Mobile có chức năng Đăng nhập); FR-23 (thanh điều hướng) |
+| Thành phần | Mobile app – thanh tiêu đề (không chừa vùng an toàn cho thanh trạng thái) |
+| Loại | Lỗi lập trình / giao diện |
+| Mức độ / Ưu tiên | Critical / Cao |
+| Tái hiện được | Luôn luôn trên Pixel 6 (thanh trạng thái 128 px); không xảy ra trên Pixel 2 (63 px) |
+| TC phát hiện | Quan sát bước 1 của báo cáo Mobile |
+
+**Các bước tái hiện**
+
+1. Mở app trên thiết bị Android có thanh trạng thái cao (Pixel 6, Android 14, có tai thỏ camera).
+2. Chạm vào chữ "Đăng nhập" (hoặc "Giỏ (0)") trên thanh tiêu đề.
+
+**Kết quả mong đợi:** mở màn hình Đăng nhập (giỏ hàng).
+
+**Kết quả thực tế:** thanh tiêu đề (y = 37–108 px) nằm hoàn toàn dưới thanh trạng thái (y = 0–128 px); chạm không có tác dụng. Không có đường nào khác tới màn hình Đăng nhập / Giỏ hàng nên người dùng không thể đăng nhập, mua hàng. Trên Pixel 2 phần dưới của chữ vẫn chạm được.
+
+**Phân tích:** Expo SDK 54 vẽ nội dung tràn lên dưới thanh trạng thái; log Metro cảnh báo `SafeAreaView has been deprecated … use react-native-safe-area-context`. Ảnh hưởng mọi máy có tai thỏ / thanh trạng thái cao.
+
+**Bằng chứng:** `bugs/screenshots/MOB-B1.png`
+
+![MOB-B1](screenshots/MOB-B1.png)
+
+### MOB-B2 – Mỗi lần đăng nhập sai bộ đếm tăng 2, tài khoản bị khóa sau lần sai thứ 2
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-02 ("Sau mỗi lần đăng nhập sai, hệ thống tăng bộ đếm lên đúng 1 đơn vị"; khóa khi sai từ 3 lần liên tiếp) – áp dụng cho Mobile (FR-20) |
+| Thành phần | Backend `POST /api/login` (app Mobile dùng chung) |
+| Loại | Lỗi lập trình |
+| Mức độ / Ưu tiên | Major / Cao |
+| Tái hiện được | Luôn luôn (cả qua app và gọi API trực tiếp – một request) |
+| TC phát hiện | MOB-DT-06, MOB-DT-07, MOB-DT-10…MOB-DT-12, MOB-BV-02, MOB-BV-04, MOB-BV-07, MOB-BV-08 (Mobile và API); MOB-DT-05 Blocked |
+
+**Các bước tái hiện**
+
+1. Khởi động lại backend (`login_attempts` của `test@eshop.com` = 0).
+2. Trên app (hoặc `POST /api/login`): đăng nhập `test@eshop.com` / `Sai12345!` một lần → xem `login_attempts` qua `GET /api/admin/users`.
+3. Đăng nhập sai lần nữa, rồi đăng nhập đúng `Test1234!`.
+
+**Kết quả mong đợi:** bộ đếm = 1 rồi 2; lần đăng nhập đúng ở bước 3 thành công (chưa đủ 3 lần sai).
+
+**Kết quả thực tế:** bộ đếm = 2 rồi 4; sau lần sai thứ 2 tài khoản bị khóa (`locked_until` được đặt), lần đăng nhập đúng bị từ chối (API 403 "Tài khoản đã bị khóa…", app hiện "Đăng nhập thất bại…").
+
+**Bằng chứng:** `bugs/screenshots/MOB-B2.png`
+
+![MOB-B2](screenshots/MOB-B2.png)
+
+### MOB-B3 – Tài khoản bị khóa 180 giây thay vì 30 giây
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-02 ("tạm khóa 30 giây (môi trường demo)") – áp dụng cho Mobile (FR-20) |
+| Thành phần | Backend `POST /api/login` |
+| Loại | Lỗi lập trình |
+| Mức độ / Ưu tiên | Major / Trung bình |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | MOB-DT-04, MOB-BV-06 (Mobile và API) |
+
+**Các bước tái hiện**
+
+1. Làm tài khoản `test@eshop.com` bị khóa (đăng nhập sai liên tiếp – xem MOB-B2), ghi thời điểm khóa.
+2. Đọc `locked_until` qua `GET /api/admin/users`; sau 32–35 giây đăng nhập đúng.
+
+**Kết quả mong đợi:** `locked_until` = thời điểm khóa + 30 giây; sau 30 giây đăng nhập đúng thành công.
+
+**Kết quả thực tế:** `locked_until` = thời điểm khóa + 180 giây; sau 35 giây vẫn bị từ chối. Các lần thử trong lúc khóa không gia hạn thêm.
+
+**Bằng chứng:** `bugs/screenshots/MOB-B3.png`
+
+![MOB-B3](screenshots/MOB-B3.png)
+
+### MOB-B4 – Đăng nhập thất bại khi email khác chữ hoa / thường hoặc có khoảng trắng đầu / cuối
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-02; giả định A6 của báo cáo Mobile (email không phân biệt hoa / thường, bỏ khoảng trắng – nhất quán với FR-01) |
+| Thành phần | Backend `POST /api/login` (app gửi nguyên chuỗi người dùng nhập) |
+| Loại | Lỗi lập trình (phụ thuộc giả định) |
+| Mức độ / Ưu tiên | Minor / Thấp |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | MOB-DT-02, MOB-DT-03 (Mobile và API) |
+
+**Các bước tái hiện**
+
+1. Trên app nhập email `TEST@eshop.com` (hoặc `␣test@eshop.com␣`), mật khẩu `Test1234!`, bấm "Sign In".
+
+**Kết quả mong đợi:** đăng nhập thành công vào tài khoản `test@eshop.com`.
+
+**Kết quả thực tế:** "Đăng nhập thất bại. Vui lòng kiểm tra lại." (API 401 "Invalid email or password"). Bàn phím điện thoại thường tự viết hoa chữ đầu hoặc thêm dấu cách sau khi gợi ý từ, nên lỗi dễ gặp trên Mobile.
+
+**Bằng chứng:** `bugs/screenshots/MOB-B4.png`
+
+![MOB-B4](screenshots/MOB-B4.png)
+
+### MOB-B5 – Màn hình Đăng nhập Mobile dùng nhãn tiếng Anh "Username" cho ô Email và nút "Sign In"
+
+| Trường | Nội dung |
+| --- | --- |
+| Feature / FR | FR-21 ("Toàn bộ giao diện dùng tiếng Việt"); FR-20 |
+| Thành phần | Mobile app – màn hình Đăng nhập |
+| Loại | Lỗi giao diện |
+| Mức độ / Ưu tiên | Minor / Thấp |
+| Tái hiện được | Luôn luôn |
+| TC phát hiện | Quan sát bước 1 của báo cáo Mobile |
+
+**Các bước tái hiện**
+
+1. Mở màn hình Đăng nhập trên app.
+
+**Kết quả mong đợi:** nhãn "Email", nút "Đăng nhập" (tiếng Việt, đúng loại dữ liệu cần nhập).
+
+**Kết quả thực tế:** nhãn "Username" phía trên ô nhập Email; nút "Sign In".
+
+**Bằng chứng:** `bugs/screenshots/MOB-B5.png`
+
+![MOB-B5](screenshots/MOB-B5.png)
 
 ## Ảnh trang GitHub Issues
 
