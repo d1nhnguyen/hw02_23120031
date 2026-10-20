@@ -89,8 +89,54 @@ Vì trạng thái có thứ tự `pending (0) < confirmed (1) < shipping (2) < d
 
 ## 2. Bước 2 – Lớp tương đương (Complete Set of Partitions)
 
-| EC | Biến | Guideline | Phân vùng | Valid / Invalid |
+### 2.1 Cách áp dụng guideline cho từng biến
+
+| Biến | Điều kiện trong đặc tả | Guideline [S04] | Lớp tạo ra |
+| --- | --- | --- | --- |
+| I1 × I2 (Admin đổi trạng thái) | Sơ đồ có 5 cạnh: `pending→confirmed`, `confirmed→shipping`, `shipping→delivered`, `pending→canceled`, `confirmed→canceled` | Tập giá trị được xử lý khác nhau (mỗi cạnh là một thao tác riêng: Xác nhận / Giao hàng / Hoàn thành / Hủy) → mỗi cạnh 1 lớp valid | 5 lớp valid |
+| | "`delivered` và `canceled` là trạng thái kết thúc"; "mọi chuyển đổi không hợp lệ phải trả về lỗi" | "Phải là" cạnh trên sơ đồ → lớp invalid; tách lớp (G5) theo kiểu sai vì mỗi kiểu có thể bị một điều kiện khác bỏ sót: đi ra từ `delivered`, đi ra từ `canceled` (giao diện còn hiện nút cho đơn đã hủy), bỏ bước (d ≥ 2), lùi (d ≤ −1), giữ nguyên (d = 0), `shipping→canceled` (A1) | 6 lớp invalid |
+| I3 (User hủy) | "User/Admin hủy" từ `pending`, `confirmed`; "khi `shipping` User không được tự hủy" | "Phải là" đơn `pending` / `confirmed`; tách lớp (G5) theo trạng thái hiện tại vì mỗi trạng thái có thể được kiểm tra riêng | 2 lớp valid; `shipping`, `delivered`, `canceled` (3 lớp invalid) |
+| I4 (Tác nhân) | User hủy đơn của mình (A6) | "Phải là" chủ đơn | User khác hủy (invalid) |
+| I2 giá trị `status` | 5 giá trị (`api_specification.md` 6.2) | "Phải là" một trong tập → 1 valid + 1 invalid (ngoài tập); tách lớp (G5): sai hoa / thường, rỗng, thiếu trường (A4) | 1 valid, 4 invalid |
+| I5 Mã đơn | Đơn đang tồn tại | "Phải là" → tồn tại / không tồn tại; tách lớp (G5): id không phải số | 1 valid, 2 invalid |
+| Đầu ra O1–O4 | thành công / từ chối / không tìm thấy / thao tác giao diện | Phân vùng đầu ra như ví dụ [UC] | 5 lớp đầu ra |
+
+### 2.2 Complete Set of Partitions
+
+| EC | Biến | Phân vùng | Ví dụ đại diện | Valid / Invalid |
 | --- | --- | --- | --- | --- |
+| EC1 | I1 × I2 Admin | `pending → confirmed` (Xác nhận) | đơn `pending`, `status = confirmed` | Valid |
+| EC2 | I1 × I2 Admin | `confirmed → shipping` (Giao hàng) | | Valid |
+| EC3 | I1 × I2 Admin | `shipping → delivered` (Hoàn thành) | | Valid |
+| EC4 | I1 × I2 Admin | `pending → canceled` (Hủy) | | Valid |
+| EC5 | I1 × I2 Admin | `confirmed → canceled` (Hủy) | | Valid |
+| EC6 | I3 User | Hủy đơn `pending` của mình | | Valid |
+| EC7 | I3 User | Hủy đơn `confirmed` của mình | | Valid |
+| EC8 | I1 × I2 Admin | Đi ra từ `delivered` (trạng thái kết thúc) | `delivered → canceled` | Invalid |
+| EC9 | I1 × I2 Admin | Đi ra từ `canceled` (trạng thái kết thúc) | `canceled → delivered` | Invalid |
+| EC10 | I1 × I2 Admin | Bỏ bước tiến (d ≥ 2) (A3) | `pending → shipping` | Invalid |
+| EC11 | I1 × I2 Admin | Lùi trạng thái (d ≤ −1) (A3) | `shipping → confirmed` | Invalid |
+| EC12 | I1 × I2 Admin | Giữ nguyên trạng thái (d = 0) (A2) | `confirmed → confirmed` | Invalid |
+| EC13 | I1 × I2 Admin | `shipping → canceled` (A1) | | Invalid |
+| EC14 | I3 User | Hủy đơn `shipping` | | Invalid |
+| EC15 | I3 User | Hủy đơn `delivered` | | Invalid |
+| EC16 | I3 User | Hủy đơn `canceled` | | Invalid |
+| EC17 | I4 | User hủy đơn của người khác (A6) | | Invalid |
+| EC18 | I2 `status` | Một trong 5 giá trị chữ thường | `confirmed` | Valid |
+| EC19 | I2 `status` | Ngoài tập (A4) | `abc` | Invalid |
+| EC20 | I2 `status` | Sai chữ hoa / thường (A4) | `Confirmed` | Invalid |
+| EC21 | I2 `status` | Rỗng (A4) | `` | Invalid |
+| EC22 | I2 `status` | Thiếu trường `status` (A4) | `{}` | Invalid |
+| EC23 | I5 Mã đơn | Đơn đang tồn tại | id `1` | Valid |
+| EC24 | I5 Mã đơn | Không tồn tại | `9999` | Invalid |
+| EC25 | I5 Mã đơn | Không phải số | `abc` | Invalid |
+| EC26 | O1, O3 | Chuyển thành công: đơn có trạng thái mới, các đơn khác giữ nguyên | | Output |
+| EC27 | O1, O2 | Từ chối chuyển đổi không hợp lệ: 4xx + thông báo, trạng thái giữ nguyên | | Output |
+| EC28 | O1, O2 | Từ chối giá trị `status` không hợp lệ: 4xx, trạng thái giữ nguyên | | Output |
+| EC29 | O2 | Không tìm thấy đơn: 404 | | Output |
+| EC30 | O4 | Giao diện chỉ hiện thao tác của chuyển đổi hợp lệ cho trạng thái hiện tại (A7) | | Output |
+
+Tổng: 25 lớp đầu vào (9 valid, 16 invalid) và 5 lớp đầu ra.
 
 ## 3. Bước 3 – Test case Domain Testing
 
