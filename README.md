@@ -22,13 +22,41 @@
 
 ## Test summary
 
-| Feature | TC đã thiết kế | Đã chạy | Pass | Fail | Chưa chạy | Số bug |
+Số feature: **4**. Số liệu lấy từ mục 5.4 của từng báo cáo (sinh tự động từ `evidence/<feature>/*_results.json`).
+
+### Theo test case (gộp các kênh)
+
+Một test case **Fail** nếu Fail ở bất kỳ kênh nào; **Blocked** nếu kết quả bị một bug khác che (không kết luận được).
+
+| Feature | Báo cáo | TC đã thiết kế | Đã chạy | Pass | Fail | Blocked | Chưa chạy | Số bug |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| FR-01 Đăng ký | [FR-01_Dang_ky.md](report/FR-01_Dang_ky.md) | 53 | 53 | 0 | 48 | 5 | 0 | 9 |
+| FR-10 Máy trạng thái đơn hàng | [FR-10_Trang_thai_don_hang.md](report/FR-10_Trang_thai_don_hang.md) | 47 | 47 | 43 | 4 | 0 | 0 | 2 |
+| FR-15 Quản lý sản phẩm | [FR-15_Quan_ly_san_pham.md](report/FR-15_Quan_ly_san_pham.md) | 61 | 61 | 23 | 38 | 0 | 0 | 6 |
+| Mobile – Đăng nhập | [Mobile_Dang_nhap.md](report/Mobile_Dang_nhap.md) | 24 | 24 | 10 | 13 | 1 | 0 | 5 |
+| **Tổng** | | **185** | **185** | **76** | **103** | **6** | **0** | **22** |
+
+### Theo lượt chạy (mỗi kênh một lượt)
+
+| Feature | Kênh | Lượt chạy | Pass | Fail | Blocked | Không áp dụng |
 | --- | --- | --- | --- | --- | --- | --- |
-| FR-01 | | | | | | |
-| FR-10 | | | | | | |
-| FR-15 | | | | | | |
-| Mobile – Đăng nhập | | | | | | |
-| **Tổng (4 feature)** | | | | | | |
+| FR-01 | Web, API | 101 | 36 | 50 | 15 | 5 |
+| FR-10 | Web Admin / Web, API | 56 | 50 | 6 | 0 | 38 |
+| FR-15 | Web Admin, API | 101 | 47 | 54 | 0 | 21 |
+| Mobile – Đăng nhập | Mobile (Android Emulator), API | 48 | 20 | 26 | 2 | 0 |
+| **Tổng** | | **306** | **153** | **136** | **17** | **64** |
+
+"Không áp dụng": test case không có thao tác tương ứng trên kênh đó (vd giao diện không có nút chuyển trạng thái, API không có trường Xác nhận mật khẩu) – lý do ghi ở mục 5.3 từng báo cáo. FR-01 có thêm lượt **khảo sát** cho 15 test case Web bị Blocked (không tính verdict).
+
+### Bug
+
+| Feature | Critical | Major | Minor | Tổng | Chi tiết |
+| --- | --- | --- | --- | --- | --- |
+| FR-01 | 2 | 4 | 3 | 9 | FR01-B1…FR01-B9 |
+| FR-10 | 1 | 1 | 0 | 2 | FR10-B1…FR10-B2 |
+| FR-15 | 0 | 5 | 1 | 6 | FR15-B1…FR15-B6 |
+| Mobile – Đăng nhập | 1 | 2 | 2 | 5 | MOB-B1…MOB-B5 |
+| **Tổng** | **4** | **12** | **6** | **22** | [bugs/Bug_Report.md](bugs/Bug_Report.md) |
 
 ## Video demo
 
