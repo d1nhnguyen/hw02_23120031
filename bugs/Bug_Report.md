@@ -215,7 +215,7 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 
 ![FR01-B7](screenshots/FR01-B7.png)
 
-### FR01-B8 – Email đăng ký được lưu kèm khoảng trắng đầu/cuối
+### FR01-B8 – Email đăng ký được lưu kèm khoảng trắng đầu/cuối, không đăng nhập được bằng email bình thường
 
 | Trường | Nội dung |
 | --- | --- |
@@ -390,7 +390,7 @@ Môi trường: như FR-01; Web Admin `http://localhost:5174` đăng nhập `adm
 
 ![FR15-B5](screenshots/FR15-B5.png)
 
-### FR15-B6 – Sửa / Xóa sản phẩm không tồn tại trả 200 thay vì 404
+### FR15-B6 – Sửa / Xóa sản phẩm không tồn tại trả 200 "Product updated / deleted" thay vì 404
 
 | Trường | Nội dung |
 | --- | --- |
@@ -478,7 +478,7 @@ Môi trường: như FR-01; bộ dữ liệu 7 đơn của `test@eshop.com` / Us
 
 Môi trường: Expo Go SDK 54 trên Android Emulator Android 14 – Pixel 6 (`eshop_api34`, 1080×2400) và Pixel 2 (`eshop_api34_pixel2`, 1080×1920); backend `http://10.0.2.2:3000/api`. Quy tắc đăng nhập theo FR-02 (giả định A1 của báo cáo Mobile). Tiêu đề issue dùng `[FR-20]` như nhóm đã làm với bug mobile.
 
-### MOB-B1 – Thanh tiêu đề app Mobile bị thanh trạng thái che, không mở được màn hình Đăng nhập
+### MOB-B1 – Thanh tiêu đề app Mobile bị thanh trạng thái che trên máy có thanh trạng thái cao, không mở được màn hình Đăng nhập
 
 | Trường | Nội dung |
 | --- | --- |
@@ -504,7 +504,7 @@ Môi trường: Expo Go SDK 54 trên Android Emulator Android 14 – Pixel 6 (`e
 
 ![MOB-B1](screenshots/MOB-B1.png)
 
-### MOB-B2 – Mỗi lần đăng nhập sai bộ đếm tăng 2, tài khoản bị khóa sau lần sai thứ 2
+### MOB-B2 – Mỗi lần đăng nhập sai bộ đếm tăng 2, tài khoản bị khóa ngay sau lần sai thứ 2
 
 | Trường | Nội dung |
 | --- | --- |
