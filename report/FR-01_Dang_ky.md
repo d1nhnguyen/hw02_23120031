@@ -160,15 +160,106 @@ Tổng: 40 lớp đầu vào (19 valid, 21 invalid) và 6 lớp đầu ra.
 
 ### 3.1 Thủ tục thực hiện
 
+Mọi test case dùng chung thủ tục, chỉ dữ liệu thay đổi, nên được viết dạng **data matrix** [DR]: thủ tục dưới đây + mỗi dòng ở mục 3.2 là một test case.
+
+**Tiền điều kiện chung**
+
+- Backend `http://localhost:3000` vừa được khởi động lại (dữ liệu seed, có sẵn `test@eshop.com / Test1234!`, `admin@eshop.com / Admin123!`).
+- Web `http://localhost:5173` đang chạy; Chrome, chưa đăng nhập.
+- Email trong mỗi test case là duy nhất (`fr01.<id>@example.com`) để các test case độc lập nhau, trừ khi test case ghi khác.
+
+**P-WEB – Thực hiện trên giao diện Web**
+
+| Bước | Hành động | Kết quả mong đợi của bước |
+| --- | --- | --- |
+| 1 | Mở `http://localhost:5173/register` | Trang "Đăng Ký Tài Khoản" hiện các ô Họ Tên, Email, Mật khẩu, Xác nhận mật khẩu và nút "Đăng Ký" |
+| 2 | Nhập Họ Tên, Email, Mật khẩu theo cột dữ liệu | Giá trị hiện đúng như nhập; ô Mật khẩu che ký tự |
+| 3 | Nhập Xác nhận mật khẩu theo cột dữ liệu (`= MK` nghĩa là giống Mật khẩu) | Ô che ký tự |
+| 4 | Bấm "Đăng Ký" | Như cột Kết quả mong đợi |
+| 5 | Kiểm chứng tài khoản: gửi `POST /api/login` với Email (đã bỏ khoảng trắng đầu/cuối) + Mật khẩu của test case | Có token nếu mong đợi đăng ký thành công; bị từ chối nếu mong đợi đăng ký bị từ chối |
+
+**P-API – Thực hiện trên API**
+
+| Bước | Hành động | Kết quả mong đợi của bước |
+| --- | --- | --- |
+| 1 | Gửi `POST http://localhost:3000/api/register`, `Content-Type: application/json`, body `{"name": <Họ Tên>, "email": <Email>, "password": <Mật khẩu>}` | Như cột Kết quả mong đợi: `200` + `{"message": "User registered successfully", "id"}` khi hợp lệ, mã 4xx + thông báo lỗi khi không hợp lệ (A7) |
+| 2 | Kiểm chứng tài khoản như bước 5 của P-WEB | như trên |
+
+Test case thuộc biến Xác nhận mật khẩu (I4) chỉ chạy P-WEB (A8). Ký hiệu `␣` là một dấu cách.
+
+**Hậu điều kiện (self cleaning):** khởi động lại backend sau phiên thực thi để xóa các tài khoản đã tạo.
+
 ### 3.2 Minimum Set of Test Cases
 
-| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Dữ liệu | Kết quả mong đợi | Origin |
-| --- | --- | --- | --- | --- | --- |
+Giá trị mặc định cho các biến không phải đối tượng của test case: Họ Tên `Nguyen Van A`, Email `fr01.<id>@example.com`, Mật khẩu `Abcdef1@`, Xác nhận `= MK`.
+
+**Test case valid** – mỗi test case phủ nhiều lớp valid nhất có thể:
+
+| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Họ Tên | Email | Mật khẩu | Xác nhận | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| DT-01 | Kiểm tra đăng ký thành công với dữ liệu hợp lệ điển hình | EC1, EC5, EC14, EC18, EC20, EC22, EC24, EC26, EC29, EC37, EC41 | `Nguyen Van A` | `fr01.dt01@example.com` | `Abcdef1@` | `= MK` | Đăng ký thành công, chuyển tới trang Đăng nhập; API `200` + `id`; đăng nhập được | Web, API | AI |
+| DT-02 | Kiểm tra đăng ký thành công khi Họ Tên có dấu, email có khoảng trắng đầu/cuối và mật khẩu có ký tự ngoài tập | EC2, EC6, EC30, EC36, EC41 | `Nguyễn Thị Ánh` | `␣fr01.dt02@example.com␣` | `Abc#def1$` | `= MK` | Như DT-01; email được lưu là `fr01.dt02@example.com` (A4) | Web, API | AI |
+| DT-03 | Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất là `!` | EC31, EC41 | mặc định | `fr01.dt03@example.com` | `Abcdef1!` | `= MK` | Như DT-01 | Web, API | AI |
+| DT-04 | Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất là `%` | EC32, EC41 | mặc định | `fr01.dt04@example.com` | `Abcdef1%` | `= MK` | Như DT-01 | Web, API | AI |
+| DT-05 | Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất là `*` | EC33, EC41 | mặc định | `fr01.dt05@example.com` | `Abcdef1*` | `= MK` | Như DT-01 | Web, API | AI |
+| DT-06 | Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất là `?` | EC34, EC41 | mặc định | `fr01.dt06@example.com` | `Abcdef1?` | `= MK` | Như DT-01 | Web, API | AI |
+| DT-07 | Kiểm tra đăng ký thành công khi ký tự đặc biệt duy nhất là `&` | EC35, EC41 | mặc định | `fr01.dt07@example.com` | `Abcdef1&` | `= MK` | Như DT-01 | Web, API | AI |
+
+**Test case invalid** – mỗi test case phủ đúng một lớp invalid, các biến còn lại hợp lệ. Kết quả mong đợi chung khi bị từ chối (A7): không tạo tài khoản, ở lại trang Đăng ký, hiện thông báo lỗi đúng lý do; API trả 4xx kèm thông báo; bước kiểm chứng đăng nhập thất bại.
+
+| ID | Tên test case (Action + Function + Condition) | Phân vùng phủ | Họ Tên | Email | Mật khẩu | Xác nhận | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| DT-08 | Kiểm tra đăng ký bị từ chối khi bỏ trống Họ Tên | EC3, EC42 | `` | `fr01.dt08@example.com` | mặc định | `= MK` | Từ chối, báo thiếu Họ Tên | Web, API | AI |
+| DT-09 | Kiểm tra đăng ký bị từ chối khi Họ Tên chỉ gồm khoảng trắng | EC4, EC42 | `␣␣␣` | `fr01.dt09@example.com` | mặc định | `= MK` | Từ chối, báo thiếu Họ Tên (A4) | Web, API | AI |
+| DT-10 | Kiểm tra đăng ký bị từ chối khi bỏ trống Email | EC7, EC42 | mặc định | `` | mặc định | `= MK` | Từ chối, báo thiếu Email | Web, API | AI |
+| DT-11 | Kiểm tra đăng ký bị từ chối khi Email thiếu ký tự `@` | EC8, EC43 | mặc định | `fr01.dt11example.com` | mặc định | `= MK` | Từ chối, báo email sai định dạng | Web, API | AI |
+| DT-12 | Kiểm tra đăng ký bị từ chối khi Email thiếu phần trước `@` | EC9, EC43 | mặc định | `@example.com` | mặc định | `= MK` | Từ chối, báo email sai định dạng | Web, API | AI |
+| DT-13 | Kiểm tra đăng ký bị từ chối khi Email thiếu phần domain sau `@` | EC10, EC43 | mặc định | `fr01.dt13@` | mặc định | `= MK` | Từ chối, báo email sai định dạng | Web, API | AI |
+| DT-14 | Kiểm tra đăng ký bị từ chối khi domain của Email không có dấu `.` | EC11, EC43 | mặc định | `fr01.dt14@example` | mặc định | `= MK` | Từ chối, báo email sai định dạng (A2) | Web, API | AI |
+| DT-15 | Kiểm tra đăng ký bị từ chối khi Email có hai ký tự `@` | EC12, EC43 | mặc định | `fr01@dt15@example.com` | mặc định | `= MK` | Từ chối, báo email sai định dạng | Web, API | AI |
+| DT-16 | Kiểm tra đăng ký bị từ chối khi Email có khoảng trắng ở giữa | EC13, EC43 | mặc định | `fr01␣dt16@example.com` | mặc định | `= MK` | Từ chối, báo email sai định dạng | Web, API | AI |
+| DT-17 | Kiểm tra đăng ký bị từ chối khi Email đã tồn tại | EC15, EC44 | mặc định | `test@eshop.com` | `Newpass1@` | `= MK` | Từ chối, báo email đã tồn tại; đăng nhập `test@eshop.com / Test1234!` vẫn thành công (tài khoản cũ không bị ghi đè); đăng nhập bằng `Newpass1@` thất bại | Web, API | AI |
+| DT-18 | Kiểm tra đăng ký bị từ chối khi Email trùng tài khoản có sẵn nhưng khác chữ hoa / thường | EC16, EC44 | mặc định | `TEST@eshop.com` | `Newpass1@` | `= MK` | Như DT-17 (A3) | Web, API | AI |
+| DT-19 | Kiểm tra đăng ký bị từ chối khi bỏ trống Mật khẩu | EC17, EC42 | mặc định | `fr01.dt19@example.com` | `` | `= MK` | Từ chối, báo thiếu Mật khẩu | Web, API | AI |
+| DT-20 | Kiểm tra đăng ký bị từ chối khi Mật khẩu ngắn hơn 8 ký tự | EC19, EC45 | mặc định | `fr01.dt20@example.com` | `Abcd1@` (6) | `= MK` | Từ chối, báo mật khẩu không đủ mạnh | Web, API | AI |
+| DT-21 | Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ hoa | EC21, EC45 | mặc định | `fr01.dt21@example.com` | `abcdef1@` | `= MK` | Từ chối, báo mật khẩu không đủ mạnh | Web, API | AI |
+| DT-22 | Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ thường | EC23, EC45 | mặc định | `fr01.dt22@example.com` | `ABCDEF1@` | `= MK` | Từ chối, báo mật khẩu không đủ mạnh | Web, API | AI |
+| DT-23 | Kiểm tra đăng ký bị từ chối khi Mật khẩu không có chữ số | EC25, EC45 | mặc định | `fr01.dt23@example.com` | `Abcdefg@` | `= MK` | Từ chối, báo mật khẩu không đủ mạnh | Web, API | AI |
+| DT-24 | Kiểm tra đăng ký bị từ chối khi Mật khẩu không có ký tự đặc biệt | EC27, EC45 | mặc định | `fr01.dt24@example.com` | `Abcdefg1` | `= MK` | Từ chối, báo mật khẩu không đủ mạnh | Web, API | AI |
+| DT-25 | Kiểm tra đăng ký bị từ chối khi ký tự đặc biệt của Mật khẩu nằm ngoài tập `@ $ ! % * ? &` | EC28, EC45 | mặc định | `fr01.dt25@example.com` | `Abcdef1#` | `= MK` | Từ chối, báo mật khẩu không đủ mạnh (A1) | Web, API | AI |
+| DT-26 | Kiểm tra đăng ký bị từ chối khi bỏ trống Xác nhận mật khẩu | EC38, EC42 | mặc định | `fr01.dt26@example.com` | mặc định | `` | Từ chối, báo thiếu Xác nhận mật khẩu hoặc không khớp | Web | AI |
+| DT-27 | Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu khác Mật khẩu | EC39, EC46 | mặc định | `fr01.dt27@example.com` | `Abcdef1@` | `Abcdef2@` | Từ chối, báo xác nhận mật khẩu không khớp | Web | AI |
+| DT-28 | Kiểm tra đăng ký bị từ chối khi Xác nhận mật khẩu chỉ khác Mật khẩu ở chữ hoa / thường | EC40, EC46 | mặc định | `fr01.dt28@example.com` | `Abcdef1@` | `abcdef1@` | Từ chối, báo xác nhận mật khẩu không khớp | Web | AI |
 
 ### 3.3 Bảng phủ phân vùng
 
-| EC | Test case phủ |
-| --- | --- |
+| EC | Test case phủ | | EC | Test case phủ |
+| --- | --- | --- | --- | --- |
+| EC1 | DT-01, DT-03…DT-07 | | EC24 | DT-01…DT-07 |
+| EC2 | DT-02 | | EC25 | DT-23 |
+| EC3 | DT-08 | | EC26 | DT-01…DT-07 |
+| EC4 | DT-09 | | EC27 | DT-24 |
+| EC5 | DT-01, DT-03…DT-07 | | EC28 | DT-25 |
+| EC6 | DT-02 | | EC29 | DT-01 |
+| EC7 | DT-10 | | EC30 | DT-02 |
+| EC8 | DT-11 | | EC31 | DT-03 |
+| EC9 | DT-12 | | EC32 | DT-04 |
+| EC10 | DT-13 | | EC33 | DT-05 |
+| EC11 | DT-14 | | EC34 | DT-06 |
+| EC12 | DT-15 | | EC35 | DT-07 |
+| EC13 | DT-16 | | EC36 | DT-02 |
+| EC14 | DT-01…DT-07 | | EC37 | DT-01…DT-07 |
+| EC15 | DT-17 | | EC38 | DT-26 |
+| EC16 | DT-18 | | EC39 | DT-27 |
+| EC17 | DT-19 | | EC40 | DT-28 |
+| EC18 | DT-01…DT-07 | | EC41 | DT-01…DT-07 |
+| EC19 | DT-20 | | EC42 | DT-08, DT-09, DT-10, DT-19, DT-26 |
+| EC20 | DT-01…DT-07 | | EC43 | DT-11…DT-16 |
+| EC21 | DT-21 | | EC44 | DT-17, DT-18 |
+| EC22 | DT-01…DT-07 | | EC45 | DT-20…DT-25 |
+| EC23 | DT-22 | | EC46 | DT-27, DT-28 |
+
+46 / 46 lớp được phủ bởi 28 test case (7 valid, 21 invalid). Lớp valid chỉ tính các test case valid phủ nó; mỗi lớp invalid có đúng một test case riêng.
 
 ## 4. Bước 4 – Boundary Value Analysis
 
