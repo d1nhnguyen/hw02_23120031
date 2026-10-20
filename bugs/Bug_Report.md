@@ -10,15 +10,15 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 
 | Mã | Issue | Feature | Tiêu đề issue đề xuất | Mức độ | Thành phần | TC phát hiện |
 | --- | --- | --- | --- | --- | --- | --- |
-| FR01-B1 | | FR-01 | Form Đăng ký trên Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ có ký tự đặc biệt `@ $ ! % * ? &` | Critical | Web | DT-01…DT-07, BV-04…BV-08, DT-29 |
-| FR01-B2 | | FR-01 | Form Đăng ký thiếu ô "Xác nhận mật khẩu" | Major | Web | DT-26…DT-28, BV-20, BV-21 |
-| FR01-B3 | | FR-01 | API đăng ký chấp nhận Họ Tên, Email hoặc Mật khẩu rỗng | Major | Backend | DT-08, DT-10, DT-19 |
-| FR01-B4 | | FR-01 | API đăng ký chấp nhận email sai định dạng | Major | Backend | DT-11…DT-16 |
-| FR01-B5 | | FR-01 | API đăng ký chấp nhận mật khẩu không đủ mạnh | Major | Backend | DT-20…DT-25, BV-01…BV-03, BV-09…BV-13, DT-29 |
-| FR01-B6 | | FR-01 | Hệ thống cho đăng ký bằng email đã tồn tại, tạo tài khoản trùng | Critical | Backend | DT-17, DT-18, BV-19 |
-| FR01-B7 | | FR-01 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; DT-11…DT-16 (lượt khảo sát Web) |
-| FR01-B8 | | FR-01 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối, không đăng nhập được bằng email bình thường | Minor | Backend | DT-02, BV-19 |
-| FR01-B9 | | FR-01 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | DT-09 |
+| FR01-B1 | | FR-01 | Form Đăng ký trên Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ có ký tự đặc biệt `@ $ ! % * ? &` | Critical | Web | FR01-DT-01…FR01-DT-07, FR01-BV-04…FR01-BV-08, FR01-DT-29, FR01-DT-32 |
+| FR01-B2 | | FR-01 | Form Đăng ký thiếu ô "Xác nhận mật khẩu" | Major | Web | FR01-DT-26…FR01-DT-28, FR01-BV-20, FR01-BV-21 |
+| FR01-B3 | | FR-01 | API đăng ký chấp nhận Họ Tên, Email hoặc Mật khẩu rỗng | Major | Backend | FR01-DT-08, FR01-DT-10, FR01-DT-19 |
+| FR01-B4 | | FR-01 | API đăng ký chấp nhận email sai định dạng | Major | Backend | FR01-DT-11…FR01-DT-16 |
+| FR01-B5 | | FR-01 | API đăng ký chấp nhận mật khẩu không đủ mạnh | Major | Backend | FR01-DT-20…FR01-DT-25, FR01-BV-01…FR01-BV-03, FR01-BV-09…FR01-BV-13, FR01-DT-29…FR01-DT-31 |
+| FR01-B6 | | FR-01 | Hệ thống cho đăng ký bằng email đã tồn tại, tạo tài khoản trùng | Critical | Backend | FR01-DT-17, FR01-DT-18, FR01-BV-19 |
+| FR01-B7 | | FR-01 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; FR01-DT-11…FR01-DT-16 (lượt khảo sát Web) |
+| FR01-B8 | | FR-01 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối, không đăng nhập được bằng email bình thường | Minor | Backend | FR01-DT-02, FR01-BV-19 |
+| FR01-B9 | | FR-01 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | FR01-DT-09 |
 
 ## Chi tiết
 
@@ -30,8 +30,8 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | Thành phần | Web – trang `/register` |
 | Loại | Lỗi lập trình (kiểm tra phía client sai) |
 | Mức độ / Ưu tiên | Critical / Cao |
-| Tái hiện được | Luôn luôn (7/7 ký tự trong tập) |
-| TC phát hiện | DT-01…DT-07, BV-04…BV-08, DT-29 (kênh Web) |
+| Tái hiện được | Luôn luôn (7/7 ký tự trong tập; 13/13 test case Web có mật khẩu hợp lệ) |
+| TC phát hiện | FR01-DT-01…FR01-DT-07, FR01-BV-04…FR01-BV-08, FR01-DT-29, FR01-DT-32 (kênh Web) |
 
 **Các bước tái hiện**
 
@@ -41,11 +41,11 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 
 **Kết quả mong đợi** (FR-01): mật khẩu có 8 ký tự, có chữ hoa, chữ thường, chữ số và `@` → đăng ký thành công, chuyển tới trang Đăng nhập.
 
-**Kết quả thực tế:** form hiện "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT.", không gửi request. Kết quả giống hệt với `Abcdef1$`, `Abcdef1!`, `Abcdef1%`, `Abcdef1*`, `Abcdef1?`, `Abcdef1&` và 25 ký tự đặc biệt khác. Ngược lại, `Abcdef1␣` (ký tự đặc biệt duy nhất là dấu cách, không thuộc tập của đặc tả) lại được chấp nhận và đăng ký thành công.
+**Kết quả thực tế:** form hiện "Mật khẩu quá yếu! Phải dài tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và KÝ TỰ ĐẶC BIỆT.", không gửi request. Kết quả giống hệt với `Mậtkhẩu1@` (có thêm chữ có dấu), `Abcdef1$`, `Abcdef1!`, `Abcdef1%`, `Abcdef1*`, `Abcdef1?`, `Abcdef1&` và 25 ký tự đặc biệt khác. Ngược lại, `Abcdef1␣` (ký tự đặc biệt duy nhất là dấu cách, không thuộc tập của đặc tả) lại được chấp nhận và đăng ký thành công.
 
 **Phân tích:** form chỉ coi dấu cách là ký tự đặc biệt. Hậu quả: không người dùng nào đăng ký được trên Web bằng mật khẩu đúng đặc tả, đồng thời mật khẩu không có ký tự đặc biệt hợp lệ lại lọt qua. Đường khác: gọi trực tiếp `POST /api/register` vẫn đăng ký được (xem FR01-B5). Liên quan: FR01-B5.
 
-**Bằng chứng:** `bugs/screenshots/FR01-B1.png`; `evidence/FR-01/explore_web_password.json` (43 mật khẩu khảo sát); ảnh từng test case `evidence/FR-01/web/DT-01.png`…
+**Bằng chứng:** `bugs/screenshots/FR01-B1.png`; `evidence/FR-01/explore_web_password.json` (43 mật khẩu khảo sát); ảnh từng test case `evidence/FR-01/web/FR01-DT-01.png`…
 
 ![FR01-B1](screenshots/FR01-B1.png)
 
@@ -58,7 +58,7 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | Loại | Lỗi lập trình (thiếu chức năng) |
 | Mức độ / Ưu tiên | Major / Cao |
 | Tái hiện được | Luôn luôn |
-| TC phát hiện | DT-26, DT-27, DT-28, BV-20, BV-21 |
+| TC phát hiện | FR01-DT-26, FR01-DT-27, FR01-DT-28, FR01-BV-20, FR01-BV-21 |
 
 **Các bước tái hiện**
 
@@ -83,7 +83,7 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | Loại | Lỗi lập trình (thiếu kiểm tra phía server) |
 | Mức độ / Ưu tiên | Major / Cao |
 | Tái hiện được | Luôn luôn |
-| TC phát hiện | DT-08, DT-10, DT-19 (kênh API) |
+| TC phát hiện | FR01-DT-08, FR01-DT-10, FR01-DT-19 (kênh API) |
 
 **Các bước tái hiện**
 
@@ -109,7 +109,7 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | Loại | Lỗi lập trình (thiếu kiểm tra phía server) |
 | Mức độ / Ưu tiên | Major / Cao |
 | Tái hiện được | Luôn luôn (6/6 kiểu sai định dạng) |
-| TC phát hiện | DT-11…DT-16 (kênh API) |
+| TC phát hiện | FR01-DT-11…FR01-DT-16 (kênh API) |
 
 **Các bước tái hiện**
 
@@ -135,12 +135,12 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | Loại | Lỗi lập trình (thiếu kiểm tra phía server) |
 | Mức độ / Ưu tiên | Major / Cao |
 | Tái hiện được | Luôn luôn |
-| TC phát hiện | DT-20…DT-25, BV-01…BV-03, BV-09…BV-13, DT-29 (kênh API) |
+| TC phát hiện | FR01-DT-20…FR01-DT-25, FR01-BV-01…FR01-BV-03, FR01-BV-09…FR01-BV-13, FR01-DT-29…FR01-DT-31 (kênh API) |
 
 **Các bước tái hiện**
 
 1. Gửi `POST /api/register` với `{"name": "Nguyen Van A", "email": "fr01.b5.0@example.com", "password": "@"}`.
-2. Lặp lại với mật khẩu `Abcde1@` (7 ký tự), `abcdef1@` (không chữ hoa), `ABCDEF1@` (không chữ thường), `Abcdefg@` (không chữ số), `Abcdefg1` (không ký tự đặc biệt), `Abcdef1#`, `Abcdef1␣` (ký tự đặc biệt ngoài tập).
+2. Lặp lại với mật khẩu `Abcde1@` (7 ký tự), `abcdef1@` (không chữ hoa), `ABCDEF1@` (không chữ thường), `Abcdefg@` (không chữ số), `Abcdefg1` (không ký tự đặc biệt), `Abcdef1#`, `Abcdef1␣` (ký tự đặc biệt ngoài tập), `Đbcdef1@`, `ABCDEă1@` (chữ hoa / chữ thường duy nhất là chữ có dấu – A10).
 
 **Kết quả mong đợi:** từ chối với thông báo mật khẩu không đủ mạnh.
 
@@ -161,7 +161,7 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | Loại | Lỗi lập trình (thiếu kiểm tra trùng / ràng buộc duy nhất) |
 | Mức độ / Ưu tiên | Critical / Cao |
 | Tái hiện được | Luôn luôn |
-| TC phát hiện | DT-17, DT-18, BV-19 (kênh API; lượt khảo sát Web cho kết quả giống) |
+| TC phát hiện | FR01-DT-17, FR01-DT-18, FR01-BV-19 (kênh API; lượt khảo sát Web cho kết quả giống) |
 
 **Các bước tái hiện**
 
@@ -187,7 +187,7 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | Loại | Lỗi lập trình |
 | Mức độ / Ưu tiên | Minor / Trung bình |
 | Tái hiện được | Luôn luôn |
-| TC phát hiện | Quan sát giao diện ở bước 1; DT-11…DT-16 (lượt khảo sát Web) |
+| TC phát hiện | Quan sát giao diện ở bước 1; FR01-DT-11…FR01-DT-16 (lượt khảo sát Web) |
 
 **Các bước tái hiện**
 
@@ -211,7 +211,7 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | Loại | Lỗi lập trình |
 | Mức độ / Ưu tiên | Minor / Thấp |
 | Tái hiện được | Luôn luôn |
-| TC phát hiện | DT-02, BV-19 (kênh API) |
+| TC phát hiện | FR01-DT-02, FR01-BV-19 (kênh API) |
 
 **Các bước tái hiện**
 
@@ -235,7 +235,7 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 | Loại | Lỗi lập trình |
 | Mức độ / Ưu tiên | Minor / Thấp |
 | Tái hiện được | Luôn luôn |
-| TC phát hiện | DT-09 (kênh API; lượt khảo sát Web cho kết quả giống) |
+| TC phát hiện | FR01-DT-09 (kênh API; lượt khảo sát Web cho kết quả giống) |
 
 **Các bước tái hiện**
 
