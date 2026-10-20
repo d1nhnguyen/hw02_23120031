@@ -247,13 +247,61 @@ Dữ liệu và kết quả mong đợi được sinh từ `scripts/fr15/cases.p
 
 ### 4.1 Xác định biên
 
-| Biến | Phân vùng | LB | UB | Bước nhảy | Nhỏ nhất nhập được | Lớn nhất nhập được |
-| --- | --- | --- | --- | --- | --- | --- |
+BVA áp dụng cho các biến có thứ tự. Với mỗi phân vùng xét LB-1, LB, LB+1, UB-1, UB, UB+1 và giá trị lớn nhất chọn thử [S04]; điểm đã có trong Minimum Set chỉ dẫn chiếu.
+
+| Biến | Phân vùng | LB | UB | Bước nhảy | Điểm kiểm tra |
+| --- | --- | --- | --- | --- | --- |
+| I2 độ dài Tên (Thêm) | EC8 (0) / EC5 (1–255) / EC10 (> 255) | 1 | 255 | 1 ký tự | 0, 1, 2, 254, 255, 256 |
+| I2 độ dài Tên có dấu (A1) | EC6 / EC10 | 1 | 255 ký tự (không phải byte) | 1 ký tự | 255, 256 ký tự `Ố` (mỗi ký tự 3 byte UTF-8) |
+| I2 khoảng trắng | EC9 / EC5 | 1 ký tự khác khoảng trắng | – | 1 ký tự | `␣A␣` |
+| I2 độ dài Tên (Sửa) | EC5 / EC10 | – | 255 | 1 ký tự | 255, 256 |
+| I3 Giá (Thêm) | EC14 (< 0) / EC13 (0) / EC12, EC11 (> 0) | > 0 | không giới hạn (A3) | 0.01 (A3) và 1 | -1, -0.01, 0, 0.01, 1, 9007199254740991 (2^53 − 1, số nguyên lớn nhất biểu diễn chính xác) |
+| I3 Giá (Sửa) | EC14 / EC11 | 1 | – | 1 | -1, 1 |
+| I4 id Danh mục | EC19 (ngoài danh sách) / EC17 (1–3) | 1 | 3 | 1 | 0, 1, 3, 4 |
+| I5 id sản phẩm (Sửa, Xóa) | EC22 / EC21 (1–5, seed) | 1 | 5 | 1 | 0, 1, 5, 6 |
 
 ### 4.2 Boundary Value Test Cases
 
-| ID | Tên test case (Action + Function + Condition) | Partition tested | Giá trị | Kết quả mong đợi | Origin |
-| --- | --- | --- | --- | --- | --- |
+Thủ tục: P-WEB / P-API ở mục 3.1. Bảng giữ các cột dữ liệu của data matrix như mục 3.2. Dòng có ID trong ngoặc là điểm biên đã có trong Minimum Set, chỉ dẫn chiếu.
+
+<!-- BEGIN:T42 -->
+| ID | Tên test case (Action + Function + Condition) | Partition tested | Thao tác | Sản phẩm (id) | Tên | Giá | Danh mục | Kết quả mong đợi | Kênh | Origin |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| (FR15-DT-05) | Kiểm tra thêm sản phẩm bị từ chối khi bỏ trống Tên | EC8 – Tên độ dài 0 | Thêm | – | (rỗng) | `350000` | `3` | Từ chối, báo Tên không hợp lệ; không tạo sản phẩm; danh sách sản phẩm không đổi; API trả 4xx (EC29) | Web, API | xem 3.2 |
+| FR15-BV-01 | Kiểm tra thêm sản phẩm thành công khi Tên dài 1 ký tự | EC8/EC5 – độ dài 1 (LB) | Thêm | – | `A` | `350000` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25) | Web, API | AI |
+| FR15-BV-02 | Kiểm tra thêm sản phẩm thành công khi Tên dài 2 ký tự | EC5 – độ dài 2 (LB+1) | Thêm | – | `AB` | `350000` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25) | Web, API | AI |
+| FR15-BV-03 | Kiểm tra thêm sản phẩm thành công khi Tên dài 254 ký tự | EC5 – độ dài 254 (UB-1) | Thêm | – | `"A" * 254` | `350000` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25) | Web, API | AI |
+| FR15-BV-04 | Kiểm tra thêm sản phẩm thành công khi Tên dài 255 ký tự | EC5/EC10 – độ dài 255 (UB) | Thêm | – | `"A" * 255` | `350000` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25) | Web, API | AI |
+| FR15-BV-05 | Kiểm tra thêm sản phẩm bị từ chối khi Tên dài 256 ký tự | EC5/EC10 – độ dài 256 (UB+1) | Thêm | – | `"A" * 256` | `350000` | `3` | Từ chối, báo Tên không hợp lệ; không tạo sản phẩm; danh sách sản phẩm không đổi; API trả 4xx (EC29) | Web, API | AI |
+| FR15-BV-06 | Kiểm tra thêm sản phẩm thành công khi Tên dài 255 ký tự có dấu | EC6/EC10 – 255 ký tự có dấu (UB, A1) | Thêm | – | `"Ố" * 255` | `350000` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25); A1 | Web, API | AI |
+| FR15-BV-07 | Kiểm tra thêm sản phẩm bị từ chối khi Tên dài 256 ký tự có dấu | EC6/EC10 – 256 ký tự có dấu (UB+1, A1) | Thêm | – | `"Ố" * 256` | `350000` | `3` | Từ chối, báo Tên không hợp lệ; không tạo sản phẩm; danh sách sản phẩm không đổi; API trả 4xx (EC29); A1 | Web, API | AI |
+| FR15-BV-08 | Kiểm tra thêm sản phẩm thành công khi Tên có 1 ký tự giữa các khoảng trắng | EC9/EC5 – 1 ký tự khác khoảng trắng (LB, A2) | Thêm | – | `␣A␣` | `350000` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25); A2 | Web, API | AI |
+| FR15-BV-09 | Kiểm tra sửa sản phẩm thành công khi Tên mới dài 255 ký tự | EC5/EC10 (Sửa) – độ dài 255 (UB) | Sửa | `2` | `"A" * 255` | `28000000` | `1` | Sửa thành công: sản phẩm id 2 mang Tên / Giá / Danh mục như cột dữ liệu, Mô tả / Ảnh giữ nguyên; các sản phẩm khác giữ nguyên; API trả 2xx (EC26, EC28) | Web, API | AI |
+| FR15-BV-10 | Kiểm tra sửa sản phẩm bị từ chối khi Tên mới dài 256 ký tự | EC5/EC10 (Sửa) – độ dài 256 (UB+1) | Sửa | `2` | `"A" * 256` | `28000000` | `1` | Từ chối, báo Tên không hợp lệ; sản phẩm id 2 và các sản phẩm khác giữ nguyên; API trả 4xx (EC29) | Web, API | AI |
+| FR15-BV-11 | Kiểm tra thêm sản phẩm bị từ chối khi Giá bằng -1 | EC14/EC13 – Giá -1 (bước 1) | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `-1` | `3` | Từ chối, báo Giá không hợp lệ; không tạo sản phẩm; danh sách sản phẩm không đổi; API trả 4xx (EC30) | Web, API | AI |
+| FR15-BV-12 | Kiểm tra thêm sản phẩm bị từ chối khi Giá bằng -0.01 | EC14/EC13 – Giá -0.01 (bước 0.01, A3) | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `-0.01` | `3` | Từ chối, báo Giá không hợp lệ; không tạo sản phẩm; danh sách sản phẩm không đổi; API trả 4xx (EC30); A3 | Web, API | AI |
+| (FR15-DT-08) | Kiểm tra thêm sản phẩm bị từ chối khi Giá bằng 0 | EC13 – Giá 0 | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `0` | `3` | Từ chối, báo Giá không hợp lệ; không tạo sản phẩm; danh sách sản phẩm không đổi; API trả 4xx (EC30) | Web, API | xem 3.2 |
+| FR15-BV-13 | Kiểm tra thêm sản phẩm thành công khi Giá bằng 0.01 | EC13/EC12 – Giá 0.01 (LB thập phân, A3) | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `0.01` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25); A3 | Web, API | AI |
+| FR15-BV-14 | Kiểm tra thêm sản phẩm thành công khi Giá bằng 1 | EC13/EC11 – Giá 1 (LB nguyên) | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `1` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25) | Web, API | AI |
+| FR15-BV-15 | Kiểm tra thêm sản phẩm thành công khi Giá bằng 9007199254740991 | EC11 – giá trị lớn nhất biểu diễn chính xác (2^53 - 1, A3) | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `9007199254740991` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25); A3 | Web, API | AI |
+| FR15-BV-16 | Kiểm tra sửa sản phẩm thành công khi Giá mới bằng 1 | EC13/EC11 (Sửa) – Giá 1 (LB) | Sửa | `2` | `Samsung␣Galaxy␣S24␣Ultra` | `1` | `1` | Sửa thành công: sản phẩm id 2 mang Tên / Giá / Danh mục như cột dữ liệu, Mô tả / Ảnh giữ nguyên; các sản phẩm khác giữ nguyên; API trả 2xx (EC26, EC28) | Web, API | AI |
+| FR15-BV-17 | Kiểm tra sửa sản phẩm bị từ chối khi Giá mới bằng -1 | EC14/EC13 (Sửa) – Giá -1 | Sửa | `2` | `Samsung␣Galaxy␣S24␣Ultra` | `-1` | `1` | Từ chối, báo Giá không hợp lệ; sản phẩm id 2 và các sản phẩm khác giữ nguyên; API trả 4xx (EC30) | Web, API | AI |
+| FR15-BV-18 | Kiểm tra thêm sản phẩm bị từ chối khi Danh mục bằng 0 | EC19/EC17 – id 0 (LB-1) | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `350000` | `0` | Từ chối, báo Danh mục không hợp lệ; không tạo sản phẩm; danh sách sản phẩm không đổi; API trả 4xx (EC31) | API | AI |
+| FR15-BV-19 | Kiểm tra thêm sản phẩm thành công khi Danh mục bằng 1 | EC17 – id 1 (LB) | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `350000` | `1` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25) | Web, API | AI |
+| (FR15-DT-01) | Kiểm tra thêm sản phẩm thành công với dữ liệu hợp lệ điển hình | EC17 – Danh mục id 3 (UB) | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `350000` | `3` | Thêm thành công: sản phẩm mới có trong danh sách Admin và `GET /api/products` với đúng Tên / Giá / Danh mục; API trả 2xx (EC25) | Web, API | xem 3.2 |
+| FR15-BV-20 | Kiểm tra thêm sản phẩm bị từ chối khi Danh mục bằng 4 | EC17/EC19 – id 4 (UB+1) | Thêm | – | `Sac␣nhanh␣USB-C␣20W` | `350000` | `4` | Từ chối, báo Danh mục không hợp lệ; không tạo sản phẩm; danh sách sản phẩm không đổi; API trả 4xx (EC31) | API | AI |
+| FR15-BV-21 | Kiểm tra sửa sản phẩm bị từ chối khi id sản phẩm bằng 0 | EC22/EC21 (Sửa) – id 0 (LB-1) | Sửa | `0` | `San␣pham␣sua␣thu` | `1000000` | `1` | Từ chối, báo không tìm thấy sản phẩm; danh sách sản phẩm không đổi; API trả 404 (EC32) | API | AI |
+| FR15-BV-22 | Kiểm tra sửa sản phẩm id 1 thành công | EC21 (Sửa) – id 1 (LB) | Sửa | `1` | `iPhone␣15␣Pro␣Max` | `31000000` | `1` | Sửa thành công: sản phẩm id 1 mang Tên / Giá / Danh mục như cột dữ liệu, Mô tả / Ảnh giữ nguyên; các sản phẩm khác giữ nguyên; API trả 2xx (EC26, EC28) | Web, API | AI |
+| (FR15-DT-15) | Kiểm tra sửa Giá sản phẩm thành công và các sản phẩm khác giữ nguyên | EC21 (Sửa) – id 3 (giá trị giữa) | Sửa | `3` | `MacBook␣Pro␣M3` | `42000000` | `2` | Sửa thành công: sản phẩm id 3 mang Tên / Giá / Danh mục như cột dữ liệu, Mô tả / Ảnh giữ nguyên; các sản phẩm khác giữ nguyên; API trả 2xx (EC26, EC28) | Web, API | xem 3.2 |
+| FR15-BV-23 | Kiểm tra sửa sản phẩm id 5 thành công | EC21 (Sửa) – id 5 (UB) | Sửa | `5` | `Bàn␣phím␣cơ␣Keychron␣Q1` | `4100000` | `3` | Sửa thành công: sản phẩm id 5 mang Tên / Giá / Danh mục như cột dữ liệu, Mô tả / Ảnh giữ nguyên; các sản phẩm khác giữ nguyên; API trả 2xx (EC26, EC28) | Web, API | AI |
+| FR15-BV-24 | Kiểm tra sửa sản phẩm bị từ chối khi id sản phẩm bằng 6 | EC21/EC22 (Sửa) – id 6 (UB+1) | Sửa | `6` | `San␣pham␣sua␣thu` | `1000000` | `1` | Từ chối, báo không tìm thấy sản phẩm; danh sách sản phẩm không đổi; API trả 404 (EC32) | API | AI |
+| FR15-BV-25 | Kiểm tra xóa sản phẩm bị từ chối khi id sản phẩm bằng 0 | EC22/EC21 (Xóa) – id 0 (LB-1) | Xóa | `0` | – | – | – | Từ chối, báo không tìm thấy sản phẩm; danh sách sản phẩm không đổi; API trả 404 (EC32) | API | AI |
+| FR15-BV-26 | Kiểm tra xóa sản phẩm id 1 thành công | EC21 (Xóa) – id 1 (LB) | Xóa | `1` | – | – | – | Xóa thành công: sản phẩm id 1 không còn trong danh sách; các sản phẩm khác giữ nguyên; API trả 2xx (EC27, EC28) | Web, API | AI |
+| (FR15-DT-30) | Kiểm tra xóa sản phẩm thành công và các sản phẩm khác giữ nguyên | EC21 (Xóa) – id 5 (UB) | Xóa | `5` | – | – | – | Xóa thành công: sản phẩm id 5 không còn trong danh sách; các sản phẩm khác giữ nguyên; API trả 2xx (EC27, EC28) | Web, API | xem 3.2 |
+| FR15-BV-27 | Kiểm tra xóa sản phẩm bị từ chối khi id sản phẩm bằng 6 | EC21/EC22 (Xóa) – id 6 (UB+1) | Xóa | `6` | – | – | – | Từ chối, báo không tìm thấy sản phẩm; danh sách sản phẩm không đổi; API trả 404 (EC32) | API | AI |
+
+Tổng: 27 test case BVA mới (FR15-BV-01…FR15-BV-27); 5 dòng có ID trong ngoặc là điểm biên đã được phủ bởi test case Minimum Set (mục 3.2), chỉ dẫn chiếu, không chạy lại.
+<!-- END:T42 -->
 
 ## 5. Bước 5 – Kết quả thực thi
 
