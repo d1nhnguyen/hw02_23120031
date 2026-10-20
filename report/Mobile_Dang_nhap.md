@@ -87,8 +87,44 @@ API mà app gọi: `POST /api/login` (`{"email", "password"}` → `{"token", "us
 
 ## 2. Bước 2 – Lớp tương đương (Complete Set of Partitions)
 
-| EC | Biến | Guideline | Phân vùng | Valid / Invalid |
+### 2.1 Cách áp dụng guideline cho từng biến
+
+| Biến | Điều kiện trong đặc tả | Guideline [S04] | Lớp tạo ra |
+| --- | --- | --- | --- |
+| I1 Email | email của tài khoản đã đăng ký | "Phải là" → đã đăng ký / không tồn tại; tách lớp (G5): khác hoa / thường, có khoảng trắng đầu / cuối (so khớp có thể khác nhau – A6), rỗng, sai định dạng | 3 valid, 3 invalid |
+| I2 Mật khẩu | khớp mật khẩu | "Phải là" → đúng / sai; tách lớp (G5): rỗng, chỉ khác hoa / thường, thừa khoảng trắng cuối (so khớp có thể bỏ qua – A6) | 1 valid, 4 invalid |
+| I3 Số lần sai liên tiếp trước đó | "từ 3 lần trở lên … bị khóa" | Khoảng giá trị: 0–2 (chưa khóa) / ≥ 3 (khóa) | 1 valid, 1 invalid |
+| I4 Thời gian từ lúc khóa | "tạm khóa 30 giây" | Khoảng giá trị: < 30 giây (còn khóa) / ≥ 30 giây (hết khóa) | 1 valid, 1 invalid |
+| I5 Đăng nhập đúng xen giữa | "liên tiếp" | "Phải là" chuỗi liên tiếp mới khóa → có lần đúng xen giữa thì bộ đếm làm mới (A3) | 1 valid |
+| Đầu ra O1–O5 | thành công / thất bại / bộ đếm / khóa / hết khóa | Phân vùng đầu ra như ví dụ [UC] | 5 lớp đầu ra |
+
+### 2.2 Complete Set of Partitions
+
+| EC | Biến | Phân vùng | Ví dụ đại diện | Valid / Invalid |
 | --- | --- | --- | --- | --- |
+| EC1 | I1 Email | Email đã đăng ký, đúng chính xác | `test@eshop.com` | Valid |
+| EC2 | I1 Email | Email đã đăng ký, khác chữ hoa / thường (A6) | `TEST@eshop.com` | Valid |
+| EC3 | I1 Email | Email đã đăng ký, có khoảng trắng đầu / cuối (A6) | `␣test@eshop.com␣` | Valid |
+| EC4 | I1 Email | Email không tồn tại | `khongco@eshop.com` | Invalid |
+| EC5 | I1 Email | Rỗng | `` | Invalid |
+| EC6 | I1 Email | Sai định dạng | `test@eshop` | Invalid |
+| EC7 | I2 Mật khẩu | Đúng | `Test1234!` | Valid |
+| EC8 | I2 Mật khẩu | Sai | `Sai12345!` | Invalid |
+| EC9 | I2 Mật khẩu | Rỗng | `` | Invalid |
+| EC10 | I2 Mật khẩu | Chỉ khác chữ hoa / thường | `test1234!` | Invalid |
+| EC11 | I2 Mật khẩu | Thừa khoảng trắng cuối (A6) | `Test1234!␣` | Invalid |
+| EC12 | I3 | 0–2 lần sai liên tiếp trước đó (chưa khóa) | 0 | Valid |
+| EC13 | I3 | ≥ 3 lần sai liên tiếp trước đó (bị khóa) | 3 | Invalid |
+| EC14 | I4 | Thử lại khi chưa hết 30 giây khóa | ngay sau khi khóa | Invalid |
+| EC15 | I4 | Thử lại khi đã hết 30 giây khóa | sau 35 giây | Valid |
+| EC16 | I5 | Có lần đăng nhập đúng xen giữa các lần sai (A3) | sai, sai, đúng, sai, sai, đúng | Valid |
+| EC17 | O1, O5 | Đăng nhập thành công: rời màn hình Đăng nhập, chào người dùng, mở được Hồ sơ; API `200` + `token` | | Output |
+| EC18 | O1, O2, O5 | Thất bại: thông báo lỗi chung, giống nhau cho sai email / sai mật khẩu (A5); API `401` | | Output |
+| EC19 | O3 | Bộ đếm `login_attempts` tăng đúng 1 sau mỗi lần sai | | Output |
+| EC20 | O1, O4 | Bị khóa: từ chối cả mật khẩu đúng | | Output |
+| EC21 | O1, O4 | Hết khóa: đăng nhập đúng thành công, bộ đếm về 0 | | Output |
+
+Tổng: 16 lớp đầu vào (7 valid, 9 invalid) và 5 lớp đầu ra.
 
 ## 3. Bước 3 – Test case Domain Testing
 
