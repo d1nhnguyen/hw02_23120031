@@ -1,6 +1,6 @@
 # Phụ lục A — Prompt log (trích tự động từ transcript Claude Code)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 23:21 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-20 23:32 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -930,9 +930,23 @@ Bảng đã đúng, và báo cáo FR-01 sinh lại không đổi gì. Tôi commi
 Giờ tôi nháp 6 bug của FR-15 vào `bugs/Bug_Report.md`: thêm vào bảng tổng hợp và phần chi tiết, theo đúng mẫu Problem Report đã dùng cho FR-01.
 
 Cả 6 bug khớp hoàn toàn với bảng kết quả. Tôi commit FR-15 B7 cùng danh sách đối chiếu và prompt log, rồi push.
+
+Lệnh `grep` chỉ thấy một dòng có "FR15", nghĩa là dòng mức độ nghiêm trọng chưa được sửa: lệnh `sed` thứ hai không khớp. Tôi kiểm tra rồi sửa trực tiếp.
+
+Giờ viết mục 3 của FR-10 (thủ tục, bộ dữ liệu dựng sẵn, Minimum Set, bảng phủ) và sinh bảng.
+
+Lần sinh lại làm báo cáo FR-15 thay đổi, dù FR-15 không có TC loại `ui`. Tôi xem diff trước khi quyết định có commit hay không.
+
+Diff hợp lệ: khi thêm FR15-DT-34 ở B6, tôi quên sinh lại bảng phủ T33 của FR-15. Lần sinh lại toàn bộ vừa rồi đã cập nhật đúng. Tôi commit riêng phần này.
+
+Dựng dữ liệu thành công: 7 đơn đều đúng trạng thái. Tôi chạy kênh API ở chế độ nền, và trong lúc đó viết runner Web.
+
+Runner Web cho FR-10 đã viết xong. Tôi chờ kênh API chạy xong rồi mới chạy Web, vì hai bên dùng chung một backend.
+
+Ảnh bằng chứng rõ ràng. Giờ tôi viết mục 6 (gap analysis), mục 7 (bug) của FR-10 và nháp 2 bug vào `bugs/Bug_Report.md`.
 ````
 
-<details><summary>Hành động AI đã thực hiện (51)</summary>
+<details><summary>Hành động AI đã thực hiện (84)</summary>
 
 1. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/DOI_CHIEU_TRUOC_KHI_NOP.md
 2. `Write` — /home/npdinh/.claude/projects/-home-npdinh-study-Homeworks/memory/hw02-pre-submit-checklist.md
@@ -989,5 +1003,40 @@ Cả 6 bug khớp hoàn toàn với bảng kết quả. Tôi commit FR-15 B7 cù
 49. `Bash` — Draft FR-15 bugs and report section 7
 50. `Bash` — Cross-check bug TC lists against results table
 51. `Bash` — Commit FR-15 B7, update log, push
+52. `Bash` — Find the severity line in checklist
+53. `Bash` — Probe checkout and order listing APIs
+54. `Bash` — Create orders in each of the five states
+55. `mcp__playwright__browser_run_code_unsafe` — code=async (page) => {
+  await page.setViewportSize({ width: 1280
+56. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr10_b1.md
+57. `Bash` — Insert FR-10 B1, update checklist, commit
+58. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fr10_b2.md
+59. `Bash` — Verify counts, insert FR-10 B2, commit
+60. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr10/cases.py
+61. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr10/report_tables.py
+62. `Bash` — Write FR-10 section 3 and generate tables
+63. `Bash` — Treat UI checks as valid; regenerate; commit FR-10 B3
+64. `Bash` — Inspect unexpected FR-15 report diff
+65. `Bash` — Commit missed FR-15 coverage regeneration
+66. `Bash` — Write FR-10 BVA section, generate, commit
+67. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr10/fixture.py
+68. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr10/run_api.py
+69. `Bash` — Smoke-test the FR-10 fixture
+70. `Bash` — Run FR-10 API suite in background
+71. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr10/run_web.mjs
+72. `Bash` — Read FR-10 API run results
+73. `Bash` — Run FR-10 web tests
+74. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/evidence/FR-10/web/FR10-DT-06.png
+75. `Bash` — Rebuild FR-10 fixture for debugging
+76. `mcp__playwright__browser_run_code_unsafe` — code=async (page) => {
+  await page.goto('http://localhost:5173/l
+77. `Bash` — Fix row locator; rerun FR-10 web
+78. `Bash` — Add FR-10 result text; write section 5; generate
+79. `Bash` — Commit FR-10 B5 with evidence
+80. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/fr10/bug_evidence.mjs
+81. `Bash` — Reproduce FR-10 bugs and capture evidence
+82. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/FR10-B2.png
+83. `Bash` — Write FR-10 sections 6, 7 and bug drafts; commit B6
+84. `Bash` — Cross-check, commit FR-10 B7, update log, push
 
 </details>
