@@ -34,6 +34,8 @@ Các mục này **không bắt buộc**: thiếu thì skill tự suy ra (tìm m�
 
 Agent tự tìm đặc tả, kênh, tiền tố, cách reset dữ liệu (ghi lại thành giả định), làm tuần tự B1 → B7, mỗi bước một commit, rồi in **Tóm tắt kết quả**: commit từng bước, số lớp / test case, bảng Pass / Fail / Blocked, bug nháp, gap analysis, các điểm cần người duyệt. Có thể nêu rõ thêm thông tin cho chắc, vd `/domain-testing-bva FR-02 – Web http://localhost:5173/login + API POST /api/login`.
 
+**Nhanh** (mục tiêu ≤ 10 phút, vd để demo): thêm chữ `nhanh` – `/domain-testing-bva FR-02 nhanh`. Phương pháp giữ nguyên; API chạy toàn bộ test case, giao diện chỉ chạy các test case đại diện (≤ 5) và ghi rõ phần chưa chạy. Nên bật tự chấp nhận quyền, chạy SUT trước và dùng model nhanh.
+
 **Từng bước** (khi muốn duyệt giữa các bước): thêm "làm B1 rồi dừng", sau đó "làm B2"… Sửa sau khi duyệt bằng prompt, commit `[<F>][B<n>-review]`.
 
 | Bước | Sản phẩm chính |

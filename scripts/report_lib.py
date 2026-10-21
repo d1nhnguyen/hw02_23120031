@@ -49,6 +49,7 @@ class Feature:
     display: Callable = None             # (case, khóa) -> chuỗi hiển thị riêng (tùy chọn)
     na_text: str = "Không áp dụng"       # ô kết quả khi test case không chạy trên kênh đó
     na_note: str = ""                    # ghi chú cột "Không áp dụng" của kênh API trong bảng tổng hợp
+    na_header: str = "Không áp dụng"     # tên cột đó trong bảng tổng hợp (chế độ nhanh: "Không áp dụng / chưa chạy")
     web_label: str = "Web"               # tên kênh giao diện trong bảng kết quả (vd "Mobile")
 
     @property
@@ -180,7 +181,7 @@ class Feature:
         web, api = self.load("web_results.json"), self.load("api_results.json")
         count = lambda res, v: sum(r["verdict"] == v for r in res.values())
         n = len(self.cases)
-        lines = ["| Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | Không áp dụng |",
+        lines = [f"| Kênh | Thiết kế | Đã chạy | Pass | Fail | Blocked | {self.na_header} |",
                  "| --- | --- | --- | --- | --- | --- | --- |",
                  f"| {self.web_label} | {n} | {len(web)} | {count(web, 'Pass')} | {count(web, 'Fail')} | {count(web, 'Blocked')} "
                  f"| {n - len(web)} |",

@@ -12,6 +12,7 @@ Skill này dẫn agent đi qua **7 bước**, mỗi bước là **một commit**
 | Chế độ | Khi nào | Cách làm |
 | --- | --- | --- |
 | **Liền mạch** (mặc định) | Người dùng gọi skill một lần, vd `/domain-testing-bva FR-02` | Làm tuần tự B1 → B7 không dừng hỏi; mỗi bước một commit; thông tin thiếu thì tự suy ra (mục "Đầu vào") và ghi thành giả định; cuối cùng in **Tóm tắt kết quả** |
+| **Nhanh** (mục tiêu ≤ 10 phút) | Prompt có "nhanh" / "demo" | Như liền mạch, nhưng thu gọn phần thực thi và trình bày theo mục "Chế độ nhanh" |
 | Từng bước | Người dùng yêu cầu duyệt từng bước ("làm B1 rồi dừng") | Làm đúng bước được yêu cầu rồi dừng chờ duyệt |
 
 Chỉ dừng giữa chừng khi bị chặn thật sự: không tìm thấy đặc tả, SUT không chạy và không tự khởi động được, đặc tả mâu thuẫn đến mức không đặt được giả định.
@@ -97,6 +98,20 @@ Bảng trong báo cáo **không viết tay**: đặt mốc `<!-- BEGIN:T32 --> �
 4. Đối chiếu bằng script: danh sách TC của mỗi bug phải khớp cột Bug của T53.
 5. **Không tự tạo GitHub issue** trừ khi người dùng yêu cầu rõ ràng – mặc định sinh viên duyệt nháp rồi tự tạo issue (đính ảnh trong `bugs/screenshots/`). Sau khi có issue, điền số `BUG-NN` + link vào `bugs/Bug_Report.md` và mục 7 của báo cáo.
 6. Commit `[<F>][B7]`; cập nhật prompt log nếu dự án có (`[ai-log]`).
+
+## Chế độ nhanh
+
+Phần tốn thời gian là lượng nội dung agent phải viết và phần thực thi (reset dữ liệu, trình duyệt, chờ thời gian thật), không phải phần thiết kế. Chế độ nhanh **giữ nguyên phương pháp** (đủ B1–B7, Complete Set of Partitions, Minimum Set mỗi TC invalid đúng 1 lớp, BVA cho mọi biến có thứ tự trong đặc tả, mỗi bước một commit) và chỉ thu gọn:
+
+| Bước | Thu gọn |
+| --- | --- |
+| B1 | Một lần quan sát giao diện (snapshot + 1 ảnh); không khảo sát thêm |
+| B2–B4 | Chỉ các biến có trong đặc tả; tách lớp ngoài guideline chỉ khi có lý do rủi ro rõ; tiêu đề / kết quả mong đợi ngắn nhưng vẫn cụ thể |
+| B5 | API chạy **toàn bộ** TC. Giao diện chỉ chạy TC có hành vi riêng của giao diện + tối đa 5 TC đại diện (mỗi TC 1 ảnh); TC còn lại để trống kênh giao diện và đặt `na_text="Chưa chạy (chế độ nhanh)"`, `na_header="Không áp dụng / chưa chạy"`. TC phải chờ thời gian thật: mỗi TC một tài khoản riêng tạo qua API, chạy song song. Lỗi runner sửa tối đa một lần, còn lỗi thì đánh Blocked kèm lý do |
+| B6 | 3–5 điểm chính |
+| B7 | Mục chính của mẫu Problem Report; dùng ảnh đã chụp ở B5, không viết script bằng chứng riêng |
+
+Ghi rõ ở mục 5.1: "chạy chế độ nhanh – giao diện N / M TC". Trước khi bắt đầu, nhắc người dùng: SUT chạy sẵn, bật tự chấp nhận quyền cho phiên, dùng model nhanh nếu có (vd `/fast`).
 
 ## Kiểm tra trước khi sang bước sau
 
