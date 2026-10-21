@@ -419,11 +419,11 @@ Không bổ sung test case sau rà soát của AI: các lỗi tìm thấy nằm 
 
 ## 7. Bước 7 – Bug
 
-Chi tiết từng bug: `bugs/Bug_Report.md`. Cột Issue điền số `BUG-NN` sau khi tạo issue trên repo nhóm.
+Chi tiết từng bug: `bugs/Bug_Report.md`. Cột GitHub Issue dẫn tới issue trên repo nhóm `d1nhnguyen/eshop-sut` (ảnh chụp trang issue ở cuối `bugs/Bug_Report.md`).
 
 | Mã | Tiêu đề | Mức độ | Thành phần | TC liên quan | GitHub Issue |
 | --- | --- | --- | --- | --- | --- |
-| FR10-B1 | Đơn đã hủy chuyển được sang "Đã giao"; Web Admin hiện nút "Đánh dấu Đã giao" cho đơn đã hủy | Critical | Backend, Web Admin | FR10-DT-09, FR10-DT-26 | |
-| FR10-B2 | User hủy được đơn đang giao; trang Hồ sơ hiện nút "Hủy đơn" cho đơn đang giao | Major | Backend, Web | FR10-DT-14, FR10-DT-27 | |
+| FR10-B1 | Đơn đã hủy chuyển được sang "Đã giao"; Web Admin hiện nút "Đánh dấu Đã giao" cho đơn đã hủy | Critical | Backend, Web Admin | FR10-DT-09, FR10-DT-26 | [BUG-30](https://github.com/d1nhnguyen/eshop-sut/issues/30) |
+| FR10-B2 | User hủy được đơn đang giao; trang Hồ sơ hiện nút "Hủy đơn" cho đơn đang giao | Major | Backend, Web | FR10-DT-14, FR10-DT-27 | [BUG-31](https://github.com/d1nhnguyen/eshop-sut/issues/31) |
 
 Tổng: 2 bug (1 Critical, 1 Major).

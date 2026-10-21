@@ -493,18 +493,18 @@ FR01-DT-29 do Claude Code thêm sau khảo sát (G1); FR01-DT-30…FR01-DT-32 đ
 
 ## 7. Bước 7 – Bug
 
-Chi tiết từng bug (các bước tái hiện, kết quả mong đợi / thực tế, phân tích, ảnh): `bugs/Bug_Report.md`. Cột Issue điền số `BUG-NN` sau khi tạo issue trên repo nhóm.
+Chi tiết từng bug (các bước tái hiện, kết quả mong đợi / thực tế, phân tích, ảnh): `bugs/Bug_Report.md`. Cột GitHub Issue dẫn tới issue trên repo nhóm `d1nhnguyen/eshop-sut` (ảnh chụp trang issue ở cuối `bugs/Bug_Report.md`).
 
 | Mã | Tiêu đề | Mức độ | Thành phần | TC liên quan | GitHub Issue |
 | --- | --- | --- | --- | --- | --- |
-| FR01-B1 | Form Đăng ký trên Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ có ký tự đặc biệt `@ $ ! % * ? &` | Critical | Web | FR01-DT-01…FR01-DT-07, FR01-BV-04…FR01-BV-08, FR01-DT-29, FR01-DT-32 | |
-| FR01-B2 | Form Đăng ký thiếu ô "Xác nhận mật khẩu" | Major | Web | FR01-DT-26…FR01-DT-28, FR01-BV-20, FR01-BV-21 | |
-| FR01-B3 | API đăng ký chấp nhận Họ Tên, Email hoặc Mật khẩu rỗng | Major | Backend | FR01-DT-08, FR01-DT-10, FR01-DT-19 | |
-| FR01-B4 | API đăng ký chấp nhận email sai định dạng | Major | Backend | FR01-DT-11…FR01-DT-16 | |
-| FR01-B5 | API đăng ký chấp nhận mật khẩu không đủ mạnh | Major | Backend | FR01-DT-20…FR01-DT-25, FR01-BV-01…FR01-BV-03, FR01-BV-09…FR01-BV-13, FR01-DT-29…FR01-DT-31 | |
-| FR01-B6 | Hệ thống cho đăng ký bằng email đã tồn tại, tạo tài khoản trùng | Critical | Backend | FR01-DT-17, FR01-DT-18, FR01-BV-19 | |
-| FR01-B7 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; FR01-DT-11…FR01-DT-16 (khảo sát) | |
-| FR01-B8 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối, không đăng nhập được bằng email bình thường | Minor | Backend | FR01-DT-02, FR01-BV-19 |  |
-| FR01-B9 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | FR01-DT-09 | |
+| FR01-B1 | Form Đăng ký trên Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ có ký tự đặc biệt `@ $ ! % * ? &` | Critical | Web | FR01-DT-01…FR01-DT-07, FR01-BV-04…FR01-BV-08, FR01-DT-29, FR01-DT-32 | [BUG-15](https://github.com/d1nhnguyen/eshop-sut/issues/15) |
+| FR01-B2 | Form Đăng ký thiếu ô "Xác nhận mật khẩu" | Major | Web | FR01-DT-26…FR01-DT-28, FR01-BV-20, FR01-BV-21 | [BUG-16](https://github.com/d1nhnguyen/eshop-sut/issues/16) |
+| FR01-B3 | API đăng ký chấp nhận Họ Tên, Email hoặc Mật khẩu rỗng | Major | Backend | FR01-DT-08, FR01-DT-10, FR01-DT-19 | [BUG-17](https://github.com/d1nhnguyen/eshop-sut/issues/17) |
+| FR01-B4 | API đăng ký chấp nhận email sai định dạng | Major | Backend | FR01-DT-11…FR01-DT-16 | [BUG-18](https://github.com/d1nhnguyen/eshop-sut/issues/18) |
+| FR01-B5 | API đăng ký chấp nhận mật khẩu không đủ mạnh | Major | Backend | FR01-DT-20…FR01-DT-25, FR01-BV-01…FR01-BV-03, FR01-BV-09…FR01-BV-13, FR01-DT-29…FR01-DT-31 | [BUG-19](https://github.com/d1nhnguyen/eshop-sut/issues/19) |
+| FR01-B6 | Hệ thống cho đăng ký bằng email đã tồn tại, tạo tài khoản trùng | Critical | Backend | FR01-DT-17, FR01-DT-18, FR01-BV-19 | [BUG-20](https://github.com/d1nhnguyen/eshop-sut/issues/20) |
+| FR01-B7 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; FR01-DT-11…FR01-DT-16 (khảo sát) | [BUG-21](https://github.com/d1nhnguyen/eshop-sut/issues/21) |
+| FR01-B8 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối, không đăng nhập được bằng email bình thường | Minor | Backend | FR01-DT-02, FR01-BV-19 | [BUG-22](https://github.com/d1nhnguyen/eshop-sut/issues/22) |
+| FR01-B9 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | FR01-DT-09 | [BUG-23](https://github.com/d1nhnguyen/eshop-sut/issues/23) |
 
 Tổng: 9 bug (2 Critical, 4 Major, 3 Minor). Ngoài phạm vi FR-01 (không báo ở đây): trang Đăng ký không có thẻ `<h1>` và nút "Đăng Ký" màu đỏ (FR-21).

@@ -447,15 +447,15 @@ Kết quả thực thi nằm ở mục 5.3.
 
 ## 7. Bước 7 – Bug
 
-Chi tiết từng bug (các bước tái hiện, kết quả mong đợi / thực tế, phân tích, ảnh): `bugs/Bug_Report.md`. Cột Issue điền số `BUG-NN` sau khi tạo issue trên repo nhóm.
+Chi tiết từng bug (các bước tái hiện, kết quả mong đợi / thực tế, phân tích, ảnh): `bugs/Bug_Report.md`. Cột GitHub Issue dẫn tới issue trên repo nhóm `d1nhnguyen/eshop-sut` (ảnh chụp trang issue ở cuối `bugs/Bug_Report.md`).
 
 | Mã | Tiêu đề | Mức độ | Thành phần | TC liên quan | GitHub Issue |
 | --- | --- | --- | --- | --- | --- |
-| FR15-B1 | Quản lý sản phẩm cho lưu Giá bằng 0 hoặc âm khi Thêm và Sửa | Major | Backend, Web Admin | FR15-DT-08, FR15-DT-09, FR15-DT-20, FR15-DT-21, FR15-BV-11, FR15-BV-12, FR15-BV-17 | |
-| FR15-B2 | Quản lý sản phẩm cho lưu khi thiếu Giá hoặc Giá không phải số | Major | Backend, Web Admin | FR15-DT-10, FR15-DT-11, FR15-DT-22, FR15-DT-23 | |
-| FR15-B3 | Quản lý sản phẩm cho lưu Tên dài hơn 255 ký tự | Major | Backend, Web Admin | FR15-DT-07, FR15-DT-19, FR15-BV-05, FR15-BV-07, FR15-BV-10 | |
-| FR15-B4 | Quản lý sản phẩm cho lưu Tên rỗng (API) hoặc chỉ gồm khoảng trắng | Major | Backend, Web Admin | FR15-DT-05, FR15-DT-06, FR15-DT-17, FR15-DT-18 | |
-| FR15-B5 | Quản lý sản phẩm cho lưu Danh mục thiếu hoặc không có trong danh sách | Major | Backend | FR15-DT-12…FR15-DT-14, FR15-DT-24…FR15-DT-26, FR15-BV-18, FR15-BV-20 | |
-| FR15-B6 | Sửa / Xóa sản phẩm không tồn tại trả 200 "Product updated / deleted" thay vì 404 | Minor | Backend | FR15-DT-27…FR15-DT-29, FR15-DT-31…FR15-DT-33, FR15-BV-21, FR15-BV-24, FR15-BV-25, FR15-BV-27 | |
+| FR15-B1 | Quản lý sản phẩm cho lưu Giá bằng 0 hoặc âm khi Thêm và Sửa | Major | Backend, Web Admin | FR15-DT-08, FR15-DT-09, FR15-DT-20, FR15-DT-21, FR15-BV-11, FR15-BV-12, FR15-BV-17 | [BUG-24](https://github.com/d1nhnguyen/eshop-sut/issues/24) |
+| FR15-B2 | Quản lý sản phẩm cho lưu khi thiếu Giá hoặc Giá không phải số | Major | Backend, Web Admin | FR15-DT-10, FR15-DT-11, FR15-DT-22, FR15-DT-23 | [BUG-25](https://github.com/d1nhnguyen/eshop-sut/issues/25) |
+| FR15-B3 | Quản lý sản phẩm cho lưu Tên dài hơn 255 ký tự | Major | Backend, Web Admin | FR15-DT-07, FR15-DT-19, FR15-BV-05, FR15-BV-07, FR15-BV-10 | [BUG-26](https://github.com/d1nhnguyen/eshop-sut/issues/26) |
+| FR15-B4 | Quản lý sản phẩm cho lưu Tên rỗng (API) hoặc chỉ gồm khoảng trắng | Major | Backend, Web Admin | FR15-DT-05, FR15-DT-06, FR15-DT-17, FR15-DT-18 | [BUG-27](https://github.com/d1nhnguyen/eshop-sut/issues/27) |
+| FR15-B5 | Quản lý sản phẩm cho lưu Danh mục thiếu hoặc không có trong danh sách | Major | Backend | FR15-DT-12…FR15-DT-14, FR15-DT-24…FR15-DT-26, FR15-BV-18, FR15-BV-20 | [BUG-28](https://github.com/d1nhnguyen/eshop-sut/issues/28) |
+| FR15-B6 | Sửa / Xóa sản phẩm không tồn tại trả 200 "Product updated / deleted" thay vì 404 | Minor | Backend | FR15-DT-27…FR15-DT-29, FR15-DT-31…FR15-DT-33, FR15-BV-21, FR15-BV-24, FR15-BV-25, FR15-BV-27 | [BUG-29](https://github.com/d1nhnguyen/eshop-sut/issues/29) |
 
 Tổng: 6 bug (5 Major, 1 Minor). Ngoài phạm vi FR-15 (ghi trong danh sách đối chiếu để báo người phụ trách): `GET /api/products/:id` trả giá dạng chuỗi với id chẵn (FR-06); giá trong danh sách Admin không có phân cách hàng nghìn (FR-21).

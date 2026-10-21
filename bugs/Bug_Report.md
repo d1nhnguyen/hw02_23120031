@@ -1,6 +1,6 @@
 # Báo cáo bug · HW02 · 23120031
 
-Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, tiêu đề dạng `[BUG-NN] [FR-xx] <tóm tắt>`. Mỗi bug dưới đây có mã tạm (vd `FR01-B1`) dùng trong báo cáo feature; cột **Issue** ghi số `BUG-NN` sau khi tạo issue. Nội dung theo mẫu Problem Report [Kaner, TCS ch.5]: tái hiện được, ít bước nhất, không phán xét, nêu hậu quả nghiêm trọng nhất và các đường khác dẫn tới cùng lỗi.
+Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, tiêu đề dạng `[BUG-NN] [FR-xx] <tóm tắt>`. Mỗi bug dưới đây có mã tạm (vd `FR01-B1`) dùng trong báo cáo feature; cột **Issue** dẫn tới issue đã tạo (BUG-15…BUG-36, tạo ngày 21/10/2026 bằng tài khoản `d1nhnguyen`); ảnh chụp từng trang issue ở mục cuối. Nội dung theo mẫu Problem Report [Kaner, TCS ch.5]: tái hiện được, ít bước nhất, không phán xét, nêu hậu quả nghiêm trọng nhất và các đường khác dẫn tới cùng lỗi.
 
 **Môi trường chung:** EShop SUT (`d1nhnguyen/eshop-sut`, commit `85af3ba`), backend Node 20.19.5 khởi động lại trước khi tái hiện (dữ liệu seed), Web `http://localhost:5173`, Chrome 155, Ubuntu 24.04. Người báo: 23120031. Ngày: 2026-10-20.
 
@@ -10,28 +10,28 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 
 | Mã | Issue | Feature | Tiêu đề issue đề xuất | Mức độ | Thành phần | TC phát hiện |
 | --- | --- | --- | --- | --- | --- | --- |
-| FR01-B1 | | FR-01 | Form Đăng ký trên Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ có ký tự đặc biệt `@ $ ! % * ? &` | Critical | Web | FR01-DT-01…FR01-DT-07, FR01-BV-04…FR01-BV-08, FR01-DT-29, FR01-DT-32 |
-| FR01-B2 | | FR-01 | Form Đăng ký thiếu ô "Xác nhận mật khẩu" | Major | Web | FR01-DT-26…FR01-DT-28, FR01-BV-20, FR01-BV-21 |
-| FR01-B3 | | FR-01 | API đăng ký chấp nhận Họ Tên, Email hoặc Mật khẩu rỗng | Major | Backend | FR01-DT-08, FR01-DT-10, FR01-DT-19 |
-| FR01-B4 | | FR-01 | API đăng ký chấp nhận email sai định dạng | Major | Backend | FR01-DT-11…FR01-DT-16 |
-| FR01-B5 | | FR-01 | API đăng ký chấp nhận mật khẩu không đủ mạnh | Major | Backend | FR01-DT-20…FR01-DT-25, FR01-BV-01…FR01-BV-03, FR01-BV-09…FR01-BV-13, FR01-DT-29…FR01-DT-31 |
-| FR01-B6 | | FR-01 | Hệ thống cho đăng ký bằng email đã tồn tại, tạo tài khoản trùng | Critical | Backend | FR01-DT-17, FR01-DT-18, FR01-BV-19 |
-| FR01-B7 | | FR-01 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; FR01-DT-11…FR01-DT-16 (lượt khảo sát Web) |
-| FR01-B8 | | FR-01 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối, không đăng nhập được bằng email bình thường | Minor | Backend | FR01-DT-02, FR01-BV-19 |
-| FR01-B9 | | FR-01 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | FR01-DT-09 |
-| FR15-B1 | | FR-15 | Quản lý sản phẩm cho lưu Giá bằng 0 hoặc âm khi Thêm và Sửa | Major | Backend, Web Admin | FR15-DT-08, FR15-DT-09, FR15-DT-20, FR15-DT-21, FR15-BV-11, FR15-BV-12, FR15-BV-17 |
-| FR15-B2 | | FR-15 | Quản lý sản phẩm cho lưu khi thiếu Giá hoặc Giá không phải số | Major | Backend, Web Admin | FR15-DT-10, FR15-DT-11, FR15-DT-22, FR15-DT-23 |
-| FR15-B3 | | FR-15 | Quản lý sản phẩm cho lưu Tên dài hơn 255 ký tự | Major | Backend, Web Admin | FR15-DT-07, FR15-DT-19, FR15-BV-05, FR15-BV-07, FR15-BV-10 |
-| FR15-B4 | | FR-15 | Quản lý sản phẩm cho lưu Tên rỗng (API) hoặc chỉ gồm khoảng trắng | Major | Backend, Web Admin | FR15-DT-05, FR15-DT-06, FR15-DT-17, FR15-DT-18 |
-| FR15-B5 | | FR-15 | Quản lý sản phẩm cho lưu Danh mục thiếu hoặc không có trong danh sách | Major | Backend | FR15-DT-12…FR15-DT-14, FR15-DT-24…FR15-DT-26, FR15-BV-18, FR15-BV-20 |
-| FR15-B6 | | FR-15 | Sửa / Xóa sản phẩm không tồn tại trả 200 "Product updated / deleted" thay vì 404 | Minor | Backend | FR15-DT-27…FR15-DT-29, FR15-DT-31…FR15-DT-33, FR15-BV-21, FR15-BV-24, FR15-BV-25, FR15-BV-27 |
-| FR10-B1 | | FR-10 | Đơn đã hủy chuyển được sang "Đã giao"; Web Admin hiện nút "Đánh dấu Đã giao" cho đơn đã hủy | Critical | Backend, Web Admin | FR10-DT-09, FR10-DT-26 |
-| FR10-B2 | | FR-10 | User hủy được đơn đang giao; trang Hồ sơ hiện nút "Hủy đơn" cho đơn đang giao | Major | Backend, Web | FR10-DT-14, FR10-DT-27 |
-| MOB-B1 | | FR-20 (Mobile – Đăng nhập) | Thanh tiêu đề app Mobile bị thanh trạng thái che trên máy có thanh trạng thái cao, không mở được màn hình Đăng nhập | Critical | Mobile | Quan sát bước 1 (Pixel 6) |
-| MOB-B2 | | FR-20 (Mobile – Đăng nhập) | Mỗi lần đăng nhập sai bộ đếm tăng 2, tài khoản bị khóa ngay sau lần sai thứ 2 | Major | Backend (ảnh hưởng Mobile) | MOB-DT-06, MOB-DT-07, MOB-DT-10…MOB-DT-12, MOB-BV-02, MOB-BV-04, MOB-BV-07, MOB-BV-08 |
-| MOB-B3 | | FR-20 (Mobile – Đăng nhập) | Tài khoản bị khóa 180 giây thay vì 30 giây | Major | Backend (ảnh hưởng Mobile) | MOB-DT-04, MOB-BV-06 |
-| MOB-B4 | | FR-20 (Mobile – Đăng nhập) | Đăng nhập thất bại khi email khác chữ hoa / thường hoặc có khoảng trắng đầu / cuối | Minor | Backend (ảnh hưởng Mobile) | MOB-DT-02, MOB-DT-03 |
-| MOB-B5 | | FR-20 (Mobile – Đăng nhập) | Màn hình Đăng nhập Mobile dùng nhãn tiếng Anh "Username" cho ô Email và nút "Sign In" | Minor | Mobile | Quan sát bước 1 |
+| FR01-B1 | [BUG-15](https://github.com/d1nhnguyen/eshop-sut/issues/15) | FR-01 | Form Đăng ký trên Web báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ có ký tự đặc biệt `@ $ ! % * ? &` | Critical | Web | FR01-DT-01…FR01-DT-07, FR01-BV-04…FR01-BV-08, FR01-DT-29, FR01-DT-32 |
+| FR01-B2 | [BUG-16](https://github.com/d1nhnguyen/eshop-sut/issues/16) | FR-01 | Form Đăng ký thiếu ô "Xác nhận mật khẩu" | Major | Web | FR01-DT-26…FR01-DT-28, FR01-BV-20, FR01-BV-21 |
+| FR01-B3 | [BUG-17](https://github.com/d1nhnguyen/eshop-sut/issues/17) | FR-01 | API đăng ký chấp nhận Họ Tên, Email hoặc Mật khẩu rỗng | Major | Backend | FR01-DT-08, FR01-DT-10, FR01-DT-19 |
+| FR01-B4 | [BUG-18](https://github.com/d1nhnguyen/eshop-sut/issues/18) | FR-01 | API đăng ký chấp nhận email sai định dạng | Major | Backend | FR01-DT-11…FR01-DT-16 |
+| FR01-B5 | [BUG-19](https://github.com/d1nhnguyen/eshop-sut/issues/19) | FR-01 | API đăng ký chấp nhận mật khẩu không đủ mạnh | Major | Backend | FR01-DT-20…FR01-DT-25, FR01-BV-01…FR01-BV-03, FR01-BV-09…FR01-BV-13, FR01-DT-29…FR01-DT-31 |
+| FR01-B6 | [BUG-20](https://github.com/d1nhnguyen/eshop-sut/issues/20) | FR-01 | Hệ thống cho đăng ký bằng email đã tồn tại, tạo tài khoản trùng | Critical | Backend | FR01-DT-17, FR01-DT-18, FR01-BV-19 |
+| FR01-B7 | [BUG-21](https://github.com/d1nhnguyen/eshop-sut/issues/21) | FR-01 | Ô Email ở form Đăng ký dùng `type="text"`, không kiểm tra định dạng email | Minor | Web | Quan sát B1; FR01-DT-11…FR01-DT-16 (lượt khảo sát Web) |
+| FR01-B8 | [BUG-22](https://github.com/d1nhnguyen/eshop-sut/issues/22) | FR-01 | Email đăng ký được lưu kèm khoảng trắng đầu/cuối, không đăng nhập được bằng email bình thường | Minor | Backend | FR01-DT-02, FR01-BV-19 |
+| FR01-B9 | [BUG-23](https://github.com/d1nhnguyen/eshop-sut/issues/23) | FR-01 | Hệ thống chấp nhận Họ Tên chỉ gồm khoảng trắng | Minor | Web, Backend | FR01-DT-09 |
+| FR15-B1 | [BUG-24](https://github.com/d1nhnguyen/eshop-sut/issues/24) | FR-15 | Quản lý sản phẩm cho lưu Giá bằng 0 hoặc âm khi Thêm và Sửa | Major | Backend, Web Admin | FR15-DT-08, FR15-DT-09, FR15-DT-20, FR15-DT-21, FR15-BV-11, FR15-BV-12, FR15-BV-17 |
+| FR15-B2 | [BUG-25](https://github.com/d1nhnguyen/eshop-sut/issues/25) | FR-15 | Quản lý sản phẩm cho lưu khi thiếu Giá hoặc Giá không phải số | Major | Backend, Web Admin | FR15-DT-10, FR15-DT-11, FR15-DT-22, FR15-DT-23 |
+| FR15-B3 | [BUG-26](https://github.com/d1nhnguyen/eshop-sut/issues/26) | FR-15 | Quản lý sản phẩm cho lưu Tên dài hơn 255 ký tự | Major | Backend, Web Admin | FR15-DT-07, FR15-DT-19, FR15-BV-05, FR15-BV-07, FR15-BV-10 |
+| FR15-B4 | [BUG-27](https://github.com/d1nhnguyen/eshop-sut/issues/27) | FR-15 | Quản lý sản phẩm cho lưu Tên rỗng (API) hoặc chỉ gồm khoảng trắng | Major | Backend, Web Admin | FR15-DT-05, FR15-DT-06, FR15-DT-17, FR15-DT-18 |
+| FR15-B5 | [BUG-28](https://github.com/d1nhnguyen/eshop-sut/issues/28) | FR-15 | Quản lý sản phẩm cho lưu Danh mục thiếu hoặc không có trong danh sách | Major | Backend | FR15-DT-12…FR15-DT-14, FR15-DT-24…FR15-DT-26, FR15-BV-18, FR15-BV-20 |
+| FR15-B6 | [BUG-29](https://github.com/d1nhnguyen/eshop-sut/issues/29) | FR-15 | Sửa / Xóa sản phẩm không tồn tại trả 200 "Product updated / deleted" thay vì 404 | Minor | Backend | FR15-DT-27…FR15-DT-29, FR15-DT-31…FR15-DT-33, FR15-BV-21, FR15-BV-24, FR15-BV-25, FR15-BV-27 |
+| FR10-B1 | [BUG-30](https://github.com/d1nhnguyen/eshop-sut/issues/30) | FR-10 | Đơn đã hủy chuyển được sang "Đã giao"; Web Admin hiện nút "Đánh dấu Đã giao" cho đơn đã hủy | Critical | Backend, Web Admin | FR10-DT-09, FR10-DT-26 |
+| FR10-B2 | [BUG-31](https://github.com/d1nhnguyen/eshop-sut/issues/31) | FR-10 | User hủy được đơn đang giao; trang Hồ sơ hiện nút "Hủy đơn" cho đơn đang giao | Major | Backend, Web | FR10-DT-14, FR10-DT-27 |
+| MOB-B1 | [BUG-32](https://github.com/d1nhnguyen/eshop-sut/issues/32) | FR-20 (Mobile – Đăng nhập) | Thanh tiêu đề app Mobile bị thanh trạng thái che trên máy có thanh trạng thái cao, không mở được màn hình Đăng nhập | Critical | Mobile | Quan sát bước 1 (Pixel 6) |
+| MOB-B2 | [BUG-33](https://github.com/d1nhnguyen/eshop-sut/issues/33) | FR-20 (Mobile – Đăng nhập) | Mỗi lần đăng nhập sai bộ đếm tăng 2, tài khoản bị khóa ngay sau lần sai thứ 2 | Major | Backend (ảnh hưởng Mobile) | MOB-DT-06, MOB-DT-07, MOB-DT-10…MOB-DT-12, MOB-BV-02, MOB-BV-04, MOB-BV-07, MOB-BV-08 |
+| MOB-B3 | [BUG-34](https://github.com/d1nhnguyen/eshop-sut/issues/34) | FR-20 (Mobile – Đăng nhập) | Tài khoản bị khóa 180 giây thay vì 30 giây | Major | Backend (ảnh hưởng Mobile) | MOB-DT-04, MOB-BV-06 |
+| MOB-B4 | [BUG-35](https://github.com/d1nhnguyen/eshop-sut/issues/35) | FR-20 (Mobile – Đăng nhập) | Đăng nhập thất bại khi email khác chữ hoa / thường hoặc có khoảng trắng đầu / cuối | Minor | Backend (ảnh hưởng Mobile) | MOB-DT-02, MOB-DT-03 |
+| MOB-B5 | [BUG-36](https://github.com/d1nhnguyen/eshop-sut/issues/36) | FR-20 (Mobile – Đăng nhập) | Màn hình Đăng nhập Mobile dùng nhãn tiếng Anh "Username" cho ô Email và nút "Sign In" | Minor | Mobile | Quan sát bước 1 |
 
 ## Chi tiết
 
@@ -601,4 +601,90 @@ Môi trường: Expo Go SDK 54 trên Android Emulator Android 14 – Pixel 6 (`e
 
 ## Ảnh trang GitHub Issues
 
-<!-- Sau khi tạo issue: chụp trang issue, lưu bugs/screenshots/BUG-NN_issue.png và chèn vào đây. -->
+### BUG-15 (FR01-B1)
+
+![BUG-15](screenshots/BUG-15_issue.png)
+
+### BUG-16 (FR01-B2)
+
+![BUG-16](screenshots/BUG-16_issue.png)
+
+### BUG-17 (FR01-B3)
+
+![BUG-17](screenshots/BUG-17_issue.png)
+
+### BUG-18 (FR01-B4)
+
+![BUG-18](screenshots/BUG-18_issue.png)
+
+### BUG-19 (FR01-B5)
+
+![BUG-19](screenshots/BUG-19_issue.png)
+
+### BUG-20 (FR01-B6)
+
+![BUG-20](screenshots/BUG-20_issue.png)
+
+### BUG-21 (FR01-B7)
+
+![BUG-21](screenshots/BUG-21_issue.png)
+
+### BUG-22 (FR01-B8)
+
+![BUG-22](screenshots/BUG-22_issue.png)
+
+### BUG-23 (FR01-B9)
+
+![BUG-23](screenshots/BUG-23_issue.png)
+
+### BUG-24 (FR15-B1)
+
+![BUG-24](screenshots/BUG-24_issue.png)
+
+### BUG-25 (FR15-B2)
+
+![BUG-25](screenshots/BUG-25_issue.png)
+
+### BUG-26 (FR15-B3)
+
+![BUG-26](screenshots/BUG-26_issue.png)
+
+### BUG-27 (FR15-B4)
+
+![BUG-27](screenshots/BUG-27_issue.png)
+
+### BUG-28 (FR15-B5)
+
+![BUG-28](screenshots/BUG-28_issue.png)
+
+### BUG-29 (FR15-B6)
+
+![BUG-29](screenshots/BUG-29_issue.png)
+
+### BUG-30 (FR10-B1)
+
+![BUG-30](screenshots/BUG-30_issue.png)
+
+### BUG-31 (FR10-B2)
+
+![BUG-31](screenshots/BUG-31_issue.png)
+
+### BUG-32 (MOB-B1)
+
+![BUG-32](screenshots/BUG-32_issue.png)
+
+### BUG-33 (MOB-B2)
+
+![BUG-33](screenshots/BUG-33_issue.png)
+
+### BUG-34 (MOB-B3)
+
+![BUG-34](screenshots/BUG-34_issue.png)
+
+### BUG-35 (MOB-B4)
+
+![BUG-35](screenshots/BUG-35_issue.png)
+
+### BUG-36 (MOB-B5)
+
+![BUG-36](screenshots/BUG-36_issue.png)

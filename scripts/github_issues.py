@@ -42,8 +42,9 @@ def parse():
             continue
         code = m.group(1)
         body = re.sub(r"^!\[[^\]]*\]\([^)]*\)\n?", "", body.strip(), flags=re.M).strip()
-        body = re.sub(r"^\*\*Bằng chứng:\*\* .*$",
-                      f"**Bằng chứng:** _(kéo-thả ảnh `bugs/screenshots/{code}.png` vào đây)_", body, flags=re.M)
+        evidence = re.search(r"^\*\*Bằng chứng:\*\* .*$", body, re.M).group(0)
+        shots = ", ".join(f"`{f}`" for f in re.findall(r"bugs/screenshots/[\w.-]+\.png", evidence))
+        body = body.replace(evidence, f"**Bằng chứng:** _(kéo-thả ảnh {shots} vào đây)_")
         bugs.append({"code": code, **summary[code], "env": env + (" " + group_env if group_env else ""), "body": body})
     assert len(bugs) == len(summary), (len(bugs), len(summary))
     return bugs

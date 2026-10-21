@@ -26,8 +26,10 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 
 ## GitHub Issues
 
-- [ ] Sinh viên tự tạo 22 issue bằng tài khoản **d1nhnguyen** trên `d1nhnguyen/eshop-sut` (số tiếp theo lúc kiểm tra 21/10: BUG-15). Tiêu đề và nội dung sẵn trong `bugs/issues/README.md` + `bugs/issues/<Mã>.md` (`python3 scripts/github_issues.py draft` để sinh lại); kéo-thả ảnh `bugs/screenshots/<Mã>.png` vào dòng **Bằng chứng**, giữ dòng đầu `Mã trong báo cáo HW02 (23120031): …`.
-- [ ] Tạo xong → chạy `python3 scripts/github_issues.py fill --shots`: điền `BUG-NN` + link vào `bugs/Bug_Report.md` và mục 7 mỗi báo cáo, chụp trang issue `bugs/screenshots/BUG-NN_issue.png`.
+- [x] Đã tạo 22 issue #15–#36 (BUG-15…BUG-36) bằng tài khoản d1nhnguyen ngày 21/10; đã đối chiếu tiêu đề, mã, nội dung và ảnh với bản nháp; đã điền link vào `bugs/Bug_Report.md`, mục 7 các báo cáo và chụp trang issue `bugs/screenshots/BUG-NN_issue.png`.
+- [ ] **#24 (FR15-B1) và #27 (FR15-B4) bị dán trùng ảnh** (cùng một ảnh 2 lần): sửa issue, xóa ảnh trùng; ở #24 có thể thay bằng `bugs/screenshots/FR15-admin-products.png`.
+- [ ] (Tuỳ chọn) Thêm ảnh phụ có trong bug report nhưng bản nháp issue chưa nhắc: `FR01-admin-users.png` cho #17 (FR01-B3), #18 (FR01-B4), #20 (FR01-B6).
+- [ ] Sửa xong → chạy lại `python3 scripts/github_issues.py fill --shots` để chụp lại trang issue.
 - [ ] Kiểm tra không trùng bug với thành viên khác trong nhóm – đặc biệt MOB-B2, MOB-B3, MOB-B4 là lỗi backend của quy tắc đăng nhập (FR-02), có thể trùng với người kiểm thử đăng nhập Web.
 
 ## Hồ sơ nộp

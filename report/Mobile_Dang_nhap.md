@@ -342,14 +342,14 @@ Kết quả thực thi nằm ở mục 5.3.
 
 ## 7. Bước 7 – Bug
 
-Chi tiết từng bug: `bugs/Bug_Report.md`. Tiêu đề issue dùng `[FR-20]`. Cột Issue điền số `BUG-NN` sau khi tạo issue trên repo nhóm.
+Chi tiết từng bug: `bugs/Bug_Report.md`. Tiêu đề issue dùng `[FR-20]`. Cột GitHub Issue dẫn tới issue trên repo nhóm `d1nhnguyen/eshop-sut` (ảnh chụp trang issue ở cuối `bugs/Bug_Report.md`).
 
 | Mã | Tiêu đề | Mức độ | Thành phần | TC liên quan | GitHub Issue |
 | --- | --- | --- | --- | --- | --- |
-| MOB-B1 | Thanh tiêu đề app Mobile bị thanh trạng thái che trên máy có thanh trạng thái cao, không mở được màn hình Đăng nhập | Critical | Mobile | Quan sát bước 1 (Pixel 6) | |
-| MOB-B2 | Mỗi lần đăng nhập sai bộ đếm tăng 2, tài khoản bị khóa ngay sau lần sai thứ 2 | Major | Backend (ảnh hưởng Mobile) | MOB-DT-06, MOB-DT-07, MOB-DT-10…MOB-DT-12, MOB-BV-02, MOB-BV-04, MOB-BV-07, MOB-BV-08 | |
-| MOB-B3 | Tài khoản bị khóa 180 giây thay vì 30 giây | Major | Backend (ảnh hưởng Mobile) | MOB-DT-04, MOB-BV-06 | |
-| MOB-B4 | Đăng nhập thất bại khi email khác chữ hoa / thường hoặc có khoảng trắng đầu / cuối | Minor | Backend (ảnh hưởng Mobile) | MOB-DT-02, MOB-DT-03 | |
-| MOB-B5 | Màn hình Đăng nhập Mobile dùng nhãn tiếng Anh "Username" cho ô Email và nút "Sign In" | Minor | Mobile | Quan sát bước 1 | |
+| MOB-B1 | Thanh tiêu đề app Mobile bị thanh trạng thái che trên máy có thanh trạng thái cao, không mở được màn hình Đăng nhập | Critical | Mobile | Quan sát bước 1 (Pixel 6) | [BUG-32](https://github.com/d1nhnguyen/eshop-sut/issues/32) |
+| MOB-B2 | Mỗi lần đăng nhập sai bộ đếm tăng 2, tài khoản bị khóa ngay sau lần sai thứ 2 | Major | Backend (ảnh hưởng Mobile) | MOB-DT-06, MOB-DT-07, MOB-DT-10…MOB-DT-12, MOB-BV-02, MOB-BV-04, MOB-BV-07, MOB-BV-08 | [BUG-33](https://github.com/d1nhnguyen/eshop-sut/issues/33) |
+| MOB-B3 | Tài khoản bị khóa 180 giây thay vì 30 giây | Major | Backend (ảnh hưởng Mobile) | MOB-DT-04, MOB-BV-06 | [BUG-34](https://github.com/d1nhnguyen/eshop-sut/issues/34) |
+| MOB-B4 | Đăng nhập thất bại khi email khác chữ hoa / thường hoặc có khoảng trắng đầu / cuối | Minor | Backend (ảnh hưởng Mobile) | MOB-DT-02, MOB-DT-03 | [BUG-35](https://github.com/d1nhnguyen/eshop-sut/issues/35) |
+| MOB-B5 | Màn hình Đăng nhập Mobile dùng nhãn tiếng Anh "Username" cho ô Email và nút "Sign In" | Minor | Mobile | Quan sát bước 1 | [BUG-36](https://github.com/d1nhnguyen/eshop-sut/issues/36) |
 
 Tổng: 5 bug (1 Critical, 2 Major, 2 Minor). Ngoài phạm vi (đã ghi trong danh sách đối chiếu): nút đăng xuất ghi "Thoát" (FR-23).
