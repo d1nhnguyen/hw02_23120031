@@ -1,19 +1,11 @@
 # AI Critique · HW02 · 23120031
 
-<!--
-200–300 từ, trả lời 3 câu hỏi của đề (mục 10):
-1. AI đã sai, thiên lệch hoặc thiếu sót ở đâu?
-2. Vì sao AI không phát hiện được vấn đề đó?
-3. Bạn rút ra nguyên tắc gì về cách cộng tác với AI qua bài này?
-Dẫn ví dụ cụ thể từ phần AI gap analysis của 4 feature.
+<!-- NHÁP do Claude Code viết theo yêu cầu của sinh viên (lượt #26), dựa trên mục 6 (AI gap analysis) của 4 báo cáo. Sinh viên đọc, chỉnh theo ý mình rồi xóa dòng này. -->
 
-Ví dụ có sẵn trong mục 6.1 các báo cáo (sinh viên chọn, tự diễn đạt, xóa khối chú thích này trước khi nộp):
-- Oracle quá dễ dãi: FR-01 G2–G3 (từ chối vì bất kỳ lý do nào cũng tính Pass → 10 + 5 test case Pass giả).
-- Suy luận quá đà từ một mẫu: FR-01 G4 (đường vòng mật khẩu), FR-15 G1 (kết luận "trình duyệt chặn 0.5" chỉ từ validationMessage).
-- Bằng chứng sai lệch: FR-01 G5, FR-15 G3, FR-10 G1 (regex tìm dòng đơn → Fail / Pass giả), FR-10 G3.
-- Thiếu biến môi trường: Mobile G1 (chỉ thử Pixel 6); test case phụ thuộc chuỗi trạng thái: Mobile G2.
-- Lỗi do bản rà soát chéo FR-01 (Google Antigravity – Gemini 4 Argon, lượt #13) phát hiện (G9–G16): bảng BVA lệch data matrix, test case không self-standing, ID trùng khi gộp, tổng số lệch, thiếu test case chữ tiếng Việt có dấu trong mật khẩu.
-- Điểm AI làm tốt: tự kiểm tra lại bằng API trước khi kết luận (Mobile G3), assert độ dài dữ liệu (FR-01 G7).
--->
+**AI đã sai ở đâu?** Lỗi nguy hiểm nhất nằm ở oracle. Ở FR-01, script đầu tiên coi mọi lần form từ chối là Pass, nên 15 test case thực chất bị từ chối vì một lỗi khác: form báo "Mật khẩu quá yếu" với mọi mật khẩu hợp lệ. AI còn khái quát từ một quan sát: kết luận ô Giá chặn `0.5` chỉ nhờ thông báo của trình duyệt dù giá vẫn được lưu (FR-15), tìm sai dòng đơn hàng nên ra Fail / Pass giả (FR-10), chỉ thử máy Pixel 6 nên suýt kết luận Mobile không đăng nhập được. Antigravity khi rà soát chéo chỉ ra test case chưa self-standing, nhưng khi đối chiếu bug lại dẫn mã test case không tồn tại.
 
-Số từ:
+**Vì sao AI không tự phát hiện?** AI tối ưu cho việc script chạy ra kết quả, không tự hỏi kết quả đúng vì đúng lý do hay không. Nó tin quan sát đầu tiên và không thấy điều công cụ không quan sát được (`adb` không thấy request mạng). Prompt của tôi cũng thiếu ngữ cảnh: không nêu thiết bị đích, không nói bốn báo cáo sẽ được gộp. Khi viết nhanh, AI rút gọn dữ liệu thành "mặc định", "như test case khác".
+
+**Nguyên tắc rút ra.** Output của AI là giả thuyết: mỗi verdict cần bằng chứng từ một kênh độc lập (dữ liệu đọc qua API trước và sau thao tác), và oracle phải kiểm tra lý do bị từ chối chứ không chỉ việc bị từ chối. AI thứ hai giúp kiểm tra chéo nhưng không thay được việc tự đối chiếu với đặc tả. Giả định, mức độ nghiêm trọng và quyết định cuối cùng vẫn là của tôi.
+
+Số từ: 291
