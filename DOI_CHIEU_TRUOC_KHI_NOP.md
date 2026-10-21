@@ -45,7 +45,7 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 - [x] **AI Audit Report**: sinh viên đã đồng ý verdict hàng #1–#33 (lượt #26). Claude Code nháp cột (4), hàng #34–#41 (verdict đề xuất – xem kỹ #34, #35, #37), mục 5 và mục 6 Mandatory Disclosure → sinh viên duyệt, xóa chú thích `NHÁP`; nếu sửa Critique / Audit thì đổi `VALID*` của hàng #40, #41. → Sinh viên đã duyệt (21/10); thêm câu khai báo theo đề §9.
 - [x] FR-15, FR-10, Mobile không có commit rà soát: sinh viên đồng ý verdict VALID, không sửa (21/10).
 - [x] **AI Disclosure Form**: kiểm tra bảng 2.4 (AI nháp), tự viết mục 2.5, xóa chú thích `NHÁP`. → Đã duyệt bảng 2.4 và viết mục 2.5 (21/10).
-- [ ] Video demo Agent Skill có **giọng nói của sinh viên** (AI-01 §10), đăng YouTube, điền link vào README.
+- [ ] Video demo Agent Skill có **giọng nói của sinh viên** (AI-01 §10), đăng YouTube (Unlisted), điền link vào README – theo `KICH_BAN_DEMO.md`; quay xong báo Claude trích prompt log phiên demo vào hồ sơ AI.
 - [ ] Điểm tự chấm trong README và tên file zip `23120031_HW02_AI_DomainTesting_<điểm>.zip` – điểm **3 chữ số** 000–100 (vd `090`).
 - [ ] Đánh dấu các ô trong `ai/AI_Privacy_Checklist.md` (mẫu AI-05).
 - [ ] Cross-review bài của thành viên khác trong nhóm (quy định chung của môn, không nằm trong file nộp HW02).
@@ -54,7 +54,7 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
   - Báo cáo chính gộp `report/` (phương pháp + 4 feature, mỗi feature có Domain Testing và BVA), **kết thúc bằng đoạn Mandatory Disclosure** (AI-01 §8).
   - PDF cho báo cáo chính, bug report, AI Audit Report, AI Critique (và các file .md khác); `git_commit_log.txt`; prompt log cập nhật lần cuối.
   - Giới hạn Moodle 20 MB / file: ảnh PNG trong bản nộp được giảm còn 256 màu (thử: 18,4 MB → 7,2 MB), ảnh gốc giữ nguyên trong git.
-  - Không đưa vào zip: `node_modules/`, `DOI_CHIEU_TRUOC_KHI_NOP.md`, `bugs/issues/`.
+  - Không đưa vào zip: `node_modules/`, `DOI_CHIEU_TRUOC_KHI_NOP.md`, `KICH_BAN_DEMO.md`, `bugs/issues/`.
   - Chuẩn hoá ô đánh dấu `[ x]` / `[x ]` / `[ ]x` thành `[x]` (GFM chỉ hiện checkbox với `[x]`).
 
 ## Môi trường
