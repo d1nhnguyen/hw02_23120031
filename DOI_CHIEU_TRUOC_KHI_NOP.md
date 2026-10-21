@@ -47,7 +47,7 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 - [x] **AI Disclosure Form**: kiểm tra bảng 2.4 (AI nháp), tự viết mục 2.5, xóa chú thích `NHÁP`. → Đã duyệt bảng 2.4 và viết mục 2.5 (21/10).
 - [x] Video demo Agent Skill có giọng nói của sinh viên: https://youtu.be/9pdx5Ahb4Yk – đã điền vào README (21/10). Phiên chạy skill trong video (nhánh `demo/fr02`) không đưa vào bài nộp (sinh viên quyết định).
 - [ ] Điểm tự chấm trong README và tên file zip `23120031_HW02_AI_DomainTesting_<điểm>.zip` – điểm **3 chữ số** 000–100 (vd `090`).
-- [ ] Đánh dấu các ô trong `ai/AI_Privacy_Checklist.md` (mẫu AI-05).
+- [x] Đánh dấu các ô trong `ai/AI_Privacy_Checklist.md` (mẫu AI-05) – sinh viên đã đánh dấu 15/15 ô (21/10).
 - [ ] Cross-review bài của thành viên khác trong nhóm (quy định chung của môn, không nằm trong file nộp HW02).
 - [ ] Điền sheet phân công nhóm (`HW02_Phan_cong_nhom.xlsx`), kiểm tra không trùng feature.
 - [ ] Đóng gói (Claude làm khi sinh viên xong các mục trên):
