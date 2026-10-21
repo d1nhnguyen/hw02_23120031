@@ -50,7 +50,7 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 - [x] Đánh dấu các ô trong `ai/AI_Privacy_Checklist.md` (mẫu AI-05) – sinh viên đã đánh dấu 15/15 ô (21/10).
 - [x] Cross-review bài của thành viên khác trong nhóm (quy định chung của môn, không nằm trong file nộp HW02). → Không cần (sinh viên quyết định 21/10).
 - [x] Điền sheet phân công nhóm (`HW02_Phan_cong_nhom.xlsx`), kiểm tra không trùng feature. → Không cần (sinh viên quyết định 21/10).
-- [ ] Đóng gói (Claude làm khi sinh viên xong các mục trên):
+- [x] Đóng gói (21/10): `../23120031_HW02_AI_DomainTesting_100.zip` bằng `scripts/package_submission.sh 100` – 14 MB, 19 PDF, ảnh 18,4 → 6,6 MB, kiểm tra `unzip -t` OK. Sửa gì sau này thì commit rồi chạy lại script:
   - Báo cáo chính gộp `report/` (phương pháp + 4 feature, mỗi feature có Domain Testing và BVA), **kết thúc bằng đoạn Mandatory Disclosure** (AI-01 §8).
   - PDF cho báo cáo chính, bug report, AI Audit Report, AI Critique (và các file .md khác); `git_commit_log.txt`; prompt log cập nhật lần cuối.
   - Giới hạn Moodle 20 MB / file: ảnh PNG trong bản nộp được giảm còn 256 màu (thử: 18,4 MB → 7,2 MB), ảnh gốc giữ nguyên trong git.
