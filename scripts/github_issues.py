@@ -37,7 +37,7 @@ def parse():
         m = re.match(r"(\w+-B\d+) – ", head)
         if not m:  # tiêu đề nhóm feature: đoạn "Môi trường: …" áp cho các bug phía sau
             note = re.search(r"^Môi trường: (.*)$", body, re.M)
-            group_env = note.group(1) if note else ""
+            group_env = re.sub(r"^như FR-\d+; ", "", note.group(1)) if note else ""  # môi trường chung đã ghi ở trên
             group_env = " ".join(s for s in re.split(r"(?<=\.) ", group_env) if "Tiêu đề issue" not in s)
             continue
         code = m.group(1)
