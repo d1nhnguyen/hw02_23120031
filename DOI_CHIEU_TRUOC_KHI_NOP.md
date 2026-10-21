@@ -6,17 +6,19 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 
 - [x] **Nguồn của bản rà soát FR-01** (G9–G16, FR01-DT-30…32): đã khai báo đầy đủ phiên rà soát chéo bằng Google Antigravity (Gemini 4 Argon, lượt #13) trong `ai/prompt_log.md`, `ai/AI_Audit_Report.md`, `ai/AI_Disclosure_Form.md`, `report/FR-01_Dang_ky.md` và cập nhật nhãn Origin / nguồn phát hiện.
 - [ ] **Các phiên AI trước 20/10** (11/10 tóm tắt đề, 14/10 làm thử FR-01, 19/10 lập kế hoạch) đang không nằm trong prompt log. Quyết định có ghi một dòng trong AI Disclosure Form ("đã dùng AI để tìm hiểu đề, không dùng kết quả") hay không.
-- [ ] **Bug report do AI nháp**: AI-01 §11 ghi "Bug report: 100% sinh viên viết; AI không được nháp mô tả", trong khi đề HW02 §11 ghi Anti-AI-Cheat "None". Đã chọn: AI nháp, sinh viên duyệt và tự viết issue → khai báo rõ trong Disclosure Form.
+- [ ] **Bug report do AI nháp**: AI-01 §11 ghi "Bug report: 100% sinh viên viết; AI không được nháp mô tả", trong khi đề HW02 §11 ghi Anti-AI-Cheat "None". Đã chọn: AI nháp, sinh viên duyệt và tự viết issue → khai báo rõ trong Disclosure Form. → Đã nháp lời khai báo trong Mandatory Disclosure (Audit Report mục 6); sinh viên xác nhận cách khai báo.
 - [ ] Prompt log có cả phiên tạo repo (`4aefb10a`); kiểm tra nội dung trước khi nộp.
 - [ ] 3 commit đầu trên GitHub còn dòng `Co-Authored-By: Claude`; quyết định giữ (minh bạch) hay viết lại lịch sử + force-push.
 
 ## Giả định cần hỏi TA
 
-- [ ] FR-01: A1 (chỉ 7 ký tự `@ $ ! % * ? &` là ký tự đặc biệt), A2 (email phải có TLD), A3 (email trùng không phân biệt hoa thường), A4 (bỏ khoảng trắng đầu/cuối), A5 (không giới hạn độ dài), A10 (chữ hoa/thường chỉ A–Z/a–z).
-- [ ] FR-15: A1 (255 ký tự tính theo ký tự Unicode), A3 (giá được phép là số thập phân dương, không giới hạn trên – ảnh hưởng kết luận về việc ô Giá chặn `0.5`), A6 (mã 404 khi sản phẩm không tồn tại).
-- [ ] FR-10: A1 (Admin **không** được hủy đơn `shipping` – sơ đồ không có cạnh `shipping → canceled`, nhưng câu "chỉ Admin mới có thể thao tác" có thể hiểu khác), A6 (User hủy đơn của người khác – giao với FR-11).
-- [ ] Pool D = các chức năng của FR-20; "Mobile – Đăng nhập" kế thừa quy tắc FR-02 (file phân công nhóm cũng ghi nên hỏi TA).
-- [ ] Mobile – Đăng nhập: A2 (khóa ngay sau lần sai thứ 3), A3 (đăng nhập đúng đặt lại bộ đếm), A6 (email không phân biệt hoa thường / bỏ khoảng trắng).
+Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định như đã ghi ở mục 1.4 mỗi báo cáo.
+
+- [x] FR-01: A1 (chỉ 7 ký tự `@ $ ! % * ? &` là ký tự đặc biệt), A2 (email phải có TLD), A3 (email trùng không phân biệt hoa thường), A4 (bỏ khoảng trắng đầu/cuối), A5 (không giới hạn độ dài), A10 (chữ hoa/thường chỉ A–Z/a–z).
+- [x] FR-15: A1 (255 ký tự tính theo ký tự Unicode), A3 (giá được phép là số thập phân dương, không giới hạn trên – ảnh hưởng kết luận về việc ô Giá chặn `0.5`), A6 (mã 404 khi sản phẩm không tồn tại).
+- [x] FR-10: A1 (Admin **không** được hủy đơn `shipping` – sơ đồ không có cạnh `shipping → canceled`, nhưng câu "chỉ Admin mới có thể thao tác" có thể hiểu khác), A6 (User hủy đơn của người khác – giao với FR-11).
+- [x] Pool D = các chức năng của FR-20; "Mobile – Đăng nhập" kế thừa quy tắc FR-02 (file phân công nhóm cũng ghi nên hỏi TA).
+- [x] Mobile – Đăng nhập: A2 (khóa ngay sau lần sai thứ 3), A3 (đăng nhập đúng đặt lại bộ đếm), A6 (email không phân biệt hoa thường / bỏ khoảng trắng).
 
 ## Quyết định phương pháp (đã áp dụng, cần sinh viên xác nhận)
 
@@ -35,9 +37,9 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 ## Hồ sơ nộp
 
 - [ ] Điền họ tên, lớp/khoá, giảng viên, ngày, chữ ký trong `ai/AI_Audit_Report.md`, `AI_Disclosure_Form.md`, `AI_Privacy_Checklist.md`.
-- [ ] AI Critique 200–300 từ (sinh viên viết / duyệt); xóa khối chú thích gợi ý trong `ai/AI_Critique.md`.
-- [ ] **AI Audit Report**: bảng mục 3 là nháp tự động (33 artifact; verdict gợi ý 27 VALID / 6 INCOMPLETE). Xác nhận / đổi verdict từng hàng, điền cột (4) lý do có dẫn chiếu slide / ISTQB, tính lại mục 4, viết mục 5 (80–150 chữ) và mục 6 Mandatory Disclosure, xóa các chú thích `NHÁP`.
-- [ ] FR-15, FR-10, Mobile **chưa có commit rà soát** của sinh viên (mọi hàng đang "Không sửa" → VALID). Nếu sửa gì khi duyệt: commit `[<F>][Bn-review]` rồi chạy lại `audit_draft.py --prompt-log ai/prompt_log.md`.
+- [ ] **AI Critique**: Claude Code đã nháp (291 từ) theo yêu cầu (lượt #26) – sinh viên đọc, chỉnh theo ý mình, xóa chú thích `NHÁP`.
+- [ ] **AI Audit Report**: sinh viên đã đồng ý verdict hàng #1–#33 (lượt #26). Claude Code nháp cột (4), hàng #34–#41 (verdict đề xuất – xem kỹ #34, #35, #37), mục 5 và mục 6 Mandatory Disclosure → sinh viên duyệt, xóa chú thích `NHÁP`; nếu sửa Critique / Audit thì đổi `VALID*` của hàng #40, #41.
+- [x] FR-15, FR-10, Mobile không có commit rà soát: sinh viên đồng ý verdict VALID, không sửa (21/10).
 - [ ] **AI Disclosure Form**: kiểm tra bảng 2.4 (AI nháp), tự viết mục 2.5, xóa chú thích `NHÁP`.
 - [ ] Video demo Agent Skill có **giọng nói của sinh viên** (AI-01 §10), đăng YouTube, điền link vào README.
 - [ ] Điểm tự chấm trong README và tên file zip `23120031_HW02_AI_DomainTesting_<điểm>.zip`.
