@@ -40,16 +40,16 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 
 ## Hồ sơ nộp
 
-- [ ] Điền họ tên, lớp/khoá, giảng viên, ngày, chữ ký trong `ai/AI_Audit_Report.md`, `AI_Disclosure_Form.md`, `AI_Privacy_Checklist.md`.
+- [x] Điền họ tên, lớp/khoá, giảng viên, ngày, chữ ký trong `ai/AI_Audit_Report.md`, `AI_Disclosure_Form.md`, `AI_Privacy_Checklist.md`. → Đã điền (21/10): NGUYỄN PHÚ DINH, CQ2023/3, GV TS. Lâm Quang Vũ, ngày 21/10/2026, chữ ký Nguyễn Phú Dinh.
 - [x] **AI Critique**: Claude Code đã nháp (291 từ) theo yêu cầu (lượt #26) – sinh viên đọc, chỉnh theo ý mình, xóa chú thích `NHÁP`. → Sinh viên đã duyệt (21/10).
 - [x] **AI Audit Report**: sinh viên đã đồng ý verdict hàng #1–#33 (lượt #26). Claude Code nháp cột (4), hàng #34–#41 (verdict đề xuất – xem kỹ #34, #35, #37), mục 5 và mục 6 Mandatory Disclosure → sinh viên duyệt, xóa chú thích `NHÁP`; nếu sửa Critique / Audit thì đổi `VALID*` của hàng #40, #41. → Sinh viên đã duyệt (21/10); thêm câu khai báo theo đề §9.
 - [x] FR-15, FR-10, Mobile không có commit rà soát: sinh viên đồng ý verdict VALID, không sửa (21/10).
 - [x] **AI Disclosure Form**: kiểm tra bảng 2.4 (AI nháp), tự viết mục 2.5, xóa chú thích `NHÁP`. → Đã duyệt bảng 2.4 và viết mục 2.5 (21/10).
 - [x] Video demo Agent Skill có giọng nói của sinh viên: https://youtu.be/9pdx5Ahb4Yk – đã điền vào README (21/10). Phiên chạy skill trong video (nhánh `demo/fr02`) không đưa vào bài nộp (sinh viên quyết định).
-- [ ] Điểm tự chấm trong README và tên file zip `23120031_HW02_AI_DomainTesting_<điểm>.zip` – điểm **3 chữ số** 000–100 (vd `090`).
+- [x] Điểm tự chấm trong README và tên file zip `23120031_HW02_AI_DomainTesting_<điểm>.zip` – điểm **3 chữ số** 000–100 (vd `090`). → 100 (25/25/25/15/10) – `23120031_HW02_AI_DomainTesting_100.zip`.
 - [x] Đánh dấu các ô trong `ai/AI_Privacy_Checklist.md` (mẫu AI-05) – sinh viên đã đánh dấu 15/15 ô (21/10).
-- [ ] Cross-review bài của thành viên khác trong nhóm (quy định chung của môn, không nằm trong file nộp HW02).
-- [ ] Điền sheet phân công nhóm (`HW02_Phan_cong_nhom.xlsx`), kiểm tra không trùng feature.
+- [x] Cross-review bài của thành viên khác trong nhóm (quy định chung của môn, không nằm trong file nộp HW02). → Không cần (sinh viên quyết định 21/10).
+- [x] Điền sheet phân công nhóm (`HW02_Phan_cong_nhom.xlsx`), kiểm tra không trùng feature. → Không cần (sinh viên quyết định 21/10).
 - [ ] Đóng gói (Claude làm khi sinh viên xong các mục trên):
   - Báo cáo chính gộp `report/` (phương pháp + 4 feature, mỗi feature có Domain Testing và BVA), **kết thúc bằng đoạn Mandatory Disclosure** (AI-01 §8).
   - PDF cho báo cáo chính, bug report, AI Audit Report, AI Critique (và các file .md khác); `git_commit_log.txt`; prompt log cập nhật lần cuối.
@@ -59,18 +59,18 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 
 ## Môi trường
 
-- [ ] Mobile được thực thi trên Android Emulator **Pixel 2** vì trên **Pixel 6** thanh tiêu đề bị thanh trạng thái che, không mở được màn hình Đăng nhập (đã báo bug). Nếu có điện thoại thật, nên thử lại để xác nhận mức độ ảnh hưởng.
+- [x] Mobile được thực thi trên Android Emulator **Pixel 2** vì trên **Pixel 6** thanh tiêu đề bị thanh trạng thái che, không mở được màn hình Đăng nhập (đã báo bug). Nếu có điện thoại thật, nên thử lại để xác nhận mức độ ảnh hưởng. → Đã ghi trong báo cáo Mobile (mục 1.1, 5.1) và MOB-B1.
 
-- [ ] Bản SUT local đã sửa `frontend-mobile/App.js:16` (API_URL → `10.0.2.2`) để chạy trên Android Emulator – đã ghi trong PLAN.md.
+- [x] Bản SUT local đã sửa `frontend-mobile/App.js:16` (API_URL → `10.0.2.2`) để chạy trên Android Emulator – đã ghi trong PLAN.md. → Đã ghi.
 
 ## Quan sát ngoài phạm vi (báo cho thành viên phụ trách nếu cần)
 
-- [ ] Gợi ý cross-review cho nhóm (issue của bạn khác):
+- [x] Gợi ý cross-review cho nhóm (issue của bạn khác): → Không cần (21/10).
   - BUG-12, BUG-14 (web) và BUG-09 (mobile) cùng hiện tượng: áp SAVE10 cho tổng tiền nhân 10 thay vì giảm 10% – nên gộp hoặc dẫn chiếu chéo.
   - BUG-12…BUG-14 gắn `[FR-04]` (hồ sơ cá nhân) nhưng nội dung là mã giảm giá (FR-09).
   - BUG-06 (tổng tiền âm) là một trường hợp của BUG-05 (thanh toán dùng số tiền người dùng nhập).
-- [ ] FR-02 / FR-21 (Web – Đăng nhập, không ai làm): trang Đăng nhập Web cũng dùng nhãn "Username" và nút "Sign In" giống MOB-B5 – thấy khi khảo sát FR-03 ngày 21/10.
-- [ ] FR-06 (chi tiết sản phẩm): `GET /api/products/:id` trả `price` dạng **chuỗi** với sản phẩm có id chẵn, dạng số với id lẻ (danh sách `GET /api/products` luôn là số) – phát hiện khi làm FR-15.
-- [ ] FR-21 (giao diện chung): trang Đăng ký không có thẻ `<h1>`, nút "Đăng Ký" màu đỏ – phát hiện khi làm FR-01.
-- [ ] FR-21: danh sách sản phẩm trong Web Admin hiển thị giá không có phân cách hàng nghìn (`30000000 ₫`) – phát hiện khi làm FR-15.
-- [ ] Mobile – Đăng xuất (Pool D, người khác): nút đăng xuất ghi "Thoát" thay vì "Đăng xuất" (FR-23).
+- [x] FR-02 / FR-21 (Web – Đăng nhập, không ai làm): trang Đăng nhập Web cũng dùng nhãn "Username" và nút "Sign In" giống MOB-B5 – thấy khi khảo sát FR-03 ngày 21/10. → Không cần báo (21/10).
+- [x] FR-06 (chi tiết sản phẩm): `GET /api/products/:id` trả `price` dạng **chuỗi** với sản phẩm có id chẵn, dạng số với id lẻ (danh sách `GET /api/products` luôn là số) – phát hiện khi làm FR-15. → Không cần báo (21/10).
+- [x] FR-21 (giao diện chung): trang Đăng ký không có thẻ `<h1>`, nút "Đăng Ký" màu đỏ – phát hiện khi làm FR-01. → Không cần báo (21/10).
+- [x] FR-21: danh sách sản phẩm trong Web Admin hiển thị giá không có phân cách hàng nghìn (`30000000 ₫`) – phát hiện khi làm FR-15. → Không cần báo (21/10).
+- [x] Mobile – Đăng xuất (Pool D, người khác): nút đăng xuất ghi "Thoát" thay vì "Đăng xuất" (FR-23). → Không cần báo (21/10).

@@ -10,8 +10,8 @@ Theo mẫu [AI-03] – FIT@HCMUS – AI Disclosure Form.
 | Mã bài tập       | HW02-AI                                |
 | Tên bài tập      | Domain Testing trên EShop              |
 | Cấp độ AI (1–5)  | Cấp 4 – AI hỗ trợ sản xuất             |
-| Ngày             |                                        |
-| Họ tên sinh viên |                                        |
+| Ngày | 21/10/2026 |
+| Họ tên sinh viên | Nguyễn Phú Dinh |
 | MSSV             | 23120031                               |
 
 ## 2. Câu hỏi khai báo
@@ -55,18 +55,18 @@ Toàn bộ prompt ở Phụ lục A (`ai/prompt_log.md`). Bốn prompt chính (n
 
 ### 2.4 Phần cụ thể AI đóng góp
 
-| Phần                                                                                               | AI đóng góp                                                                                                                                                  | Sửa / bổ sung sau rà soát                                                                                                                             |
-| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Bước 1–4 (biến I/O, lớp tương đương, Minimum Set, BVA) của FR-01, FR-10, FR-15, Mobile – Đăng nhập | Phiên bản đầu của toàn bộ bảng; 180 / 185 test case Origin AI                                                                                                | FR-01: rà soát chéo bằng Antigravity (lượt #13) và sửa bằng Claude Code (lượt #14) – 5 test case AI-sửa (`FR01-DT-02`, `FR01-BV-19`, `FR01-DT-30…32`) |
-| Bước 5 – thực thi                                                                                  | Script chạy test, chạy test trên SUT, bảng kết quả và ảnh bằng chứng (`scripts/`, `evidence/`)                                                               | FR-01: chạy lại 53 test case sau rà soát, mỗi test case một dòng kết quả kèm bằng chứng                                                               |
-| Bước 6 – AI gap analysis                                                                           | Mục 6 mỗi báo cáo (FR-01 G1–G8, FR-15 G1–G5, FR-10 G1–G3, Mobile G1–G5) và test case bổ sung FR01-DT-29, FR15-DT-34, MOB-DT-14                               | FR-01 G9–G16, FR01-DT-30…32 phát hiện qua rà soát chéo với Antigravity (lượt #13)                                                                     |
-| Bước 7 – bug                                                                                       | Nháp mô tả 22 bug (`bugs/Bug_Report.md`), ảnh bằng chứng và nội dung dán vào issue (`scripts/github_issues.py`); Antigravity đối chiếu 22 bug (lượt #21–#22) | Sinh viên duyệt, tự tạo 22 issue BUG-15…BUG-36 bằng tài khoản d1nhnguyen và đính ảnh                                                                  |
-| Agent Skill                                                                                        | `.claude/skills/domain-testing-bva` (quy trình 7 bước, template, thư viện sinh bảng, bài học khi tự động hoá)                                                |                                                                                                                                                       |
-| Script hồ sơ AI                                                                                    | `scripts/export_prompt_log.py`, `scripts/audit_draft.py`                                                                                                     | Hỗ trợ trích log cả Claude Code và Google Antigravity                                                                                                 |
-| Hồ sơ AI                                                                                           | Prompt log (trích tự động); bảng AI Audit Report, cột lý do, kết luận và Mandatory Disclosure (Claude Code, lượt #26)                                        | Sinh viên đồng ý verdict (lượt #26) và duyệt phần nháp                                                                                                |
-| AI Critique                                                                                        | Claude Code nháp theo yêu cầu (lượt #26), dựa trên mục 6 của 4 báo cáo                                                                                       | Sinh viên duyệt / chỉnh                                                                                                                               |
-| Video demo | Claude Code gợi ý kịch bản cảnh và prompt (`KICH_BAN_DEMO.md`, lượt #29); phiên chạy skill trong video (FR-02, nhánh demo riêng) hiển thị trực tiếp trong video, không đưa vào bài nộp | Sinh viên tự quay, tự nói, chọn nội dung |
-| Điểm tự chấm | Không | |
+| Phần                                                                                               | AI đóng góp                                                                                                                                                                            | Sửa / bổ sung sau rà soát                                                                                                                             |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bước 1–4 (biến I/O, lớp tương đương, Minimum Set, BVA) của FR-01, FR-10, FR-15, Mobile – Đăng nhập | Phiên bản đầu của toàn bộ bảng; 180 / 185 test case Origin AI                                                                                                                          | FR-01: rà soát chéo bằng Antigravity (lượt #13) và sửa bằng Claude Code (lượt #14) – 5 test case AI-sửa (`FR01-DT-02`, `FR01-BV-19`, `FR01-DT-30…32`) |
+| Bước 5 – thực thi                                                                                  | Script chạy test, chạy test trên SUT, bảng kết quả và ảnh bằng chứng (`scripts/`, `evidence/`)                                                                                         | FR-01: chạy lại 53 test case sau rà soát, mỗi test case một dòng kết quả kèm bằng chứng                                                               |
+| Bước 6 – AI gap analysis                                                                           | Mục 6 mỗi báo cáo (FR-01 G1–G8, FR-15 G1–G5, FR-10 G1–G3, Mobile G1–G5) và test case bổ sung FR01-DT-29, FR15-DT-34, MOB-DT-14                                                         | FR-01 G9–G16, FR01-DT-30…32 phát hiện qua rà soát chéo với Antigravity (lượt #13)                                                                     |
+| Bước 7 – bug                                                                                       | Nháp mô tả 22 bug (`bugs/Bug_Report.md`), ảnh bằng chứng và nội dung dán vào issue (`scripts/github_issues.py`); Antigravity đối chiếu 22 bug (lượt #21–#22)                           | Sinh viên duyệt, tự tạo 22 issue BUG-15…BUG-36 bằng tài khoản d1nhnguyen và đính ảnh                                                                  |
+| Agent Skill                                                                                        | `.claude/skills/domain-testing-bva` (quy trình 7 bước, template, thư viện sinh bảng, bài học khi tự động hoá)                                                                          |                                                                                                                                                       |
+| Script hồ sơ AI                                                                                    | `scripts/export_prompt_log.py`, `scripts/audit_draft.py`                                                                                                                               | Hỗ trợ trích log cả Claude Code và Google Antigravity                                                                                                 |
+| Hồ sơ AI                                                                                           | Prompt log (trích tự động); bảng AI Audit Report, cột lý do, kết luận và Mandatory Disclosure (Claude Code, lượt #26)                                                                  | Sinh viên đồng ý verdict (lượt #26) và duyệt phần nháp                                                                                                |
+| AI Critique                                                                                        | Claude Code nháp theo yêu cầu (lượt #26), dựa trên mục 6 của 4 báo cáo                                                                                                                 | Sinh viên duyệt / chỉnh                                                                                                                               |
+| Video demo                                                                                         | Claude Code gợi ý kịch bản cảnh và prompt (`KICH_BAN_DEMO.md`, lượt #29); phiên chạy skill trong video (FR-02, nhánh demo riêng) hiển thị trực tiếp trong video, không đưa vào bài nộp | Sinh viên tự quay, tự nói, chọn nội dung                                                                                                              |
+| Điểm tự chấm                                                                                       | Không                                                                                                                                                                                  |                                                                                                                                                       |
 
 ### 2.5 Cách tôi rà soát / chỉnh sửa / xác minh đầu ra AI
 
@@ -86,10 +86,10 @@ Bằng việc ký tên dưới đây, tôi cam đoan thông tin khai báo ở tr
 
 | Mục                       | Giá trị                                |
 | ------------------------- | -------------------------------------- |
-| Họ tên sinh viên (in hoa) |                                        |
+| Họ tên sinh viên (in hoa) | NGUYỄN PHÚ DINH |
 | MSSV                      | 23120031                               |
-| Lớp / Khoá                |                                        |
+| Lớp / Khoá | CQ2023/3 |
 | Môn học                   | CS423 / CSC13003 – Kiểm chứng Phần mềm |
-| Giảng viên                |                                        |
-| Ngày                      |                                        |
-| Chữ ký                    |                                        |
+| Giảng viên | TS. Lâm Quang Vũ |
+| Ngày | 21/10/2026 |
+| Chữ ký | Nguyễn Phú Dinh |

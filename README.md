@@ -13,12 +13,12 @@
 
 | STT | Tiêu chí | Điểm | Tự chấm |
 | --- | --- | --- | --- |
-| 1 | Feature A – FR-01 Đăng ký tài khoản (Domain + Boundary) | 25 | |
-| 2 | Feature B – FR-10 Máy trạng thái đơn hàng (Domain + Boundary) | 25 | |
-| 3 | Feature C – FR-15 Quản lý sản phẩm (Domain + Boundary) | 25 | |
-| 4 | Feature D – Mobile: Đăng nhập (Domain + Boundary) | 15 | |
-| 5 | Agent Skills | 10 | |
-| | **Tổng** | **100** | |
+| 1 | Feature A – FR-01 Đăng ký tài khoản (Domain + Boundary) | 25 | 25 |
+| 2 | Feature B – FR-10 Máy trạng thái đơn hàng (Domain + Boundary) | 25 | 25 |
+| 3 | Feature C – FR-15 Quản lý sản phẩm (Domain + Boundary) | 25 | 25 |
+| 4 | Feature D – Mobile: Đăng nhập (Domain + Boundary) | 15 | 15 |
+| 5 | Agent Skills | 10 | 10 |
+| | **Tổng** | **100** | **100** |
 
 ## Test summary
 
@@ -68,11 +68,14 @@ Một test case **Fail** nếu Fail ở bất kỳ kênh nào; **Blocked** nếu
 
 | Thư mục / file | Nội dung |
 | --- | --- |
-| `report/` | Báo cáo chính (Domain Testing + BVA) cho từng feature, bản Markdown + PDF |
-| `bugs/` | Báo cáo bug, ảnh bug và ảnh chụp trang GitHub Issues |
-| `ai/` | AI Audit Report, AI Critique, Disclosure Form, Privacy Checklist, prompt log (Phụ lục A) |
-| `evidence/` | Ảnh / log kết quả chạy test |
-| `scripts/` | Script dựng dữ liệu, chạy test, sinh bảng báo cáo, trích prompt log, nháp bảng AI Audit |
-| `.claude/skills/domain-testing-bva/` | Agent Skill áp dụng Domain Testing + BVA cho một feature (`skills` là liên kết tới `.claude/skills`) |
-| `git_commit_log.txt` | Git commit log |
+| `report/Bao_cao_chinh.md` | **Báo cáo chính** (gộp): phương pháp + 4 feature, mỗi feature có Domain Testing (bước 1–3) và Boundary Value Analysis (bước 4), kết thúc bằng Mandatory Disclosure |
+| `report/` (các file khác) | Phần phương pháp và báo cáo từng feature – nguồn của báo cáo chính (sinh lại bằng `scripts/build_main_report.py`) |
+| `bugs/` | Báo cáo bug (22 bug, link GitHub Issues BUG-15…BUG-36), ảnh bug và ảnh chụp trang GitHub Issues |
+| `ai/` | AI Audit Report, AI Critique, Disclosure Form, Privacy Checklist, prompt log có thời gian (Phụ lục A) |
+| `evidence/` | Kết quả chạy test (JSON) và ảnh từng test case |
+| `scripts/` | Script dựng dữ liệu, chạy test, sinh bảng báo cáo, trích prompt log, nháp bảng AI Audit, đóng gói |
+| `.claude/skills/domain-testing-bva/` | Agent Skill áp dụng Domain Testing + BVA cho một feature (`.claude` là thư mục ẩn; hướng dẫn: `README.md` trong thư mục skill) |
+| `git_commit_log.txt` | Git commit log (mỗi bước của mỗi feature một commit) |
 | `PLAN.md` | Kế hoạch, quy ước làm bài |
+
+Mỗi file Markdown có bản PDF cùng tên (Save-As-PDF). Ảnh trong file nộp được giảm còn 256 màu để vừa giới hạn 20 MB / file của Moodle; ảnh gốc nằm trong repo git riêng.

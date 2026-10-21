@@ -32,10 +32,10 @@ Trách nhiệm cuối cùng về độ chính xác, tính nguyên bản, và li�
 
 | Mục                       | Giá trị                                |
 | ------------------------- | -------------------------------------- |
-| Họ tên sinh viên (in hoa) |                                        |
+| Họ tên sinh viên (in hoa) | NGUYỄN PHÚ DINH |
 | MSSV                      | 23120031                               |
-| Lớp / Khoá                |                                        |
+| Lớp / Khoá | CQ2023/3 |
 | Môn học                   | CS423 / CSC13003 – Kiểm chứng Phần mềm |
-| Giảng viên                |                                        |
-| Ngày                      |                                        |
-| Chữ ký                    |                                        |
+| Giảng viên | TS. Lâm Quang Vũ |
+| Ngày | 21/10/2026 |
+| Chữ ký | Nguyễn Phú Dinh |
