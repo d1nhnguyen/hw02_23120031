@@ -1,6 +1,6 @@
 # Phụ lục A — Prompt log (trích tự động từ transcript Claude Code & Google Antigravity)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-21 07:15 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-21 09:51 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -30,6 +30,17 @@
 | 24 | 2026-10-21 06:57 | `1946c20d` | kiểm tra github issues |
 | 25 | 2026-10-21 07:04 | `1946c20d` | đã sửa xong |
 | 26 | 2026-10-21 07:09 | `1946c20d` | các giá định có thể ko cần hỏi. ai audit report: tôi đồng ý với verdict, draft các phần cò |
+| 27 | 2026-10-21 07:20 | `1946c20d` | 1. đã xong. kiểm tra còn cần gì khác ko? 2. tôi sẽ làm trước khi nộp. 4. các phiên đó có t |
+| 28 | 2026-10-21 07:28 | `1946c20d` | 5. tạm thời cứ như hiện tại và ghi chú. theo như tài liệu là được áp dụng được cứ giữ. 6.  |
+| 29 | 2026-10-21 08:04 | `1946c20d` | hướng dẫn tôi dùng skill và kịch bản demo |
+| 30 | 2026-10-21 08:21 | `1946c20d` | tôi chỉ muốn một prompt gọi skill và agent sẽ lo phần còn lại, sau đó show kết quả |
+| 31 | 2026-10-21 08:26 | `1946c20d` | tại sao một feature lại chạy lâu vậy? tôi chỉ muốn có kết quả sau tôi đa 5p |
+| 32 | 2026-10-21 08:26 | `1946c20d` | [Request interrupted by user] |
+| 33 | 2026-10-21 08:26 | `1946c20d` | 5-10p |
+| 34 | 2026-10-21 09:39 | `1946c20d` | https://youtu.be/9pdx5Ahb4Yk đây là link video youtube, hãy thêm vào bài nộp và kiểm tra x |
+| 35 | 2026-10-21 09:39 | `1946c20d` | [Request interrupted by user] |
+| 36 | 2026-10-21 09:39 | `1946c20d` | ko cần thêm phần đó vào |
+| 37 | 2026-10-21 09:45 | `1946c20d` | tôi đã xong, kiểm tra lại lần cuối, bỏ các file thư mục ko cần thiết, các nội dung điền sh |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -2079,6 +2090,40 @@ Giờ viết toàn bộ phần audit bằng một script để giữ nguyên 33 
 Phần kết luận dài 156 từ, vượt mức 80–150. Tôi rút gọn lại:
 
 Kết luận giờ còn 148 từ. Tiếp theo cập nhật Disclosure Form (ghi rõ Critique và phần audit do AI nháp) và danh sách đối chiếu.
+
+Tôi đã nháp xong AI Critique và các phần còn trống của AI Audit Report; tất cả đã commit và push. Các giả định đã đánh dấu là không hỏi TA, giữ nguyên như mục 1.4 mỗi báo cáo.
+
+**AI Critique** ([ai/AI_Critique.md](ai/AI_Critique.md))
+- Dài 291 từ (đề yêu cầu 200–300), viết ở ngôi "tôi", trả lời đủ 3 câu hỏi của đề.
+- Các ví dụ lấy từ mục 6.1 của 4 báo cáo: oracle quá dễ dãi ở FR-01 (15 test case Pass giả), ô Giá `0.5` ở FR-15, tìm sai dòng đơn ở FR-10, chỉ thử Pixel 6 ở Mobile, và Antigravity dẫn mã test case không tồn tại.
+
+**AI Audit Report** ([ai/AI_Audit_Report.md](ai/AI_Audit_Report.md))
+- Cột (4) "Lý do" đã điền cho cả 33 hàng bạn đồng ý verdict, dẫn chiếu slide ([S04], [UC], [S07], [DR], [TPL], [KB]), mẫu bug report của Kaner và ISTQB CTFL v4.0.
+- Tôi thêm 8 hàng (#34–#41) cho những phần làm sau khi bảng được sinh. Verdict của 8 hàng này là tôi đề xuất, bạn cần xem lại:
+  - #34 — Antigravity cập nhật hồ sơ AI: **VALID**, có ghi một hạn chế: script trích log có đoạn ghi cứng output và mã commit.
+  - #35 — Antigravity đối chiếu 22 bug: **INCOMPLETE**. Kết luận đúng nhưng dẫn mã test case không tồn tại, nên chỉ dùng phần đúng.
+  - #37 — script nháp issue: **INCOMPLETE**, vì bỏ sót ảnh phụ, đã sửa sau đó.
+  - #36, #38, #39: **VALID**.
+  - #40 (Critique) và #41 (chính phần audit này): **VALID\***. Nếu bạn sửa bản nháp thì đổi thành INCOMPLETE.
+- Mục 4 (độ chính xác của AI): 41 artifact, 33 VALID (80%), 8 INCOMPLETE (20%), 0 INVALID. Tôi có thêm một câu nói rõ "VALID" vẫn bao gồm các lỗi AI đã tự sửa trước khi commit.
+- Mục 5 (kết luận): 148 từ.
+- Mục 6 (Mandatory Disclosure):
+  - Khai báo trung thực rằng Critique, phần audit và mô tả bug do AI nháp.
+  - Đoạn về mô tả bug viện dẫn đề HW02 §11 ("Anti-AI-Cheat: None"), vì mẫu cam kết AI-01 §11 kỳ vọng bug report 100% do sinh viên viết.
+  - Câu cuối ghi "video demo do tôi tự quay", nên chỉ ký sau khi đã quay video.
+
+Disclosure Form: dòng AI Critique trước đây ghi "Không", nay sửa thành "Claude Code nháp (lượt #26)"; dòng bug ghi rõ bạn tự tạo 22 issue.
+
+**Bạn cần làm trước khi nộp:**
+1. Đọc và chỉnh Critique cùng các phần nháp trong Audit Report, nhất là verdict #34, #35, #37 và đoạn Mandatory Disclosure, rồi xóa các chú thích `NHÁP`.
+2. Viết mục 2.5 của Disclosure Form; điền họ tên, lớp, chữ ký.
+3. Quay video demo bằng giọng của bạn, đưa link vào README, điền điểm tự chấm.
+4. Quyết định các mục còn lại trong [DOI_CHIEU_TRUOC_KHI_NOP.md](DOI_CHIEU_TRUOC_KHI_NOP.md):
+   - các phiên AI trước 20/10;
+   - dòng Co-Authored-By ở 3 commit đầu;
+   - kiểm tra trùng bug với nhóm.
+
+Xong các việc trên thì báo tôi để xuất PDF, tạo `git_commit_log.txt` và đóng file zip.
 ````
 
 <details><summary>Hành động AI đã thực hiện (20)</summary>
@@ -2103,5 +2148,524 @@ Kết luận giờ còn 148 từ. Tiếp theo cập nhật Disclosure Form (ghi 
 18. `Bash` — Trim conclusion to within 150 words
 19. `Bash` — Update Disclosure Form rows and pre-submit checklist
 20. `Bash` — Commit audit drafts, refresh prompt log, push
+
+</details>
+
+## #27 · 2026-10-21 07:20:05 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+1. đã xong. kiểm tra còn cần gì khác ko?
+2. tôi sẽ làm trước khi nộp.
+4. các phiên đó có thể bỏ qua vì không đóng góp vào bài làm này. vẫn giữ co author.
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Còn hai việc đề bắt buộc phải có trong bài nộp mà tôi chưa làm: báo cáo chính phải kết thúc bằng đoạn Mandatory Disclosure, và file zip phải dưới 20 MB. Cả hai tôi sẽ xử lý lúc đóng gói. Ngoài ra còn một số việc chỉ bạn tự làm được (liệt kê ở cuối).
+
+**Vừa sửa thêm** (đã commit và push):
+- Xóa 2 chú thích `NHÁP` còn sót, ở đầu AI Critique và mục 2.4 Disclosure Form.
+- AI Audit Report thiếu câu khai báo đề §9 bắt buộc ("*I use AI tools for the following tasks*"); tôi đã thêm câu này kèm danh sách các việc có dùng AI.
+- Mục 2.5 Disclosure Form trước đó dẫn tới `DOI_CHIEU_TRUOC_KHI_NOP.md`. File đó sẽ không có trong zip, nên tôi đổi thành "mục 1.4 mỗi báo cáo".
+- Danh sách đối chiếu: các phiên AI trước 20/10 ghi là bỏ qua, dòng Co-Authored-By giữ nguyên.
+
+**Tôi sẽ làm lúc đóng gói:**
+- **Báo cáo chính:** gộp phần phương pháp và 4 feature thành một file, cuối file là đoạn Mandatory Disclosure. Mẫu cam kết AI-01 §8 yêu cầu đoạn này nằm ở cuối báo cáo, hiện nó mới chỉ có trong AI Audit Report.
+- **Dung lượng:** Moodle giới hạn 20 MB mỗi file, nhưng riêng ảnh trong repo đã 18,4 MB, cộng thêm PDF sẽ vượt. Trong bản nộp tôi sẽ giảm ảnh xuống 256 màu; thử trên bản sao thì còn 7,2 MB. Ảnh gốc vẫn giữ nguyên trong git.
+- Xuất PDF, tạo `git_commit_log.txt`, cập nhật prompt log lần cuối.
+- Không đưa vào zip: `node_modules/`, file đối chiếu, `bugs/issues/`.
+
+**Còn lại cho bạn:**
+1. Điền họ tên, lớp, giảng viên, ngày, chữ ký trong 3 file hồ sơ AI.
+2. Đánh dấu các ô trong `ai/AI_Privacy_Checklist.md` (mẫu AI-05). File này vẫn đang trống hết.
+3. Quay video demo skill bằng giọng của bạn, đưa link YouTube vào README. Nhớ mở Claude Code trong thư mục `HW02_23120031` thì skill mới được nạp.
+4. Điểm tự chấm trong README. Tên zip phải dùng **3 chữ số**, ví dụ `23120031_HW02_AI_DomainTesting_090.zip`.
+5. Xác nhận 4 mục chưa tích trong danh sách đối chiếu:
+   - cách xử lý Blocked (FR-01);
+   - mức độ nghiêm trọng của 22 bug;
+   - cách đếm số liệu tổng;
+   - giữ phiên tạo repo (`4aefb10a`) trong prompt log.
+6. Việc nhóm:
+   - điền sheet phân công `HW02_Phan_cong_nhom.xlsx`;
+   - kiểm tra trùng bug với các bạn, nhất là 3 bug đăng nhập ở backend (MOB-B2, MOB-B3, MOB-B4);
+   - cross-review bài của thành viên khác theo quy định chung của môn.
+
+Bạn xong mục 1–4 thì báo tôi để đóng gói.
+````
+
+<details><summary>Hành động AI đã thực hiện (13)</summary>
+
+1. `Bash` — Check working tree and leftover draft markers
+2. `Bash` — Show the user's uncommitted edits
+3. `Bash` — Diff user edits ignoring table reformatting
+4. `Bash` — View Disclosure sections 2.4-2.5 and critique header
+5. `Bash` — Re-read brief requirements sections
+6. `Bash` — Scan homework policies for submission requirements
+7. `Bash` — Read policy rules, check repo size and privacy checklist
+8. `Bash` — Measure tracked size, zip size, PDF sizes, image tools
+9. `Bash` — Check AI declaration sentence, DOI_CHIEU references, open checklist items
+10. `Bash` — Estimate PNG size reduction via 256-color quantization
+11. `Bash` — Remove leftover draft markers, add §9 declaration, fix SHA
+12. `Bash` — Tidy critique header and tick resolved checklist items
+13. `Bash` — Add packaging items, commit reviewed AI docs, push
+
+</details>
+
+## #28 · 2026-10-21 07:28:46 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+5.  tạm thời cứ như hiện tại và ghi chú.
+ theo như tài liệu là được
+áp dụng được
+cứ giữ.
+6. tôi thấy có một vài lỗi trùng, hãy xem xét
+[kèm 2 ảnh]
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Đánh giá xong và đã ghi vào danh sách đối chiếu. Giờ tôi commit dưới dạng một lượt rà soát FR-01 B7, đồng thời ghi vào bảng audit.
+
+Không có bug nào của bạn trùng hẳn với issue của các bạn trong nhóm. Có 2 nhóm bug liên quan với nhau; tôi giữ riêng và thêm dẫn chiếu chéo. Tất cả đã commit và push.
+
+**Mục 5:** 4 quyết định của bạn đã ghi vào [DOI_CHIEU_TRUOC_KHI_NOP.md](DOI_CHIEU_TRUOC_KHI_NOP.md): Blocked tạm giữ như hiện tại, mức độ bug giữ theo tài liệu, cách đếm số liệu áp dụng, phiên tạo repo giữ trong prompt log.
+
+**Mục 6 – bug của bạn so với BUG-01…BUG-14:**
+
+| Bug của bạn | Issue nhóm | Đánh giá |
+| --- | --- | --- |
+| BUG-15 (FR01-B1, form Đăng ký báo "Mật khẩu quá yếu") | BUG-01 (FR-03, form Đặt lại mật khẩu) | **Liên quan chặt.** Tôi thử lại form Đặt lại mật khẩu bằng chính 9 mật khẩu của FR01-B1. Kết quả giống hệt form Đăng ký: cùng câu thông báo, cả 7 ký tự `@ $ ! % * ? &` bị từ chối, chỉ mật khẩu có dấu cách qua được. Hai form thuộc hai chức năng khác nhau và có thể phải sửa ở hai chỗ, nên vẫn báo riêng. |
+| BUG-18 (FR01-B4), BUG-21 (FR01-B7): không kiểm tra định dạng email | BUG-02 (FR-03, form Quên mật khẩu nhận email "q") | Cùng kiểu lỗi nhưng khác form và endpoint, nên **liên quan**, không trùng. |
+| BUG-27 (FR15-B4, tên sản phẩm rỗng) | BUG-07 (FR-14, tên danh mục rỗng) | Khác đối tượng, **không trùng**. |
+
+- Trong [Bug_Report.md](bugs/Bug_Report.md), FR01-B1, FR01-B4 và FR01-B7 đã có thêm dòng **Liên quan**.
+- Lượt thử form Đặt lại mật khẩu được lưu làm bằng chứng tại `evidence/FR-01/explore_reset_password.json`.
+- Phần sửa này commit dưới dạng `[FR-01][B7-review]` và đã ghi vào hàng #8 của AI Audit Report.
+
+**Tuỳ chọn:** thêm comment dẫn chiếu trên GitHub. Nếu bạn thêm thì báo tôi để chụp lại trang issue.
+- #15: `Liên quan: #1 – form Đặt lại mật khẩu (FR-03) có cùng quy tắc mật khẩu sai (cùng thông báo; @ $ ! % * ? & bị từ chối, chỉ dấu cách được chấp nhận). Báo riêng vì khác chức năng / form.`
+- #18 và #21: `Liên quan: #2 – form Quên mật khẩu cũng không kiểm tra định dạng email.`
+
+**Trùng giữa các bạn khác với nhau** (đã ghi vào danh sách đối chiếu để bạn góp ý khi cross-review):
+- BUG-12, BUG-14 (web) và BUG-09 (mobile) cùng một hiện tượng: áp mã SAVE10 thì tổng tiền bị nhân 10 thay vì giảm 10%.
+- BUG-12…BUG-14 gắn nhãn `[FR-04]` (hồ sơ cá nhân), nhưng nội dung là mã giảm giá (FR-09).
+- BUG-06 (tổng tiền âm) là một trường hợp riêng của BUG-05.
+
+**Khác:**
+- Khi thử form Đặt lại mật khẩu, tôi thấy trang Đăng nhập trên Web cũng dùng nhãn "Username" / "Sign In" giống MOB-B5. Chức năng này (FR-02) không ai làm; tôi đã ghi vào mục quan sát ngoài phạm vi.
+- `AI_Privacy_Checklist.md` đang chỉnh dở nên tôi chưa commit. Một số ô đang gõ thành `[ x]`, `[x ]`, `[ ]x`; GitHub chỉ hiện ô đã đánh dấu khi viết đúng `[x]`. Lúc đóng gói tôi sẽ chuẩn hoá lại, hoặc bạn sửa luôn.
+````
+
+<details><summary>Hành động AI đã thực hiện (21)</summary>
+
+1. `Bash` — Download teammates' issue images and read FR-03 spec
+2. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/team/bug1_1.png
+3. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/team/bug2_1.png
+4. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/team/bug2_2.png
+5. `Bash` — Compare FR01-B1 message; check whether web app is running
+6. `Bash` — Read environment start script
+7. `Bash` — Start backend and web frontend detached
+8. `Bash` — Probe reset-password form with FR01-B1 password set, then reset data
+9. `Bash` — Download images of possibly overlapping teammate issues
+10. `Bash` — Build contact sheets of teammate issue images
+11. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/team/sheetA.png
+12. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/team/sheetB.png
+13. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/team/bug9_2_small.png
+14. `Bash` — Save reset-password probe as script and evidence, reset data
+15. `Bash` — Locate analysis/evidence lines of FR01-B1, B4, B7
+16. `Bash` — Add cross-reference notes to FR01-B1, B4, B7
+17. `Bash` — See user's in-progress privacy checklist edits
+18. `Bash` — Record decisions, duplicate analysis, cross-review notes in checklist
+19. `Bash` — Commit cross-reference review and note it in audit row 8
+20. `Bash` — Get exact timestamp of prompt 27
+21. `Bash` — Fix turn number in commit, update audit row 8, push
+
+</details>
+
+## #29 · 2026-10-21 08:04:52 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+hướng dẫn tôi dùng skill và kịch bản demo
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Tôi đã viết 2 tài liệu (đã commit và push):
+- [README.md](.claude/skills/domain-testing-bva/README.md) trong thư mục skill: hướng dẫn cài đặt và cách gọi skill. File này nằm trong bài nộp.
+- [KICH_BAN_DEMO.md](KICH_BAN_DEMO.md): kịch bản quay video, để bạn dùng khi quay, không đưa vào zip.
+
+**Cách dùng skill**
+1. Mở Claude Code ngay trong thư mục dự án (thư mục có `.claude/skills/`), gõ `/` sẽ thấy `domain-testing-bva`.
+2. Prompt đầu tiên cho skill biết: mã feature, chỗ đọc đặc tả, kênh test (Web / API), tiền tố ID, cách reset dữ liệu. Kết thúc bằng "làm B1 rồi dừng để tôi duyệt".
+3. Mỗi bước (B1 → B7) là một prompt. Bạn duyệt rồi mới gõ bước tiếp; skill tự commit `[<F>][Bn]` sau mỗi bước. Muốn sửa thì yêu cầu bằng prompt, skill sẽ commit dạng `[<F>][Bn-review]`.
+4. Skill không tự tạo GitHub issue.
+
+**Kịch bản demo**
+- **Feature nên dùng: FR-02 Đăng nhập & Khóa tài khoản trên Web.**
+  - Chưa ai trong nhóm làm FR-02, nên video cho thấy skill dùng lại được cho feature mới, đúng mục đích của đề §7.
+  - Đặc tả ngắn nhưng có đủ biến có thứ tự (số lần sai, thời gian khóa) để làm BVA.
+  - Phương án khác: chạy lại FR-10 trong nhánh riêng.
+- **Chạy trong nhánh riêng** `demo/fr02`, đặt ở thư mục `../HW02_demo_FR02`, để không ảnh hưởng bài nộp. Lệnh tạo nhánh có sẵn trong mục 2 của kịch bản. Backend và Web hiện vẫn đang chạy.
+- **11 cảnh, video khoảng 12–18 phút** sau khi cắt (chạy thật mất 45–90 phút; đoạn B5 thì tua nhanh). Thứ tự: giới thiệu skill → B1 → B2 → B3 → B4 → B5 → cảnh bạn tự rà soát và yêu cầu sửa → B6 → B7 → `git log`. Mỗi cảnh có thao tác trên màn hình, ý chính cần nói và prompt gợi ý.
+- **Bắt buộc có giọng của bạn.** Kịch bản chỉ ghi ý chính chứ không phải lời đọc sẵn, vì AI-01 §10 yêu cầu video có giọng nói của sinh viên. Cảnh rà soát (cảnh 7) nên là một chỗ bạn thật sự thấy cần sửa: nó cho thấy bạn là người quyết định.
+
+**Sau khi quay:** đăng YouTube ở chế độ Unlisted rồi dán link vào README. Sau đó báo tôi để:
+- trích prompt log của phiên demo vào hồ sơ AI;
+- đẩy nhánh `demo/fr02` lên repo riêng làm bằng chứng.
+
+Hai tài liệu này do tôi viết nên đã được ghi vào hồ sơ AI: AI Audit Report thêm hàng #42; Disclosure Form ghi rõ video do bạn tự quay và tự nói.
+
+Bạn muốn tôi tạo sẵn nhánh demo và thư mục `HW02_demo_FR02` luôn không?
+````
+
+<details><summary>Hành động AI đã thực hiện (9)</summary>
+
+1. `Bash` — Check exporter options, SUT path logic, FR-02 spec, worktrees
+2. `Bash` — Check recent commits, skill files, env status, headed option
+3. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/.claude/skills/domain-testing-bva/README.md
+4. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/KICH_BAN_DEMO.md
+5. `Bash` — Fix env note, update checklist and disclosure for demo script
+6. `Bash` — Commit skill README and demo script, add audit row 42
+7. `Bash` — Inspect formatted row 41 and summary lines
+8. `Bash` — Insert audit row 42 and update totals
+9. `Bash` — Commit AI record updates and push
+
+</details>
+
+## #30 · 2026-10-21 08:21:32 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+tôi chỉ muốn một prompt gọi skill và agent sẽ lo phần còn lại, sau đó show kết quả
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Tôi sẽ thêm cho skill chế độ chạy liền mạch: chỉ một prompt, skill vẫn tự làm lần lượt B1 → B7 với mỗi bước một commit, cuối cùng in bảng tóm tắt để bạn trình bày trong video. Sau đó cập nhật README và kịch bản demo theo cách này.
+
+Giờ viết lại kịch bản demo theo cách dùng một prompt:
+
+Skill giờ chạy được chỉ với một prompt; tôi đã sửa skill và kịch bản demo theo cách đó, tất cả đã commit và push.
+
+**Skill**
+- Gọi skill một lần thì agent tự làm lần lượt B1 → B7, mỗi bước vẫn là một commit riêng.
+- Giữa các bước, agent tự kiểm tra theo một bảng trong `SKILL.md`, ví dụ bảng phủ phải đạt 100%, kết quả bất ngờ phải được xác minh bằng API.
+- Thông tin bạn không đưa (đặc tả, kênh, tiền tố ID, cách reset dữ liệu) thì agent tự tìm và ghi thành giả định.
+- Agent chỉ dừng khi bị chặn thật sự, ví dụ không tìm thấy đặc tả hoặc SUT không chạy.
+- Cuối cùng agent in **Tóm tắt kết quả**: commit của từng bước, số lớp và số test case, bảng Pass / Fail / Blocked, các bug nháp, gap analysis, và các điểm cần bạn duyệt.
+- Nếu muốn duyệt giữa các bước thì thêm "làm B1 rồi dừng" như trước.
+
+**Prompt duy nhất trong video:**
+```text
+/domain-testing-bva FR-02 – đặc tả trong ../../eshop-sut-main/README.md; Web http://localhost:5173/login + API POST /api/login
+```
+Gõ ngắn `/domain-testing-bva FR-02` cũng được, phần thêm vào chỉ để chắc agent tìm đúng đặc tả và kênh.
+
+**Kịch bản** ([KICH_BAN_DEMO.md](KICH_BAN_DEMO.md)), video khoảng 10–15 phút. Agent chạy thật mất khoảng 45–90 phút, đoạn đó bạn tua nhanh.
+1. Giới thiệu skill.
+2. Gõ prompt.
+3. Agent làm việc (tua nhanh). Mở thêm một terminal `watch git log` để thấy các commit `[FR-02][B1]` … `[B7]` lần lượt hiện ra.
+4. Bản tóm tắt agent in ra.
+5. Đi qua báo cáo, ảnh bằng chứng và bug nháp.
+6. Bạn duyệt vài điểm trong mục "Điểm cần người duyệt".
+7. Kết.
+
+Hai lưu ý:
+- **Quyền chạy lệnh:** phiên demo cần chế độ tự chấp nhận quyền, nếu không agent sẽ dừng giữa chừng chờ bạn bấm Allow. Việc này an toàn vì chạy trong nhánh demo riêng.
+- **Nên giữ cảnh 6:** đề §2 cảnh báo việc dùng "một prompt chung chung". Skill vẫn đi đúng từng bước kỹ thuật với commit riêng, nhưng cảnh bạn duyệt kết quả giúp tránh hiểu nhầm.
+
+Trong AI Audit Report, hàng #42 đổi sang INCOMPLETE vì đã sửa theo yêu cầu của bạn. Tổng hiện là 42 artifact: 33 VALID, 9 INCOMPLETE.
+
+Bạn muốn tôi tạo sẵn nhánh demo và thư mục `HW02_demo_FR02`, kèm file cho phép lệnh để agent không dừng hỏi quyền, không?
+````
+
+<details><summary>Hành động AI đã thực hiện (6)</summary>
+
+1. `Bash` — Review SKILL.md sections to modify and execution lessons
+2. `Bash` — Add continuous mode to SKILL.md and update skill README
+3. `Bash` — Update skill description and README input note
+4. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/KICH_BAN_DEMO.md
+5. `Bash` — Commit skill and script changes; mark audit row 42 as revised
+6. `Bash` — Update audit row 42 reason, commit and push
+
+</details>
+
+## #31 · 2026-10-21 08:26:44 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `n/a`
+
+**Prompt (nguyên văn):**
+
+````text
+tại sao một feature lại chạy lâu vậy? tôi chỉ muốn có kết quả sau tôi đa 5p
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+(không có văn bản trả lời)
+````
+
+## #32 · 2026-10-21 08:26:45 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `n/a`
+
+**Prompt (nguyên văn):**
+
+````text
+[Request interrupted by user]
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+(không có văn bản trả lời)
+````
+
+## #33 · 2026-10-21 08:26:50 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+5-10p
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Bản ước lượng 45–90 phút trước đó của tôi bị dư: tôi tính theo FR-01 (phải sửa oracle rồi chạy lại) và Mobile (mỗi test case phải mở lại app trên emulator mất 20–30 giây). Với feature Web + API thì nhanh hơn nhiều. Theo giờ commit, FR-10 đi từ B1 đến B7 hết khoảng 9 phút, FR-15 khoảng 26 phút. Tôi đã thêm chế độ nhanh cho skill với mục tiêu 5–10 phút.
+
+**Thời gian thực sự tốn vào đâu:**
+1. **Agent viết nội dung.** Đây là phần tốn nhất: đặc tả, các bảng, `cases.py`, runner, báo cáo, bug. Phần thiết kế thì nhanh.
+2. **Thực thi.**
+   - Mỗi test case phải reset dữ liệu, mở trình duyệt và chụp ảnh.
+   - Chạy 2 kênh nên số lượt nhân đôi.
+   - Riêng FR-02 có các test case phải chờ khóa thật 28 và 32 giây.
+3. **Sửa runner** khi kết quả bất ngờ. Phần này khó đoán trước nhất.
+
+**Chế độ nhanh** (đã commit và push). Phương pháp giữ nguyên: đủ B1–B7, Minimum Set, BVA, mỗi bước một commit. Chỉ thu gọn các phần sau:
+- API chạy toàn bộ test case. Web chỉ chạy tối đa 5 test case đại diện; các test case còn lại ghi rõ "Chưa chạy (chế độ nhanh)" trong báo cáo.
+- Các test case phải chờ khóa chạy song song, mỗi test case dùng một tài khoản riêng, nên tổng thời gian chờ chỉ khoảng 30 giây.
+- Runner lỗi thì chỉ sửa một lần; còn lỗi thì đánh Blocked kèm lý do.
+- Gap analysis và bug viết ngắn, dùng lại ảnh đã chụp ở bước chạy test.
+
+Prompt trong video:
+```text
+/domain-testing-bva FR-02 nhanh – đặc tả trong ../../eshop-sut-main/README.md; Web http://localhost:5173/login + API POST /api/login
+```
+
+Để đạt 5–10 phút thì cần:
+- SUT chạy sẵn;
+- phiên demo bật tự chấp nhận quyền;
+- gõ `/fast` trong phiên demo nếu tài khoản của bạn có.
+
+5–10 phút là mục tiêu, không chắc chắn: phiên mới phải đọc skill trước, và nếu runner cần sửa thì sẽ lâu hơn. [KICH_BAN_DEMO.md](KICH_BAN_DEMO.md) đã cập nhật theo chế độ nhanh. Lần sửa này cũng đã ghi vào hàng #42 của AI Audit Report.
+
+Bạn có muốn tôi chạy thử một lượt có bấm giờ trong nhánh demo riêng (`HW02_demo_FR02`) trước khi bạn quay không? Như vậy biết được thời gian thật và bắt lỗi trước, kết quả không lẫn vào bài nộp.
+````
+
+<details><summary>Hành động AI đã thực hiện (7)</summary>
+
+1. `Bash` — Check how report tables count unexecuted test cases
+2. `Bash` — View Feature constructor and N/A options in report_lib
+3. `Bash` — View Feature dataclass fields
+4. `Bash` — Add configurable N/A header to report_lib and regenerate T55
+5. `Bash` — Add fast mode to SKILL.md and README
+6. `Bash` — Update demo script for fast mode and commit both changes
+7. `Bash` — Record fast-mode revision in audit row 42 and push
+
+</details>
+
+## #34 · 2026-10-21 09:39:20 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+https://youtu.be/9pdx5Ahb4Yk đây là link video youtube, hãy thêm vào bài nộp và kiểm tra xem cần làm gì nữa trước khi nộp?
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+(không có văn bản trả lời)
+````
+
+<details><summary>Hành động AI đã thực hiện (2)</summary>
+
+1. `Bash` — Check repo state, worktrees, branches, recent AI sessions
+2. `Bash` — List demo branch commits and new Claude Code sessions
+
+</details>
+
+## #35 · 2026-10-21 09:39:43 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `n/a`
+
+**Prompt (nguyên văn):**
+
+````text
+[Request interrupted by user]
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+(không có văn bản trả lời)
+````
+
+## #36 · 2026-10-21 09:39:51 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+ko cần thêm phần đó vào
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Hiểu rồi: tôi không đưa phiên demo FR-02 và nhánh `demo/fr02` vào bài nộp. Giờ tôi thêm link video vào README và rà lại các mục còn thiếu trước khi nộp.
+
+Link video đã có trong README. Bây giờ chỉ còn 2 việc bạn tự làm: điền thông tin cá nhân và tự chấm điểm. Sau đó tôi đóng gói được.
+
+- **Video:** link đã thêm vào bảng "Video demo" của README. Tôi đã kiểm tra, link mở được công khai, tiêu đề video là "[HW02-23120031] Agent Skill for domain testing".
+- **Phiên demo FR-02:** theo ý bạn, log và nhánh `demo/fr02` không đưa vào bài nộp. Disclosure Form trước đó ghi phiên demo "có prompt log riêng", nên tôi sửa thành "hiển thị trực tiếp trong video, không đưa vào bài nộp".
+- **Privacy Checklist:** bạn đã đánh dấu đủ 15/15 ô. Tôi sửa lại cách gõ ô đánh dấu (`[ x]`, `[x ]`, `[ ]x` thành `[x]`) để GitHub hiện đúng, rồi commit.
+- **Antigravity:** phiên `7c24fd82` (06:12, "/plan kiểm tra các bug trong report có đúng so với thực tế ko?") liên quan đến bài nhưng chưa có trong prompt log. Phiên này rất ngắn, chỉ một prompt và chưa ra kết quả. Khi xuất prompt log lần cuối tôi sẽ đưa vào; nếu bạn không muốn thì báo tôi. Hai phiên Antigravity còn lại là ôn thi giữa kỳ, không liên quan nên tôi bỏ qua.
+
+Tất cả đã commit và push.
+
+**Bạn cần làm trước khi nộp:**
+1. Điền họ tên (in hoa), lớp / khoá, giảng viên, ngày và chữ ký:
+   - `ai/AI_Audit_Report.md`: mục 1 và mục Chữ ký;
+   - `ai/AI_Disclosure_Form.md`: mục 1 và phần cam đoan;
+   - `ai/AI_Privacy_Checklist.md`: phần cam đoan.
+2. Tự chấm 5 dòng trong bảng của README. Điểm tổng sẽ thành tên file zip, viết 3 chữ số, ví dụ `23120031_HW02_AI_DomainTesting_090.zip`.
+3. Ngoài file nộp:
+   - điền sheet `HW02_Phan_cong_nhom.xlsx`;
+   - cross-review bài của các bạn trong nhóm (gợi ý có sẵn trong mục "Quan sát ngoài phạm vi" của [DOI_CHIEU_TRUOC_KHI_NOP.md](DOI_CHIEU_TRUOC_KHI_NOP.md)).
+
+Bạn xong mục 1–2 thì báo tôi. Tôi sẽ:
+- gộp báo cáo chính, cuối file là đoạn Mandatory Disclosure;
+- xuất PDF;
+- tạo `git_commit_log.txt`;
+- xuất prompt log lần cuối;
+- giảm dung lượng ảnh để mỗi file dưới 20 MB;
+- bỏ các file nội bộ;
+- nén zip đúng tên.
+````
+
+<details><summary>Hành động AI đã thực hiện (6)</summary>
+
+1. `Bash` — Check README video/self-grade, signature fields, new Antigravity sessions
+2. `Bash` — Inspect the HW02-related Antigravity session 7c24fd82
+3. `Bash` — Add video link to README, adjust disclosure and checklist
+4. `Bash` — Check the YouTube link is publicly viewable
+5. `Bash` — Commit video link, list remaining checklist items
+6. `Bash` — Normalize privacy checklist ticks, commit and push
+
+</details>
+
+## #37 · 2026-10-21 09:45:14 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+tôi đã xong, kiểm tra lại lần cuối, bỏ các file thư mục ko cần thiết, các nội dung điền sheet, cross-review ko cần
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Bạn đã xong. Việc sheet nhóm và cross-review tôi bỏ khỏi danh sách. Giờ tôi kiểm tra lần cuối rồi đóng gói. Trước hết xem thông tin cá nhân và điểm tự chấm đã điền đủ chưa.
+
+Các ô thông tin đã điền đủ. Tiếp theo tôi viết script gộp báo cáo chính và script đóng gói.
+
+Báo cáo chính gộp đã tạo xong và không có link hỏng. Giờ tôi cập nhật README (cấu trúc bài nộp, ghi chú về ảnh nén) và chốt danh sách đối chiếu.
+
+Giờ viết script đóng gói:
+````
+
+**Sinh viên trả lời câu hỏi của AI:**
+
+````text
+The user answered: "Bảng tự chấm trong README vẫn trống, mà điểm tổng dùng để đặt tên file zip. Bạn tự chấm bao nhiêu? (chọn Other để nhập từng dòng, vd 23/24/23/14/9)"="100 (25/25/25/15/10)", "Ô "Giảng viên" trong 3 file hồ sơ AI còn trống. Giảng viên lớp CQ2023/3 của bạn là ai?"="TS. Lâm Quang Vũ", "Vẫn còn ô trống ở: phần chữ ký cuối AI Audit Report (cả 5 ô), Disclosure Form (Họ tên + Ngày ở mục 1; Ngày + Chữ ký ở phần cam đoan). Tôi điền thế nào?"="chép thông tin đã điền phần chữ ký là nguyễn phú dinh". Read the answers carefully — they may request clarification, changes, or that you not proceed — and follow what they actually say.
+````
+
+<details><summary>Hành động AI đã thực hiện (19)</summary>
+
+1. `Bash` — Check self-grade and personal info fields
+2. `Bash` — List tracked files by folder and spot temporary files
+3. `Bash` — Check broken relative links and leftover placeholders
+4. `Bash` — Inspect flagged placeholder lines
+5. `AskUserQuestion` — Bảng tự chấm trong README vẫn trống, mà điểm tổng dùng để đặt tên file zip. Bạn tự chấm bao nhiêu? (chọn Other để nhập từng dòng, vd 23/24/23/14/9) / Ô "Giảng viên" trong 3 file hồ sơ AI còn trống. Giảng viên lớp CQ2023/3 của bạn là ai? / Vẫn còn ô trống ở: phần chữ ký cuối AI Audit Report (cả 5 ô), Disclosure Form (Họ tên + Ngày ở mục 1; Ngày + Chữ ký ở phần cam đoan). Tôi điền thế nào?
+6. `Bash` — Read scope memory for submission folder conventions
+7. `Bash` — Fill personal info, self-grade, finalize audit rows 40-41
+8. `Bash` — Finalize rows 40-41 and verify filled signature fields
+9. `Bash` — Inspect README structure and report headers for merging
+10. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/build_main_report.py
+11. `Bash` — Build combined main report and check its outline
+12. `Bash` — Fix README-relative links in combined report and verify
+13. `Bash` — Count embedded images, md files, open checklist items
+14. `Bash` — Update README submission structure and close checklist items
+15. `Write` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/scripts/package_submission.sh
+16. `Bash` — Commit filled info, combined report, packaging script
+17. `Bash` — Preview final prompt log numbering with both Antigravity sessions
+18. `Bash` — Read the short Antigravity session content verbatim
+19. `Bash` — Export final prompt log with existing numbering
+
+</details>
+
+## Phụ lục A.1 – Phiên Antigravity không đánh số (`7c24fd82`)
+
+Phiên mở trong thư mục môn học (không phải thư mục bài), bị dừng sau khoảng 1 phút, không tạo output dùng trong bài; sinh viên chuyển sang phiên `421e648d` (lượt #21, 06:14). Ghi tách riêng để không làm đổi số các lượt mà AI Audit Report dẫn chiếu.
+
+- **Thời gian:** 2026-10-21 06:12:36 (GMT+7)
+- **Công cụ AI:** Google Antigravity IDE
+
+**Prompt (nguyên văn):**
+
+````text
+/plan kiểm tra các bug trong report có đúng so với thực tế ko?
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Tôi sẽ bắt đầu bằng việc khảo sát cấu trúc thư mục và các file trong workspace để tìm tài liệu báo cáo (report) và mã nguồn của dự án.
+
+Tôi đang tìm kiếm các file báo cáo (report) và dự án bên trong các thư mục `Homeworks`, `InClass`, `Seminars`, và `Templates`.
+````
+
+<details><summary>Hành động AI đã thực hiện (1)</summary>
+
+1. `run_command` — liệt kê thư mục môn học
 
 </details>
