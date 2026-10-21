@@ -5,10 +5,10 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 ## Liêm chính & khai báo AI
 
 - [x] **Nguồn của bản rà soát FR-01** (G9–G16, FR01-DT-30…32): đã khai báo đầy đủ phiên rà soát chéo bằng Google Antigravity (Gemini 4 Argon, lượt #13) trong `ai/prompt_log.md`, `ai/AI_Audit_Report.md`, `ai/AI_Disclosure_Form.md`, `report/FR-01_Dang_ky.md` và cập nhật nhãn Origin / nguồn phát hiện.
-- [ ] **Các phiên AI trước 20/10** (11/10 tóm tắt đề, 14/10 làm thử FR-01, 19/10 lập kế hoạch) đang không nằm trong prompt log. Quyết định có ghi một dòng trong AI Disclosure Form ("đã dùng AI để tìm hiểu đề, không dùng kết quả") hay không.
-- [ ] **Bug report do AI nháp**: AI-01 §11 ghi "Bug report: 100% sinh viên viết; AI không được nháp mô tả", trong khi đề HW02 §11 ghi Anti-AI-Cheat "None". Đã chọn: AI nháp, sinh viên duyệt và tự viết issue → khai báo rõ trong Disclosure Form. → Đã nháp lời khai báo trong Mandatory Disclosure (Audit Report mục 6); sinh viên xác nhận cách khai báo.
+- [x] **Các phiên AI trước 20/10** (11/10 tóm tắt đề, 14/10 làm thử FR-01, 19/10 lập kế hoạch) đang không nằm trong prompt log. Quyết định có ghi một dòng trong AI Disclosure Form ("đã dùng AI để tìm hiểu đề, không dùng kết quả") hay không. → Sinh viên quyết định bỏ qua (21/10): các phiên đó không đóng góp vào bài làm.
+- [x] **Bug report do AI nháp**: AI-01 §11 ghi "Bug report: 100% sinh viên viết; AI không được nháp mô tả", trong khi đề HW02 §11 ghi Anti-AI-Cheat "None". Đã chọn: AI nháp, sinh viên duyệt và tự viết issue → khai báo rõ trong Disclosure Form. → Đã nháp lời khai báo trong Mandatory Disclosure (Audit Report mục 6); sinh viên xác nhận cách khai báo. Sinh viên đã duyệt (21/10).
 - [ ] Prompt log có cả phiên tạo repo (`4aefb10a`); kiểm tra nội dung trước khi nộp.
-- [ ] 3 commit đầu trên GitHub còn dòng `Co-Authored-By: Claude`; quyết định giữ (minh bạch) hay viết lại lịch sử + force-push.
+- [x] 3 commit đầu trên GitHub còn dòng `Co-Authored-By: Claude`; quyết định giữ (minh bạch) hay viết lại lịch sử + force-push. → Giữ nguyên (21/10).
 
 ## Giả định cần hỏi TA
 
@@ -37,14 +37,20 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 ## Hồ sơ nộp
 
 - [ ] Điền họ tên, lớp/khoá, giảng viên, ngày, chữ ký trong `ai/AI_Audit_Report.md`, `AI_Disclosure_Form.md`, `AI_Privacy_Checklist.md`.
-- [ ] **AI Critique**: Claude Code đã nháp (291 từ) theo yêu cầu (lượt #26) – sinh viên đọc, chỉnh theo ý mình, xóa chú thích `NHÁP`.
-- [ ] **AI Audit Report**: sinh viên đã đồng ý verdict hàng #1–#33 (lượt #26). Claude Code nháp cột (4), hàng #34–#41 (verdict đề xuất – xem kỹ #34, #35, #37), mục 5 và mục 6 Mandatory Disclosure → sinh viên duyệt, xóa chú thích `NHÁP`; nếu sửa Critique / Audit thì đổi `VALID*` của hàng #40, #41.
+- [x] **AI Critique**: Claude Code đã nháp (291 từ) theo yêu cầu (lượt #26) – sinh viên đọc, chỉnh theo ý mình, xóa chú thích `NHÁP`. → Sinh viên đã duyệt (21/10).
+- [x] **AI Audit Report**: sinh viên đã đồng ý verdict hàng #1–#33 (lượt #26). Claude Code nháp cột (4), hàng #34–#41 (verdict đề xuất – xem kỹ #34, #35, #37), mục 5 và mục 6 Mandatory Disclosure → sinh viên duyệt, xóa chú thích `NHÁP`; nếu sửa Critique / Audit thì đổi `VALID*` của hàng #40, #41. → Sinh viên đã duyệt (21/10); thêm câu khai báo theo đề §9.
 - [x] FR-15, FR-10, Mobile không có commit rà soát: sinh viên đồng ý verdict VALID, không sửa (21/10).
-- [ ] **AI Disclosure Form**: kiểm tra bảng 2.4 (AI nháp), tự viết mục 2.5, xóa chú thích `NHÁP`.
+- [x] **AI Disclosure Form**: kiểm tra bảng 2.4 (AI nháp), tự viết mục 2.5, xóa chú thích `NHÁP`. → Đã duyệt bảng 2.4 và viết mục 2.5 (21/10).
 - [ ] Video demo Agent Skill có **giọng nói của sinh viên** (AI-01 §10), đăng YouTube, điền link vào README.
-- [ ] Điểm tự chấm trong README và tên file zip `23120031_HW02_AI_DomainTesting_<điểm>.zip`.
+- [ ] Điểm tự chấm trong README và tên file zip `23120031_HW02_AI_DomainTesting_<điểm>.zip` – điểm **3 chữ số** 000–100 (vd `090`).
+- [ ] Đánh dấu các ô trong `ai/AI_Privacy_Checklist.md` (mẫu AI-05).
+- [ ] Cross-review bài của thành viên khác trong nhóm (quy định chung của môn, không nằm trong file nộp HW02).
 - [ ] Điền sheet phân công nhóm (`HW02_Phan_cong_nhom.xlsx`), kiểm tra không trùng feature.
-- [ ] Xuất PDF cho báo cáo chính, bug report, AI Audit Report, AI Critique; xuất `git_commit_log.txt`.
+- [ ] Đóng gói (Claude làm khi sinh viên xong các mục trên):
+  - Báo cáo chính gộp `report/` (phương pháp + 4 feature, mỗi feature có Domain Testing và BVA), **kết thúc bằng đoạn Mandatory Disclosure** (AI-01 §8).
+  - PDF cho báo cáo chính, bug report, AI Audit Report, AI Critique (và các file .md khác); `git_commit_log.txt`; prompt log cập nhật lần cuối.
+  - Giới hạn Moodle 20 MB / file: ảnh PNG trong bản nộp được giảm còn 256 màu (thử: 18,4 MB → 7,2 MB), ảnh gốc giữ nguyên trong git.
+  - Không đưa vào zip: `node_modules/`, `DOI_CHIEU_TRUOC_KHI_NOP.md`, `bugs/issues/`.
 
 ## Môi trường
 
