@@ -1,6 +1,6 @@
 #!/bin/bash
 # Đóng gói bài nộp <MSSV>_HW02_AI_DomainTesting_<điểm>.zip ở thư mục cha của repo, từ commit HEAD (cây làm việc phải sạch).
-# - bỏ file nội bộ (danh sách đối chiếu, kịch bản demo, .gitignore, liên kết skills); thêm git_commit_log.txt
+# - bỏ file nội bộ (.gitignore, .gitkeep, liên kết skills); thêm git_commit_log.txt
 # - ảnh PNG giảm còn 256 màu (giới hạn Moodle 20 MB / file); mỗi file .md có bản PDF cùng tên
 # Dùng: scripts/package_submission.sh <điểm tự chấm 3 chữ số, vd 100>
 set -euo pipefail
@@ -16,7 +16,7 @@ trap 'rm -rf "$TMP"' EXIT
 STAGE="$TMP/$NAME"
 mkdir -p "$STAGE"
 git -C "$ROOT" archive HEAD | tar -x -C "$STAGE"
-rm -f "$STAGE/DOI_CHIEU_TRUOC_KHI_NOP.md" "$STAGE/KICH_BAN_DEMO.md" "$STAGE/.gitignore" "$STAGE/evidence/.gitkeep" "$STAGE/skills"
+rm -f "$STAGE/.gitignore" "$STAGE/evidence/.gitkeep" "$STAGE/skills"
 git -C "$ROOT" log --reverse --date=iso > "$STAGE/git_commit_log.txt"
 
 python3 - "$STAGE" <<'EOF'
