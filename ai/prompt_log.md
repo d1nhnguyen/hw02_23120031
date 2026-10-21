@@ -1,6 +1,6 @@
 # Phụ lục A — Prompt log (trích tự động từ transcript Claude Code & Google Antigravity)
 
-> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-21 06:35 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
+> Sinh bởi `scripts/export_prompt_log.py` lúc 2026-10-21 07:15 (GMT+7). Prompt và output của AI được giữ **nguyên văn**. Không đưa vào: phần suy luận ẩn của model, nội dung file / kết quả lệnh mà AI đọc được (chỉ liệt kê tên hành động).
 
 | # | Thời gian (GMT+7) | Phiên | Prompt (rút gọn) |
 |---|---|---|---|
@@ -27,6 +27,9 @@
 | 21 | 2026-10-21 06:14 | `421e648d` | kiểm tra các bug trong report có đúng chưa? |
 | 22 | 2026-10-21 06:22 | `421e648d` | các bug đó thật sự có trong code? |
 | 23 | 2026-10-21 06:29 | `1946c20d` | 1. đó là Antigravity, tôi dùng để kiểm tra chéo và đã thêm vào báo cáo. 2. bạn hãy tạo 22  |
+| 24 | 2026-10-21 06:57 | `1946c20d` | kiểm tra github issues |
+| 25 | 2026-10-21 07:04 | `1946c20d` | đã sửa xong |
+| 26 | 2026-10-21 07:09 | `1946c20d` | các giá định có thể ko cần hỏi. ai audit report: tôi đồng ý với verdict, draft các phần cò |
 
 ## #1 · 2026-10-20 20:46:19 · phiên `1946c20d`
 
@@ -1879,6 +1882,29 @@ Bạn có muốn mình sửa lại câu mô tả ngắn ở Mục 5.4 của [FR-
 Skill đã chuyển xong. Giờ tôi chuẩn bị nội dung 22 issue để bạn dán vào.
 
 Đã có bản nháp nội dung 22 issue. Tôi cập nhật danh sách đối chiếu, commit, rồi cập nhật prompt log.
+
+Tôi phát hiện một lỗi trong hàm điền link (ô Issue rỗng dạng `| |` sẽ làm lệch cột), nên sửa lại và chạy thử trên bản sao.
+
+Ảnh chụp trang issue hoạt động tốt. Tôi commit bản sửa script, push, rồi cập nhật memory.
+
+Tôi chưa tạo issue nào, đúng như bạn muốn tự tạo. Phần skills đã xong, và nội dung 22 issue đã soạn sẵn để bạn dán vào. Mọi thay đổi đã commit và push.
+
+**1. Antigravity**
+- Phần khai báo bạn đã cập nhật (commit d58c016), tôi push lên cùng các commit của tôi.
+- Ở lượt #21, Antigravity chỉ ra vài tiêu đề bug lệch chữ giữa bảng tổng hợp và phần chi tiết. Tôi kiểm tra thì có 4 bug lệch (FR01-B8, FR15-B6, MOB-B1, MOB-B2) và đã sửa cho khớp, vì issue sẽ dùng tiêu đề ở bảng tổng hợp.
+- Có một ví dụ dùng được cho AI Critique: ở lượt #21, Antigravity dẫn những mã test case không có trong báo cáo, như `FR01-BVA-01`, `FR01-ERR-05`, `MOB-BVA-02`.
+- Lượt #22 Antigravity đọc mã nguồn SUT. Báo cáo cần nói rõ đó là bước kiểm tra chéo sau khi đã làm xong, còn test vẫn thiết kế hộp đen từ đặc tả.
+
+**2. Nội dung 22 issue** (thư mục `bugs/issues/`, không đưa vào git)
+- [bugs/issues/README.md](bugs/issues/README.md) có 22 tiêu đề theo đúng thứ tự, đánh số đề xuất **BUG-15 → BUG-36**. Repo nhóm hiện mới tới BUG-14; trước khi tạo bạn nhìn lại số mới nhất, phòng khi có bạn trong nhóm vừa tạo thêm.
+- Mỗi bug có một file `bugs/issues/<Mã>.md`. Bạn dán cả file vào ô mô tả, rồi kéo-thả ảnh `bugs/screenshots/<Mã>.png` vào dòng **Bằng chứng**.
+- Đừng xóa dòng đầu `Mã trong báo cáo HW02 (23120031): …`. Script dựa vào dòng này để tìm đúng issue kể cả khi bạn sửa tiêu đề.
+- Tạo xong bạn báo tôi. Tôi sẽ chạy `python3 scripts/github_issues.py fill --shots` để điền `BUG-NN` kèm link vào `Bug_Report.md` và mục 7 của 4 báo cáo, đồng thời chụp từng trang issue thành `bugs/screenshots/BUG-NN_issue.png`. Tôi đã chạy thử phần điền link trên bản sao và chụp thử một issue sẵn có (#14), đều chạy đúng.
+
+**3. Skills**
+- Skill nằm ở [.claude/skills/domain-testing-bva/](.claude/skills/domain-testing-bva/SKILL.md). Thư mục `skills` giờ là liên kết tới `.claude/skills`, để người chấm vẫn thấy khi mở bài nộp.
+- Đã xóa skill ai-audit-log. Script `audit_draft.py` chuyển về `scripts/`, vì AI Audit Report có nhắc tới script này.
+- Quay video demo: mở Claude Code trong thư mục `HW02_23120031`; nếu đang mở sẵn thì khởi động lại phiên để skill `domain-testing-bva` hiện ra.
 ````
 
 **Sinh viên trả lời câu hỏi của AI:**
@@ -1887,7 +1913,7 @@ Skill đã chuyển xong. Giờ tôi chuẩn bị nội dung 22 issue để bạ
 The user answered: "Issue nên đứng tên tài khoản GitHub nào? (gh CLI trên máy đang đăng nhập npdinhx; tài khoản d1nhnguyen hiện chỉ có SSH, không gọi được API)"="d1nhnguyen", "Ảnh bug đính vào issue bằng cách nào? API của GitHub không cho upload file đính kèm (kiểu kéo-thả user-attachments như các bạn trong nhóm đang làm), nên ảnh phải nằm ở một nơi public rồi nhúng bằng link."="vậy phần này tôi sẽ tự tạo, làm các yêu cầu khác". Read the answers carefully — they may request clarification, changes, or that you not proceed — and follow what they actually say.
 ````
 
-<details><summary>Hành động AI đã thực hiện (22)</summary>
+<details><summary>Hành động AI đã thực hiện (35)</summary>
 
 1. `Bash` — Check tree status, Antigravity mentions, gh auth and SUT repo access
 2. `Bash` — Show recent commits and existing issues on shared SUT repo
@@ -1911,5 +1937,171 @@ The user answered: "Issue nên đứng tên tài khoản GitHub nào? (gh CLI tr
 20. `Bash` — Fix summary regex and rerun draft and dry fill
 21. `Bash` — Check status, ignore drafts folder, view issues checklist
 22. `Bash` — Update checklist, commit issue scripts, regenerate prompt log
+23. `Bash` — Check prompt log index and removed lines
+24. `Bash` — Read Antigravity turns #20-#22 in regenerated prompt log
+25. `Bash` — Read Antigravity turn #22 output
+26. `Bash` — List title mismatches between summary, details, reports
+27. `Bash` — Sync detail headings and FR-01 section 7 title to summary titles
+28. `Bash` — Commit title sync and prompt log, push all
+29. `Bash` — Fix cell splitting and test fill on scratch copies
+30. `Bash` — Test marker matching and issue page screenshot
+31. `Bash` — Retry issue screenshot with load-based waiting
+32. `Read` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/TEST-SHOT_issue.png
+33. `Bash` — Commit script fixes, push, read decisions memory
+34. `Bash` — Update HW02 decisions memory with new choices
+35. `Bash` — Update memory index line for decisions
+
+</details>
+
+## #24 · 2026-10-21 06:57:39 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+kiểm tra github issues
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Đủ 22 issue (#15–#36, tài khoản d1nhnguyen). Tôi đối chiếu từng issue với bản nháp: tiêu đề, mã, nội dung và ảnh.
+
+#24 và #27 mỗi issue có 2 ảnh, tôi xem kỹ hai issue này.
+
+Cả 22 issue có tiêu đề, mã và nội dung khớp bản nháp, ảnh khớp file gốc, chỉ trừ #24 và #27. Tôi điền số BUG và link vào báo cáo, rồi chụp các trang issue.
+
+Giờ cập nhật danh sách đối chiếu rồi commit.
+
+Cả 22 issue đã lên đúng: #15–#36 (BUG-15 → BUG-36), tài khoản d1nhnguyen. Có 2 issue cần bạn sửa: #24 và #27 bị dán trùng ảnh.
+
+**Kết quả đối chiếu với bản nháp**
+- **20 issue khớp hoàn toàn**: tiêu đề, dòng mã, nội dung và ảnh. Tôi tải từng ảnh trên GitHub về so với file trong `bugs/screenshots/`, ảnh nào cũng đúng file của bug đó.
+- **#24 (FR15-B1)**: cùng ảnh `FR15-B1.png` bị dán 2 lần.
+- **#27 (FR15-B4)**: cùng ảnh `FR15-B4.png` bị dán 2 lần.
+- **Thiếu ảnh phụ (lỗi của tôi):** bản nháp issue chỉ nhắc ảnh chính, bỏ sót ảnh phụ có trong bug report:
+  - `FR15-admin-products.png` cho #24;
+  - `FR01-admin-users.png` cho #17, #18, #20.
+
+  Tôi đã sửa script để lần sau bản nháp liệt kê đủ ảnh.
+
+**Đã điền vào báo cáo** (đã commit và push)
+- Link BUG-NN đã vào bảng tổng hợp trong [Bug_Report.md](bugs/Bug_Report.md) và mục 7 của cả 4 báo cáo.
+- Đã chụp 22 trang issue (`bugs/screenshots/BUG-NN_issue.png`) và gắn vào mục cuối của Bug_Report.md. Tôi đã xem lại ảnh BUG-33_issue.png, trang hiện đầy đủ.
+
+**Việc của bạn:**
+1. Sửa #24 và #27: xóa ảnh trùng. Ở #24 có thể thay ảnh trùng bằng `FR15-admin-products.png`.
+2. Nếu muốn, thêm `FR01-admin-users.png` vào #17, #18, #20.
+3. Sửa xong thì báo tôi, tôi chạy lại `python3 scripts/github_issues.py fill --shots` để chụp lại các trang issue đã sửa.
+
+Ba việc trên đã ghi vào [DOI_CHIEU_TRUOC_KHI_NOP.md](DOI_CHIEU_TRUOC_KHI_NOP.md).
+````
+
+<details><summary>Hành động AI đã thực hiện (10)</summary>
+
+1. `Bash` — List all issues on shared repo with marker and image checks
+2. `Bash` — Compare each created issue with its draft
+3. `Bash` — Inspect image lines in issues 24 and 27
+4. `Bash` — Download duplicated attachments and compare with local screenshots
+5. `Bash` — Verify each issue image matches the right local screenshot
+6. `Bash` — Fill BUG links into reports and capture issue page screenshots
+7. `Bash` — Check filled rows, leftover placeholder text, screenshot sizes
+8. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/BUG-33_issue.png
+9. `Bash` — Update issue-column wording and list all evidence images in drafts
+10. `Bash` — Update checklist, commit filled issue links and screenshots, push
+
+</details>
+
+## #25 · 2026-10-21 07:04:16 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+đã sửa xong
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Phần GitHub Issues đã xong, các ảnh chụp mới đã commit và push.
+
+- Tôi tải lại ảnh của cả 22 issue về so: issue nào cũng chỉ còn một ảnh và đúng ảnh của bug đó, kể cả #24 và #27 sau khi bạn sửa.
+- Đã chụp lại trang #24 và #27. 20 trang còn lại không đổi nội dung nên tôi giữ ảnh cũ.
+- Link BUG-15…BUG-36 trong [Bug_Report.md](bugs/Bug_Report.md) và mục 7 của 4 báo cáo vẫn đúng.
+- Trong [DOI_CHIEU_TRUOC_KHI_NOP.md](DOI_CHIEU_TRUOC_KHI_NOP.md), mục GitHub Issues đã đánh dấu xong, chỉ còn một việc: kiểm tra không trùng bug với các bạn trong nhóm.
+- Ở các issue FR-15 và FR-10, dòng môi trường có cụm "như FR-01;" đứng hơi lạc chỗ. Lỗi này do script nháp của tôi, chỉ là lỗi diễn đạt nên không cần sửa issue. Script đã sửa cho lần sau.
+
+**Phần còn lại của bạn trước khi nộp:**
+- AI Audit Report: duyệt verdict, điền cột lý do, viết kết luận và Mandatory Disclosure.
+- AI Critique.
+- Mục 2.5 của Disclosure Form.
+- Họ tên, lớp, chữ ký.
+- Video demo bằng giọng của bạn.
+- Điểm tự chấm.
+- Hỏi TA về các giả định.
+
+Bạn xong các việc này thì báo tôi để xuất PDF, tạo `git_commit_log.txt` và đóng file zip.
+````
+
+<details><summary>Hành động AI đã thực hiện (4)</summary>
+
+1. `Bash` — Re-check images in all 22 issues after the user's edits
+2. `Bash` — Recapture issue pages, keep only updated #24 and #27 shots
+3. `Read` — /home/npdinh/study/Homeworks/HW02/HW02_23120031/bugs/screenshots/BUG-24_issue.png
+4. `Bash` — Mark checklist items done, tidy draft env line, commit and push
+
+</details>
+
+## #26 · 2026-10-21 07:09:02 · phiên `1946c20d`
+
+- **Công cụ AI:** Claude Code 2.1.304 (VS Code extension), model `claude-opus-5-5`
+
+**Prompt (nguyên văn):**
+
+````text
+các giá định có thể ko cần hỏi.
+ai audit report: tôi đồng ý với verdict, draft các phần còn lại.
+ai critique: draft cho tôi theo nội dung đã gợi ý>
+````
+
+**Output AI (nguyên văn):**
+
+````markdown
+Viết nháp AI Critique trước:
+
+Bản nháp dài 354 từ, vượt mức 300. Tôi rút gọn lại:
+
+Giờ viết toàn bộ phần audit bằng một script để giữ nguyên 33 hàng hiện có:
+
+Phần kết luận dài 156 từ, vượt mức 80–150. Tôi rút gọn lại:
+
+Kết luận giờ còn 148 từ. Tiếp theo cập nhật Disclosure Form (ghi rõ Critique và phần audit do AI nháp) và danh sách đối chiếu.
+````
+
+<details><summary>Hành động AI đã thực hiện (20)</summary>
+
+1. `Bash` — Check AI policy rules on critique and audit report authorship
+2. `Bash` — Search AI-01 agreement for authorship restrictions
+3. `Bash` — Read AI-01 sections 7-11 on prohibited AI artifacts
+4. `Bash` — Read current AI Audit Report
+5. `Bash` — See how Antigravity changed audit_draft.py and commits since
+6. `Bash` — Read the Antigravity-modified prompt log exporter header
+7. `Bash` — Check current prompt numbering for new turns
+8. `Bash` — Find citation keys used in the method report
+9. `Bash` — Read reference table of method report
+10. `Bash` — Write AI Critique draft and count words
+11. `Bash` — Rewrite shorter critique and record word count
+12. `Bash` — Finalize word count line and commit critique draft
+13. `Bash` — View disclosure contribution table and checklist items to update
+14. `Bash` — Fill audit reasons, add rows 34-41, sections 4-6
+15. `Bash` — Confirm audit file untouched after failed run
+16. `Write` — /tmp/claude-1000/-home-npdinh-study-Homeworks/1946c20d-e4f8-44d7-804c-ccef4a7b7b1d/scratchpad/fill_audit.py
+17. `Bash` — Apply audit report drafting script
+18. `Bash` — Trim conclusion to within 150 words
+19. `Bash` — Update Disclosure Form rows and pre-submit checklist
+20. `Bash` — Commit audit drafts, refresh prompt log, push
 
 </details>
