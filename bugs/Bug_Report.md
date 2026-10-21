@@ -58,6 +58,8 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 
 **Phân tích:** form chỉ coi dấu cách là ký tự đặc biệt. Hậu quả: không người dùng nào đăng ký được trên Web bằng mật khẩu đúng đặc tả, đồng thời mật khẩu không có ký tự đặc biệt hợp lệ lại lọt qua. Đường khác: gọi trực tiếp `POST /api/register` vẫn đăng ký được (xem FR01-B5). Liên quan: FR01-B5.
 
+**Liên quan:** form Đặt lại mật khẩu (FR-03) có cùng quy tắc sai – issue [BUG-01](https://github.com/d1nhnguyen/eshop-sut/issues/1) của nhóm. Kiểm tra lại ngày 21/10 bằng 9 mật khẩu của bug này (`scripts/fr01/explore_reset_password.mjs`, `evidence/FR-01/explore_reset_password.json`): cùng thông báo, cả 7 ký tự `@ $ ! % * ? &` bị từ chối, chỉ `Abcdef1␣` được chấp nhận. Đặc tả FR-03 yêu cầu mật khẩu mới "tuân thủ điều kiện như FR-01", nhưng hai form thuộc hai chức năng khác nhau và có thể phải sửa ở hai chỗ, nên vẫn báo riêng và dẫn chiếu chéo.
+
 **Bằng chứng:** `bugs/screenshots/FR01-B1.png`; `evidence/FR-01/explore_web_password.json` (43 mật khẩu khảo sát); ảnh từng test case `evidence/FR-01/web/FR01-DT-01.png`…
 
 ![FR01-B1](screenshots/FR01-B1.png)
@@ -135,6 +137,8 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 
 **Phân tích:** form Web cũng không kiểm tra định dạng (FR01-B7), nên lỗi xảy ra cả qua giao diện. Tài khoản có email không dùng được cho chức năng Quên mật khẩu (FR-03).
 
+**Liên quan:** form Quên mật khẩu (FR-03) cũng không kiểm tra định dạng email – issue [BUG-02](https://github.com/d1nhnguyen/eshop-sut/issues/2) của nhóm. Khác form / endpoint nên báo riêng, có dẫn chiếu chéo.
+
 **Bằng chứng:** `bugs/screenshots/FR01-B4.png`, `bugs/screenshots/FR01-admin-users.png`
 
 ![FR01-B4](screenshots/FR01-B4.png)
@@ -210,6 +214,8 @@ Bug được báo trên GitHub Issues của repo nhóm `d1nhnguyen/eshop-sut`, t
 **Kết quả mong đợi:** ô Email là `type="email"`, trình duyệt / form báo email sai định dạng và không gửi đi.
 
 **Kết quả thực tế:** form gửi request ngay, server trả 200, chuyển tới trang Đăng nhập.
+
+**Liên quan:** form Quên mật khẩu (FR-03) cũng không kiểm tra định dạng email – issue [BUG-02](https://github.com/d1nhnguyen/eshop-sut/issues/2) của nhóm. Khác form / endpoint nên báo riêng, có dẫn chiếu chéo.
 
 **Bằng chứng:** `bugs/screenshots/FR01-B7.png`
 

@@ -7,7 +7,7 @@ Danh sách này được cập nhật trong suốt quá trình làm bài. Đánh
 - [x] **Nguồn của bản rà soát FR-01** (G9–G16, FR01-DT-30…32): đã khai báo đầy đủ phiên rà soát chéo bằng Google Antigravity (Gemini 4 Argon, lượt #13) trong `ai/prompt_log.md`, `ai/AI_Audit_Report.md`, `ai/AI_Disclosure_Form.md`, `report/FR-01_Dang_ky.md` và cập nhật nhãn Origin / nguồn phát hiện.
 - [x] **Các phiên AI trước 20/10** (11/10 tóm tắt đề, 14/10 làm thử FR-01, 19/10 lập kế hoạch) đang không nằm trong prompt log. Quyết định có ghi một dòng trong AI Disclosure Form ("đã dùng AI để tìm hiểu đề, không dùng kết quả") hay không. → Sinh viên quyết định bỏ qua (21/10): các phiên đó không đóng góp vào bài làm.
 - [x] **Bug report do AI nháp**: AI-01 §11 ghi "Bug report: 100% sinh viên viết; AI không được nháp mô tả", trong khi đề HW02 §11 ghi Anti-AI-Cheat "None". Đã chọn: AI nháp, sinh viên duyệt và tự viết issue → khai báo rõ trong Disclosure Form. → Đã nháp lời khai báo trong Mandatory Disclosure (Audit Report mục 6); sinh viên xác nhận cách khai báo. Sinh viên đã duyệt (21/10).
-- [ ] Prompt log có cả phiên tạo repo (`4aefb10a`); kiểm tra nội dung trước khi nộp.
+- [x] Prompt log có cả phiên tạo repo (`4aefb10a`); kiểm tra nội dung trước khi nộp. → Giữ (21/10).
 - [x] 3 commit đầu trên GitHub còn dòng `Co-Authored-By: Claude`; quyết định giữ (minh bạch) hay viết lại lịch sử + force-push. → Giữ nguyên (21/10).
 
 ## Giả định cần hỏi TA
@@ -22,9 +22,9 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 
 ## Quyết định phương pháp (đã áp dụng, cần sinh viên xác nhận)
 
-- [ ] Test case bị một lỗi khác che → **Blocked** ở lượt chính thức + lượt **khảo sát** không tính verdict (FR-01: 15 test case Web).
-- [ ] Mức độ nghiêm trọng của từng bug (FR-01: 2 Critical, 4 Major, 3 Minor; FR-15: 5 Major, 1 Minor; FR-10: 1 Critical, 1 Major; Mobile: 1 Critical, 2 Major, 2 Minor).
-- [ ] Cách đếm số liệu tổng: theo lượt chạy từng kênh (Web/API) và theo test case gộp kênh.
+- [x] Test case bị một lỗi khác che → **Blocked** ở lượt chính thức + lượt **khảo sát** không tính verdict (FR-01: 15 test case Web). → Tạm giữ như hiện tại (21/10); cách xử lý đã ghi ở `report/00_Phuong_phap.md` và mục 5 báo cáo FR-01.
+- [x] Mức độ nghiêm trọng của từng bug (FR-01: 2 Critical, 4 Major, 3 Minor; FR-15: 5 Major, 1 Minor; FR-10: 1 Critical, 1 Major; Mobile: 1 Critical, 2 Major, 2 Minor). → Giữ theo tài liệu (21/10).
+- [x] Cách đếm số liệu tổng: theo lượt chạy từng kênh (Web/API) và theo test case gộp kênh. → Áp dụng (21/10).
 
 ## GitHub Issues
 
@@ -32,7 +32,11 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 - [x] **#24 (FR15-B1) và #27 (FR15-B4) bị dán trùng ảnh** (cùng một ảnh 2 lần): sửa issue, xóa ảnh trùng; ở #24 có thể thay bằng `bugs/screenshots/FR15-admin-products.png`.
 - [x] (Tuỳ chọn, sinh viên không thêm) Thêm ảnh phụ có trong bug report nhưng bản nháp issue chưa nhắc: `FR01-admin-users.png` cho #17 (FR01-B3), #18 (FR01-B4), #20 (FR01-B6).
 - [x] Sửa xong (21/10) → đã kiểm tra lại ảnh 22 issue và chụp lại trang #24, #27.
-- [ ] Kiểm tra không trùng bug với thành viên khác trong nhóm – đặc biệt MOB-B2, MOB-B3, MOB-B4 là lỗi backend của quy tắc đăng nhập (FR-02), có thể trùng với người kiểm thử đăng nhập Web.
+- [x] Kiểm tra không trùng bug với thành viên khác trong nhóm – đặc biệt MOB-B2, MOB-B3, MOB-B4 là lỗi backend của quy tắc đăng nhập (FR-02), có thể trùng với người kiểm thử đăng nhập Web. → Đã đối chiếu 22 bug với BUG-01…BUG-14 (21/10): không trùng hẳn, có 2 nhóm liên quan, giữ riêng và dẫn chiếu chéo trong `bugs/Bug_Report.md`:
+  - BUG-15 (FR01-B1) ↔ BUG-01 (FR-03): cùng quy tắc mật khẩu sai trên form Đặt lại mật khẩu – đã kiểm tra lại hộp đen (`evidence/FR-01/explore_reset_password.json`).
+  - BUG-18 (FR01-B4), BUG-21 (FR01-B7) ↔ BUG-02 (FR-03): cùng kiểu thiếu kiểm tra định dạng email, khác form.
+  - BUG-27 (FR15-B4, tên sản phẩm rỗng) và BUG-07 (FR-14, tên danh mục rỗng): khác đối tượng, không trùng.
+  - (Tuỳ chọn) Thêm comment dẫn chiếu chéo trên các issue #15 ↔ #1, #18 / #21 ↔ #2; nếu thêm thì chạy lại `github_issues.py fill --shots`.
 
 ## Hồ sơ nộp
 
@@ -51,6 +55,7 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
   - PDF cho báo cáo chính, bug report, AI Audit Report, AI Critique (và các file .md khác); `git_commit_log.txt`; prompt log cập nhật lần cuối.
   - Giới hạn Moodle 20 MB / file: ảnh PNG trong bản nộp được giảm còn 256 màu (thử: 18,4 MB → 7,2 MB), ảnh gốc giữ nguyên trong git.
   - Không đưa vào zip: `node_modules/`, `DOI_CHIEU_TRUOC_KHI_NOP.md`, `bugs/issues/`.
+  - Chuẩn hoá ô đánh dấu `[ x]` / `[x ]` / `[ ]x` thành `[x]` (GFM chỉ hiện checkbox với `[x]`).
 
 ## Môi trường
 
@@ -60,6 +65,11 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 
 ## Quan sát ngoài phạm vi (báo cho thành viên phụ trách nếu cần)
 
+- [ ] Gợi ý cross-review cho nhóm (issue của bạn khác):
+  - BUG-12, BUG-14 (web) và BUG-09 (mobile) cùng hiện tượng: áp SAVE10 cho tổng tiền nhân 10 thay vì giảm 10% – nên gộp hoặc dẫn chiếu chéo.
+  - BUG-12…BUG-14 gắn `[FR-04]` (hồ sơ cá nhân) nhưng nội dung là mã giảm giá (FR-09).
+  - BUG-06 (tổng tiền âm) là một trường hợp của BUG-05 (thanh toán dùng số tiền người dùng nhập).
+- [ ] FR-02 / FR-21 (Web – Đăng nhập, không ai làm): trang Đăng nhập Web cũng dùng nhãn "Username" và nút "Sign In" giống MOB-B5 – thấy khi khảo sát FR-03 ngày 21/10.
 - [ ] FR-06 (chi tiết sản phẩm): `GET /api/products/:id` trả `price` dạng **chuỗi** với sản phẩm có id chẵn, dạng số với id lẻ (danh sách `GET /api/products` luôn là số) – phát hiện khi làm FR-15.
 - [ ] FR-21 (giao diện chung): trang Đăng ký không có thẻ `<h1>`, nút "Đăng Ký" màu đỏ – phát hiện khi làm FR-01.
 - [ ] FR-21: danh sách sản phẩm trong Web Admin hiển thị giá không có phân cách hàng nghìn (`30000000 ₫`) – phát hiện khi làm FR-15.
