@@ -45,7 +45,7 @@ Sinh viên quyết định **không hỏi TA** (21/10): giữ các giả định
 - [x] **AI Audit Report**: sinh viên đã đồng ý verdict hàng #1–#33 (lượt #26). Claude Code nháp cột (4), hàng #34–#41 (verdict đề xuất – xem kỹ #34, #35, #37), mục 5 và mục 6 Mandatory Disclosure → sinh viên duyệt, xóa chú thích `NHÁP`; nếu sửa Critique / Audit thì đổi `VALID*` của hàng #40, #41. → Sinh viên đã duyệt (21/10); thêm câu khai báo theo đề §9.
 - [x] FR-15, FR-10, Mobile không có commit rà soát: sinh viên đồng ý verdict VALID, không sửa (21/10).
 - [x] **AI Disclosure Form**: kiểm tra bảng 2.4 (AI nháp), tự viết mục 2.5, xóa chú thích `NHÁP`. → Đã duyệt bảng 2.4 và viết mục 2.5 (21/10).
-- [ ] Video demo Agent Skill có **giọng nói của sinh viên** (AI-01 §10), đăng YouTube (Unlisted), điền link vào README – theo `KICH_BAN_DEMO.md`; quay xong báo Claude trích prompt log phiên demo vào hồ sơ AI.
+- [x] Video demo Agent Skill có giọng nói của sinh viên: https://youtu.be/9pdx5Ahb4Yk – đã điền vào README (21/10). Phiên chạy skill trong video (nhánh `demo/fr02`) không đưa vào bài nộp (sinh viên quyết định).
 - [ ] Điểm tự chấm trong README và tên file zip `23120031_HW02_AI_DomainTesting_<điểm>.zip` – điểm **3 chữ số** 000–100 (vd `090`).
 - [ ] Đánh dấu các ô trong `ai/AI_Privacy_Checklist.md` (mẫu AI-05).
 - [ ] Cross-review bài của thành viên khác trong nhóm (quy định chung của môn, không nằm trong file nộp HW02).

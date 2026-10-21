@@ -62,7 +62,7 @@ Một test case **Fail** nếu Fail ở bất kỳ kênh nào; **Blocked** nếu
 
 | Nội dung | Link |
 | --- | --- |
-| Agent Skill Domain Testing + BVA trên một feature hoàn chỉnh | |
+| Agent Skill `domain-testing-bva`: một prompt, agent làm B1 → B7 trên một feature hoàn chỉnh (FR-02 Web – Đăng nhập, chạy trong nhánh demo riêng, không thuộc 4 feature được chấm) | https://youtu.be/9pdx5Ahb4Yk |
 
 ## Cấu trúc bài nộp
 
