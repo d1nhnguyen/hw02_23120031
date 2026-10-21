@@ -1,11 +1,20 @@
 ---
 name: domain-testing-bva
-description: Apply Domain Testing (equivalence partitioning) and Boundary Value Analysis to one feature of a system under test, step by step as taught in CSC13003 (S04, UC Analysis, S07, Runnels), producing a Vietnamese Markdown report with data-matrix test cases, executable test scripts, execution evidence, AI gap analysis and bug report drafts. Use when the user asks to design or run domain / boundary test cases for a feature from its specification (e.g. "làm domain testing cho FR-xx", "BVA cho chức năng đăng nhập").
+description: Apply Domain Testing (equivalence partitioning) and Boundary Value Analysis to one feature of a system under test, step by step as taught in CSC13003 (S04, UC Analysis, S07, Runnels), producing a Vietnamese Markdown report with data-matrix test cases, executable test scripts, execution evidence, AI gap analysis and bug report drafts. By default a single invocation runs all seven steps in order (one git commit per step, self-checks between steps) and ends with a results summary; it can also run one step at a time for review. Use when the user asks to design or run domain / boundary test cases for a feature from its specification (e.g. "làm domain testing cho FR-xx", "BVA cho chức năng đăng nhập").
 ---
 
 # Domain Testing + Boundary Value Analysis cho một feature
 
-Skill này dẫn agent đi qua **7 bước**, mỗi bước là **một commit** `[<FEATURE>][B<n>]`. Không bao giờ dùng một prompt "sinh test case" duy nhất: làm từng bước, đọc lại kết quả, rồi mới sang bước sau.
+Skill này dẫn agent đi qua **7 bước**, mỗi bước là **một commit** `[<FEATURE>][B<n>]`. Không gộp các bước thành một lần "sinh test case": làm xong một bước, tự kiểm tra kết quả theo mục "Kiểm tra trước khi sang bước sau", rồi mới làm bước kế.
+
+## Hai chế độ chạy
+
+| Chế độ | Khi nào | Cách làm |
+| --- | --- | --- |
+| **Liền mạch** (mặc định) | Người dùng gọi skill một lần, vd `/domain-testing-bva FR-02` | Làm tuần tự B1 → B7 không dừng hỏi; mỗi bước một commit; thông tin thiếu thì tự suy ra (mục "Đầu vào") và ghi thành giả định; cuối cùng in **Tóm tắt kết quả** |
+| Từng bước | Người dùng yêu cầu duyệt từng bước ("làm B1 rồi dừng") | Làm đúng bước được yêu cầu rồi dừng chờ duyệt |
+
+Chỉ dừng giữa chừng khi bị chặn thật sự: không tìm thấy đặc tả, SUT không chạy và không tự khởi động được, đặc tả mâu thuẫn đến mức không đặt được giả định.
 
 Trước khi bắt đầu, đọc `reference/method.md` (quy tắc của môn học) và `reference/lessons.md` (các lỗi đã gặp khi tự động hóa – bắt buộc tránh).
 
@@ -18,7 +27,14 @@ Trước khi bắt đầu, đọc `reference/method.md` (quy tắc của môn h�
 | Cách khởi động lại dữ liệu sạch | `scripts/restart_backend.sh` |
 | Tiền tố ID | `FR15`, `MOB` |
 
-Thiếu mục nào hoặc đặc tả mâu thuẫn → **dừng và hỏi người dùng**. Chỗ đặc tả chỉ mơ hồ → đặt giả định có mã (A1, A2…) và ghi vào danh sách điểm cần hỏi TA (`DOI_CHIEU_TRUOC_KHI_NOP.md` nếu dự án có).
+Thiếu mục nào thì tự suy ra và ghi vào mục 1.4 (giả định):
+
+- Đặc tả: tìm mục `FR-xx` trong README / tài liệu đặc tả của SUT (vd `eshop-sut-main/README.md`, `api_specification.md`); trích **nguyên văn** vào mục 0.
+- Kênh: theo đặc tả (Web / Web Admin / Mobile) + endpoint API tương ứng; kiểm tra SUT đang chạy (vd `curl` trang và API).
+- Tiền tố ID: mã feature bỏ dấu gạch (`FR-02` → `FR02`).
+- Reset dữ liệu: `scripts/restart_backend.sh` nếu dự án có.
+
+Đặc tả mơ hồ → đặt giả định có mã (A1, A2…) và ghi vào danh sách điểm cần hỏi (`DOI_CHIEU_TRUOC_KHI_NOP.md` nếu dự án có). Chế độ từng bước: thiếu thông tin hoặc mâu thuẫn thì hỏi người dùng.
 
 ## Bố cục sản phẩm
 
@@ -81,6 +97,29 @@ Bảng trong báo cáo **không viết tay**: đặt mốc `<!-- BEGIN:T32 --> �
 4. Đối chiếu bằng script: danh sách TC của mỗi bug phải khớp cột Bug của T53.
 5. **Không tự tạo GitHub issue** trừ khi người dùng yêu cầu rõ ràng – mặc định sinh viên duyệt nháp rồi tự tạo issue (đính ảnh trong `bugs/screenshots/`). Sau khi có issue, điền số `BUG-NN` + link vào `bugs/Bug_Report.md` và mục 7 của báo cáo.
 6. Commit `[<F>][B7]`; cập nhật prompt log nếu dự án có (`[ai-log]`).
+
+## Kiểm tra trước khi sang bước sau
+
+| Bước | Tự kiểm tra |
+| --- | --- |
+| B1 | Đặc tả trích nguyên văn; có cả biến đầu ra; mỗi chỗ mơ hồ có giả định |
+| B2 | Mỗi điều kiện trong đặc tả có lớp valid + invalid; đếm lại số lớp bằng script |
+| B3 | T33 đạt 100%; mỗi TC invalid phủ đúng 1 lớp invalid; không có ô "mặc định" / "như TC khác" |
+| B4 | Mỗi biến có thứ tự có LB-1…UB+1; điểm trùng Minimum Set chỉ dẫn chiếu |
+| B5 | Mỗi TC có verdict + bằng chứng; kết quả bất ngờ đã xác minh bằng một request API; runner dài chạy nền và theo dõi đến khi xong (lessons 9–11) |
+| B6 | Mỗi điểm có nguyên nhân + cách phát hiện; TC bổ sung đã chạy |
+| B7 | TC của mỗi bug khớp cột Bug của T53 |
+
+## Tóm tắt kết quả (cuối chế độ liền mạch)
+
+In ra cho người dùng, ngắn gọn:
+
+1. Bảng 7 bước → commit tương ứng (`git log --oneline`).
+2. Số lớp tương đương, số TC (Minimum Set / BVA / bổ sung) và bảng T55 (Pass / Fail / Blocked theo kênh).
+3. Danh sách bug nháp: mã, tiêu đề, mức độ, TC phát hiện.
+4. Các điểm AI gap analysis chính.
+5. **Điểm cần người duyệt**: giả định đã đặt, mức độ bug, kết quả bất ngờ.
+6. File nên mở để xem: báo cáo, `evidence/<F>/`, `bugs/Bug_Report.md`.
 
 ## Rà soát của sinh viên
 

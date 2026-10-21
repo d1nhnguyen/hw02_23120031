@@ -1,6 +1,6 @@
 # Hướng dẫn dùng skill `domain-testing-bva`
 
-Skill dẫn Claude Code áp dụng **Domain Testing + Boundary Value Analysis** cho một feature, theo đúng các bước đã học (S04, UC Analysis, S07, Runnels). Mỗi lần gọi chỉ làm **một bước**, người dùng duyệt rồi mới sang bước sau; mỗi bước là một commit. Skill được đúc kết sau khi làm 4 feature của HW02 (FR-01, FR-10, FR-15, Mobile – Đăng nhập).
+Skill dẫn Claude Code áp dụng **Domain Testing + Boundary Value Analysis** cho một feature, theo đúng các bước đã học (S04, UC Analysis, S07, Runnels): 7 bước, mỗi bước một commit. Skill được đúc kết sau khi làm 4 feature của HW02 (FR-01, FR-10, FR-15, Mobile – Đăng nhập).
 
 ## 1. Cài đặt
 
@@ -22,20 +22,29 @@ Skill dẫn Claude Code áp dụng **Domain Testing + Boundary Value Analysis** 
 | Tiền tố ID test case | `FR02` → `FR02-DT-01`, `FR02-BV-01` |
 | Cách reset dữ liệu | `scripts/restart_backend.sh` |
 
-Thiếu mục nào hoặc đặc tả mâu thuẫn, skill sẽ dừng lại hỏi. Chỗ đặc tả mơ hồ được ghi thành giả định A1, A2…
+Các mục này **không bắt buộc**: thiếu thì skill tự suy ra (tìm mục FR trong đặc tả, kênh theo đặc tả, tiền tố từ mã feature, script reset có sẵn) và ghi thành giả định A1, A2…; chỉ dừng khi bị chặn thật sự (không thấy đặc tả, SUT không chạy).
 
-## 3. Cách gọi – mỗi bước một prompt
+## 3. Cách gọi
 
-| Bước | Prompt gợi ý (tự viết lại theo ý mình) | Sản phẩm chính |
-| --- | --- | --- |
-| B1 | `/domain-testing-bva FR-02 … (thông tin mục 2). Làm B1 rồi dừng để tôi duyệt.` | Mục 0–1 báo cáo: đặc tả nguyên văn, quan sát hộp đen, biến vào / ra, giả định; ảnh `evidence/<F>/B1_*.png` |
-| B2 | `Duyệt B1: <nhận xét>. Làm B2.` | Bảng 2.1 (guideline → lớp), 2.2 Complete Set of Partitions |
-| B3 | `Làm B3.` | `scripts/<f>/cases.py`, bảng T32 (Minimum Set), T33 (phủ phân vùng 100%) |
-| B4 | `Làm B4.` | Bảng 4.1 (LB / UB / bước nhảy), T42 Boundary Value Test Cases |
-| B5 | `Chạy B5 trên Web và API.` | Runner, `evidence/<F>/*_results.json`, ảnh từng test case, T53, T55 |
-| B6 | `Làm B6.` | AI gap analysis (nguyên nhân: prompt / công cụ / độ phức tạp), test case bổ sung T62 |
-| B7 | `Làm B7.` | Nháp bug theo mẫu Problem Report trong `bugs/Bug_Report.md`, ảnh bằng chứng |
-| Rà soát | `Sửa <điểm> theo nhận xét của tôi.` | Commit `[<F>][B<n>-review]`, Origin `AI-sửa` / `SV` |
+**Một prompt (chế độ liền mạch, mặc định):**
+
+```text
+/domain-testing-bva FR-02
+```
+
+Agent tự tìm đặc tả, kênh, tiền tố, cách reset dữ liệu (ghi lại thành giả định), làm tuần tự B1 → B7, mỗi bước một commit, rồi in **Tóm tắt kết quả**: commit từng bước, số lớp / test case, bảng Pass / Fail / Blocked, bug nháp, gap analysis, các điểm cần người duyệt. Có thể nêu rõ thêm thông tin cho chắc, vd `/domain-testing-bva FR-02 – Web http://localhost:5173/login + API POST /api/login`.
+
+**Từng bước** (khi muốn duyệt giữa các bước): thêm "làm B1 rồi dừng", sau đó "làm B2"… Sửa sau khi duyệt bằng prompt, commit `[<F>][B<n>-review]`.
+
+| Bước | Sản phẩm chính |
+| --- | --- |
+| B1 | Mục 0–1 báo cáo: đặc tả nguyên văn, quan sát hộp đen, biến vào / ra, giả định; ảnh `evidence/<F>/B1_*.png` |
+| B2 | Bảng 2.1 (guideline → lớp), 2.2 Complete Set of Partitions |
+| B3 | `scripts/<f>/cases.py`, bảng T32 (Minimum Set), T33 (phủ phân vùng 100%) |
+| B4 | Bảng 4.1 (LB / UB / bước nhảy), T42 Boundary Value Test Cases |
+| B5 | Runner, `evidence/<F>/*_results.json`, ảnh từng test case, T53, T55 |
+| B6 | AI gap analysis (nguyên nhân: prompt / công cụ / độ phức tạp), test case bổ sung T62 |
+| B7 | Nháp bug theo mẫu Problem Report trong `bugs/Bug_Report.md`, ảnh bằng chứng |
 
 Skill **không tự tạo GitHub issue**; chỉ tạo khi người dùng yêu cầu rõ.
 
